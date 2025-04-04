@@ -117,12 +117,29 @@
   }
 }
 
-/* Mobile Sidebar Overlay */
+/* Mobile Sidebar Overlay - Fix this selector */
 @media (max-width: 1199px) {
-  .header-show {
-    left: 0 !important;
+  .header-show + main::before {
+    display: none; /* Remove this line if present */
   }
   
+  body.header-show::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    pointer-events: auto;
+  }
+}
+
+/* Increase z-index for header */
+.header {
+  z-index: 9999; /* Increase this */
+}
   .header-show + main::before {
     content: '';
     position: fixed;
@@ -447,6 +464,7 @@
 
   <header id="header" class="header dark-background d-flex flex-column">
     <i class="header-toggle d-xl-none bi bi-list"></i>
+    
 
     <div class="profile-img">
       <img src="assets/Images/IssaLogo.jpeg" alt="" class="img-fluid rounded-circle">
@@ -709,26 +727,33 @@ document.getElementById('whatsappForm').addEventListener('submit', function(e) {
   <script src="assets/js/main.js"></script>
 
   <script>
-    // Mobile sidebar toggle
+    // Mobile menu toggle with overlay and click-outside functionality
     document.addEventListener('DOMContentLoaded', function() {
       const headerToggle = document.querySelector('.header-toggle');
       const header = document.getElementById('header');
       
       if(headerToggle && header) {
-        headerToggle.addEventListener('click', function() {
-          header.classList.toggle('header-show');
+        headerToggle.addEventListener('click', function(e) {
+          e.stopPropagation();
+          document.body.classList.toggle('header-show');
         });
-      }
-      
-      // Close sidebar when clicking a nav link on mobile
-      const navLinks = document.querySelectorAll('.navmenu a');
-      navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          if(window.innerWidth < 1200) {
-            header.classList.remove('header-show');
+        
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+          if(document.body.classList.contains('header-show') && 
+             !header.contains(e.target) && 
+             e.target !== headerToggle) {
+            document.body.classList.remove('header-show');
           }
         });
-      });
+        
+        // Close when clicking nav links
+        document.querySelectorAll('.navmenu a').forEach(link => {
+          link.addEventListener('click', function() {
+            document.body.classList.remove('header-show');
+          });
+        });
+      }
     });
   </script>
 </body>
