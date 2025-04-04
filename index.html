@@ -84,73 +84,66 @@
       padding: 0 15px;
       background: navy;
       overflow-y: auto;
-      transition: all 0.3s;
-      z-index: 999;
+      transition: all 0.3s ease;
+      z-index: 9999;
     }
 
     /* Mobile Toggle Button */
-.header-toggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  color: white;
-  background: var(--accent-color);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  z-index: 998;
-  cursor: pointer;
-}
+    .header-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      color: white;
+      background: var(--accent-color);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      z-index: 9998;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.header-toggle:hover {
-  background: rgba(20, 157, 221, 0.8);
-}
+    .header-toggle:hover {
+      background: rgba(20, 157, 221, 0.8);
+    }
 
-/* Show toggle only on mobile */
-@media (min-width: 1200px) {
-  .header-toggle {
-    display: none;
-  }
-}
+    /* Mobile overlay */
+    .mobile-nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9997;
+      display: none;
+    }
 
-/* Mobile Sidebar Overlay - Fix this selector */
-@media (max-width: 1199px) {
-  .header-show + main::before {
-    display: none; /* Remove this line if present */
-  }
-  
-  body.header-show::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 998;
-    pointer-events: auto;
-  }
-}
+    /* Show toggle only on mobile */
+    @media (min-width: 1200px) {
+      .header-toggle {
+        display: none;
+      }
+    }
 
-/* Increase z-index for header */
-.header {
-  z-index: 9999; /* Increase this */
-}
-  .header-show + main::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-  }
-}
+    /* Mobile sidebar styles */
+    @media (max-width: 1199px) {
+      .header {
+        left: -300px;
+      }
+      
+      .header.header-show {
+        left: 0;
+      }
+      
+      .mobile-nav-overlay.active {
+        display: block;
+      }
+    }
 
     .profile-img img {
       margin: 15px auto;
@@ -335,48 +328,48 @@
     # Services Section
     --------------------------------------------------------------*/
     .service-item {
-  background: #28a745; /* Green background */
-  border-radius: 15px;
-  color: white;
-  height: 100%;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
+      background: #28a745; /* Green background */
+      border-radius: 15px;
+      color: white;
+      height: 100%;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-.service-item:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
+    .service-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
 
-.icon {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
-  background: #0d6efd !important; /* Blue color with override */
-}
+    .icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      background: #0d6efd !important; /* Blue color with override */
+    }
 
-.title {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
+    .title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
 
-.description {
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
+    .description {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
 
-/* Responsive adjustments */
-@media (max-width: 767px) {
-  .service-item {
-    max-width: 350px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+      .service-item {
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
 
     /*--------------------------------------------------------------
     # Contact Section
@@ -427,13 +420,9 @@
     /*--------------------------------------------------------------
     # Responsive Styles
     --------------------------------------------------------------*/
-    @media (max-width: 1199px) {
-      .header {
-        left: -300px;
-      }
-      
-      .header.header-show {
-        left: 0;
+    @media (min-width: 1200px) {
+      main, footer {
+        margin-left: 300px;
       }
     }
 
@@ -450,22 +439,19 @@
         font-size: 28px;
       }
     }
-
-    @media (min-width: 1200px) {
-      main, footer {
-        margin-left: 300px;
-      }
-    }
   </style>
 
 </head>
 
 <body class="index-page">
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
-    
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav-overlay"></div>
 
+  <!-- Mobile Toggle Button -->
+  <i class="header-toggle bi bi-list"></i>
+
+  <header id="header" class="header dark-background d-flex flex-column">
     <div class="profile-img">
       <img src="assets/Images/IssaLogo.jpeg" alt="" class="img-fluid rounded-circle">
     </div>
@@ -731,27 +717,38 @@ document.getElementById('whatsappForm').addEventListener('submit', function(e) {
     document.addEventListener('DOMContentLoaded', function() {
       const headerToggle = document.querySelector('.header-toggle');
       const header = document.getElementById('header');
+      const overlay = document.querySelector('.mobile-nav-overlay');
       
       if(headerToggle && header) {
         headerToggle.addEventListener('click', function(e) {
           e.stopPropagation();
-          document.body.classList.toggle('header-show');
+          header.classList.toggle('header-show');
+          overlay.classList.toggle('active');
         });
         
         // Close when clicking outside
-        document.addEventListener('click', function(e) {
-          if(document.body.classList.contains('header-show') && 
-             !header.contains(e.target) && 
-             e.target !== headerToggle) {
-            document.body.classList.remove('header-show');
-          }
+        overlay.addEventListener('click', function() {
+          header.classList.remove('header-show');
+          overlay.classList.remove('active');
         });
         
         // Close when clicking nav links
         document.querySelectorAll('.navmenu a').forEach(link => {
           link.addEventListener('click', function() {
-            document.body.classList.remove('header-show');
+            header.classList.remove('header-show');
+            overlay.classList.remove('active');
           });
+        });
+      }
+      
+      // Initialize typed.js if element exists
+      if (document.querySelector('.typed')) {
+        var typed = new Typed('.typed', {
+          strings: ["ATS Friendly CV's", "Professional CV's", "Cover Letter", "LinkedIn Profile Setup", "Personal Portfolio"],
+          typeSpeed: 100,
+          backSpeed: 50,
+          backDelay: 2000,
+          loop: true
         });
       }
     });
