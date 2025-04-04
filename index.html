@@ -88,6 +88,53 @@
       z-index: 999;
     }
 
+    /* Mobile Toggle Button */
+.header-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  color: white;
+  background: var(--accent-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  z-index: 998;
+  cursor: pointer;
+}
+
+.header-toggle:hover {
+  background: rgba(20, 157, 221, 0.8);
+}
+
+/* Show toggle only on mobile */
+@media (min-width: 1200px) {
+  .header-toggle {
+    display: none;
+  }
+}
+
+/* Mobile Sidebar Overlay */
+@media (max-width: 1199px) {
+  .header-show {
+    left: 0 !important;
+  }
+  
+  .header-show + main::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+}
+
     .profile-img img {
       margin: 15px auto;
       display: block;
@@ -660,5 +707,29 @@ document.getElementById('whatsappForm').addEventListener('submit', function(e) {
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    // Mobile sidebar toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const headerToggle = document.querySelector('.header-toggle');
+      const header = document.getElementById('header');
+      
+      if(headerToggle && header) {
+        headerToggle.addEventListener('click', function() {
+          header.classList.toggle('header-show');
+        });
+      }
+      
+      // Close sidebar when clicking a nav link on mobile
+      const navLinks = document.querySelectorAll('.navmenu a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if(window.innerWidth < 1200) {
+            header.classList.remove('header-show');
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
