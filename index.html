@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Issa Digital Services</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicons -->
+  <link href="assets/Images/IssaLogo.jpeg" rel="icon">
+  <link href="assets/Images/IssaLogo.jpeg" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Inlined CSS -->
+  <style>
+    /*--------------------------------------------------------------
+    # General Styles
+    --------------------------------------------------------------*/
+    :root {
+      --background-color: #ffffff;
+      --default-color: #272829;
+      --heading-color: #050d18;
+      --accent-color: #149ddd;
+      --surface-color: #ffffff;
+      --contrast-color: #ffffff;
+      --nav-color: #a8a9b4;
+      --nav-hover-color: #ffffff;
+      --nav-mobile-bg: #040b14;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--default-color);
+      background-color: var(--background-color);
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: rgba(97, 20, 221, 0.8);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Raleway", sans-serif;
+      color: var(--heading-color);
+    }
+
+    /* Dark background utility class */
+    .dark-background {
+      --background-color: #050414;
+      --default-color: #ffffff;
+      --heading-color: #ffffff;
+      --surface-color: #151f2b;
+    }
+
+    /*--------------------------------------------------------------
+    # Header Styles
+    --------------------------------------------------------------*/
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 300px;
+      padding: 0 15px;
+      background: navy;
+      overflow-y: auto;
+      transition: all 0.3s;
+      z-index: 999;
+    }
+
+    .profile-img img {
+      margin: 15px auto;
+      display: block;
+      width: 160px;
+      background-color: black;
+      border: 8px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .logo h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    .social-links {
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      color:yellowgreen;
+      border-radius: 50%;
+      margin: 0 12px;
+      font-size: 26px;
+      transition: 0.3s;
+    }
+
+    .social-links a:hover {
+      background: black;
+      color: red;
+    }
+
+    /* Navigation */
+    .navmenu ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    .navmenu a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      color: whitesmoke;
+      font-size: 15px;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+
+    .navmenu a i {
+      font-size: 20px;
+      margin-right: 10px;
+    }
+
+    .navmenu a:hover, 
+    .navmenu .active {
+      color: yellow;
+    }
+
+    /*--------------------------------------------------------------
+    # Hero Section
+    --------------------------------------------------------------*/
+    .hero {
+      width: 100%;
+      min-height: 200px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px 0; /* Reduced from 60px */
+      padding-top: 5px;
+    }
+
+    /*--------------------------------------------------------------
+    # About Section - UPDATED
+    --------------------------------------------------------------*/
+    #about.section {
+      margin-top: -30px; /* Pulls section up */
+      padding-top: 30px; /* Maintains internal spacing */
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 0%;
+      height: 10%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero:before {
+      content: "";
+      background: #221f1f;
+      position: absolute;
+      height: 200px;
+      inset: 0;
+      z-index: 2;
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: 38px;
+      font-weight: 1000;
+      color: white;
+    }
+
+    .hero p {
+      color: white;
+      margin: 10px 0 0;
+      font-size: 22px;
+    }
+
+    /* Typed text animation */
+    .typed {
+      color: yellow;
+      font-weight: 500;
+      border-bottom: 3px solid;
+    }
+
+    /*--------------------------------------------------------------
+    # Section Titles
+    --------------------------------------------------------------*/
+    .section-title {
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    .section-title h2 {
+      font-size: 32px;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 5px;
+    }
+
+    .section-title h2:after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 90px;
+      height: 4px;
+      background: black;
+      bottom: 0;
+      left: calc(45.5% - 5px);
+    }
+
+    .section-title p {
+      margin-top: 10px;
+    }
+
+    /*--------------------------------------------------------------
+    # About Section
+    --------------------------------------------------------------*/
+    .about .video-container {
+      margin: 10px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border-color:black;
+      border-style: dashed;
+    }
+
+    .about video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /*--------------------------------------------------------------
+    # Services Section
+    --------------------------------------------------------------*/
+    .service-item {
+  background: #28a745; /* Green background */
+  border-radius: 15px;
+  color: white;
+  height: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.service-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  background: #0d6efd !important; /* Blue color with override */
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .service-item {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+    /*--------------------------------------------------------------
+    # Contact Section
+    --------------------------------------------------------------*/
+    .contact .php-email-form {
+      padding: 30px;
+      background: red;
+      box-shadow: green;
+    }
+
+    .contact input,
+    .contact textarea {
+      width: 100%;
+      padding: 10px 10px;
+      margin-bottom: 5px;
+      border: yellow;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+
+    .contact button[type="submit"] {
+      background: blue;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .contact button[type="submit"]:hover {
+      background: black;
+    }
+
+    /*--------------------------------------------------------------
+    # Footer
+    --------------------------------------------------------------*/
+    .footer {
+      background: var(--background-color);
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    .footer .copyright {
+      margin-bottom: 5px;
+    }
+
+    /*--------------------------------------------------------------
+    # Responsive Styles
+    --------------------------------------------------------------*/
+    @media (max-width: 1199px) {
+      .header {
+        left: -300px;
+      }
+      
+      .header.header-show {
+        left: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 32px;
+      }
+      
+      .hero p {
+        font-size: 18px;
+      }
+      
+      .section-title h2 {
+        font-size: 28px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      main, footer {
+        margin-left: 300px;
+      }
+    }
+  </style>
+
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <div class="profile-img">
+      <img src="assets/Images/IssaLogo.jpeg" alt="" class="img-fluid rounded-circle">
+    </div>
+
+    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+      <h1 class="sitename">ISSA Digital Services</h1>
+    </a>
+
+    <div class="social-links text-center">
+      <a href="https://wa.me/+919746431460" class="whatsapp"><i class="bi bi-whatsapp"></i></a>
+      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+    </div>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
+        <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
+        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+
+      <img src="assets/Images/Blue.jpg" alt="" data-aos="fade-in" class="">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <h2>ISSA Digital Services</h2>
+        <p>Our Main Services :   <span class="typed" data-typed-items="ATS Friendly CV's, Professional CV's, Cover Letter, LinkedIn Profile Setup, Personal Portfolio"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section" style="margin-top: -30px; padding-top: 30px;">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>About</h2>
+        <p>Welcome to ISSA Digital Services! We are a dedicated team committed to helping individuals elevate their professional presence. </p>
+        <p>We offer a range of services designed to showcase your skills and experiences effectively to employers and recruiters.</p>
+        <p>At ISSA Digital Services, we focus on delivering high-quality, personalized solutions to help you stand out in today's competitive job market. </p>
+      <p>Let us assist you in taking the next step in your career journey!</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4 justify-content-center">
+          <div class="col-lg-4">
+            <!-- <img src="assets/Images/IssaLogo.jpeg" class="img-fluid" alt=""> -->
+          </div>
+
+          <!-- Main content section with video and form -->
+        <div class="container">
+          <!-- Video Container -->
+          <div class="video-container">
+              <video width="840" height="500" controls autoplay muted>
+                  <source src="assets/Videos/Video of Cv.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+              </video>
+          </div>
+         </section><!-- /About Section -->
+
+
+  <!-- Services Section -->
+<section id="services" class="services section">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Services</h2>
+    <p>Our Professional Services</p>
+  </div>
+
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      
+      <!-- ATS CV -->
+      <div class="col-lg-4 col-md-6 d-flex">
+        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
+            <i class="bi bi-file-earmark-check text-white"></i>
+          </div>
+          <h4 class="title mb-2">ATS CV</h4>
+          <p class="description">HR Optimized Resume</p>
+        </div>
+      </div>
+
+      <!-- Professional CV -->
+      <div class="col-lg-4 col-md-6 d-flex">
+        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
+            <i class="bi bi-file-earmark-person text-white"></i>
+          </div>
+          <h4 class="title mb-2">Professional CV</h4>
+          <p class="description">Premium Resume Design</p>
+        </div>
+      </div>
+
+      <!-- Cover Letter -->
+      <div class="col-lg-4 col-md-6 d-flex">
+        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
+            <i class="bi bi-envelope-paper text-white"></i>
+          </div>
+          <h4 class="title mb-2">Cover Letter</h4>
+          <p class="description">Custom Application Letters</p>
+        </div>
+      </div>
+
+      <!-- LinkedIn Profile -->
+      <div class="col-lg-4 col-md-6 d-flex">
+        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="400">
+          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
+            <i class="bi bi-linkedin text-white"></i>
+          </div>
+          <h4 class="title mb-2">LinkedIn Profile</h4>
+          <p class="description">Professional Profile Setup</p>
+        </div>
+      </div>
+
+      <!-- Personal Portfolio -->
+      <div class="col-lg-4 col-md-6 d-flex">
+        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="500">
+          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
+            <i class="bi bi-globe text-white"></i>
+          </div>
+          <h4 class="title mb-2">Personal Portfolio</h4>
+          <p class="description">Custom Career Website</p>
+        </div>
+      </div>
+
+      <!-- Interview Tips -->
+      <div class="col-lg-4 col-md-6 d-flex">
+        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="600">
+          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
+            <i class="bi bi-person-video3 text-white"></i>
+          </div>
+          <h4 class="title mb-2">Interview Tips</h4>
+          <p class="description">Job Interview Coaching</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+   <!-- Contact Section -->
+<section id="contact" class="contact section">
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Contact us</h2>
+    <p>Fill the below Form to get connected</p>
+  </div>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <form id="whatsappForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+          <div class="row gy-4">
+            <div class="col-md-6">
+              <label for="name-field" class="pb-2">Your Name</label>
+              <input type="text" id="name-field" class="form-control" required>
+            </div>
+
+            <div class="col-md-6">
+              <label for="email-field" class="pb-2">Your Email</label>
+              <input type="email" id="email-field" class="form-control" required>
+            </div>
+
+            <div class="col-md-12">
+              <label for="phone-field" class="pb-2">Mobile Number</label>
+              <input type="tel" id="phone-field" class="form-control" required>
+            </div>
+
+            <div class="col-md-12">
+              <label for="service-field" class="pb-2">Which Service needed from us</label>
+              <select class="form-select" id="service-field" required>
+                <option value="" disabled selected>Select a service...</option>
+                <option value="ATS CV">ATS CV</option>
+                <option value="Professional CV">Professional CV</option>
+                <option value="Cover Letter">Cover Letter</option>
+                <option value="LinkedIn Profile Setup">LinkedIn Profile Setup</option>
+                <option value="Personal Portfolio">Personal Portfolio</option>
+                <option value="Interview Tips">Interview Tricks & Tips</option>
+              </select>
+            </div>
+
+            <div class="col-md-12 text-center">
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WhatsApp Integration Script -->
+<script>
+document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  // Get form values
+  const name = document.getElementById('name-field').value;
+  const email = document.getElementById('email-field').value;
+  const phone = document.getElementById('phone-field').value;
+  const service = document.getElementById('service-field').value;
+  
+  // Create WhatsApp message
+  const message = `New Inquiry from Website:%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Service Needed:* ${service}`;
+  
+  // Open WhatsApp chat
+  window.open(`https://wa.me/919746431460?text=${message}`, '_blank');
+  
+  // Optional: Reset form after submission
+  this.reset();
+});
+</script>
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+
+    <div class="container">
+      <div class="copyright text-center ">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">ISSA Digital Services</strong> </p>
+          <p>© <span>All Rights Reserved</span> </p>
+      </div>
+      <div class="credits">
+        Designed by <strong class="px-1 sitename">Arshad Kumbla</strong>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

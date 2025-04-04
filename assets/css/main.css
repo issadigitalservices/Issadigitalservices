@@ -1,0 +1,356 @@
+
+/*--------------------------------------------------------------
+# General Styles
+--------------------------------------------------------------*/
+:root {
+  --background-color: #ffffff;
+  --default-color: #272829;
+  --heading-color: #050d18;
+  --accent-color: #149ddd;
+  --surface-color: #ffffff;
+  --contrast-color: #ffffff;
+  --nav-color: #a8a9b4;
+  --nav-hover-color: #ffffff;
+  --nav-mobile-bg: #040b14;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: var(--default-color);
+  background-color: var(--background-color);
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: rgba(97, 20, 221, 0.8);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", sans-serif;
+  color: var(--heading-color);
+}
+
+/* Dark background utility class */
+.dark-background {
+  --background-color: #050414;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: #151f2b;
+}
+
+/*--------------------------------------------------------------
+# Header Styles
+--------------------------------------------------------------*/
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  padding: 0 15px;
+  background: navy;
+  overflow-y: auto;
+  transition: all 0.3s;
+  z-index: 999;
+}
+
+.profile-img img {
+  margin: 15px auto;
+  display: block;
+  width: 160px;
+  background-color: black;
+  border: 8px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.logo h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.social-links {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color:yellowgreen;
+  border-radius: 50%;
+  margin: 0 12px;
+  font-size: 26px;
+  transition: 0.3s;
+}
+
+.social-links a:hover {
+  background: black;
+  color: red;
+}
+
+/* Navigation */
+.navmenu ul {
+  padding: 0;
+  list-style: none;
+}
+
+.navmenu a {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: whitesmoke;
+  font-size: 15px;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.navmenu a i {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.navmenu a:hover, 
+.navmenu .active {
+  color: yellow;
+}
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+.hero {
+  width: 100%;
+  min-height: 50vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 0;
+  padding-top: 5px;
+}
+
+.hero img {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  height: 10%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero:before {
+  content: "";
+  background: #221f1f;
+  position: absolute;
+  height: 200px;
+  inset: 0;
+  z-index: 2;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 3;
+}
+
+.hero h2 {
+  margin: 0;
+  font-size: 38px;
+  font-weight: 1000;
+  color: white;
+}
+
+.hero p {
+  color: white;
+  margin: 10px 0 0;
+  font-size: 22px;
+}
+
+/* Typed text animation */
+.typed {
+  color: yellow;
+  font-weight: 500;
+  border-bottom: 3px solid;
+}
+
+/*--------------------------------------------------------------
+# Section Titles
+--------------------------------------------------------------*/
+.section-title {
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.section-title h2:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 90px;
+  height: 4px;
+  background: black;
+  bottom: 0;
+  left: calc(45.5% - 5px);
+}
+
+.section-title p {
+  margin-top: 10px;
+}
+
+/*--------------------------------------------------------------
+# About Section
+--------------------------------------------------------------*/
+.about .video-container {
+  margin: 10px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border-color:black;
+  border-style: dashed;
+}
+
+.about video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/*--------------------------------------------------------------
+# Services Section
+--------------------------------------------------------------*/
+.services .service-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1px;
+  background: green;
+  padding: 5px;
+  border-radius: 20px;
+  box-shadow: black;
+  transition: 0.3s;
+  color: green;
+}
+
+.services .service-item:hover {
+  transform: translateY(-5px);
+  box-shadow: blue;
+}
+
+.services .icon {
+  background: var(--accent-color);
+  color: yellow;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  font-size: 24px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.services .title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 1px;
+}
+
+.services .description {
+  color:black;
+  font-size: 14px;
+}
+
+/*--------------------------------------------------------------
+# Contact Section
+--------------------------------------------------------------*/
+.contact .php-email-form {
+  padding: 30px;
+  background: red;
+  box-shadow: green;
+}
+
+.contact input,
+.contact textarea {
+  width: 100%;
+  padding: 10px 10px;
+  margin-bottom: 5px;
+  border: yellow;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.contact button[type="submit"] {
+  background: blue;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.contact button[type="submit"]:hover {
+  background: black;
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+.footer {
+  background: var(--background-color);
+  padding: 30px 0;
+  text-align: center;
+}
+
+.footer .copyright {
+  margin-bottom: 5px;
+}
+
+/*--------------------------------------------------------------
+# Responsive Styles
+--------------------------------------------------------------*/
+@media (max-width: 1199px) {
+  .header {
+    left: -300px;
+  }
+  
+  .header.header-show {
+    left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero h2 {
+    font-size: 32px;
+  }
+  
+  .hero p {
+    font-size: 18px;
+  }
+  
+  .section-title h2 {
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 1200px) {
+  main, footer {
+    margin-left: 300px;
+  }
+}
