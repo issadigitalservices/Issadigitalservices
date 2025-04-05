@@ -137,13 +137,12 @@
     /* Mobile sidebar styles - UPDATED */
     @media (max-width: 1199px) {
       .header {
-        left: -300px;
-        transition: all 0.5s ease;
-      }
-      
-      .header.header-show {
         left: 0;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+      
+      .header.header-mobile-hidden {
+        left: -300px;
       }
       
       .mobile-nav-overlay.active {
@@ -469,10 +468,10 @@
 <body class="index-page">
 
   <!-- Mobile Nav Overlay -->
-  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-overlay active"></div>
 
   <!-- Mobile Toggle Button -->
-  <button class="header-toggle border-0"><i class="bi bi-list"></i></button>
+  <button class="header-toggle border-0"><i class="bi bi-x"></i></button>
 
   <header id="header" class="header dark-background d-flex flex-column">
     <div class="profile-img">
@@ -697,16 +696,24 @@
   <!-- Mobile Navigation Script - IMPROVED -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Mobile menu toggle
+      // Mobile menu elements
       const headerToggle = document.querySelector('.header-toggle');
       const header = document.getElementById('header');
       const overlay = document.querySelector('.mobile-nav-overlay');
       
       // Toggle menu function
       function toggleMenu() {
-        header.classList.toggle('header-show');
+        header.classList.toggle('header-mobile-hidden');
         overlay.classList.toggle('active');
-        console.log('Menu toggled');
+        // Change icon based on state
+        const icon = headerToggle.querySelector('i');
+        if (header.classList.contains('header-mobile-hidden')) {
+          icon.classList.remove('bi-x');
+          icon.classList.add('bi-list');
+        } else {
+          icon.classList.remove('bi-list');
+          icon.classList.add('bi-x');
+        }
       }
       
       // Event listeners
@@ -719,14 +726,16 @@
         
         // Overlay click to close
         overlay.addEventListener('click', function() {
-          toggleMenu();
+          if (!header.classList.contains('header-mobile-hidden')) {
+            toggleMenu();
+          }
         });
         
         // Nav links click to close
         const navLinks = document.querySelectorAll('.navmenu a');
         navLinks.forEach(link => {
           link.addEventListener('click', function() {
-            if (window.innerWidth < 1200) {
+            if (window.innerWidth < 1200 && !header.classList.contains('header-mobile-hidden')) {
               toggleMenu();
             }
           });
@@ -764,6 +773,19 @@
           });
         });
       }
+      
+      // Check screen size and adjust menu accordingly
+      function checkScreenSize() {
+        if (window.innerWidth >= 1200) {
+          // Desktop - ensure menu is visible
+          header.classList.remove('header-mobile-hidden');
+          overlay.classList.remove('active');
+        }
+      }
+      
+      // Run on load and resize
+      window.addEventListener('load', checkScreenSize);
+      window.addEventListener('resize', checkScreenSize);
     });
     
     // WhatsApp Form Submission
