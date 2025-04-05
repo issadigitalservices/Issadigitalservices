@@ -46,7 +46,7 @@
       color: var(--default-color);
       background-color: var(--background-color);
       overflow-x: hidden;
-      padding-top: 80px; /* Added to account for fixed navbar */
+      padding-top: 180px; /* Increased to account for new nav layout */
     }
 
     a {
@@ -64,134 +64,238 @@
       color: var(--heading-color);
     }
 
-    /*--------------------------------------------------------------
-    # Top Navigation Bar - SIMPLIFIED WITHOUT TOGGLE
-    --------------------------------------------------------------*/
-    .top-navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: navy;
-      z-index: 9999;
-      padding: 10px 0;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    }
+   /*--------------------------------------------------------------
+# Top Navigation Bar - Single Line Layout
+--------------------------------------------------------------*/
+.top-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: navy;
+  z-index: 9999;
+  padding: 15px 0;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
 
-    .navbar-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 15px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      color: white;
-      font-weight: 700;
-      font-size: 1.25rem;
-    }
+.navbar-brand {
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
 
-    .navbar-brand img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
-      border: 3px solid rgba(255, 255, 255, 0.2);
-    }
+.navbar-brand img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
 
-    .navbar-menu {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
+.navbar-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
 
-    .navbar-nav {
-      display: flex;
-      flex-direction: row;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 15px;
+}
 
-    .nav-item {
-      margin: 0 10px;
-    }
+.nav-link {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
 
-    .nav-link {
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 8px 12px;
-      border-radius: 4px;
-      transition: all 0.3s;
-    }
+.nav-link:hover, 
+.nav-link.active {
+  color: yellow;
+  background: rgba(255, 255, 255, 0.1);
+}
 
-    .nav-link i {
-      margin-right: 5px;
-      font-size: 16px;
-    }
+.navbar-social {
+  display: flex;
+  gap: 15px;
+}
 
-    .nav-link:hover, 
-    .nav-link.active {
-      color: yellow;
-      background: rgba(255, 255, 255, 0.1);
-    }
+.social-link {
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  transition: all 0.3s;
+}
 
-    .navbar-social {
-      display: flex;
-      margin-left: 15px;
-    }
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: yellow;
+}
 
-    .social-link {
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      margin: 0 3px;
-      font-size: 16px;
-      transition: all 0.3s;
-    }
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .navbar-content {
+    gap: 20px;
+  }
+  .navbar-nav, .navbar-social {
+    gap: 10px;
+  }
+}
 
-    .social-link:hover {
-      background: rgba(255, 255, 255, 0.2);
-      color: yellow;
-    }
+@media (max-width: 768px) {
+  body {
+    padding-top: 160px;
+  }
+  .navbar-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .navbar-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .navbar-nav {
+    order: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .navbar-social {
+    order: 2;
+  }
+}
 
-    /* Responsive adjustments - SIMPLIFIED */
+@media (max-width: 480px) {
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+  .nav-link {
+    font-size: 0.85rem;
+    padding: 5px 8px;
+  }
+  .social-link {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .navbar-container {
+    gap: 20px;
+  }
+  .navbar-nav, .navbar-social {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 160px;
+  }
+  .navbar-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .navbar-nav {
+    order: 1;
+  }
+  .navbar-social {
+    order: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 180px; /* Adjusted for compact navbar */
+  }
+  
+  .navbar-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-item {
+    margin: 3px 5px; /* Even tighter spacing on mobile */
+  }
+  
+  .nav-link {
+    padding: 5px 8px;
+    font-size: 0.9rem;
+  }
+  
+  .social-link {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-top: 220px; /* More space for stacked nav on mobile */
+  }
+  
+  .navbar-nav {
+    flex-direction: column; /* Keep vertical on mobile */
+  }
+  
+  .nav-item {
+    margin: 3px 0; /* Even tighter spacing on mobile */
+  }
+  
+  .social-link {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    margin: 0 5px;
+  }
+}
+    /* Responsive adjustments */
     @media (max-width: 768px) {
-      .navbar-container {
-        flex-direction: column;
-        padding: 10px;
-      }
-      
-      .navbar-brand {
-        margin-bottom: 10px;
-      }
-      
-      .navbar-menu {
-        width: 100%;
-        justify-content: center;
+      body {
+        padding-top: 220px; /* More space for stacked nav on mobile */
       }
       
       .navbar-nav {
         flex-wrap: wrap;
-        justify-content: center;
       }
       
       .nav-item {
         margin: 5px;
       }
       
-      .navbar-social {
-        margin: 10px 0 0 0;
-        justify-content: center;
+      .social-link {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+        margin: 0 5px;
       }
     }
 
@@ -200,7 +304,7 @@
     --------------------------------------------------------------*/
     .hero {
       width: 100%;
-      min-height: 10vh;
+      min-height: calc(100vh - 180px); /* Adjusted for new nav height */
       position: relative;
       display: flex;
       align-items: center;
@@ -211,6 +315,7 @@
       color: white;
     }
 
+    /* Rest of your CSS remains the same */
     .hero-content {
       position: relative;
       z-index: 2;
@@ -432,40 +537,42 @@
 
 <body class="index-page">
 
-  <!-- Top Navigation Bar - SIMPLIFIED WITHOUT TOGGLE -->
+  <!-- Top Navigation Bar with new layout -->
   <nav class="top-navbar">
-    <div class="navbar-container">
+    <div class="container">
+      <!-- Brand/logo centered at top -->
       <a href="index.html" class="navbar-brand">
         <img src="assets/Images/IssaLogo.jpeg" alt="ISSA Logo">
         ISSA Digital Services
       </a>
 
-      <div class="navbar-menu">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="#hero" class="nav-link active"><i class="bi bi-house"></i> Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="#about" class="nav-link"><i class="bi bi-person"></i> About</a>
-          </li>
-          <li class="nav-item">
-            <a href="#services" class="nav-link"><i class="bi bi-hdd-stack"></i> Services</a>
-          </li>
-          <li class="nav-item">
-            <a href="#contact" class="nav-link"><i class="bi bi-envelope"></i> Contact</a>
-          </li>
-        </ul>
+      <!-- Navigation links in a row below -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="#hero" class="nav-link active"><i class="bi bi-house"></i> Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#about" class="nav-link"><i class="bi bi-person"></i> About</a>
+        </li>
+        <li class="nav-item">
+          <a href="#services" class="nav-link"><i class="bi bi-hdd-stack"></i> Services</a>
+        </li>
+        <li class="nav-item">
+          <a href="#contact" class="nav-link"><i class="bi bi-envelope"></i> Contact</a>
+        </li>
+      </ul>
 
-        <div class="navbar-social">
-          <a href="https://wa.me/+919746431460" class="social-link"><i class="bi bi-whatsapp"></i></a>
-          <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-        </div>
+      <!-- Social media links in a row below -->
+      <div class="navbar-social">
+        <a href="https://wa.me/+919746431460" class="social-link"><i class="bi bi-whatsapp"></i></a>
+        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
       </div>
     </div>
   </nav>
 
+  <!-- Rest of your HTML remains the same -->
   <main class="main">
 
     <!-- Hero Section -->
@@ -660,7 +767,7 @@
   <!-- Typed.js -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
-  <!-- Main JavaScript - SIMPLIFIED WITHOUT TOGGLE FUNCTIONALITY -->
+  <!-- Main JavaScript -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Initialize typed.js
@@ -705,7 +812,7 @@
           
           if (targetElement) {
             window.scrollTo({
-              top: targetElement.offsetTop - 70, // Account for fixed navbar
+              top: targetElement.offsetTop - 180, // Adjusted for new nav height
               behavior: 'smooth'
             });
           }
