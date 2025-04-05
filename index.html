@@ -88,13 +88,13 @@
       z-index: 9999;
     }
 
-    /* Mobile Toggle Button */
+    /* Mobile Toggle Button - UPDATED */
     .header-toggle {
       position: fixed;
       top: 20px;
-      left: 20px;
+      right: 20px; /* Changed from left to right */
       color: white;
-      background: var(--accent-color);
+      background: #0d6efd; /* Changed to blue */
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -105,6 +105,7 @@
       z-index: 9998;
       cursor: pointer;
       transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Added shadow */
     }
 
     .header-toggle:hover {
@@ -130,10 +131,11 @@
       }
     }
 
-    /* Mobile sidebar styles */
+    /* Mobile sidebar styles - UPDATED */
     @media (max-width: 1199px) {
       .header {
         left: -300px;
+        transition: all 0.3s ease; /* Added explicit transition */
       }
       
       .header.header-show {
@@ -712,6 +714,7 @@ document.getElementById('whatsappForm').addEventListener('submit', function(e) {
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  <!-- UPDATED JavaScript for Mobile Navigation -->
   <script>
     // Mobile menu toggle with overlay and click-outside functionality
     document.addEventListener('DOMContentLoaded', function() {
@@ -719,11 +722,12 @@ document.getElementById('whatsappForm').addEventListener('submit', function(e) {
       const header = document.getElementById('header');
       const overlay = document.querySelector('.mobile-nav-overlay');
       
-      if(headerToggle && header) {
+      if(headerToggle && header && overlay) {
         headerToggle.addEventListener('click', function(e) {
           e.stopPropagation();
           header.classList.toggle('header-show');
           overlay.classList.toggle('active');
+          console.log('Mobile menu toggled'); // For debugging
         });
         
         // Close when clicking outside
@@ -733,7 +737,8 @@ document.getElementById('whatsappForm').addEventListener('submit', function(e) {
         });
         
         // Close when clicking nav links
-        document.querySelectorAll('.navmenu a').forEach(link => {
+        const navLinks = document.querySelectorAll('.navmenu a');
+        navLinks.forEach(link => {
           link.addEventListener('click', function() {
             header.classList.remove('header-show');
             overlay.classList.remove('active');
