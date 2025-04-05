@@ -45,7 +45,8 @@
       font-family: "Poppins", sans-serif;
       color: var(--default-color);
       background-color: var(--background-color);
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      overflow-x: hidden;
+      padding-top: 80px; /* Added to account for fixed navbar */
     }
 
     a {
@@ -63,166 +64,158 @@
       color: var(--heading-color);
     }
 
-    /* Dark background utility class */
-    .dark-background {
-      --background-color: #050414;
-      --default-color: #ffffff;
-      --heading-color: #ffffff;
-      --surface-color: #151f2b;
-    }
-
     /*--------------------------------------------------------------
-    # Header Styles - FIXED
+    # Top Navigation Bar
     --------------------------------------------------------------*/
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 300px;
-      padding: 0 15px;
-      background: navy;
-      overflow-y: auto;
-      z-index: 9997;
-      transition: all 0.5s ease;
-    }
-
-    /* Mobile Toggle Button */
-    .header-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      color: white;
-      background: #0d6efd;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      z-index: 9998;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    .header-toggle:hover {
-      background: rgba(20, 157, 221, 0.8);
-    }
-
-    /* Mobile overlay */
-    .mobile-nav-overlay {
+    .top-navbar {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 9996;
-      display: none;
-    }
-
-    /* Show toggle only on mobile */
-    @media (min-width: 1200px) {
-      .header-toggle {
-        display: none;
-      }
-      
-      main, footer {
-        margin-left: 300px;
-      }
-    }
-
-    /* Mobile sidebar styles - UPDATED */
-    @media (max-width: 1199px) {
-      .header {
-        left: 0;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      }
-      
-      .header.header-mobile-hidden {
-        left: -300px;
-      }
-      
-      .mobile-nav-overlay.active {
-        display: block;
-      }
-      
-      main, footer {
-        margin-left: 0;
-      }
-    }
-
-    .profile-img img {
-      margin: 15px auto;
-      display: block;
-      width: 160px;
-      background-color: black;
-      border: 8px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-    }
-
-    .logo h1 {
-      font-size: 24px;
-      font-weight: 700;
-      margin: 0;
+      background: navy;
+      z-index: 9999;
       padding: 10px 0;
-      text-align: center;
-      color: white; /* Added to ensure visibility */
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .social-links {
-      margin: 10px 0;
-      text-align: center;
-    }
-
-    .social-links a {
-      display: inline-flex;
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      color: yellowgreen;
-      border-radius: 50%;
-      margin: 0 12px;
-      font-size: 26px;
-      transition: 0.3s;
+      padding: 0 15px;
     }
 
-    .social-links a:hover {
-      background: black;
-      color: red;
-    }
-
-    /* Navigation */
-    .navmenu ul {
-      padding: 0;
-      list-style: none;
-      margin-top: 20px; /* Added spacing */
-    }
-
-    .navmenu a {
+    .navbar-brand {
       display: flex;
       align-items: center;
-      padding: 12px 15px;
-      color: whitesmoke;
-      font-size: 15px;
-      transition: 0.3s;
-      font-weight: 600;
-      margin-bottom: 5px; /* Added spacing between items */
-      border-radius: 5px; /* Added rounded corners */
+      color: white;
+      font-weight: 700;
+      font-size: 1.25rem;
     }
 
-    .navmenu a i {
-      font-size: 20px;
+    .navbar-brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
       margin-right: 10px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
     }
 
-    .navmenu a:hover, 
-    .navmenu .active {
+    .navbar-menu {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-item {
+      margin: 0 5px;
+    }
+
+    .nav-link {
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .nav-link i {
+      margin-right: 5px;
+      font-size: 16px;
+    }
+
+    .nav-link:hover, 
+    .nav-link.active {
       color: yellow;
-      background: rgba(255, 255, 255, 0.1); /* Added hover background */
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar-social {
+      display: flex;
+      margin-left: 15px;
+    }
+
+    .social-link {
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin: 0 3px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .social-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: yellow;
+    }
+
+    /* Mobile menu toggle */
+    .navbar-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Mobile menu styles */
+    @media (max-width: 991px) {
+      .navbar-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: navy;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        transform: translateY(-150%);
+        transition: transform 0.3s ease;
+        z-index: 9998;
+      }
+
+      .navbar-menu.active {
+        transform: translateY(0);
+      }
+
+      .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .nav-item {
+        margin: 5px 0;
+        width: 100%;
+      }
+
+      .nav-link {
+        width: 100%;
+      }
+
+      .navbar-social {
+        margin: 15px 0 0 0;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .navbar-toggle {
+        display: block;
+      }
     }
 
     /*--------------------------------------------------------------
@@ -230,71 +223,49 @@
     --------------------------------------------------------------*/
     .hero {
       width: 100%;
-      min-height: 200px;
+      height: 5px;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 30px 0;
-      padding-top: 5px;
+      padding: 60px 0;
+      background: rgb(12, 17, 26);
+      color: white;
     }
 
-    /*--------------------------------------------------------------
-    # About Section - UPDATED
-    --------------------------------------------------------------*/
-    #about.section {
-      margin-top: -30px;
-      padding-top: 30px;
-    }
-
-    .hero img {
-      position: absolute;
-      inset: 0;
-      width: 100%; /* Fixed from 0% to 100% */
-      height: 100%; /* Fixed from 10% to 100% */
-      object-fit: cover;
-      z-index: 1;
-    }
-
-    .hero:before {
-      content: "";
-      background: rgba(34, 31, 31, 0.7); /* Made semi-transparent */
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-    }
-
-    .hero .container {
+    .hero-content {
       position: relative;
-      z-index: 3;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 20px;
     }
 
     .hero h2 {
       margin: 0;
-      font-size: 38px;
-      font-weight: 1000;
+      font-size: 2.5rem;
+      font-weight: 700;
       color: white;
     }
 
     .hero p {
       color: white;
-      margin: 10px 0 0;
-      font-size: 22px;
+      margin: 15px 0 0;
+      font-size: 1.25rem;
     }
 
     /* Typed text animation */
     .typed {
       color: yellow;
       font-weight: 500;
-      border-bottom: 3px solid;
+      border-bottom: 2px solid;
     }
 
     /*--------------------------------------------------------------
     # Section Titles
     --------------------------------------------------------------*/
     .section-title {
-      padding-bottom: 10px;
+      padding-bottom: 30px;
       text-align: center;
     }
 
@@ -302,7 +273,7 @@
       font-size: 32px;
       font-weight: 700;
       position: relative;
-      padding-bottom: 5px;
+      padding-bottom: 15px;
     }
 
     .section-title h2:after {
@@ -311,24 +282,28 @@
       display: block;
       width: 90px;
       height: 4px;
-      background: black;
+      background: var(--accent-color);
       bottom: 0;
-      left: calc(50% - 45px); /* Fixed calculation */
+      left: calc(50% - 45px);
     }
 
     .section-title p {
-      margin-top: 10px;
+      margin-top: 15px;
+      color: #6c757d;
     }
 
     /*--------------------------------------------------------------
     # About Section
     --------------------------------------------------------------*/
+    .about {
+      padding: 80px 0;
+    }
+
     .about .video-container {
-      margin: 10px 0;
+      margin: 30px 0;
       border-radius: 10px;
       overflow: hidden;
-      border-color: black;
-      border-style: dashed;
+      border: 2px dashed #ddd;
     }
 
     .about video {
@@ -340,6 +315,11 @@
     /*--------------------------------------------------------------
     # Services Section
     --------------------------------------------------------------*/
+    .services {
+      padding: 80px 0;
+      background: #f8f9fa;
+    }
+
     .service-item {
       background: #28a745;
       border-radius: 15px;
@@ -347,6 +327,8 @@
       height: 100%;
       transition: all 0.3s ease;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      padding: 30px 20px;
+      margin-bottom: 30px;
     }
 
     .service-item:hover {
@@ -363,11 +345,13 @@
       justify-content: center;
       font-size: 30px;
       background: #0d6efd !important;
+      margin: 0 auto 15px;
     }
 
     .title {
       font-size: 1.25rem;
       font-weight: 600;
+      margin-bottom: 10px;
     }
 
     .description {
@@ -375,62 +359,64 @@
       opacity: 0.9;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 767px) {
-      .service-item {
-        max-width: 350px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-    }
-
     /*--------------------------------------------------------------
     # Contact Section
     --------------------------------------------------------------*/
+    .contact {
+      padding: 80px 0;
+    }
+
     .contact .php-email-form {
       padding: 30px;
-      background: #f8f9fa; /* Changed from red to light gray */
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1); /* Changed from green */
-      border-radius: 10px; /* Added rounded corners */
+      background: #f8f9fa;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
     }
 
     .contact input,
     .contact textarea,
     .contact select {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 15px; /* Increased from 5px */
-      border: 1px solid #ced4da; /* Changed from yellow */
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ced4da;
       border-radius: 4px;
-      font-size: 14px; /* Changed from 10px */
+      font-size: 14px;
     }
 
     .contact button[type="submit"] {
-      background: #0d6efd; /* Changed from blue to Bootstrap primary */
+      background: #0d6efd;
       color: white;
       border: none;
-      padding: 10px 20px; /* Increased padding */
-      border-radius: 40px;
+      padding: 12px 30px;
+      border-radius: 4px;
       cursor: pointer;
       transition: 0.3s;
-      font-weight: 600; /* Added bold text */
+      font-weight: 600;
+      width: 100%;
     }
 
     .contact button[type="submit"]:hover {
-      background: #0b5ed7; /* Darker shade on hover */
+      background: #0b5ed7;
     }
 
     /*--------------------------------------------------------------
     # Footer
     --------------------------------------------------------------*/
     .footer {
-      background: var(--background-color);
+      background: #343a40;
       padding: 30px 0;
       text-align: center;
+      color: white;
     }
 
     .footer .copyright {
       margin-bottom: 5px;
+    }
+
+    .footer .credits {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
     }
 
     /*--------------------------------------------------------------
@@ -448,6 +434,8 @@
       z-index: 995;
       transition: all 0.4s;
       display: none;
+      align-items: center;
+      justify-content: center;
     }
 
     .scroll-top:hover {
@@ -455,10 +443,10 @@
     }
 
     /*--------------------------------------------------------------
-    # Main Sections - Added padding for better spacing
+    # Main Sections
     --------------------------------------------------------------*/
     .section {
-      padding: 60px 0;
+      padding: 80px 0;
       overflow: hidden;
     }
   </style>
@@ -467,71 +455,77 @@
 
 <body class="index-page">
 
-  <!-- Mobile Nav Overlay -->
-  <div class="mobile-nav-overlay active"></div>
+  <!-- Top Navigation Bar -->
+  <nav class="top-navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <img src="assets/Images/IssaLogo.jpeg" alt="ISSA Logo">
+        ISSA Digital Services
+      </a>
 
-  <!-- Mobile Toggle Button -->
-  <button class="header-toggle border-0"><i class="bi bi-x"></i></button>
+      <div class="navbar-menu" id="navbarMenu">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="#hero" class="nav-link active"><i class="bi bi-house"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="#about" class="nav-link"><i class="bi bi-person"></i> About</a>
+          </li>
+          <li class="nav-item">
+            <a href="#services" class="nav-link"><i class="bi bi-hdd-stack"></i> Services</a>
+          </li>
+          <li class="nav-item">
+            <a href="#contact" class="nav-link"><i class="bi bi-envelope"></i> Contact</a>
+          </li>
+        </ul>
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <div class="profile-img">
-      <img src="assets/Images/IssaLogo.jpeg" alt="ISSA Logo" class="img-fluid rounded-circle">
+        <div class="navbar-social">
+          <a href="https://wa.me/+919746431460" class="social-link"><i class="bi bi-whatsapp"></i></a>
+          <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+
+      <button class="navbar-toggle" id="navbarToggle">
+        <i class="bi bi-list"></i>
+      </button>
     </div>
-
-    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-      <h1 class="sitename">ISSA Digital Services</h1>
-    </a>
-
-    <div class="social-links text-center">
-      <a href="https://wa.me/+919746431460" class="whatsapp"><i class="bi bi-whatsapp"></i></a>
-      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-      <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-    </div>
-
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
-        <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
-        <li><a href="#services"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  </nav>
 
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-
-      <img src="assets/Images/Blue.jpg" alt="" data-aos="fade-in">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <section id="hero" class="hero section">
+      <div class="hero-content">
         <h2>ISSA Digital Services</h2>
-        <p>Our Main Services :   <span class="typed" data-typed-items="ATS Friendly CV's, Professional CV's, Cover Letter, LinkedIn Profile Setup, Personal Portfolio"></span></p>
+        <p>Our Main Services: <span class="typed" data-typed-items="ATS Friendly CV's, Professional CV's, Cover Letter, LinkedIn Profile Setup, Personal Portfolio"></span></p>
       </div>
-
     </section><!-- /Hero Section -->
 
     <!-- About Section -->
-    <section id="about" class="about section" style="margin-top: -30px; padding-top: 30px;">
-
+    <section id="about" class="about section">
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title">
         <h2>About</h2>
         <p>Welcome to ISSA Digital Services! We are a dedicated team committed to helping individuals elevate their professional presence.</p>
-        <p>We offer a range of services designed to showcase your skills and experiences effectively to employers and recruiters.</p>
-        <p>At ISSA Digital Services, we focus on delivering high-quality, personalized solutions to help you stand out in today's competitive job market.</p>
-        <p>Let us assist you in taking the next step in your career journey!</p>
       </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <p>We offer a range of services designed to showcase your skills and experiences effectively to employers and recruiters.</p>
+            <p>At ISSA Digital Services, we focus on delivering high-quality, personalized solutions to help you stand out in today's competitive job market.</p>
+            <p>Let us assist you in taking the next step in your career journey!</p>
+          </div>
+        </div>
+        
         <!-- Video Container -->
         <div class="video-container">
-            <video width="840" height="500" controls autoplay muted>
-                <source src="assets/Videos/Video of Cv.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+          <video width="100%" controls autoplay muted>
+              <source src="assets/Videos/Video of Cv.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
         </div>
       </div>
     </section><!-- /About Section -->
@@ -539,7 +533,7 @@
     <!-- Services Section -->
     <section id="services" class="services section">
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title">
         <h2>Services</h2>
         <p>Our Professional Services</p>
       </div>
@@ -549,7 +543,7 @@
           
           <!-- ATS CV -->
           <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item w-100 text-center p-4">
               <div class="icon mx-auto mb-3 bg-primary">
                 <i class="bi bi-file-earmark-check text-white"></i>
               </div>
@@ -560,7 +554,7 @@
 
           <!-- Professional CV -->
           <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item w-100 text-center p-4">
               <div class="icon mx-auto mb-3 bg-primary">
                 <i class="bi bi-file-earmark-person text-white"></i>
               </div>
@@ -571,7 +565,7 @@
 
           <!-- Cover Letter -->
           <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item w-100 text-center p-4">
               <div class="icon mx-auto mb-3 bg-primary">
                 <i class="bi bi-envelope-paper text-white"></i>
               </div>
@@ -582,7 +576,7 @@
 
           <!-- LinkedIn Profile -->
           <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item w-100 text-center p-4">
               <div class="icon mx-auto mb-3 bg-primary">
                 <i class="bi bi-linkedin text-white"></i>
               </div>
@@ -593,7 +587,7 @@
 
           <!-- Personal Portfolio -->
           <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-item w-100 text-center p-4">
               <div class="icon mx-auto mb-3 bg-primary">
                 <i class="bi bi-globe text-white"></i>
               </div>
@@ -604,7 +598,7 @@
 
           <!-- Interview Tips -->
           <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="600">
+            <div class="service-item w-100 text-center p-4">
               <div class="icon mx-auto mb-3 bg-primary">
                 <i class="bi bi-person-video3 text-white"></i>
               </div>
@@ -619,7 +613,7 @@
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title">
         <h2>Contact us</h2>
         <p>Fill the below Form to get connected</p>
       </div>
@@ -627,7 +621,7 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8">
-            <form id="whatsappForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form id="whatsappForm" class="php-email-form">
               <div class="row gy-4">
                 <div class="col-md-6">
                   <label for="name-field" class="pb-2">Your Name</label>
@@ -669,14 +663,14 @@
 
   </main>
 
-  <footer id="footer" class="footer position-relative light-background">
+  <footer id="footer" class="footer position-relative">
     <div class="container">
       <div class="copyright text-center">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">ISSA Digital Services</strong></p>
+        <p>© <span>Copyright</span> <strong class="px-1">ISSA Digital Services</strong></p>
         <p>© <span>All Rights Reserved</span></p>
       </div>
       <div class="credits">
-        Designed by <strong class="px-1 sitename">Arshad Kumbla</strong>
+        Designed by <strong class="px-1">Arshad Kumbla</strong>
       </div>
     </div>
   </footer>
@@ -693,54 +687,40 @@
   <!-- Typed.js -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
-  <!-- Mobile Navigation Script - IMPROVED -->
+  <!-- Main JavaScript -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Mobile menu elements
-      const headerToggle = document.querySelector('.header-toggle');
-      const header = document.getElementById('header');
-      const overlay = document.querySelector('.mobile-nav-overlay');
+      // Mobile menu toggle
+      const navbarToggle = document.getElementById('navbarToggle');
+      const navbarMenu = document.getElementById('navbarMenu');
       
-      // Toggle menu function
-      function toggleMenu() {
-        header.classList.toggle('header-mobile-hidden');
-        overlay.classList.toggle('active');
-        // Change icon based on state
-        const icon = headerToggle.querySelector('i');
-        if (header.classList.contains('header-mobile-hidden')) {
-          icon.classList.remove('bi-x');
-          icon.classList.add('bi-list');
-        } else {
-          icon.classList.remove('bi-list');
-          icon.classList.add('bi-x');
-        }
-      }
-      
-      // Event listeners
-      if(headerToggle && header && overlay) {
-        // Toggle button click
-        headerToggle.addEventListener('click', function(e) {
-          e.stopPropagation();
-          toggleMenu();
-        });
-        
-        // Overlay click to close
-        overlay.addEventListener('click', function() {
-          if (!header.classList.contains('header-mobile-hidden')) {
-            toggleMenu();
+      if (navbarToggle && navbarMenu) {
+        navbarToggle.addEventListener('click', function() {
+          navbarMenu.classList.toggle('active');
+          // Change icon
+          const icon = this.querySelector('i');
+          if (navbarMenu.classList.contains('active')) {
+            icon.classList.remove('bi-list');
+            icon.classList.add('bi-x');
+          } else {
+            icon.classList.remove('bi-x');
+            icon.classList.add('bi-list');
           }
         });
-        
-        // Nav links click to close
-        const navLinks = document.querySelectorAll('.navmenu a');
-        navLinks.forEach(link => {
-          link.addEventListener('click', function() {
-            if (window.innerWidth < 1200 && !header.classList.contains('header-mobile-hidden')) {
-              toggleMenu();
-            }
-          });
-        });
       }
+      
+      // Close mobile menu when clicking on a nav link
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (window.innerWidth < 992) {
+            navbarMenu.classList.remove('active');
+            const icon = navbarToggle.querySelector('i');
+            icon.classList.remove('bi-x');
+            icon.classList.add('bi-list');
+          }
+        });
+      });
       
       // Initialize typed.js
       if (document.querySelector('.typed')) {
@@ -774,18 +754,22 @@
         });
       }
       
-      // Check screen size and adjust menu accordingly
-      function checkScreenSize() {
-        if (window.innerWidth >= 1200) {
-          // Desktop - ensure menu is visible
-          header.classList.remove('header-mobile-hidden');
-          overlay.classList.remove('active');
-        }
-      }
-      
-      // Run on load and resize
-      window.addEventListener('load', checkScreenSize);
-      window.addEventListener('resize', checkScreenSize);
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 70, // Account for fixed navbar
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
     });
     
     // WhatsApp Form Submission
