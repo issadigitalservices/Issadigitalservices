@@ -7,7 +7,6 @@
   <title>Issa Digital Services</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Favicons -->
   <link href="assets/Images/IssaLogo.jpeg" rel="icon">
@@ -18,12 +17,11 @@
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Inlined CSS -->
   <style>
@@ -47,6 +45,7 @@
       font-family: "Poppins", sans-serif;
       color: var(--default-color);
       background-color: var(--background-color);
+      overflow-x: hidden; /* Prevent horizontal scroll */
     }
 
     a {
@@ -73,7 +72,7 @@
     }
 
     /*--------------------------------------------------------------
-    # Header Styles
+    # Header Styles - FIXED
     --------------------------------------------------------------*/
     .header {
       position: fixed;
@@ -84,17 +83,17 @@
       padding: 0 15px;
       background: navy;
       overflow-y: auto;
-      transition: all 0.3s ease;
-      z-index: 9999;
+      z-index: 9997;
+      transition: all 0.5s ease;
     }
 
-    /* Mobile Toggle Button - UPDATED */
+    /* Mobile Toggle Button */
     .header-toggle {
       position: fixed;
       top: 20px;
-      right: 20px; /* Changed from left to right */
+      right: 20px;
       color: white;
-      background: #0d6efd; /* Changed to blue */
+      background: #0d6efd;
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -105,7 +104,7 @@
       z-index: 9998;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Added shadow */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
     .header-toggle:hover {
@@ -120,7 +119,7 @@
       right: 0;
       bottom: 0;
       background: rgba(0, 0, 0, 0.5);
-      z-index: 9997;
+      z-index: 9996;
       display: none;
     }
 
@@ -129,21 +128,30 @@
       .header-toggle {
         display: none;
       }
+      
+      main, footer {
+        margin-left: 300px;
+      }
     }
 
     /* Mobile sidebar styles - UPDATED */
     @media (max-width: 1199px) {
       .header {
         left: -300px;
-        transition: all 0.3s ease; /* Added explicit transition */
+        transition: all 0.5s ease;
       }
       
       .header.header-show {
         left: 0;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       }
       
       .mobile-nav-overlay.active {
         display: block;
+      }
+      
+      main, footer {
+        margin-left: 0;
       }
     }
 
@@ -162,6 +170,7 @@
       margin: 0;
       padding: 10px 0;
       text-align: center;
+      color: white; /* Added to ensure visibility */
     }
 
     .social-links {
@@ -175,7 +184,7 @@
       justify-content: center;
       width: 36px;
       height: 36px;
-      color:yellowgreen;
+      color: yellowgreen;
       border-radius: 50%;
       margin: 0 12px;
       font-size: 26px;
@@ -191,6 +200,7 @@
     .navmenu ul {
       padding: 0;
       list-style: none;
+      margin-top: 20px; /* Added spacing */
     }
 
     .navmenu a {
@@ -201,6 +211,8 @@
       font-size: 15px;
       transition: 0.3s;
       font-weight: 600;
+      margin-bottom: 5px; /* Added spacing between items */
+      border-radius: 5px; /* Added rounded corners */
     }
 
     .navmenu a i {
@@ -211,6 +223,7 @@
     .navmenu a:hover, 
     .navmenu .active {
       color: yellow;
+      background: rgba(255, 255, 255, 0.1); /* Added hover background */
     }
 
     /*--------------------------------------------------------------
@@ -224,7 +237,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 30px 0; /* Reduced from 60px */
+      padding: 30px 0;
       padding-top: 5px;
     }
 
@@ -232,24 +245,23 @@
     # About Section - UPDATED
     --------------------------------------------------------------*/
     #about.section {
-      margin-top: -30px; /* Pulls section up */
-      padding-top: 30px; /* Maintains internal spacing */
+      margin-top: -30px;
+      padding-top: 30px;
     }
 
     .hero img {
       position: absolute;
       inset: 0;
-      width: 0%;
-      height: 10%;
+      width: 100%; /* Fixed from 0% to 100% */
+      height: 100%; /* Fixed from 10% to 100% */
       object-fit: cover;
       z-index: 1;
     }
 
     .hero:before {
       content: "";
-      background: #221f1f;
+      background: rgba(34, 31, 31, 0.7); /* Made semi-transparent */
       position: absolute;
-      height: 200px;
       inset: 0;
       z-index: 2;
     }
@@ -302,7 +314,7 @@
       height: 4px;
       background: black;
       bottom: 0;
-      left: calc(45.5% - 5px);
+      left: calc(50% - 45px); /* Fixed calculation */
     }
 
     .section-title p {
@@ -316,7 +328,7 @@
       margin: 10px 0;
       border-radius: 10px;
       overflow: hidden;
-      border-color:black;
+      border-color: black;
       border-style: dashed;
     }
 
@@ -330,7 +342,7 @@
     # Services Section
     --------------------------------------------------------------*/
     .service-item {
-      background: #28a745; /* Green background */
+      background: #28a745;
       border-radius: 15px;
       color: white;
       height: 100%;
@@ -351,7 +363,7 @@
       align-items: center;
       justify-content: center;
       font-size: 30px;
-      background: #0d6efd !important; /* Blue color with override */
+      background: #0d6efd !important;
     }
 
     .title {
@@ -378,32 +390,35 @@
     --------------------------------------------------------------*/
     .contact .php-email-form {
       padding: 30px;
-      background: red;
-      box-shadow: green;
+      background: #f8f9fa; /* Changed from red to light gray */
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1); /* Changed from green */
+      border-radius: 10px; /* Added rounded corners */
     }
 
     .contact input,
-    .contact textarea {
+    .contact textarea,
+    .contact select {
       width: 100%;
-      padding: 10px 10px;
-      margin-bottom: 5px;
-      border: yellow;
+      padding: 10px;
+      margin-bottom: 15px; /* Increased from 5px */
+      border: 1px solid #ced4da; /* Changed from yellow */
       border-radius: 4px;
-      font-size: 10px;
+      font-size: 14px; /* Changed from 10px */
     }
 
     .contact button[type="submit"] {
-      background: blue;
+      background: #0d6efd; /* Changed from blue to Bootstrap primary */
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 10px 20px; /* Increased padding */
       border-radius: 40px;
       cursor: pointer;
       transition: 0.3s;
+      font-weight: 600; /* Added bold text */
     }
 
     .contact button[type="submit"]:hover {
-      background: black;
+      background: #0b5ed7; /* Darker shade on hover */
     }
 
     /*--------------------------------------------------------------
@@ -420,26 +435,32 @@
     }
 
     /*--------------------------------------------------------------
-    # Responsive Styles
+    # Scroll Top Button
     --------------------------------------------------------------*/
-    @media (min-width: 1200px) {
-      main, footer {
-        margin-left: 300px;
-      }
+    .scroll-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #0d6efd;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: white;
+      z-index: 995;
+      transition: all 0.4s;
+      display: none;
     }
 
-    @media (max-width: 768px) {
-      .hero h2 {
-        font-size: 32px;
-      }
-      
-      .hero p {
-        font-size: 18px;
-      }
-      
-      .section-title h2 {
-        font-size: 28px;
-      }
+    .scroll-top:hover {
+      background: #0b5ed7;
+    }
+
+    /*--------------------------------------------------------------
+    # Main Sections - Added padding for better spacing
+    --------------------------------------------------------------*/
+    .section {
+      padding: 60px 0;
+      overflow: hidden;
     }
   </style>
 
@@ -451,11 +472,11 @@
   <div class="mobile-nav-overlay"></div>
 
   <!-- Mobile Toggle Button -->
-  <i class="header-toggle bi bi-list"></i>
+  <button class="header-toggle border-0"><i class="bi bi-list"></i></button>
 
   <header id="header" class="header dark-background d-flex flex-column">
     <div class="profile-img">
-      <img src="assets/Images/IssaLogo.jpeg" alt="" class="img-fluid rounded-circle">
+      <img src="assets/Images/IssaLogo.jpeg" alt="ISSA Logo" class="img-fluid rounded-circle">
     </div>
 
     <a href="index.html" class="logo d-flex align-items-center justify-content-center">
@@ -484,11 +505,11 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="assets/Images/Blue.jpg" alt="" data-aos="fade-in" class="">
+      <img src="assets/Images/Blue.jpg" alt="" data-aos="fade-in">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <h2>ISSA Digital Services</h2>
-        <p>Our Main Services :   <span class="typed" data-typed-items="ATS Friendly CV's, Professional CV's, Cover Letter, LinkedIn Profile Setup, Personal Portfolio"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+        <p>Our Main Services :   <span class="typed" data-typed-items="ATS Friendly CV's, Professional CV's, Cover Letter, LinkedIn Profile Setup, Personal Portfolio"></span></p>
       </div>
 
     </section><!-- /Hero Section -->
@@ -499,256 +520,222 @@
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>About</h2>
-        <p>Welcome to ISSA Digital Services! We are a dedicated team committed to helping individuals elevate their professional presence. </p>
+        <p>Welcome to ISSA Digital Services! We are a dedicated team committed to helping individuals elevate their professional presence.</p>
         <p>We offer a range of services designed to showcase your skills and experiences effectively to employers and recruiters.</p>
-        <p>At ISSA Digital Services, we focus on delivering high-quality, personalized solutions to help you stand out in today's competitive job market. </p>
-      <p>Let us assist you in taking the next step in your career journey!</p>
+        <p>At ISSA Digital Services, we focus on delivering high-quality, personalized solutions to help you stand out in today's competitive job market.</p>
+        <p>Let us assist you in taking the next step in your career journey!</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <!-- <img src="assets/Images/IssaLogo.jpeg" class="img-fluid" alt=""> -->
-          </div>
-
-          <!-- Main content section with video and form -->
-        <div class="container">
-          <!-- Video Container -->
-          <div class="video-container">
-              <video width="840" height="500" controls autoplay muted>
-                  <source src="assets/Videos/Video of Cv.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-              </video>
-          </div>
-         </section><!-- /About Section -->
-
-
-  <!-- Services Section -->
-<section id="services" class="services section">
-  <!-- Section Title -->
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Services</h2>
-    <p>Our Professional Services</p>
-  </div>
-
-  <div class="container">
-    <div class="row g-4 justify-content-center">
-      
-      <!-- ATS CV -->
-      <div class="col-lg-4 col-md-6 d-flex">
-        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="100">
-          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
-            <i class="bi bi-file-earmark-check text-white"></i>
-          </div>
-          <h4 class="title mb-2">ATS CV</h4>
-          <p class="description">HR Optimized Resume</p>
+        <!-- Video Container -->
+        <div class="video-container">
+            <video width="840" height="500" controls autoplay muted>
+                <source src="assets/Videos/Video of Cv.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
       </div>
+    </section><!-- /About Section -->
 
-      <!-- Professional CV -->
-      <div class="col-lg-4 col-md-6 d-flex">
-        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="200">
-          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
-            <i class="bi bi-file-earmark-person text-white"></i>
-          </div>
-          <h4 class="title mb-2">Professional CV</h4>
-          <p class="description">Premium Resume Design</p>
-        </div>
+    <!-- Services Section -->
+    <section id="services" class="services section">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Services</h2>
+        <p>Our Professional Services</p>
       </div>
 
-      <!-- Cover Letter -->
-      <div class="col-lg-4 col-md-6 d-flex">
-        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="300">
-          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
-            <i class="bi bi-envelope-paper text-white"></i>
-          </div>
-          <h4 class="title mb-2">Cover Letter</h4>
-          <p class="description">Custom Application Letters</p>
-        </div>
-      </div>
-
-      <!-- LinkedIn Profile -->
-      <div class="col-lg-4 col-md-6 d-flex">
-        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="400">
-          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
-            <i class="bi bi-linkedin text-white"></i>
-          </div>
-          <h4 class="title mb-2">LinkedIn Profile</h4>
-          <p class="description">Professional Profile Setup</p>
-        </div>
-      </div>
-
-      <!-- Personal Portfolio -->
-      <div class="col-lg-4 col-md-6 d-flex">
-        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="500">
-          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
-            <i class="bi bi-globe text-white"></i>
-          </div>
-          <h4 class="title mb-2">Personal Portfolio</h4>
-          <p class="description">Custom Career Website</p>
-        </div>
-      </div>
-
-      <!-- Interview Tips -->
-      <div class="col-lg-4 col-md-6 d-flex">
-        <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="600">
-          <div class="icon mx-auto mb-3 bg-primary"> <!-- Blue background -->
-            <i class="bi bi-person-video3 text-white"></i>
-          </div>
-          <h4 class="title mb-2">Interview Tips</h4>
-          <p class="description">Job Interview Coaching</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-   <!-- Contact Section -->
-<section id="contact" class="contact section">
-  <div class="container section-title" data-aos="fade-up">
-    <h2>Contact us</h2>
-    <p>Fill the below Form to get connected</p>
-  </div>
-
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <form id="whatsappForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-          <div class="row gy-4">
-            <div class="col-md-6">
-              <label for="name-field" class="pb-2">Your Name</label>
-              <input type="text" id="name-field" class="form-control" required>
-            </div>
-
-            <div class="col-md-6">
-              <label for="email-field" class="pb-2">Your Email</label>
-              <input type="email" id="email-field" class="form-control" required>
-            </div>
-
-            <div class="col-md-12">
-              <label for="phone-field" class="pb-2">Mobile Number</label>
-              <input type="tel" id="phone-field" class="form-control" required>
-            </div>
-
-            <div class="col-md-12">
-              <label for="service-field" class="pb-2">Which Service needed from us</label>
-              <select class="form-select" id="service-field" required>
-                <option value="" disabled selected>Select a service...</option>
-                <option value="ATS CV">ATS CV</option>
-                <option value="Professional CV">Professional CV</option>
-                <option value="Cover Letter">Cover Letter</option>
-                <option value="LinkedIn Profile Setup">LinkedIn Profile Setup</option>
-                <option value="Personal Portfolio">Personal Portfolio</option>
-                <option value="Interview Tips">Interview Tricks & Tips</option>
-              </select>
-            </div>
-
-            <div class="col-md-12 text-center">
-              <button type="submit" class="btn btn-primary">Send Message</button>
+      <div class="container">
+        <div class="row g-4 justify-content-center">
+          
+          <!-- ATS CV -->
+          <div class="col-lg-4 col-md-6 d-flex">
+            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="icon mx-auto mb-3 bg-primary">
+                <i class="bi bi-file-earmark-check text-white"></i>
+              </div>
+              <h4 class="title mb-2">ATS CV</h4>
+              <p class="description">HR Optimized Resume</p>
             </div>
           </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- WhatsApp Integration Script -->
-<script>
-document.getElementById('whatsappForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  // Get form values
-  const name = document.getElementById('name-field').value;
-  const email = document.getElementById('email-field').value;
-  const phone = document.getElementById('phone-field').value;
-  const service = document.getElementById('service-field').value;
-  
-  // Create WhatsApp message
-  const message = `New Inquiry from Website:%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Service Needed:* ${service}`;
-  
-  // Open WhatsApp chat
-  window.open(`https://wa.me/919746431460?text=${message}`, '_blank');
-  
-  // Optional: Reset form after submission
-  this.reset();
-});
-</script>
+          <!-- Professional CV -->
+          <div class="col-lg-4 col-md-6 d-flex">
+            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="icon mx-auto mb-3 bg-primary">
+                <i class="bi bi-file-earmark-person text-white"></i>
+              </div>
+              <h4 class="title mb-2">Professional CV</h4>
+              <p class="description">Premium Resume Design</p>
+            </div>
+          </div>
+
+          <!-- Cover Letter -->
+          <div class="col-lg-4 col-md-6 d-flex">
+            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="300">
+              <div class="icon mx-auto mb-3 bg-primary">
+                <i class="bi bi-envelope-paper text-white"></i>
+              </div>
+              <h4 class="title mb-2">Cover Letter</h4>
+              <p class="description">Custom Application Letters</p>
+            </div>
+          </div>
+
+          <!-- LinkedIn Profile -->
+          <div class="col-lg-4 col-md-6 d-flex">
+            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="400">
+              <div class="icon mx-auto mb-3 bg-primary">
+                <i class="bi bi-linkedin text-white"></i>
+              </div>
+              <h4 class="title mb-2">LinkedIn Profile</h4>
+              <p class="description">Professional Profile Setup</p>
+            </div>
+          </div>
+
+          <!-- Personal Portfolio -->
+          <div class="col-lg-4 col-md-6 d-flex">
+            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="500">
+              <div class="icon mx-auto mb-3 bg-primary">
+                <i class="bi bi-globe text-white"></i>
+              </div>
+              <h4 class="title mb-2">Personal Portfolio</h4>
+              <p class="description">Custom Career Website</p>
+            </div>
+          </div>
+
+          <!-- Interview Tips -->
+          <div class="col-lg-4 col-md-6 d-flex">
+            <div class="service-item w-100 text-center p-4" data-aos="fade-up" data-aos-delay="600">
+              <div class="icon mx-auto mb-3 bg-primary">
+                <i class="bi bi-person-video3 text-white"></i>
+              </div>
+              <h4 class="title mb-2">Interview Tips</h4>
+              <p class="description">Job Interview Coaching</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Contact us</h2>
+        <p>Fill the below Form to get connected</p>
+      </div>
+
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <form id="whatsappForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <label for="name-field" class="pb-2">Your Name</label>
+                  <input type="text" id="name-field" class="form-control" required>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="email-field" class="pb-2">Your Email</label>
+                  <input type="email" id="email-field" class="form-control" required>
+                </div>
+
+                <div class="col-md-12">
+                  <label for="phone-field" class="pb-2">Mobile Number</label>
+                  <input type="tel" id="phone-field" class="form-control" required>
+                </div>
+
+                <div class="col-md-12">
+                  <label for="service-field" class="pb-2">Which Service needed from us</label>
+                  <select class="form-select" id="service-field" required>
+                    <option value="" disabled selected>Select a service...</option>
+                    <option value="ATS CV">ATS CV</option>
+                    <option value="Professional CV">Professional CV</option>
+                    <option value="Cover Letter">Cover Letter</option>
+                    <option value="LinkedIn Profile Setup">LinkedIn Profile Setup</option>
+                    <option value="Personal Portfolio">Personal Portfolio</option>
+                    <option value="Interview Tips">Interview Tricks & Tips</option>
+                  </select>
+                </div>
+
+                <div class="col-md-12 text-center">
+                  <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
 
   </main>
 
   <footer id="footer" class="footer position-relative light-background">
-
     <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">ISSA Digital Services</strong> </p>
-          <p>© <span>All Rights Reserved</span> </p>
+      <div class="copyright text-center">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">ISSA Digital Services</strong></p>
+        <p>© <span>All Rights Reserved</span></p>
       </div>
       <div class="credits">
         Designed by <strong class="px-1 sitename">Arshad Kumbla</strong>
       </div>
     </div>
-
   </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+  <!-- jQuery (required for Bootstrap) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Typed.js -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
-
-  <!-- UPDATED JavaScript for Mobile Navigation -->
+  <!-- Mobile Navigation Script - IMPROVED -->
   <script>
-    // Mobile menu toggle with overlay and click-outside functionality
     document.addEventListener('DOMContentLoaded', function() {
+      // Mobile menu toggle
       const headerToggle = document.querySelector('.header-toggle');
       const header = document.getElementById('header');
       const overlay = document.querySelector('.mobile-nav-overlay');
       
+      // Toggle menu function
+      function toggleMenu() {
+        header.classList.toggle('header-show');
+        overlay.classList.toggle('active');
+        console.log('Menu toggled');
+      }
+      
+      // Event listeners
       if(headerToggle && header && overlay) {
+        // Toggle button click
         headerToggle.addEventListener('click', function(e) {
           e.stopPropagation();
-          header.classList.toggle('header-show');
-          overlay.classList.toggle('active');
-          console.log('Mobile menu toggled'); // For debugging
+          toggleMenu();
         });
         
-        // Close when clicking outside
+        // Overlay click to close
         overlay.addEventListener('click', function() {
-          header.classList.remove('header-show');
-          overlay.classList.remove('active');
+          toggleMenu();
         });
         
-        // Close when clicking nav links
+        // Nav links click to close
         const navLinks = document.querySelectorAll('.navmenu a');
         navLinks.forEach(link => {
           link.addEventListener('click', function() {
-            header.classList.remove('header-show');
-            overlay.classList.remove('active');
+            if (window.innerWidth < 1200) {
+              toggleMenu();
+            }
           });
         });
       }
       
-      // Initialize typed.js if element exists
+      // Initialize typed.js
       if (document.querySelector('.typed')) {
-        var typed = new Typed('.typed', {
+        new Typed('.typed', {
           strings: ["ATS Friendly CV's", "Professional CV's", "Cover Letter", "LinkedIn Profile Setup", "Personal Portfolio"],
           typeSpeed: 100,
           backSpeed: 50,
@@ -756,7 +743,52 @@ document.getElementById('whatsappForm').addEventListener('submit', function(e) {
           loop: true
         });
       }
+      
+      // Scroll to top button
+      const scrollTop = document.getElementById('scroll-top');
+      
+      if (scrollTop) {
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 100) {
+            scrollTop.style.display = 'flex';
+          } else {
+            scrollTop.style.display = 'none';
+          }
+        });
+        
+        scrollTop.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+    });
+    
+    // WhatsApp Form Submission
+    document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const name = document.getElementById('name-field').value;
+      const email = document.getElementById('email-field').value;
+      const phone = document.getElementById('phone-field').value;
+      const service = document.getElementById('service-field').value;
+      
+      // Create WhatsApp message
+      const message = `New Inquiry from Website:%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Service Needed:* ${service}`;
+      
+      // Open WhatsApp chat
+      window.open(`https://wa.me/919746431460?text=${message}`, '_blank');
+      
+      // Reset form after submission
+      this.reset();
+      
+      // Show success message (optional)
+      alert('Thank you for your inquiry! We will contact you shortly.');
     });
   </script>
+
 </body>
 </html>
