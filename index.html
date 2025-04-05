@@ -65,7 +65,7 @@
     }
 
     /*--------------------------------------------------------------
-    # Top Navigation Bar
+    # Top Navigation Bar - SIMPLIFIED WITHOUT TOGGLE
     --------------------------------------------------------------*/
     .top-navbar {
       position: fixed;
@@ -83,6 +83,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 15px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .navbar-brand {
@@ -116,7 +118,7 @@
     }
 
     .nav-item {
-      margin: 0 5px;
+      margin: 0 10px;
     }
 
     .nav-link {
@@ -162,59 +164,34 @@
       color: yellow;
     }
 
-    /* Mobile menu toggle */
-    .navbar-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    /* Mobile menu styles */
-    @media (max-width: 991px) {
+    /* Responsive adjustments - SIMPLIFIED */
+    @media (max-width: 768px) {
+      .navbar-container {
+        flex-direction: column;
+        padding: 10px;
+      }
+      
+      .navbar-brand {
+        margin-bottom: 10px;
+      }
+      
       .navbar-menu {
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: navy;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        transform: translateY(-150%);
-        transition: transform 0.3s ease;
-        z-index: 9998;
-      }
-
-      .navbar-menu.active {
-        transform: translateY(0);
-      }
-
-      .navbar-nav {
-        flex-direction: column;
         width: 100%;
-      }
-
-      .nav-item {
-        margin: 5px 0;
-        width: 100%;
-      }
-
-      .nav-link {
-        width: 100%;
-      }
-
-      .navbar-social {
-        margin: 15px 0 0 0;
         justify-content: center;
-        width: 100%;
       }
-
-      .navbar-toggle {
-        display: block;
+      
+      .navbar-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .nav-item {
+        margin: 5px;
+      }
+      
+      .navbar-social {
+        margin: 10px 0 0 0;
+        justify-content: center;
       }
     }
 
@@ -223,14 +200,14 @@
     --------------------------------------------------------------*/
     .hero {
       width: 100%;
-      height: 5px;
+      min-height: 10vh;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 60px 0;
-      background: rgb(12, 17, 26);
+      background: black;
       color: white;
     }
 
@@ -455,15 +432,15 @@
 
 <body class="index-page">
 
-  <!-- Top Navigation Bar -->
+  <!-- Top Navigation Bar - SIMPLIFIED WITHOUT TOGGLE -->
   <nav class="top-navbar">
-    <div class="container navbar-container">
+    <div class="navbar-container">
       <a href="index.html" class="navbar-brand">
         <img src="assets/Images/IssaLogo.jpeg" alt="ISSA Logo">
         ISSA Digital Services
       </a>
 
-      <div class="navbar-menu" id="navbarMenu">
+      <div class="navbar-menu">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="#hero" class="nav-link active"><i class="bi bi-house"></i> Home</a>
@@ -486,10 +463,6 @@
           <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
-
-      <button class="navbar-toggle" id="navbarToggle">
-        <i class="bi bi-list"></i>
-      </button>
     </div>
   </nav>
 
@@ -687,41 +660,9 @@
   <!-- Typed.js -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
-  <!-- Main JavaScript -->
+  <!-- Main JavaScript - SIMPLIFIED WITHOUT TOGGLE FUNCTIONALITY -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Mobile menu toggle
-      const navbarToggle = document.getElementById('navbarToggle');
-      const navbarMenu = document.getElementById('navbarMenu');
-      
-      if (navbarToggle && navbarMenu) {
-        navbarToggle.addEventListener('click', function() {
-          navbarMenu.classList.toggle('active');
-          // Change icon
-          const icon = this.querySelector('i');
-          if (navbarMenu.classList.contains('active')) {
-            icon.classList.remove('bi-list');
-            icon.classList.add('bi-x');
-          } else {
-            icon.classList.remove('bi-x');
-            icon.classList.add('bi-list');
-          }
-        });
-      }
-      
-      // Close mobile menu when clicking on a nav link
-      const navLinks = document.querySelectorAll('.nav-link');
-      navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          if (window.innerWidth < 992) {
-            navbarMenu.classList.remove('active');
-            const icon = navbarToggle.querySelector('i');
-            icon.classList.remove('bi-x');
-            icon.classList.add('bi-list');
-          }
-        });
-      });
-      
       // Initialize typed.js
       if (document.querySelector('.typed')) {
         new Typed('.typed', {
