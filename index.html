@@ -2,847 +2,640 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Issa Digital Services</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Issa Digital Services</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="assets/Images/IssaLogo.jpeg" rel="icon">
-  <link href="assets/Images/IssaLogo.jpeg" rel="apple-touch-icon">
+    <link href="assets/Images/IssaLogo.jpeg" rel="icon">
+    <link href="assets/Images/IssaLogo.jpeg" rel="apple-touch-icon">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-  <!-- Inlined CSS -->
-  <style>
-    /*--------------------------------------------------------------
-    # General Styles
-    --------------------------------------------------------------*/
-    :root {
-      --background-color: #ffffff;
-      --default-color: #272829;
-      --heading-color: #050d18;
-      --accent-color: #149ddd;
-      --surface-color: #ffffff;
-      --contrast-color: #ffffff;
-      --nav-color: #a8a9b4;
-      --nav-hover-color: #ffffff;
-      --nav-mobile-bg: #040b14;
-      scroll-behavior: smooth;
-    }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    body {
-      font-family: "Poppins", sans-serif;
-      color: var(--default-color);
-      background-color: var(--background-color);
-      overflow-x: hidden;
-      padding-top: 180px; /* Increased to account for new nav layout */
-    }
+    <style>
+        :root {
+            --background-color: #ffffff;
+            --default-color: #272829;
+            --heading-color: #050d18;
+            --accent-color: #149ddd;
+            --surface-color: #ffffff;
+            --contrast-color: #ffffff;
+            --nav-color: #a8a9b4;
+            --nav-hover-color: #ffffff;
+            --nav-mobile-bg: #040b14;
+            scroll-behavior: smooth;
+        }
 
-    a {
-      color: var(--accent-color);
-      text-decoration: none;
-      transition: 0.3s;
-    }
+        body {
+            font-family: "Poppins", sans-serif;
+            color: var(--default-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
+            padding-top: 180px;
+        }
 
-    a:hover {
-      color: rgba(97, 20, 221, 0.8);
-    }
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: 0.3s;
+        }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-family: "Raleway", sans-serif;
-      color: var(--heading-color);
-    }
+        a:hover {
+            color: rgba(97, 20, 221, 0.8);
+        }
 
-   /*--------------------------------------------------------------
-# Top Navigation Bar - Single Line Layout
---------------------------------------------------------------*/
-.top-navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: navy;
-  z-index: 9999;
-  padding: 15px 0;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-}
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Raleway", sans-serif;
+            color: var(--heading-color);
+        }
 
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: nowrap;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #001f3f, #003366);
+            z-index: 9999;
+            padding: 15px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
 
-.navbar-brand {
-  color: white;
-  font-weight: 700;
-  font-size: 1.3rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  white-space: nowrap;
-}
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: nowrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-.navbar-brand img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-}
+        .navbar-brand {
+            color: white;
+            font-weight: 700;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
 
-.navbar-content {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
+        .navbar-brand img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
 
-.navbar-nav {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 15px;
-}
+        .navbar-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
 
-.nav-link {
-  color: white;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 10px;
-  border-radius: 4px;
-  transition: all 0.3s;
-  font-size: 0.95rem;
-  white-space: nowrap;
-}
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 15px;
+        }
 
-.nav-link:hover, 
-.nav-link.active {
-  color: yellow;
-  background: rgba(255, 255, 255, 0.1);
-}
+        .navbar-nav .nav-item {
+            display: inline-block;
+        }
 
-.navbar-social {
-  display: flex;
-  gap: 15px;
-}
+        .nav-link {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
 
-.social-link {
-  color: white;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 16px;
-  transition: all 0.3s;
-}
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffeb3b;
+        }
 
-.social-link:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: yellow;
-}
+        .navbar-social {
+            display: flex;
+            gap: 15px;
+        }
 
-/* Responsive adjustments */
-@media (max-width: 992px) {
-  .navbar-content {
-    gap: 20px;
-  }
-  .navbar-nav, .navbar-social {
-    gap: 10px;
-  }
-}
+        .social-link {
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 18px;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
 
-@media (max-width: 768px) {
-  body {
-    padding-top: 160px;
-  }
-  .navbar-container {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .navbar-content {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .navbar-nav {
-    order: 1;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .navbar-social {
-    order: 2;
-  }
-}
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffeb3b;
+        }
 
-@media (max-width: 480px) {
-  .navbar-brand {
-    font-size: 1.1rem;
-  }
-  .nav-link {
-    font-size: 0.85rem;
-    padding: 5px 8px;
-  }
-  .social-link {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
-  }
-}
+        @media (max-width: 992px) {
+            .navbar-content {
+                gap: 20px;
+            }
 
-/* Responsive adjustments */
-@media (max-width: 992px) {
-  .navbar-container {
-    gap: 20px;
-  }
-  .navbar-nav, .navbar-social {
-    gap: 10px;
-  }
-}
+            .navbar-nav,
+            .navbar-social {
+                gap: 10px;
+            }
+        }
 
-@media (max-width: 768px) {
-  body {
-    padding-top: 160px;
-  }
-  .navbar-container {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .navbar-nav {
-    order: 1;
-  }
-  .navbar-social {
-    order: 2;
-  }
-}
+        @media (max-width: 768px) {
+            body {
+                padding-top: 160px;
+            }
 
-@media (max-width: 768px) {
-  body {
-    padding-top: 180px; /* Adjusted for compact navbar */
-  }
-  
-  .navbar-nav {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .nav-item {
-    margin: 3px 5px; /* Even tighter spacing on mobile */
-  }
-  
-  .nav-link {
-    padding: 5px 8px;
-    font-size: 0.9rem;
-  }
-  
-  .social-link {
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
-  }
-}
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  body {
-    padding-top: 220px; /* More space for stacked nav on mobile */
-  }
-  
-  .navbar-nav {
-    flex-direction: column; /* Keep vertical on mobile */
-  }
-  
-  .nav-item {
-    margin: 3px 0; /* Even tighter spacing on mobile */
-  }
-  
-  .social-link {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-    margin: 0 5px;
-  }
-}
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      body {
-        padding-top: 220px; /* More space for stacked nav on mobile */
-      }
-      
-      .navbar-nav {
-        flex-wrap: wrap;
-      }
-      
-      .nav-item {
-        margin: 5px;
-      }
-      
-      .social-link {
-        width: 32px;
-        height: 32px;
-        font-size: 16px;
-        margin: 0 5px;
-      }
-    }
+            .navbar-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
 
-    /*--------------------------------------------------------------
-    # Hero Section
-    --------------------------------------------------------------*/
-    .hero {
-      width: 100%;
-      min-height: calc(100vh - 180px); /* Adjusted for new nav height */
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 60px 0;
-      background: black;
-      color: white;
-    }
+            .navbar-content {
+                flex-direction: column;
+                gap: 15px;
+            }
 
-    /* Rest of your CSS remains the same */
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 800px;
-      padding: 0 20px;
-    }
+            .navbar-nav {
+                order: 1;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
 
-    .hero h2 {
-      margin: 0;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: white;
-    }
+            .navbar-social {
+                order: 2;
+            }
+        }
 
-    .hero p {
-      color: white;
-      margin: 15px 0 0;
-      font-size: 1.25rem;
-    }
+        @media (max-width: 480px) {
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
 
-    /* Typed text animation */
-    .typed {
-      color: yellow;
-      font-weight: 500;
-      border-bottom: 2px solid;
-    }
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 6px 10px;
+            }
 
-    /*--------------------------------------------------------------
-    # Section Titles
-    --------------------------------------------------------------*/
-    .section-title {
-      padding-bottom: 30px;
-      text-align: center;
-    }
+            .social-link {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+        }
 
-    .section-title h2 {
-      font-size: 32px;
-      font-weight: 700;
-      position: relative;
-      padding-bottom: 15px;
-    }
+        .hero {
+            display: none;
+        }
 
-    .section-title h2:after {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 90px;
-      height: 4px;
-      background: var(--accent-color);
-      bottom: 0;
-      left: calc(50% - 45px);
-    }
+        .section-title {
+            padding-bottom: 30px;
+            text-align: center;
+        }
 
-    .section-title p {
-      margin-top: 15px;
-      color: #6c757d;
-    }
+        .section-title h2 {
+            font-size: 32px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
 
-    /*--------------------------------------------------------------
-    # About Section
-    --------------------------------------------------------------*/
-    .about {
-      padding: 80px 0;
-    }
+        .section-title h2:after {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 90px;
+            height: 4px;
+            background: var(--accent-color);
+            bottom: 0;
+            left: calc(50% - 45px);
+        }
 
-    .about .video-container {
-      margin: 30px 0;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 2px dashed #ddd;
-    }
+        .section-title p {
+            margin-top: 15px;
+            color: #6c757d;
+        }
 
-    .about video {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+        .about {
+            padding: 80px 0;
+        }
 
-    /*--------------------------------------------------------------
-    # Services Section
-    --------------------------------------------------------------*/
-    .services {
-      padding: 80px 0;
-      background: #f8f9fa;
-    }
+        .about .video-container {
+            margin: 30px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px dashed #ddd;
+        }
 
-    .service-item {
-      background: #28a745;
-      border-radius: 15px;
-      color: white;
-      height: 100%;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      padding: 30px 20px;
-      margin-bottom: 30px;
-    }
+        .about video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-    .service-item:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+        .services {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
 
-    .icon {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      background: #0d6efd !important;
-      margin: 0 auto 15px;
-    }
+        .service-item {
+            background: #28a745;
+            border-radius: 15px;
+            color: white;
+            height: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px;
+            margin-bottom: 30px;
+        }
 
-    .title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
 
-    .description {
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
+        .icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            background: #0d6efd !important;
+            margin: 0 auto 15px;
+        }
 
-    /*--------------------------------------------------------------
-    # Contact Section
-    --------------------------------------------------------------*/
-    .contact {
-      padding: 80px 0;
-    }
+        .title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
 
-    .contact .php-email-form {
-      padding: 30px;
-      background: #f8f9fa;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-    }
+        .description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
 
-    .contact input,
-    .contact textarea,
-    .contact select {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
-      border: 1px solid #ced4da;
-      border-radius: 4px;
-      font-size: 14px;
-    }
+        .contact {
+            padding: 80px 0;
+        }
 
-    .contact button[type="submit"] {
-      background: #0d6efd;
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: 0.3s;
-      font-weight: 600;
-      width: 100%;
-    }
+        .contact .php-email-form {
+            padding: 30px;
+            background: #f8f9fa;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
 
-    .contact button[type="submit"]:hover {
-      background: #0b5ed7;
-    }
+        .contact input,
+        .contact textarea,
+        .contact select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
 
-    /*--------------------------------------------------------------
-    # Footer
-    --------------------------------------------------------------*/
-    .footer {
-      background: #343a40;
-      padding: 30px 0;
-      text-align: center;
-      color: white;
-    }
+        .contact button[type="submit"] {
+            background: #0d6efd;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+            width: 100%;
+        }
 
-    .footer .copyright {
-      margin-bottom: 5px;
-    }
+        .contact button[type="submit"]:hover {
+            background: #0b5ed7;
+        }
 
-    .footer .credits {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 14px;
-    }
+        .footer {
+            background: #343a40;
+            padding: 30px 0;
+            text-align: center;
+            color: white;
+        }
 
-    /*--------------------------------------------------------------
-    # Scroll Top Button
-    --------------------------------------------------------------*/
-    .scroll-top {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      background: #0d6efd;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      color: white;
-      z-index: 995;
-      transition: all 0.4s;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
+        .footer .copyright {
+            margin-bottom: 5px;
+        }
 
-    .scroll-top:hover {
-      background: #0b5ed7;
-    }
+        .footer .credits {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
 
-    /*--------------------------------------------------------------
-    # Main Sections
-    --------------------------------------------------------------*/
-    .section {
-      padding: 80px 0;
-      overflow: hidden;
-    }
-  </style>
+        .scroll-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #0d6efd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            z-index: 995;
+            transition: all 0.4s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-top:hover {
+            background: #0b5ed7;
+        }
+
+        .section {
+            padding: 80px 0;
+            overflow: hidden;
+        }
+    </style>
 
 </head>
 
 <body class="index-page">
 
-  <!-- Top Navigation Bar with new layout -->
-  <nav class="top-navbar">
-    <div class="container">
-      <!-- Brand/logo centered at top -->
-      <a href="index.html" class="navbar-brand">
-        <img src="assets/Images/IssaLogo.jpeg" alt="ISSA Logo">
-        ISSA Digital Services
-      </a>
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <img src="assets/Images/IssaLogo.jpeg" alt="ISSA Logo">
+                ISSA Digital Services
+            </a>
 
-      <!-- Navigation links in a row below -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a href="#hero" class="nav-link active"><i class="bi bi-house"></i> Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="#about" class="nav-link"><i class="bi bi-person"></i> About</a>
-        </li>
-        <li class="nav-item">
-          <a href="#services" class="nav-link"><i class="bi bi-hdd-stack"></i> Services</a>
-        </li>
-        <li class="nav-item">
-          <a href="#contact" class="nav-link"><i class="bi bi-envelope"></i> Contact</a>
-        </li>
-      </ul>
+            <div class="navbar-content">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link active"><i class="bi bi-person"></i> About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#services" class="nav-link"><i class="bi bi-hdd-stack"></i> Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link"><i class="bi bi-envelope"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link" style="padding: 0;">Our Main Services: <span class="nav-typed" data-typed-items="ATS Friendly CV's, Professional CV's, Cover Letter, LinkedIn Profile Setup, Personal Portfolio" style="color: white;font-weight: 500;"></span></span>
+                    </li>
+                </ul>
 
-      <!-- Social media links in a row below -->
-      <div class="navbar-social">
-        <a href="https://wa.me/+919746431460" class="social-link"><i class="bi bi-whatsapp"></i></a>
-        <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Rest of your HTML remains the same -->
-  <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section">
-      <div class="hero-content">
-        <h2>ISSA Digital Services</h2>
-        <p>Our Main Services: <span class="typed" data-typed-items="ATS Friendly CV's, Professional CV's, Cover Letter, LinkedIn Profile Setup, Personal Portfolio"></span></p>
-      </div>
-    </section><!-- /Hero Section -->
-
-    <!-- About Section -->
-    <section id="about" class="about section">
-      <!-- Section Title -->
-      <div class="container section-title">
-        <h2>About</h2>
-        <p>Welcome to ISSA Digital Services! We are a dedicated team committed to helping individuals elevate their professional presence.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <p>We offer a range of services designed to showcase your skills and experiences effectively to employers and recruiters.</p>
-            <p>At ISSA Digital Services, we focus on delivering high-quality, personalized solutions to help you stand out in today's competitive job market.</p>
-            <p>Let us assist you in taking the next step in your career journey!</p>
-          </div>
+                <div class="navbar-social">
+                    <a href="https://wa.me/+919746431460" class="social-link"><i class="bi bi-whatsapp"></i></a>
+                    <a href="#" class="social-link"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
         </div>
-        
-        <!-- Video Container -->
-        <div class="video-container">
-          <video width="100%" controls autoplay muted>
-              <source src="assets/Videos/Video of Cv.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-          </video>
+    </nav>
+
+    <main class="main">
+
+        <section id="hero" class="hero section">
+        </section>
+
+        <section id="about" class="about section">
+            <div class="container section-title">
+                <h2>About</h2>
+                <p>Welcome to ISSA Digital Services! We are a dedicated team committed to helping individuals elevate their professional presence.</p>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>We offer a range of services designed to showcase your skills and experiences effectively to employers and recruiters.</p>
+                        <p>At ISSA Digital Services, we focus on delivering high-quality, personalized solutions to help you stand out in today's competitive job market.</p>
+                        <p>Let us assist you in taking the next step in your career journey!</p>
+                    </div>
+                </div>
+                <div class="video-container">
+                    <video width="100%" controls autoplay muted>
+                        <source src="assets/Videos/Video of Cv.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services section">
+            <div class="container section-title">
+                <h2>Services</h2>
+                <p>Our Professional Services</p>
+            </div>
+            <div class="container">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex">
+                        <div class="service-item w-100 text-center p-4">
+                            <div class="icon mx-auto mb-3 bg-primary">
+                                <i class="bi bi-file-earmark-check text-white"></i>
+                            </div>
+                            <h4 class="title mb-2">ATS CV</h4>
+                            <p class="description">HR Optimized Resume</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex">
+                        <div class="service-item w-100 text-center p-4">
+                            <div class="icon mx-auto mb-3 bg-primary">
+                                <i class="bi bi-file-earmark-person text-white"></i>
+                            </div>
+                            <h4 class="title mb-2">Professional CV</h4>
+                            <p class="description">Premium Resume Design</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex">
+                        <div class="service-item w-100 text-center p-4">
+                            <div class="icon mx-auto mb-3 bg-primary">
+                                <i class="bi bi-envelope-paper text-white"></i>
+                            </div>
+                            <h4 class="title mb-2">Cover Letter</h4>
+                            <p class="description">Custom Application Letters</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex">
+                        <div class="service-item w-100 text-center p-4">
+                            <div class="icon mx-auto mb-3 bg-primary">
+                                <i class="bi bi-linkedin text-white"></i>
+                            </div>
+                            <h4 class="title mb-2">LinkedIn Profile</h4>
+                            <p class="description">Professional Profile Setup</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex">
+                        <div class="service-item w-100 text-center p-4">
+                            <div class="icon mx-auto mb-3 bg-primary">
+                                <i class="bi bi-globe text-white"></i>
+                            </div>
+                            <h4 class="title mb-2">Personal Portfolio</h4>
+                            <p class="description">Custom Career Website</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 d-flex">
+                        <div class="service-item w-100 text-center p-4">
+                            <div class="icon mx-auto mb-3 bg-primary">
+                                <i class="bi bi-person-video3 text-white"></i>
+                            </div>
+                            <h4 class="title mb-2">Interview Tips</h4>
+                            <p class="description">Job Interview Coaching</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact section">
+            <div class="container section-title">
+                <h2>Contact us</h2>
+                <p>Fill the below Form to get connected</p>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <form id="whatsappForm" class="php-email-form">
+                            <div class="row gy-4">
+                                <div class="col-md-6">
+                                    <label for="name-field" class="pb-2">Your Name</label>
+                                    <input type="text" id="name-field" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email-field" class="pb-2">Your Email</label>
+                                    <input type="email" id="email-field" class="form-control" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="phone-field" class="pb-2">Mobile Number</label>
+                                    <input type="tel" id="phone-field" class="form-control" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="service-field" class="pb-2">Which Service needed from us</label>
+                                    <select class="form-select" id="service-field" required>
+                                        <option value="" disabled selected>Select a service...</option>
+                                        <option value="ATS CV">ATS CV</option>
+                                        <option value="Professional CV">Professional CV</option>
+                                        <option value="Cover Letter">Cover Letter</option>
+                                        <option value="LinkedIn Profile Setup">LinkedIn Profile Setup</option>
+                                        <option value="Personal Portfolio">Personal Portfolio</option>
+                                        <option value="Interview Tips">Interview Tricks & Tips</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="footer" class="footer position-relative">
+        <div class="container">
+            <div class="copyright text-center">
+                <p>© <span>Copyright</span> <strong class="px-1">ISSA Digital Services</strong></p>
+                <p>© <span>All Rights Reserved</span></p>
+            </div>
+            <div class="credits">
+                Designed by <strong class="px-1">Arshad Kumbla</strong>
+            </div>
         </div>
-      </div>
-    </section><!-- /About Section -->
+    </footer>
 
-    <!-- Services Section -->
-    <section id="services" class="services section">
-      <!-- Section Title -->
-      <div class="container section-title">
-        <h2>Services</h2>
-        <p>Our Professional Services</p>
-      </div>
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-      <div class="container">
-        <div class="row g-4 justify-content-center">
-          
-          <!-- ATS CV -->
-          <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4">
-              <div class="icon mx-auto mb-3 bg-primary">
-                <i class="bi bi-file-earmark-check text-white"></i>
-              </div>
-              <h4 class="title mb-2">ATS CV</h4>
-              <p class="description">HR Optimized Resume</p>
-            </div>
-          </div>
-
-          <!-- Professional CV -->
-          <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4">
-              <div class="icon mx-auto mb-3 bg-primary">
-                <i class="bi bi-file-earmark-person text-white"></i>
-              </div>
-              <h4 class="title mb-2">Professional CV</h4>
-              <p class="description">Premium Resume Design</p>
-            </div>
-          </div>
-
-          <!-- Cover Letter -->
-          <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4">
-              <div class="icon mx-auto mb-3 bg-primary">
-                <i class="bi bi-envelope-paper text-white"></i>
-              </div>
-              <h4 class="title mb-2">Cover Letter</h4>
-              <p class="description">Custom Application Letters</p>
-            </div>
-          </div>
-
-          <!-- LinkedIn Profile -->
-          <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4">
-              <div class="icon mx-auto mb-3 bg-primary">
-                <i class="bi bi-linkedin text-white"></i>
-              </div>
-              <h4 class="title mb-2">LinkedIn Profile</h4>
-              <p class="description">Professional Profile Setup</p>
-            </div>
-          </div>
-
-          <!-- Personal Portfolio -->
-          <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4">
-              <div class="icon mx-auto mb-3 bg-primary">
-                <i class="bi bi-globe text-white"></i>
-              </div>
-              <h4 class="title mb-2">Personal Portfolio</h4>
-              <p class="description">Custom Career Website</p>
-            </div>
-          </div>
-
-          <!-- Interview Tips -->
-          <div class="col-lg-4 col-md-6 d-flex">
-            <div class="service-item w-100 text-center p-4">
-              <div class="icon mx-auto mb-3 bg-primary">
-                <i class="bi bi-person-video3 text-white"></i>
-              </div>
-              <h4 class="title mb-2">Interview Tips</h4>
-              <p class="description">Job Interview Coaching</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-      <div class="container section-title">
-        <h2>Contact us</h2>
-        <p>Fill the below Form to get connected</p>
-      </div>
-
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <form id="whatsappForm" class="php-email-form">
-              <div class="row gy-4">
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" id="name-field" class="form-control" required>
-                </div>
-
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" id="email-field" class="form-control" required>
-                </div>
-
-                <div class="col-md-12">
-                  <label for="phone-field" class="pb-2">Mobile Number</label>
-                  <input type="tel" id="phone-field" class="form-control" required>
-                </div>
-
-                <div class="col-md-12">
-                  <label for="service-field" class="pb-2">Which Service needed from us</label>
-                  <select class="form-select" id="service-field" required>
-                    <option value="" disabled selected>Select a service...</option>
-                    <option value="ATS CV">ATS CV</option>
-                    <option value="Professional CV">Professional CV</option>
-                    <option value="Cover Letter">Cover Letter</option>
-                    <option value="LinkedIn Profile Setup">LinkedIn Profile Setup</option>
-                    <option value="Personal Portfolio">Personal Portfolio</option>
-                    <option value="Interview Tips">Interview Tricks & Tips</option>
-                  </select>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <button type="submit" class="btn btn-primary">Send Message</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer id="footer" class="footer position-relative">
-    <div class="container">
-      <div class="copyright text-center">
-        <p>© <span>Copyright</span> <strong class="px-1">ISSA Digital Services</strong></p>
-        <p>© <span>All Rights Reserved</span></p>
-      </div>
-      <div class="credits">
-        Designed by <strong class="px-1">Arshad Kumbla</strong>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- jQuery (required for Bootstrap) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
-  <!-- Typed.js -->
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-
-  <!-- Main JavaScript -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize typed.js
-      if (document.querySelector('.typed')) {
-        new Typed('.typed', {
-          strings: ["ATS Friendly CV's", "Professional CV's", "Cover Letter", "LinkedIn Profile Setup", "Personal Portfolio"],
-          typeSpeed: 100,
-          backSpeed: 50,
-          backDelay: 2000,
-          loop: true
-        });
-      }
-      
-      // Scroll to top button
-      const scrollTop = document.getElementById('scroll-top');
-      
-      if (scrollTop) {
-        window.addEventListener('scroll', function() {
-          if (window.scrollY > 100) {
-            scrollTop.style.display = 'flex';
-          } else {
-            scrollTop.style.display = 'none';
-          }
-        });
-        
-        scrollTop.addEventListener('click', function(e) {
-          e.preventDefault();
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        });
-      }
-      
-      // Smooth scrolling for navigation links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const targetId = this.getAttribute('href');
-          const targetElement = document.querySelector(targetId);
-          
-          if (targetElement) {
-            window.scrollTo({
-              top: targetElement.offsetTop - 180, // Adjusted for new nav height
-              behavior: 'smooth'
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.querySelector('.nav-typed')) {
+                new Typed('.nav-typed', {
+                    strings: ["ATS Friendly CV's", "Professional CV's", "Cover Letter", "LinkedIn Profile Setup", "Personal Portfolio"],
+                    typeSpeed: 100,
+                    backSpeed: 50,
+                    backDelay: 2000,
+                    loop: true
+                });
+            }
+            const scrollTop = document.getElementById('scroll-top');
+            if (scrollTop) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 100) {
+                        scrollTop.style.display = 'flex';
+                    } else {
+                        scrollTop.style.display = 'none';
+                    }
+                });
+                scrollTop.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 180,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
-          }
         });
-      });
-    });
-    
-    // WhatsApp Form Submission
-    document.getElementById('whatsappForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Get form values
-      const name = document.getElementById('name-field').value;
-      const email = document.getElementById('email-field').value;
-      const phone = document.getElementById('phone-field').value;
-      const service = document.getElementById('service-field').value;
-      
-      // Create WhatsApp message
-      const message = `New Inquiry from Website:%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Service Needed:* ${service}`;
-      
-      // Open WhatsApp chat
-      window.open(`https://wa.me/919746431460?text=${message}`, '_blank');
-      
-      // Reset form after submission
-      this.reset();
-      
-      // Show success message (optional)
-      alert('Thank you for your inquiry! We will contact you shortly.');
-    });
-  </script>
+        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name-field').value;
+            const email = document.getElementById('email-field').value;
+            const phone = document.getElementById('phone-field').value;
+            const service = document.getElementById('service-field').value;
+            const message = `New Inquiry from Website:%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Service Needed:* ${service}`;
+            window.open(`https://wa.me/919746431460?text=${message}`, '_blank');
+            this.reset();
+            alert('Thank you for your inquiry! We will contact you shortly.');
+        });
+    </script>
 
 </body>
+
 </html>
