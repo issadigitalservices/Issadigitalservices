@@ -20,72 +20,78 @@
       line-height: 1.6;
     }
 
-    /* Sticky Top Wrapper */
     .top-wrapper {
       position: sticky;
       top: 0;
       z-index: 1000;
       background-color: #1f2937;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 2rem;
     }
 
     .top-header {
-      color: #fff;
-      text-align: center;
-      padding: 1rem;
-      animation: slideDown 1s ease-out;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    .top-header img {
+    .brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand img {
       width: 60px;
-      vertical-align: middle;
     }
 
-    .top-header h1 {
-      display: inline-block;
-      font-size: 2rem;
+    .brand-text {
       margin-left: 1rem;
-      vertical-align: middle;
-    }
-
-    .top-header p {
-      font-size: 1rem;
-      color: #cbd5e1;
-      margin-top: 0.3rem;
-    }
-
-    .social-icons {
-      text-align: center;
-      padding: 0.5rem 0;
-      background: #111827;
-    }
-
-    .social-icons a {
       color: #fff;
-      margin: 0 0.75rem;
-      font-size: 1.5rem;
-      transition: color 0.3s;
     }
 
-    .social-icons a:hover {
-      color: #38bdf8;
+    .brand-text h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .brand-text p {
+      font-size: 0.95rem;
+      color: #cbd5e1;
     }
 
     nav {
-      background: #111827;
-      text-align: center;
-      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
     }
 
     nav a {
       color: #fff;
-      margin: 0 1rem;
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s;
     }
 
     nav a:hover {
+      color: #38bdf8;
+    }
+
+    .social-icons {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .social-icons a {
+      color: #fff;
+      font-size: 1.4rem;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
       color: #38bdf8;
     }
 
@@ -169,23 +175,15 @@
       font-size: 0.9rem;
     }
 
-    @media (max-width: 600px) {
-      .top-header h1 {
-        font-size: 1.5rem;
+    @media (max-width: 768px) {
+      .top-header {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
-      .top-header img {
-        width: 40px;
+      nav, .social-icons {
+        margin-top: 1rem;
       }
-
-      .social-icons a {
-        font-size: 1.2rem;
-      }
-    }
-
-    @keyframes slideDown {
-      from { transform: translateY(-100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
     }
   </style>
 </head>
@@ -194,27 +192,62 @@
   <!-- Sticky Top Section -->
   <div class="top-wrapper">
     <div class="top-header">
-      <img src="assets/images/Issa-Logo-Updated.png" alt="ISSA Logo" />
-      <h1>ISSA Digital Services</h1>
-      <p>CV Writing | Cover Letter | LinkedIn Setup | Personal Portfolio</p>
+      <div class="brand">
+        <img src="assets/images/Issa-Logo-Updated.png" alt="ISSA Logo" />
+        <div class="brand-text">
+          <h1>ISSA Digital Services</h1>
+          <p>CV Writing | Cover Letter | LinkedIn Setup | Personal Portfolio</p>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <nav>
+          <a href="#Home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="social-icons">
+          <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://youtube.com/yourchannel" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
     </div>
-    <div class="social-icons">
-      <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://youtube.com/yourchannel" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-    </div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
-    </nav>
   </div>
+
+  <!-- Home Section -->
+
+  <section id="Home" class="Home">
+    <h2>Home</h2>
+    <p style="margin-top: 1rem;">
+      Welcome to the Digital World.
+    </p>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About</h2>
+    <p style="margin-top: 1rem;">
+      ISSA Digital Services is dedicated to helping professionals build their online presence with standout CVs, powerful cover letters, and strong LinkedIn profiles. Whether you're a fresher or a senior, we tailor our services to suit your journey.
+    </p>
+  </section>
 
   <!-- Services Section -->
   <section id="services">
     <h2 style="text-align: center; margin-bottom: 2rem;">Our Services</h2>
     <div class="services">
+      <div class="card">
+        <h3>ATS-Friendly CV</h3>
+        <p>Crafted resumes that pass Applicant Tracking Systems and impress recruiters.</p>
+      </div>
+      <div class="card">
+        <h3>ATS-Friendly CV</h3>
+        <p>Crafted resumes that pass Applicant Tracking Systems and impress recruiters.</p>
+      </div>
+      <div class="card">
+        <h3>ATS-Friendly CV</h3>
+        <p>Crafted resumes that pass Applicant Tracking Systems and impress recruiters.</p>
+      </div>
       <div class="card">
         <h3>ATS-Friendly CV</h3>
         <p>Crafted resumes that pass Applicant Tracking Systems and impress recruiters.</p>
@@ -236,14 +269,6 @@
         <p>Modern portfolio websites to showcase your skills and experience.</p>
       </div>
     </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="about">
-    <h2>About</h2>
-    <p style="margin-top: 1rem;">
-      ISSA Digital Services is dedicated to helping professionals build their online presence with standout CVs, powerful cover letters, and strong LinkedIn profiles. Whether you're a fresher or a senior, we tailor our services to suit your journey.
-    </p>
   </section>
 
   <!-- Contact Section -->
