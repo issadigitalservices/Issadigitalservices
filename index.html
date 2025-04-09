@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ISSA Digital Services</title>
+  <!-- Font Awesome CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: #f7f8fc;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Sticky Top Wrapper */
+    .top-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #1f2937;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .top-header {
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      animation: slideDown 1s ease-out;
+    }
+
+    .top-header img {
+      width: 60px;
+      vertical-align: middle;
+    }
+
+    .top-header h1 {
+      display: inline-block;
+      font-size: 2rem;
+      margin-left: 1rem;
+      vertical-align: middle;
+    }
+
+    .top-header p {
+      font-size: 1rem;
+      color: #cbd5e1;
+      margin-top: 0.3rem;
+    }
+
+    .social-icons {
+      text-align: center;
+      padding: 0.5rem 0;
+      background: #111827;
+    }
+
+    .social-icons a {
+      color: #fff;
+      margin: 0 0.75rem;
+      font-size: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #38bdf8;
+    }
+
+    nav {
+      background: #111827;
+      text-align: center;
+      padding: 0.5rem 0;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #38bdf8;
+    }
+
+    section {
+      padding: 3rem 1rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .about, .contact {
+      text-align: center;
+    }
+
+    .contact a {
+      display: inline-block;
+      margin: 0.5rem;
+      color: #1f2937;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    form {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      max-width: 400px;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+    }
+
+    form input:focus, form textarea:focus {
+      border-color: #38bdf8;
+      outline: none;
+    }
+
+    form button {
+      background: #1f2937;
+      color: #fff;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    form button:hover {
+      background: #374151;
+    }
+
+    footer {
+      background: #1f2937;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .top-header h1 {
+        font-size: 1.5rem;
+      }
+
+      .top-header img {
+        width: 40px;
+      }
+
+      .social-icons a {
+        font-size: 1.2rem;
+      }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Top Section -->
+  <div class="top-wrapper">
+    <div class="top-header">
+      <img src="assets/images/Issa-Logo-Updated.png" alt="ISSA Logo" />
+      <h1>ISSA Digital Services</h1>
+      <p>CV Writing | Cover Letter | LinkedIn Setup | Personal Portfolio</p>
+    </div>
+    <div class="social-icons">
+      <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/yourchannel" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <!-- Services Section -->
+  <section id="services">
+    <h2 style="text-align: center; margin-bottom: 2rem;">Our Services</h2>
+    <div class="services">
+      <div class="card">
+        <h3>ATS-Friendly CV</h3>
+        <p>Crafted resumes that pass Applicant Tracking Systems and impress recruiters.</p>
+      </div>
+      <div class="card">
+        <h3>Professional CV</h3>
+        <p>Well-designed and tailored CVs for any job role or industry.</p>
+      </div>
+      <div class="card">
+        <h3>Cover Letter</h3>
+        <p>Personalized cover letters that speak directly to hiring managers.</p>
+      </div>
+      <div class="card">
+        <h3>LinkedIn Profile</h3>
+        <p>Complete profile optimization and guidance for professional networking.</p>
+      </div>
+      <div class="card">
+        <h3>Personal Portfolio</h3>
+        <p>Modern portfolio websites to showcase your skills and experience.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <h2>About</h2>
+    <p style="margin-top: 1rem;">
+      ISSA Digital Services is dedicated to helping professionals build their online presence with standout CVs, powerful cover letters, and strong LinkedIn profiles. Whether you're a fresher or a senior, we tailor our services to suit your journey.
+    </p>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <h2>Contact</h2>
+    <p style="margin-top: 1rem;">We'd love to hear from you!</p>
+    <form id="whatsapp-form">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="tel" id="phone" placeholder="Your Mobile Number" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <button type="submit">Send Message</button>
+    </form>
+    <a href="https://wa.me/919746431460" target="_blank">
+      <i class="fab fa-whatsapp" style="font-size: 2rem; color: #25D366; margin-top: 1rem;"></i>
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 ISSA Digital Services. All rights reserved.<br>
+    Designed by Arshad Kuttyalam
+  </footer>
+
+  <!-- WhatsApp Script -->
+  <script>
+    document.getElementById('whatsapp-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const message = `Name: ${name}%0AMobile: ${phone}%0AEmail: ${email}`;
+      window.open(`https://wa.me/919746431460?text=${message}`, '_blank');
+    });
+  </script>
+
+</body>
+</html>
