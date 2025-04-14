@@ -30,17 +30,17 @@
     }
 
     .top-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
-    .brand {
-      display: flex;
-      align-items: center;
-    }
+.brand {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
     .brand img {
       width: 60px;
@@ -194,11 +194,11 @@
     background-color: #374151;
   }
 
-    @media (max-width: 768px) {
-      .top-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+  @media (max-width: 768px) {
+  .top-header {
+    flex-direction: column;
+    align-items: center;
+  }
 
       nav, .social-icons {
         margin-top: 1rem;
@@ -215,7 +215,7 @@
         <img src="assets/images/Issa-Logo-Updated.png" alt="ISSA Logo" />
         <div class="brand-text">
           <h1>ISSA Digital Services</h1>
-          <p>CV Writing | Cover Letter | LinkedIn Setup | Personal Portfolio</p>
+          <p>CV Writing | Cover Letter | LinkedIn Profile Setup | Personal Portfolio</p>
         </div>
       </div>
     
