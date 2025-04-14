@@ -20,22 +20,26 @@
       line-height: 1.6;
     }
 
-    .sticky-brand {
+    .top-wrapper {
       position: sticky;
       top: 0;
       z-index: 1000;
       background-color: #1f2937;
-      padding: 0.75rem 2rem;
-      text-align: center;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 2rem;
+    }
+
+    .top-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
     .brand {
-      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-direction: row;
+      text-align: center;
     }
 
     .brand img {
@@ -43,6 +47,7 @@
     }
 
     .brand-text {
+      margin-left: 1rem;
       color: #fff;
     }
 
@@ -56,23 +61,15 @@
       color: #cbd5e1;
     }
 
-    .top-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 1rem;
-    }
-
     nav {
-      display: flex;
+      display: none;
       align-items: center;
       gap: 1rem;
       margin-top: 0.5rem;
     }
 
     nav a {
-      color: #1f2937;
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s;
@@ -92,7 +89,7 @@
     }
 
     .social-icons a {
-      color: #1f2937;
+      color: #fff;
       font-size: 1.4rem;
       transition: color 0.3s;
     }
@@ -197,78 +194,98 @@
       background-color: #374151;
     }
 
-    @media (max-width: 768px) {
-      .brand {
-        flex-direction: column;
-      }
+    .social-icons-contact {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.75rem;
+      margin-top: 1.5rem;
+    }
 
-      .brand-text {
-        text-align: center;
+    .social-icons-contact a {
+      color: #1f2937;
+      font-size: 1.6rem;
+      transition: color 0.3s;
+    }
+
+    .social-icons-contact a:hover {
+      color: #38bdf8;
+    }
+
+    @media (max-width: 768px) {
+      .top-header {
+        flex-direction: column;
+        align-items: center;
       }
 
       nav, .social-icons {
         margin-top: 1rem;
-        flex-direction: column;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sticky Logo and Title Only -->
-  <div class="sticky-brand">
-    <div class="brand">
-      <img src="assets/Images/Issa-Logo-Updated.png" alt="ISSA Logo" />
-      <div class="brand-text">
-        <h1>ISSA Digital Services</h1>
-        <p>CV Writing | Cover Letter | LinkedIn Profile Setup | Personal Portfolio</p>
+  <!-- Sticky Top Section -->
+  <div class="top-wrapper">
+    <div class="top-header">
+      <div class="brand">
+        <img src="assets/Images/Issa-Logo-Updated.png" alt="ISSA Logo" />
+        <div class="brand-text">
+          <h1>ISSA Digital Services</h1>
+          <p>CV Writing | Cover Letter | LinkedIn Profile Setup | Personal Portfolio</p>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Scrollable Header Content -->
-  <div class="top-header">
-    <nav>
-      <a href="#Home">Home</a>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
-    </nav>
-
-    <div class="social-icons">
-      <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://youtube.com/yourchannel" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+    
+      <!-- Navigation Menu (hidden) -->
+      <nav>
+        <a href="#Home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
   </div>
 
   <!-- Home Section -->
   <section id="Home" class="Home">
     <h2>Home</h2>
-    <p style="margin-top: 1rem;">Welcome to the Digital World.</p>
+    <p style="margin-top: 1rem;">Ready to level up your career? ISSA Digital Services offers tailored CVs, impactful cover letters, optimized LinkedIn profiles, and beautiful personal portfolios — all at prices that won’t break the bank. Whether you're starting fresh or scaling higher, we’ve got the tools to get you noticed.</p>
   </section>
 
   <!-- About Section -->
-  <section id="about" class="about">
-    <h2>About</h2>
-    <p style="margin-top: 1rem;">
-      ISSA Digital Services is dedicated to helping professionals build their online presence with standout CVs, powerful cover letters, and strong LinkedIn profiles. Whether you're a fresher or a senior, we tailor our services to suit your journey.
+<section id="about" class="about" style="background-color: #ffffff; padding: 1rem 1rem;">
+  <div style="max-width: 800px; margin: auto;">
+    <h2 style="text-align: center; margin-bottom: 1rem;">About Us</h2>
+    <p style="font-size: 1.1rem; line-height: 1.8; color: #444;">
+      At <strong>ISSA Digital Services</strong>, we’re passionate about helping job seekers make a strong first impression. Our services include crafting tailored <strong>ATS-friendly CVs</strong>, writing compelling <strong>Cover Letters</strong>, setting up professional <strong>LinkedIn Profiles</strong>, and building elegant <strong>Personal Portfolios</strong>.
     </p>
-  </section>
+    <p style="font-size: 1.1rem; line-height: 1.8; color: #444; margin-top: 1.5rem;">
+      We’re committed to delivering top-quality work at prices that are significantly more affordable than typical market rates — because everyone deserves a chance to shine, no matter their budget.
+    </p>
+  </div>
+</section>
 
   <!-- Services Section -->
   <section id="services">
     <h2 style="text-align: center; margin-bottom: 2rem;">Our Services</h2>
     <div class="services">
-      <div class="card"><h3>CV Writing (ATS & Professional)</h3></div>
-      <div class="card"><h3>Cover Letter</h3></div>
-      <div class="card"><h3>LinkedIn Profile Setup</h3></div>
-      <div class="card"><h3>Personal Portfolio</h3></div>
+      <div class="card">
+        <h3>CV Writing (ATS & Professional)</h3>
+      </div>
+      <div class="card">
+        <h3>Cover Letter</h3>
+      </div>
+      <div class="card">
+        <h3>LinkedIn Profile Setup</h3>
+      </div>
+      <div class="card">
+        <h3>Personal Portfolio</h3>
+      </div>
     </div>
   </section>
 
-  <!-- CV Model Navigation Section -->
+  <!-- CV Models Navigation Section -->
   <section style="text-align: center; padding: 3rem 1rem; background-color: #eef2f7;">
     <h2 style="margin-bottom: 1.5rem; font-size: 2rem; color: #1f2937;">CV Models & Cover Letter Models</h2>
     <a href="ats-models.html" class="model-btn">ATS CV Models</a>
@@ -286,9 +303,18 @@
       <input type="email" id="email" placeholder="Your Email" required />
       <button type="submit">Send Message</button>
     </form>
-    <a href="https://wa.me/919746431460" target="_blank">
-      <i class="fab fa-whatsapp" style="font-size: 2rem; color: #25D366; margin-top: 1rem;"></i>
-    </a>
+
+
+    <!-- Social Media at Bottom -->
+    <div style="margin-top: 2rem;">
+      <h3 style="margin-bottom: 1rem;">Explore us in Social Media</h3>
+      <div class="social-icons-contact">
+        <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/yourchannel" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
   </section>
 
   <!-- Footer -->
