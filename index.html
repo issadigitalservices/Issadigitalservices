@@ -394,5 +394,14 @@
     });
   </script>
 
+
+<script>
+  window.addEventListener('pageshow', function (event) {
+    // Hide loader when returning via back/forward button
+    document.getElementById('loader-overlay').style.display = 'none';
+  });
+</script>
+
+
 </body>
 </html>
