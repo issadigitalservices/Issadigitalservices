@@ -31,35 +31,98 @@
       border-radius: 1rem;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       text-align: center;
+      position: relative;
+    }
+
+    .cv-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      color: #1f2937;
     }
 
     .cv-card img {
       max-width: 100%;
       border-radius: 0.5rem;
-      margin-bottom: 0.5rem;
+      pointer-events: none; /* Prevent dragging */
+      user-select: none;
     }
 
-    .cv-card a {
+    .cv-card img::selection {
+      background: none;
+    }
+
+    /* Optional: WhatsApp link */
+    .whatsapp-link {
       display: inline-block;
       margin-top: 0.5rem;
       text-decoration: none;
-      color: #1f2937;
+      color: #25D366;
       font-weight: bold;
     }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false;"> <!-- disables right click -->
+
   <h1>ATS CV Model Samples</h1>
+
   <div class="cv-gallery">
     <div class="cv-card">
-      <img src="assets/models/ats1.jpg" alt="ATS CV 1" />
-      <a href="assets/models/ats1.pdf" target="_blank">View PDF</a>
+      <div class="cv-title">ATS CV Model # 301</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 301" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20301" target="_blank">WhatsApp Us</a>
     </div>
+
     <div class="cv-card">
-      <img src="assets/models/ats2.jpg" alt="ATS CV 2" />
-      <a href="assets/models/ats2.pdf" target="_blank">View PDF</a>
+      <div class="cv-title">ATS CV Model # 302</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 302" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20302" target="_blank">WhatsApp Us</a>
     </div>
-    <!-- Add more models up to 10 -->
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 303</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 303" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20303" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 304</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 304" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20304" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 305</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 305" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20305" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 306</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 306" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20306" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 307</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 307" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20307" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 308</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 308" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20308" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 309</div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 309" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20309" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <!-- Repeat similar blocks for CV 303 to CV 310 -->
   </div>
+
 </body>
 </html>
