@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Professional CV Models</title>
+  <title>ATS CV Models</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -20,7 +20,7 @@
     .cv-gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+      gap: 3.5rem;
       max-width: 1000px;
       margin: auto;
     }
@@ -29,37 +29,127 @@
       background: white;
       padding: 1rem;
       border-radius: 1rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       text-align: center;
+      border-color: blue;
+      position: relative;
+      border-style: dashed ;
+    }
+
+    .cv-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      color: #1f2937;
+    }
+
+    .cv-price {
+      display: block;
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: blue;
+      margin-top: 0.25rem;
     }
 
     .cv-card img {
       max-width: 100%;
       border-radius: 0.5rem;
-      margin-bottom: 0.5rem;
+      pointer-events: none; /* Prevent dragging */
+      user-select: none;
     }
 
-    .cv-card a {
+    .cv-card img::selection {
+      background: none;
+    }
+
+    .whatsapp-link {
       display: inline-block;
       margin-top: 0.5rem;
       text-decoration: none;
-      color: #1f2937;
+      color: green;
       font-weight: bold;
     }
+
+    .home-button {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #2563eb; /* blue */
+  color: white;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #1d4ed8;
+}
+
   </style>
 </head>
-<body>
-  <h1>Professional CV Model Samples</h1>
+<body oncontextmenu="return false;">
+
+  <h1>ATS CV Model Samples</h1>
+
   <div class="cv-gallery">
     <div class="cv-card">
-      <img src="assets/models/pro1.jpg" alt="Professional CV 1" />
-      <a href="assets/models/pro1.pdf" target="_blank">View PDF</a>
+      <div class="cv-title">Designed CV Model # 101<br><span class="cv-price">1 Page Rs.299/-</span></div>
+      <img src="assets/Images/Des-101.jpg" alt="Designed CV 101" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20101" target="_blank">WhatsApp Us</a>
     </div>
+
     <div class="cv-card">
-      <img src="assets/models/pro2.jpg" alt="Professional CV 2" />
-      <a href="assets/models/pro2.pdf" target="_blank">View PDF</a>
+      <div class="cv-title">Designed CV Model # 102<br><span class="cv-price">1 Page Rs.299/-</span></div>
+      <img src="assets/Images/Des-102.jpg" alt="Designed CV 102" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20102" target="_blank">WhatsApp Us</a>
     </div>
-    <!-- Add more models up to 10 -->
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 303<br><span class="cv-price">1 Page Rs.299/-</span></div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 303" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20303" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 304<br><span class="cv-price">1 Page Rs.299/-</span></div>
+      <img src="assets/Images/Ats-304.jpg" alt="ATS CV 304" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20304" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 401<br><span class="cv-price">2 Pages Rs.399/-</span></div>
+      <img src="assets/Images/Ats-401.jpg" alt="ATS CV 401" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20401" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 402<br><span class="cv-price">2 Pages Rs.399/-</span></div>
+      <img src="assets/Images/Ats-402.jpg" alt="ATS CV 402" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20402" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 307<br><span class="cv-price">1 Page Rs.299/-</span></div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 307" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20307" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 308<br><span class="cv-price">1 Page Rs.299/-</span></div>
+      <img src="assets/Images/Ats-302.jpg" alt="ATS CV 308" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20308" target="_blank">WhatsApp Us</a>
+    </div>
+
+    <div class="cv-card">
+      <div class="cv-title">ATS CV Model # 309<br><span class="cv-price">1 Page Rs.299/-</span></div>
+      <img src="assets/Images/Ats-301.jpg" alt="ATS CV 309" />
+      <a class="whatsapp-link" href="https://wa.me/919746431460?text=I'm%20interested%20in%20CV%20309" target="_blank">WhatsApp Us</a>
+    </div>
   </div>
+  <div style="text-align: center; margin-top: 3rem;">
+    <a href="index.html" class="home-button">← Back to Home</a>
+  </div>
+
 </body>
 </html>
