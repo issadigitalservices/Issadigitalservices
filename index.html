@@ -1,235 +1,529 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta name="google-site-verification" content="AR5t1Mg7u4S-Shm94R9An4yiA8l3UoWwPFOBrheWRpM" />
+  <meta name="google-site-verification" content="AR5t1Mg7u4S-Shm94R9An4yiA8l3UoWwPFOBrheWRpM" />
   <meta charset="UTF-8" />
- <meta name="description" content="Issa Digital Services offers expert CV writing (ATS and professional formats) and Excel master classes to boost your career and skills.">
-    <meta property="og:title" content="Your Custom Title Here" />
-    <meta property="og:description" content="A short description of your page to make it more compelling!" />
-    <meta property="og:image" content="URL_of_image_to_display.jpg" />
-    <meta property="og:url" content="https://www.yoursite.com" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Your Website Name" />
-
+  <meta name="description" content="Professional CV writing services, ATS-optimized resumes, cover letters, LinkedIn profiles, and personal portfolios to boost your career opportunities.">
+  <meta property="og:title" content="ISSA Digital Services | Professional CV Writing & Career Services" />
+  <meta property="og:description" content="Get noticed with our expert CV writing, cover letters, LinkedIn optimization, and personal portfolios at affordable prices." />
+  <meta property="og:image" content="https://www.issadigitalservices.com/assets/Images/Issa-Logo.png" />
+  <meta property="og:url" content="https://www.issadigitalservices.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ISSA Digital Services" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ISSA Digital Services</title>
+  <title>ISSA Digital Services | Professional CV Writing & Career Services</title>
   <!-- Font Awesome CDN -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-dark: #1e40af;
+      --secondary-color: #10b981;
+      --dark-color: #1f2937;
+      --light-color: #f9fafb;
+      --text-color: #374151;
+      --text-light: #6b7280;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
     }
 
     body {
-      background: #f7f8fc;
-      color: #333;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-color);
+      color: var(--text-color);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    .top-wrapper {
+    h1, h2, h3, h4 {
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--dark-color);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.75rem;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #0d9488;
+    }
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-title:after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--primary-color);
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* Header Styles */
+    header {
+      background-color: var(--dark-color);
+      color: white;
       position: sticky;
       top: 0;
       z-index: 1000;
-      background-color: #1f2937;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 0.5rem 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .top-header {
+    .header-container {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      text-align: center;
+      padding: 1rem 2rem;
     }
 
-    .brand {
-      flex-direction: column;
+    .logo {
+      display: flex;
       align-items: center;
-      text-align: center;
+      gap: 1rem;
     }
 
-    .brand img {
-      width: 60px;
+    .logo img {
+      width: 50px;
+      height: auto;
     }
 
-    .brand-text {
-      margin-left: 1rem;
-      color: #fff;
+    .logo-text h1 {
+      font-size: 1.5rem;
+      color: white;
+      margin-bottom: 0.25rem;
     }
 
-    .brand-text h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .brand-text p {
-      font-size: 0.95rem;
-      color: #cbd5e1;
+    .logo-text p {
+      font-size: 0.85rem;
+      color: #d1d5db;
     }
 
     nav {
-      display: none;
+      display: flex;
       align-items: center;
-      gap: 1rem;
-      margin-top: 0.5rem;
+      gap: 2rem;
     }
 
     nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
     }
 
     nav a:hover {
-      color: #38bdf8;
+      color: #93c5fd;
     }
 
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2.75rem;
-      margin-top: 0.5rem;
+    nav a:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #93c5fd;
+      transition: var(--transition);
+    }
+
+    nav a:hover:after {
       width: 100%;
     }
 
-    .social-icons a {
-      color: #fff;
-      font-size: 1.4rem;
-      transition: color 0.3s;
-    }
-
-    .social-icons a:hover {
-      color: #38bdf8;
-    }
-
-    section {
-      padding: 3rem 1rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
-
-    .about, .contact {
-      text-align: center;
-    }
-
-    .contact a {
-      display: inline-block;
-      margin: 0.5rem;
-      color: #1f2937;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    form {
-      margin-top: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    form input, form textarea {
-      width: 100%;
-      max-width: 400px;
-      padding: 0.75rem;
-      margin: 0.5rem 0;
-      border: 1px solid #ccc;
-      border-radius: 0.5rem;
-    }
-
-    form input:focus, form textarea:focus {
-      border-color: #38bdf8;
-      outline: none;
-    }
-
-    form button {
-      background: #1f2937;
-      color: #fff;
-      padding: 0.75rem 2rem;
+    .mobile-menu-btn {
+      display: none;
+      background: none;
       border: none;
-      border-radius: 0.5rem;
+      color: white;
+      font-size: 1.5rem;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
-    form button:hover {
-      background: #374151;
-    }
-
-    footer {
-      background: #1f2937;
-      color: #fff;
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--dark-color) 0%, #374151 100%);
+      color: white;
+      padding: 6rem 0;
       text-align: center;
-      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/Images/hero-pattern.svg') no-repeat center center;
+      background-size: cover;
+      opacity: 0.05;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    /* Services Section */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid #e5e7eb;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-icon {
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 2rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .service-content {
+      padding: 1.5rem;
+    }
+
+    .service-content h3 {
+      margin-bottom: 1rem;
+      color: var(--dark-color);
+    }
+
+    .service-content p {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-price {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-text {
+      padding-right: 2rem;
+    }
+
+    .about-text h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+      margin-bottom: 1rem;
+    }
+
+    .about-image {
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      background-color: #f3f4f6;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .testimonial-text:before {
+      content: '"';
+      font-size: 3rem;
+      color: #d1d5db;
+      position: absolute;
+      top: -1rem;
+      left: -1rem;
+      line-height: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      margin-bottom: 0.25rem;
+    }
+
+    .author-info p {
+      color: var(--text-light);
       font-size: 0.9rem;
     }
 
-    .model-btn {
-      display: inline-block;
-      margin: 1rem;
-      padding: 0.75rem 1.5rem;
-      background-color: #1f2937;
+    /* CTA Section */
+    .cta {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       color: white;
-      text-decoration: none;
+      text-align: center;
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('assets/Images/cta-pattern.svg') no-repeat center center;
+      background-size: cover;
+      opacity: 0.1;
+    }
+
+    .cta-content {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .cta h2 {
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta p {
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    /* Contact Section */
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
       border-radius: 0.5rem;
-      font-weight: bold;
-      transition: background 0.3s;
+      box-shadow: var(--shadow);
     }
 
-    .model-btn:hover {
-      background-color: #374151;
+    .form-group {
+      margin-bottom: 1.5rem;
     }
 
-    .social-icons-contact {
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .social-links {
       display: flex;
       justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      display: flex;
       align-items: center;
-      gap: 2.75rem;
-      margin-top: 1.5rem;
+      justify-content: center;
+      transition: var(--transition);
     }
 
-    .social-icons-contact a {
-      color: #1f2937;
-      font-size: 1.6rem;
-      transition: color 0.3s;
+    .social-link:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
     }
 
-    .social-icons-contact a:hover {
-      color: #38bdf8;
+    /* Footer */
+    footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 3rem 0 1.5rem;
     }
 
-    @media (max-width: 768px) {
-      .top-header {
-        flex-direction: column;
-        align-items: center;
-      }
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
 
-      nav, .social-icons {
-        margin-top: 1rem;
-      }
+    .footer-column h3 {
+      color: white;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: #d1d5db;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid #374151;
+      color: #9ca3af;
+      font-size: 0.9rem;
     }
 
     /* Loader Styles */
@@ -248,7 +542,7 @@
 
     .spinner {
       border: 6px solid #f3f3f3;
-      border-top: 6px solid #1f2937;
+      border-top: 6px solid var(--primary-color);
       border-radius: 50%;
       width: 60px;
       height: 60px;
@@ -257,6 +551,84 @@
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-text {
+        padding-right: 0;
+      }
+      
+      .about-image {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        padding: 1rem;
+      }
+      
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--dark-color);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      nav.active {
+        display: flex;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .section {
+        padding: 3rem 0;
+      }
+      
+      .section-title {
+        margin-bottom: 2rem;
+      }
+      
+      .hero {
+        padding: 4rem 0;
+      }
+      
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
@@ -267,109 +639,294 @@
     <div class="spinner"></div>
   </div>
 
-  <!-- Sticky Top Section -->
-  <div class="top-wrapper">
-    <div class="top-header">
-      <div class="brand">
-        <img src="assets/Images/Issa-Logo.png" alt="ISSA Logo" />
-        <div class="brand-text">
-          <h1>ISSSSSSSSSSA Digital Services</h1>
-          <p>CV Writing | Cover Letter | LinkedIn Profile Setup | Personal Portfolio</p>
+  <!-- Header -->
+  <header>
+    <div class="header-container container">
+      <div class="logo">
+        <img src="assets/Images/Issa-Logo.png" alt="ISSA Digital Services Logo">
+        <div class="logo-text">
+          <h1>ISSA Digital Services</h1>
+          <p>Professional CV Writing & Career Services</p>
         </div>
       </div>
-    
-      <!-- Navigation Menu (hidden) -->
-      <nav>
-        <a href="#Home">Home</a>
-        <a href="#about">About</a>
+      
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav id="mainNav">
+        <a href="#home">Home</a>
         <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#testimonials">Success Stories</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
-  </div>
+  </header>
 
-  <!-- Home Section -->
-  <section id="Home" class="Home">
-    <h2>Home</h2>
-    <p style="margin-top: 1rem;">Ready to level up your career? ISSA Digital Services offers tailored CVs, impactful cover letters, optimized LinkedIn profiles, and beautiful personal portfolios — all at prices that won’t break the bank. Whether you're starting fresh or scaling higher, we’ve got the tools to get you noticed.</p>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" style="padding: 3rem 1rem; max-width: 1000px; margin: auto;">
-    <h2>About</h2>
-    <p style="margin-top: 1rem;">
-      At <strong>ISSA Digital Services</strong>, we’re passionate about helping job seekers make a strong first impression. We specialize in crafting <strong>ATS-friendly CVs</strong>, writing compelling <strong>Cover Letters</strong>, setting up professional <strong>LinkedIn Profiles</strong>, and building elegant <strong>Personal Portfolios</strong>.
-    </p>
-    <p style="margin-top: 1rem;">
-      We’re committed to delivering top-quality work at prices that are significantly more affordable than typical market rates — because everyone deserves a chance to shine, no matter their budget.
-    </p>
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content container">
+      <h1>Get Noticed With A Professional CV</h1>
+      <p>We craft ATS-optimized resumes, compelling cover letters, and powerful LinkedIn profiles that help you stand out and land more interviews.</p>
+      <div class="hero-btns">
+        <a href="#services" class="btn">Our Services</a>
+        <a href="#contact" class="btn btn-secondary">Get Started</a>
+      </div>
+    </div>
   </section>
 
   <!-- Services Section -->
-  <section id="services">
-    <h2 style="text-align: center; margin-bottom: 2rem;">Our Services</h2>
-    <div class="services">
-      <div class="card">
-        <h3>CV Writing (ATS & Professional)</h3>
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Professional Services</h2>
+        <p>We offer comprehensive career documentation services tailored to your needs</p>
       </div>
-      <div class="card">
-        <h3>Cover Letter</h3>
-      </div>
-      <div class="card">
-        <h3>LinkedIn Profile Setup</h3>
-      </div>
-      <div class="card">
-        <h3>Personal Portfolio</h3>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="service-content">
+            <h3>ATS-Optimized CV</h3>
+            <p>Professionally written resume designed to pass Applicant Tracking Systems and impress hiring managers.</p>
+            <span class="service-price">Starting at ₹999</span>
+            <a href="#contact" class="btn">Get Yours</a>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-envelope-open-text"></i>
+          </div>
+          <div class="service-content">
+            <h3>Professional Cover Letter</h3>
+            <p>Custom-written cover letter that complements your resume and highlights your unique value.</p>
+            <span class="service-price">Starting at ₹599</span>
+            <a href="#contact" class="btn">Get Yours</a>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fab fa-linkedin"></i>
+          </div>
+          <div class="service-content">
+            <h3>LinkedIn Profile Makeover</h3>
+            <p>Complete LinkedIn optimization to attract recruiters and showcase your professional brand.</p>
+            <span class="service-price">Starting at ₹1299</span>
+            <a href="#contact" class="btn">Get Yours</a>
+          </div>
+        </div>
+        
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <div class="service-content">
+            <h3>Personal Portfolio</h3>
+            <p>Custom portfolio website to showcase your work, skills, and professional achievements.</p>
+            <span class="service-price">Starting at ₹2499</span>
+            <a href="#contact" class="btn">Get Yours</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CV Models Navigation Section -->
-  <section style="text-align: center; padding: 3rem 1rem; background-color: #eef2f7;">
-    <h2 style="margin-bottom: 1.5rem; font-size: 2rem; color: #1f2937;">CV Models & Cover Letter Models</h2>
-    <a href="ats-models.html" class="model-btn">ATS CV Models</a>
-    <a href="professional-models.html" class="model-btn">Professional CV Models</a>
-    <a href="cover-letter-models.html" class="model-btn">Cover Letter Samples</a>
+  <!-- About Section -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2 class="section-title">About ISSA Digital Services</h2>
+          <p>At ISSA Digital Services, we understand that your career documents are your first impression with potential employers. That's why we're committed to creating materials that not only look professional but effectively communicate your value.</p>
+          <p>Our team combines expertise in HR recruitment practices with professional writing skills to create documents that get results. We stay updated on the latest trends in resume writing and applicant tracking systems to ensure your materials are always optimized for success.</p>
+          <p>What sets us apart is our affordable pricing without compromising on quality. We believe everyone deserves access to professional career services, regardless of their budget.</p>
+        </div>
+        <div class="about-image">
+          <img src="assets/Images/about-image.jpg" alt="Professional resume writing">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-title">
+        <h2>Success Stories</h2>
+        <p>What our clients say about our services</p>
+      </div>
+      
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            <p>ISSA Digital Services transformed my CV completely. I went from getting no responses to landing 3 interviews in the first week of using my new resume. Worth every rupee!</p>
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="assets/Images/client1.jpg" alt="Client testimonial">
+            </div>
+            <div class="author-info">
+              <h4>Rahul Menon</h4>
+              <p>Software Engineer, Bangalore</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            <p>The LinkedIn profile makeover helped me get noticed by recruiters from top companies. I received multiple interview requests within days of updating my profile.</p>
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="assets/Images/client2.jpg" alt="Client testimonial">
+            </div>
+            <div class="author-info">
+              <h4>Priya Sharma</h4>
+              <p>Marketing Manager, Delhi</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            <p>I was skeptical at first, but the cover letter they wrote for me helped me stand out among 200+ applicants. Got the job at my dream company!</p>
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              <img src="assets/Images/client3.jpg" alt="Client testimonial">
+            </div>
+            <div class="author-info">
+              <h4>Arjun Patel</h4>
+              <p>Financial Analyst, Mumbai</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta-content container">
+      <h2>Ready to Transform Your Career Documents?</h2>
+      <p>Invest in your career today with professional documents that get results. Our affordable services can make the difference between getting overlooked and getting hired.</p>
+      <a href="#contact" class="btn btn-secondary">Get Started Now</a>
+    </div>
   </section>
 
   <!-- Contact Section -->
-<section id="contact" class="contact">
-  <h2>Contact</h2>
-  <p style="margin-top: 1rem;">We'd love to hear from you!</p>
-  <form id="whatsapp-form">
-    <input type="text" id="name" placeholder="Your Name" required />
-    <input type="tel" id="phone" placeholder="Your Mobile Number" required />
-    <input type="email" id="email" placeholder="Your Email" required />
-    
-    <!-- New Dropdown Field -->
-    <select id="service" required style="width: 100%; max-width: 400px; padding: 0.75rem; margin: 0.5rem 0; border: 1px solid #ccc; border-radius: 0.5rem;">
-      <option value="" disabled selected>Select Service Needed</option>
-      <option value="ATS CV">ATS CV</option>
-      <option value="Professional CV">Professional CV</option>
-      <option value="Cover Letter">Cover Letter</option>
-      <option value="LinkedIn Profile Setup">LinkedIn Profile Setup</option>
-      <option value="Personal Portfolio">Personal Portfolio</option>
-    </select>
-
-    <button type="submit">Send Message</button>
-  </form>
-
-  <!-- Social Media at Bottom -->
-  <div style="margin-top: 2rem;">
-    <h3 style="margin-bottom: 1rem;">Explore us in Social Media</h3>
-    <div class="social-icons-contact">
-      <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://youtube.com/yourchannel" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-title">
+        <h2>Get In Touch</h2>
+        <p>Contact us to discuss your career document needs</p>
+      </div>
+      
+      <div class="contact-form">
+        <form id="whatsapp-form">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="service">Service Needed</label>
+            <select id="service" class="form-control" required>
+              <option value="" disabled selected>Select a service</option>
+              <option value="ATS CV">ATS-Optimized CV</option>
+              <option value="Professional CV">Professional CV</option>
+              <option value="Cover Letter">Cover Letter</option>
+              <option value="LinkedIn Profile">LinkedIn Profile Makeover</option>
+              <option value="Portfolio">Personal Portfolio</option>
+              <option value="Multiple">Multiple Services</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Your Message (Optional)</label>
+            <textarea id="message" class="form-control" placeholder="Tell us about your specific needs"></textarea>
+          </div>
+          
+          <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+        </form>
+        
+        <div class="social-links">
+          <a href="https://wa.me/919746431460" class="social-link" target="_blank" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+          <a href="https://facebook.com/yourprofile" class="social-link" target="_blank" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://instagram.com/yourprofile" class="social-link" target="_blank" title="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://linkedin.com/yourprofile" class="social-link" target="_blank" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- Footer -->
   <footer>
-    &copy; 2025 ISSA Digital Services. All rights reserved.<br>
-    Designed by Arshad Kuttyalam
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>ISSA Digital Services</h3>
+          <p>Professional CV writing and career services to help you stand out and land your dream job.</p>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#testimonials">Success Stories</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Services</h3>
+          <ul class="footer-links">
+            <li><a href="#services">CV Writing</a></li>
+            <li><a href="#services">Cover Letters</a></li>
+            <li><a href="#services">LinkedIn Profiles</a></li>
+            <li><a href="#services">Personal Portfolios</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Contact Info</h3>
+          <ul class="footer-links">
+            <li><a href="tel:+919746431460"><i class="fas fa-phone-alt"></i> +91 9746431460</a></li>
+            <li><a href="mailto:contact@issadigitalservices.com"><i class="fas fa-envelope"></i> contact@issadigitalservices.com</a></li>
+            <li><a href="https://wa.me/919746431460"><i class="fab fa-whatsapp"></i> WhatsApp Us</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 ISSA Digital Services. All rights reserved. | Designed by Arshad Kuttyalam</p>
+      </div>
+    </div>
   </footer>
 
   <!-- WhatsApp Script -->
@@ -379,18 +936,45 @@
       const name = document.getElementById('name').value;
       const phone = document.getElementById('phone').value;
       const email = document.getElementById('email').value;
-      const message = `Name: ${name}%0AMobile: ${phone}%0AEmail: ${email}`;
-      window.open(`https://wa.me/919746431460?text=${message}`, '_blank');
+      const service = document.getElementById('service').value;
+      const message = document.getElementById('message').value;
+      
+      const whatsappMessage = `Hi ISSA Digital Services,\n\nI'm interested in your ${service} service.\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\n\n${message ? 'Additional Message: ' + message : ''}`;
+      
+      window.open(`https://wa.me/919746431460?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
     });
 
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+      mainNav.classList.toggle('active');
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (mainNav.classList.contains('active')) {
+          mainNav.classList.remove('active');
+        }
+        
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+    
     // Link loader for all internal links
     const links = document.querySelectorAll('a[href]');
     const loader = document.getElementById('loader-overlay');
-
+    
     links.forEach(link => {
       const target = link.getAttribute('target');
       const href = link.getAttribute('href');
-
+      
       if (href && !href.startsWith('javascript:') && target !== '_blank' && !href.startsWith('https://wa.me')) {
         link.addEventListener('click', function(e) {
           e.preventDefault();
@@ -401,16 +985,10 @@
         });
       }
     });
+    
+    window.addEventListener('pageshow', function() {
+      document.getElementById('loader-overlay').style.display = 'none';
+    });
   </script>
-
-
-<script>
-  window.addEventListener('pageshow', function (event) {
-    // Hide loader when returning via back/forward button
-    document.getElementById('loader-overlay').style.display = 'none';
-  });
-</script>
-
-
 </body>
 </html>
