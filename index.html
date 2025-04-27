@@ -145,17 +145,18 @@
 
     .header-container {
       display: flex;
-      justify-content: space-between;
+      /* Changed justify-content to center or flex-start if only logo remains */
+      justify-content: flex-start; /* Align logo to the left */
+      /* Or use justify-content: center; to center the logo */
       align-items: center;
-      flex-wrap: wrap; /* Allow wrapping on small screens */
-      padding: 0.75rem 1rem;
+      padding: 0.75rem 1rem; /* Keep padding */
     }
 
     .logo {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin-bottom: 0.5rem; /* Add space below logo if nav wraps */
+      margin-bottom: 0; /* Removed margin-bottom as nav is gone */
     }
 
     .logo img {
@@ -177,29 +178,11 @@
       color: #d1d5db;
     }
 
-    /* Navigation Styles (Always Visible) */
-    nav {
-      display: flex;
-      gap: 0.5rem; /* Spacing between links */
-      flex-wrap: wrap; /* Allow links to wrap */
-      justify-content: center; /* Center links when wrapped */
-      width: 100%; /* Take full width on small screens */
-      margin-top: 0.5rem; /* Space above nav when wrapped */
-    }
+    /* Navigation Styles Removed */
+    /* nav { ... } */
+    /* nav a { ... } */
+    /* nav a:hover { ... } */
 
-    nav a {
-      padding: 0.5rem 0.8rem; /* Adjust padding */
-      font-weight: 500;
-      transition: var(--transition);
-      color: #e5e7eb; /* Lighter color for nav links */
-      border-radius: 0.25rem; /* Slight rounding */
-      font-size: 0.9rem; /* Slightly smaller font */
-    }
-
-    nav a:hover {
-      color: white;
-      background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
-    }
 
     /* Hero Section */
     .hero {
@@ -526,25 +509,14 @@
       }
 
       .header-container {
-        flex-wrap: nowrap; /* Prevent wrapping */
+        /* flex-wrap: nowrap; */ /* Not needed if only logo */
         padding: 1rem 2rem;
       }
 
-      .logo {
-          margin-bottom: 0; /* Remove bottom margin */
-      }
+      /* .logo { margin-bottom: 0; } */ /* Already set */
 
-      nav {
-          width: auto; /* Allow nav to size based on content */
-          margin-top: 0; /* Remove top margin */
-          justify-content: flex-end; /* Align nav to the right */
-          gap: 1rem; /* Increase gap */
-      }
-
-       nav a {
-          padding: 0.5rem 1rem; /* Adjust padding */
-          font-size: 0.95rem; /* Slightly larger font */
-      }
+      /* nav { ... } */ /* Removed */
+      /* nav a { ... } */ /* Removed */
 
       .hero {
         padding: 5rem 0;
@@ -607,17 +579,11 @@
       <a href="#home" class="logo"> <img src="assets/Images/Issa-Logo.png" alt="ISSA Digital Services Logo"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"> <span style="display:none; background: var(--primary-color); color: white; padding: 10px; border-radius: 50%; font-weight: bold; width: 40px; height: 40px; text-align: center; line-height: 20px;">IS</span> <div class="logo-text">
           <h1>ISSA Digital Services</h1>
-          <p>Professional CV Writing</p>
+          <p> Innovative Services for Skill Advancement</p>
         </div>
       </a>
 
-      <nav id="mainNav">
-        <a href="#home">Home</a>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </div>
+      </div>
   </header>
 
   <main>
@@ -646,9 +612,8 @@
               </div>
               <div class="service-content">
                 <h3>ATS-Optimized CV</h3>
-                <h3>Professional Design CV</h3>
                 <p>Resume designed to pass Applicant Tracking Systems and impress recruiters.</p>
-                <span class="service-price">Starting at ₹399</span>
+                <span class="service-price">Starting at ₹999</span>
                 <a href="#contact" class="btn">Order Now</a>
               </div>
             </div>
@@ -660,7 +625,7 @@
               <div class="service-content">
                 <h3>Professional Cover Letter</h3>
                 <p>Custom-written letter that highlights your unique qualifications.</p>
-                <span class="service-price">Starting at ₹149</span>
+                <span class="service-price">Starting at ₹599</span>
                 <a href="#contact" class="btn">Order Now</a>
               </div>
             </div>
@@ -734,8 +699,8 @@
               </div>
 
               <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" class="form-control" placeholder="Enter your Mobile Number" required pattern="[0-9\s+-]{8,}" title="Please enter a valid phone number">
+                <label for="phone">Phone Number (WhatsApp)</label>
+                <input type="tel" id="phone" class="form-control" placeholder="Enter your WhatsApp number" required pattern="[0-9\s+-]{8,}" title="Please enter a valid phone number">
               </div>
 
               <div class="form-group">
@@ -790,7 +755,7 @@
           <h3>Contact Info</h3>
           <ul class="footer-links">
             <li><a href="tel:+919746431460"><i class="fas fa-phone-alt"></i> +91 9746431460</a></li>
-            <li><a href="mailto:issadigitalservices@gmail.com"><i class="fas fa-envelope"></i> issadigitalservices@gmail.com</a></li>
+            <li><a href="mailto:contact@issadigitalservices.com"><i class="fas fa-envelope"></i> contact@issadigitalservices.com</a></li>
             <li><a href="https://wa.me/919746431460" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a></li>
             </ul>
         </div>
@@ -810,19 +775,33 @@
       // Get form values
       const name = document.getElementById('name').value.trim();
       const phone = document.getElementById('phone').value.trim();
-      // Email field removed
       const service = document.getElementById('service').value;
       const message = document.getElementById('message').value.trim();
 
       // Basic validation check (ensure required fields are filled)
       if (!name || !phone || !service) {
-          alert('Please fill in all required fields (Name, Phone, Service Needed).');
+          // Using a more user-friendly notification instead of alert()
+          const form = document.getElementById('whatsapp-form');
+          let errorMsg = form.querySelector('.error-message');
+          if (!errorMsg) {
+              errorMsg = document.createElement('p');
+              errorMsg.style.color = 'red';
+              errorMsg.style.marginTop = '10px';
+              errorMsg.classList.add('error-message');
+              form.insertBefore(errorMsg, form.querySelector('button[type="submit"]'));
+          }
+          errorMsg.textContent = 'Please fill in all required fields (Name, Phone, Service Needed).';
           return; // Stop submission if validation fails
+      } else {
+          // Clear error message if validation passes
+          const errorMsg = document.getElementById('whatsapp-form').querySelector('.error-message');
+          if (errorMsg) errorMsg.textContent = '';
       }
+
 
       // Construct WhatsApp message
       const whatsappNumber = '919746431460'; // Your WhatsApp number
-      let whatsappMessage = `Hi ISSA Digital Services,\n\nI'm interested in the *${service}* service.\n\n*Name:* ${name}\n*Phone:* ${phone}\n`; // Email removed
+      let whatsappMessage = `Hi ISSA Digital Services,\n\nI'm interested in the *${service}* service.\n\n*Name:* ${name}\n*Phone:* ${phone}\n`;
 
       if (message) {
         whatsappMessage += `\n*Details:* ${message}`;
@@ -841,10 +820,8 @@
       // e.target.reset();
     });
 
-    // --- Mobile Menu Logic Removed (as nav is always visible) ---
-
     // --- Smooth Scrolling for Anchor Links ---
-    // Still relevant for navigating sections
+    // Still relevant for navigating sections via buttons
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
@@ -870,7 +847,8 @@
       const target = link.getAttribute('target');
 
       // Trigger loader only for non-hash, non-javascript, non-blank-target links
-      if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank' && !link.closest('form')) { // Exclude form submit links handled elsewhere if needed
+      // Also exclude the WhatsApp links from triggering the loader
+      if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank' && !link.closest('form') && !href.startsWith('https://wa.me')) {
         link.addEventListener('click', function(e) {
           // Prevent default navigation immediately
           e.preventDefault();
@@ -901,6 +879,7 @@
     const copyrightElement = document.getElementById('copyright');
     if (copyrightElement) {
         const currentYear = new Date().getFullYear();
+        // Ensure the designer credit remains
         copyrightElement.innerHTML = `&copy; ${currentYear} ISSA Digital Services. All rights reserved. | Designed by Arshad Kuttyalam`;
     }
 
