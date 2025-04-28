@@ -145,9 +145,7 @@
 
     .header-container {
       display: flex;
-      /* Changed justify-content to center or flex-start if only logo remains */
       justify-content: flex-start; /* Align logo to the left */
-      /* Or use justify-content: center; to center the logo */
       align-items: center;
       padding: 0.75rem 1rem; /* Keep padding */
     }
@@ -162,7 +160,6 @@
     .logo img {
       width: 40px;
       height: auto;
-      /* Add fallback style in case image fails */
       background-color: var(--light-color);
       border-radius: 50%;
     }
@@ -178,15 +175,8 @@
       color: #d1d5db;
     }
 
-    /* Navigation Styles Removed */
-    /* nav { ... } */
-    /* nav a { ... } */
-    /* nav a:hover { ... } */
-
-
     /* Hero Section */
     .hero {
-      /* Changed background gradient for contrast */
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       color: white;
       padding: 4rem 0;
@@ -235,6 +225,8 @@
       box-shadow: var(--shadow);
       transition: var(--transition);
       border: 1px solid var(--border-color); /* Updated border */
+      display: flex; /* Use flex for vertical layout */
+      flex-direction: column;
     }
 
     .service-card:hover {
@@ -246,25 +238,45 @@
     .service-icon {
       background-color: var(--primary-color);
       color: white;
-      font-size: 1.5rem;
-      padding: 1rem;
+      padding: 1.5rem 1rem; /* Adjusted padding */
       text-align: center;
+      /* Use flexbox to center icon and text */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem; /* Space between icon and title */
+      min-height: 120px; /* Ensure a minimum height */
+    }
+
+    .service-icon i {
+        font-size: 1.75rem; /* Icon size */
+    }
+
+    /* Style for H3 inside the service icon */
+    .service-icon h3 {
+      color: white;
+      font-size: 1.1rem; /* Match previous size */
+      font-weight: 600;
+      margin: 0; /* Remove default margin */
+      line-height: 1.3;
     }
 
     .service-content {
       padding: 1.25rem;
+      flex-grow: 1; /* Allow content to fill remaining space */
+      display: flex; /* Use flex for content layout */
+      flex-direction: column;
     }
 
-    .service-content h3 {
-      margin-bottom: 0.75rem;
-      color: var(--dark-color);
-      font-size: 1.1rem;
-    }
+    /* Removed h3 style from here as it's moved to .service-icon h3 */
+    /* .service-content h3 { ... } */
 
     .service-content p {
       color: var(--text-light);
       margin-bottom: 1rem;
       font-size: 0.9rem;
+      flex-grow: 1; /* Allow paragraph to take available space */
     }
 
     .service-price {
@@ -274,6 +286,11 @@
       display: block;
       font-size: 0.95rem;
     }
+
+    .service-content .btn {
+        margin-top: auto; /* Push button to the bottom */
+    }
+
 
     /* About Section */
     .about-content {
@@ -301,7 +318,6 @@
     }
 
     .about-image img {
-        /* Add fallback style */
         background-color: var(--border-color);
     }
 
@@ -509,14 +525,8 @@
       }
 
       .header-container {
-        /* flex-wrap: nowrap; */ /* Not needed if only logo */
         padding: 1rem 2rem;
       }
-
-      /* .logo { margin-bottom: 0; } */ /* Already set */
-
-      /* nav { ... } */ /* Removed */
-      /* nav a { ... } */ /* Removed */
 
       .hero {
         padding: 5rem 0;
@@ -579,11 +589,10 @@
       <a href="#home" class="logo"> <img src="assets/Images/Issa-Logo.png" alt="ISSA Digital Services Logo"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"> <span style="display:none; background: var(--primary-color); color: white; padding: 10px; border-radius: 50%; font-weight: bold; width: 40px; height: 40px; text-align: center; line-height: 20px;">IS</span> <div class="logo-text">
           <h1>ISSA Digital Services</h1>
-          <p> Innovative Services for Skill Advancement</p>
+          <p>Innovative Services for Skill Advancement</p>
         </div>
       </a>
-
-      </div>
+    </div>
   </header>
 
   <main>
@@ -592,7 +601,7 @@
           <h1>Professional CV Writing Services</h1>
           <p>Get noticed by employers with our ATS-optimized resumes, compelling cover letters, and professional LinkedIn profiles tailored for your career success.</p>
           <div class="hero-btns">
-            <a href="#contact" class="btn btn-secondary">Get Started Now</a>
+             <a href="#contact" class="btn btn-secondary">Get Started Now</a>
           </div>
         </div>
       </section>
@@ -608,9 +617,9 @@
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-file-alt"></i>
+                <h3>ATS-Optimized CV</h3>
               </div>
               <div class="service-content">
-                <h3>ATS-Optimized CV</h3>
                 <p>Resume designed to pass Applicant Tracking Systems and impress recruiters.</p>
                 <span class="service-price">Starting at ₹999</span>
                 <a href="#contact" class="btn">Order Now</a>
@@ -620,10 +629,10 @@
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-envelope-open-text"></i>
+                 <h3>Professional Cover Letter</h3>
               </div>
               <div class="service-content">
-                <h3>Professional Cover Letter</h3>
-                <p>Custom-written letter that highlights your unique qualifications.</p>
+                 <p>Custom-written letter that highlights your unique qualifications.</p>
                 <span class="service-price">Starting at ₹599</span>
                 <a href="#contact" class="btn">Order Now</a>
               </div>
@@ -632,10 +641,10 @@
             <div class="service-card">
               <div class="service-icon">
                 <i class="fab fa-linkedin"></i>
+                 <h3>LinkedIn Profile</h3>
               </div>
               <div class="service-content">
-                <h3>LinkedIn Profile</h3>
-                <p>Optimized profile to attract recruiters and build your network.</p>
+                 <p>Optimized profile to attract recruiters and build your network.</p>
                 <span class="service-price">Starting at ₹1299</span>
                 <a href="#contact" class="btn">Order Now</a>
               </div>
@@ -644,10 +653,10 @@
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-briefcase"></i>
+                 <h3>Personal Portfolio</h3>
               </div>
               <div class="service-content">
-                <h3>Personal Portfolio</h3>
-                <p>Custom website to showcase your work and achievements.</p>
+                 <p>Custom website to showcase your work and achievements.</p>
                 <span class="service-price">Starting at ₹2499</span>
                 <a href="#contact" class="btn">Order Now</a>
               </div>
@@ -669,10 +678,7 @@
               <p>We are committed to providing high-quality, affordable career support because we believe everyone deserves the chance to succeed professionally.</p>
               <a href="#contact" class="btn" style="margin-top: 1rem;">Learn More</a>
             </div>
-            <div class="about-image">
-              <img src="assets/Images/about-image.jpg" alt="Team working on resumes"
-                   onerror="this.src='https://placehold.co/600x400/e2e8f0/374151?text=About+Us'; this.alt='Placeholder image for About Us section';"> </div>
-          </div>
+           
         </div>
       </section>
 
@@ -698,8 +704,7 @@
               </div>
 
               <div class="form-group">
-                <label for="phone">Mobile Number</label>
-                <input type="tel" id="phone" class="form-control" placeholder="Enter your Mobile number" required pattern="[0-9\s+-]{8,}" title="Please enter a valid phone number">
+                <label for="phone">Mobile Number</label> <input type="tel" id="phone" class="form-control" placeholder="Enter your Mobile number" required pattern="[0-9\s+-]{8,}" title="Please enter a valid phone number">
               </div>
 
               <div class="form-group">
@@ -707,7 +712,7 @@
                 <select id="service" class="form-control" required>
                   <option value="" disabled selected>-- Select a service --</option>
                   <option value="ATS CV">ATS-Optimized CV (from ₹999)</option>
-                  <option value="Professional CV">Professional Designed CV CV (from ₹999)</option>
+                  <option value="Professional CV">Professional Designed CV (from ₹999)</option>
                   <option value="Cover Letter">Cover Letter (from ₹599)</option>
                   <option value="LinkedIn Profile">LinkedIn Profile (from ₹1299)</option>
                   <option value="Portfolio">Personal Portfolio (from ₹2499)</option>
@@ -757,7 +762,7 @@
             <li><a href="tel:+919746431460"><i class="fas fa-phone-alt"></i> +91 9746431460</a></li>
             <li><a href="mailto:issadigitalservices@gmail.com"><i class="fas fa-envelope"></i> issadigitalservices@gmail.com</a></li>
             <li><a href="https://wa.me/919746431460" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a></li>
-            </ul>
+          </ul>
         </div>
       </div>
 
@@ -788,6 +793,7 @@
               errorMsg.style.color = 'red';
               errorMsg.style.marginTop = '10px';
               errorMsg.classList.add('error-message');
+              // Insert error message before the submit button
               form.insertBefore(errorMsg, form.querySelector('button[type="submit"]'));
           }
           errorMsg.textContent = 'Please fill in all required fields (Name, Phone, Service Needed).';
@@ -821,7 +827,6 @@
     });
 
     // --- Smooth Scrolling for Anchor Links ---
-    // Still relevant for navigating sections via buttons
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
@@ -850,26 +855,22 @@
       // Also exclude the WhatsApp links from triggering the loader
       if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank' && !link.closest('form') && !href.startsWith('https://wa.me')) {
         link.addEventListener('click', function(e) {
-          // Prevent default navigation immediately
           e.preventDefault();
-          // Show loader
           if(loader) loader.classList.add('show');
-          // Navigate after a short delay to allow loader to show
           setTimeout(() => {
             window.location.href = href;
-          }, 150); // Small delay
+          }, 150);
         });
       }
     });
 
     // Hide loader when page is shown (e.g., after back button)
     window.addEventListener('pageshow', function (event) {
-      // Check if the page is being loaded from the cache (bfcache)
       if (event.persisted && loader) {
-        loader.classList.remove('show'); // Hide loader immediately if navigating back
+        loader.classList.remove('show');
       }
     });
-    // Ensure loader is hidden on initial load (in case it was somehow stuck)
+    // Ensure loader is hidden on initial load
      window.addEventListener('load', function () {
          if(loader) loader.classList.remove('show');
      });
@@ -879,7 +880,6 @@
     const copyrightElement = document.getElementById('copyright');
     if (copyrightElement) {
         const currentYear = new Date().getFullYear();
-        // Ensure the designer credit remains
         copyrightElement.innerHTML = `&copy; ${currentYear} ISSA Digital Services. All rights reserved. | Designed by Arshad Kuttyalam`;
     }
 
