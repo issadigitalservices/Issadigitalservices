@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Join the Excel Master Class by ISSA Digital Services. Learn Basic to Advanced Excel, AI automation, Power Query, and more. Starts July 1st, 2025!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Excel Master Class with AI | ISSA Digital Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Add custom styles or overrides here if needed */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Style for the loader */
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000; /* Ensure loader is on top */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #loader-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #10b981; /* Green color for Excel theme */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* Custom highlight color for this page */
+        :root {
+             --page-highlight-color: #10b981; /* Green */
+             --page-highlight-dark: #0d9488; /* Darker Green */
+        }
+        .highlight-text { color: var(--page-highlight-color); }
+        .highlight-bg { background-color: var(--page-highlight-color); }
+        .highlight-bg-dark:hover { background-color: var(--page-highlight-dark); }
+        .highlight-border { border-color: var(--page-highlight-color); }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="loader-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="bg-gray-800 text-white sticky top-0 z-40 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2"> <img src="assets/Images/Issa-Logo.png" alt="ISSA Digital Services Logo" class="h-10 w-auto bg-white rounded-full p-1"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <span style="display:none; background: #2563eb; color: white; padding: 8px; border-radius: 50%; font-weight: bold; width: 40px; height: 40px; text-align: center; line-height: 24px;">IS</span>
+                <div>
+                    <h1 class="text-lg font-semibold">ISSA Digital Services</h1>
+                    <p class="text-xs text-gray-300">Skill Advancement Experts</p>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center gap-4">
+               
+                 <a href="https://wa.me/919746431460?text=Hi%2C%20I%27m%20interested%20in%20the%20Excel%20Master%20Class." target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300 flex items-center gap-2">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp Us</span>
+                </a>
+            </div>
+             <a href="https://wa.me/919746431460?text=Hi%2C%20I%27m%20interested%20in%20the%20Excel%20Master%20Class." target="_blank" class="md:hidden bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="bg-gradient-to-r from-green-600 to-green-800 text-white py-16 md:py-20">
+            <div class="container mx-auto px-4 text-center">
+                <span class="text-sm font-semibold bg-white text-green-700 px-3 py-1 rounded-full mb-4 inline-block">Starts July 1st, 2025</span>
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">Excel Master Class: From Basic to Advanced with AI Integration</h1>
+                <p class="text-lg md:text-xl mb-8 text-green-100 max-w-3xl mx-auto">Transform your data skills. Learn advanced Excel techniques and harness the power of AI to automate tasks – no complex formulas required!</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                    <a href="#course-details" class="bg-white text-green-700 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 w-full md:w-auto">Course Details</a>
+                    <a href="#enroll" class="highlight-bg highlight-bg-dark font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 w-full md:w-auto">Enroll Now</a>
+                </div>
+                 <div class="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-green-200">
+                    <span><i class="fas fa-check-circle mr-1"></i> Basic to Advanced</span>
+                    <span><i class="fas fa-robot mr-1"></i> AI Integration</span>
+                    <span><i class="fas fa-cogs mr-1"></i> Automation Focus</span>
+                    <span><i class="fas fa-gift mr-1"></i> Bonus Content Included</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="course-details" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">Course Highlights: What You Will Master</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-table"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Comprehensive Excel Skills</h3>
+                        <p class="text-gray-600 text-sm">From fundamental operations, formulas, and functions to advanced data analysis, pivot tables, charts, and dashboards.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-robot"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Excel Automation with AI</h3>
+                        <p class="text-gray-600 text-sm">Learn to leverage AI tools to automate repetitive tasks, generate insights, and create complex reports without memorizing formulas.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-filter"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Introduction to Power Query</h3>
+                        <p class="text-gray-600 text-sm">Get a foundational understanding of Power Query for efficient data cleaning, transformation, and loading.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-file-word"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Essential MS Word Skills</h3>
+                        <p class="text-gray-600 text-sm">Covering basic document formatting, styles, and integration techniques relevant to reporting.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-lightbulb"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Tips, Tricks & Best Practices</h3>
+                        <p class="text-gray-600 text-sm">Learn time-saving shortcuts, efficiency techniques, and professional best practices throughout the course.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-gift"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Exclusive Bonus (Worth ₹5000)</h3>
+                        <p class="text-gray-600 text-sm">Receive valuable bonus materials, templates, and resources to further accelerate your learning and application.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <h2 class="text-3xl font-bold text-center mb-12">Is This Course Right For You?</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700">
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Students seeking essential job skills.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Professionals looking to improve efficiency and data handling.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Individuals wanting to automate tasks using AI in Excel.</span></li>
+                    </ul>
+                     <ul class="space-y-3">
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Anyone managing data, creating reports, or performing analysis.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Beginners wanting a comprehensive Excel education.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Intermediate users ready to explore advanced features and AI.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="enroll" class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-2xl">
+                 <h2 class="text-3xl font-bold text-center mb-4">Enroll in the Excel Master Class!</h2>
+                 <p class="text-center text-gray-600 mb-8">Starts <strong class="highlight-text">July 1st, 2025</strong>. Limited seats available. Send your details via WhatsApp to inquire or enroll.</p>
+
+                 <div class="bg-gray-50 p-8 rounded-lg shadow-md border border-gray-200">
+                     <form id="whatsapp-form-excel">
+                        <div class="mb-4">
+                            <label for="name-excel" class="block text-gray-700 text-sm font-medium mb-2">Your Name</label>
+                            <input type="text" id="name-excel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="phone-excel" class="block text-gray-700 text-sm font-medium mb-2">Mobile Number (WhatsApp)</label>
+                            <input type="tel" id="phone-excel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" placeholder="Enter your WhatsApp number" required pattern="[0-9\s+-]{8,}" title="Please enter a valid phone number">
+                        </div>
+
+                         <input type="hidden" id="course-excel" value="Excel Master Class">
+
+                        <div class="mb-6">
+                            <label for="message-excel" class="block text-gray-700 text-sm font-medium mb-2">Questions or Message (Optional)</label>
+                            <textarea id="message-excel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500" rows="4" placeholder="Any specific questions about the course?"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full highlight-bg highlight-bg-dark text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp"></i> Inquire / Enroll via WhatsApp
+                        </button>
+                        <p class="text-xs text-gray-500 text-center mt-4">We'll reply via WhatsApp with enrollment details and answer your questions.</p>
+                    </form>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                 <div class="flex justify-center gap-4 mb-4">
+                    <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp" class="text-gray-300 hover:text-green-400 transition duration-300 text-xl"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook" class="text-gray-300 hover:text-blue-400 transition duration-300 text-xl"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram" class="text-gray-300 hover:text-pink-400 transition duration-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn" class="text-gray-300 hover:text-blue-300 transition duration-300 text-xl"><i class="fab fa-linkedin-in"></i></a>
+                 </div>
+                 <p class="text-sm mb-1"><a href="tel:+919746431460" class="hover:text-white"><i class="fas fa-phone-alt mr-1"></i> +91 9746431460</a></p>
+                 <p class="text-sm"><a href="mailto:issadigitalservices@gmail.com" class="hover:text-white"><i class="fas fa-envelope mr-1"></i> issadigitalservices@gmail.com</a></p>
+            </div>
+            <div class="border-t border-gray-700 pt-4 mt-4">
+                <p id="copyright-excel" class="text-xs">&copy; 2025 ISSA Digital Services. All rights reserved. | <a href="index.html" class="hover:text-white">Home</a></p>
+                 <p class="text-xs mt-1">Designed by Arshad Kuttyalam</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- WhatsApp Form Submission ---
+        document.getElementById('whatsapp-form-excel').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name-excel').value.trim();
+            const phone = document.getElementById('phone-excel').value.trim();
+            const course = document.getElementById('course-excel').value; // Get course name
+            const message = document.getElementById('message-excel').value.trim();
+
+            if (!name || !phone) {
+                const form = document.getElementById('whatsapp-form-excel');
+                let errorMsg = form.querySelector('.error-message');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('p');
+                    errorMsg.style.color = 'red';
+                    errorMsg.style.marginTop = '10px';
+                    errorMsg.classList.add('error-message');
+                    form.insertBefore(errorMsg, form.querySelector('button[type="submit"]'));
+                }
+                errorMsg.textContent = 'Please fill in Your Name and Mobile Number.';
+                return;
+            } else {
+                const errorMsg = document.getElementById('whatsapp-form-excel').querySelector('.error-message');
+                if (errorMsg) errorMsg.textContent = '';
+            }
+
+            const whatsappNumber = '919746431460'; // Your WhatsApp number
+            let whatsappMessage = `Hi ISSA Digital Services,\n\nI'm interested in enrolling in the *${course}*.\n\n*Name:* ${name}\n*Phone:* ${phone}\n`;
+
+            if (message) {
+                whatsappMessage += `\n*Message:* ${message}`;
+            } else {
+                 whatsappMessage += `\nPlease send me the enrollment details.`;
+            }
+
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // --- Smooth Scrolling for Anchor Links ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#') && href.length > 1) {
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // --- Page Transition Loader ---
+        const loader = document.getElementById('loader-overlay');
+        function showLoader() { if(loader) loader.classList.add('show'); }
+        function hideLoader() { if(loader) loader.classList.remove('show'); }
+
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            const target = link.getAttribute('target');
+            if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank' && !link.closest('form') && !href.startsWith('https://wa.me')) {
+                link.addEventListener('click', function(e) {
+                    const isInternalPageLink = !href.startsWith('http') && !href.startsWith('//') && href.includes('.html');
+                    if (isInternalPageLink || !href.startsWith('http')) {
+                         e.preventDefault();
+                         showLoader();
+                         setTimeout(() => { window.location.href = href; }, 150);
+                    }
+                });
+            }
+        });
+        window.addEventListener('pageshow', function (event) { if (event.persisted) { hideLoader(); } });
+        window.addEventListener('load', hideLoader);
+
+
+        // --- Dynamic Copyright Year ---
+        const copyrightElement = document.getElementById('copyright-excel');
+        if (copyrightElement) {
+            const currentYear = new Date().getFullYear();
+            copyrightElement.innerHTML = `&copy; ${currentYear} ISSA Digital Services. All rights reserved. | <a href="index.html" class="hover:text-white">Home</a>`;
+        }
+
+    </script>
+
+</body>
+</html>
