@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Expert CV Writing Services by ISSA Digital Services. ATS-optimized, professional resumes tailored to your career goals.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV Writing Services | ISSA Digital Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Add custom styles or overrides here if needed */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Style for the loader */
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000; /* Ensure loader is on top */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #loader-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #2563eb; /* Blue color */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="loader-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="bg-gray-800 text-white sticky top-0 z-40 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2"> <img src="assets/Images/Issa-Logo.png" alt="ISSA Digital Services Logo" class="h-10 w-auto bg-white rounded-full p-1"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <span style="display:none; background: #2563eb; color: white; padding: 8px; border-radius: 50%; font-weight: bold; width: 40px; height: 40px; text-align: center; line-height: 24px;">IS</span>
+                <div>
+                    <h1 class="text-lg font-semibold">ISSA Digital Services</h1>
+                    <p class="text-xs text-gray-300">CV Writing Experts</p>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center gap-4">
+                <a href="tel:+919746431460" class="flex items-center gap-2 text-sm hover:text-blue-300 transition duration-300">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+91 9746431460</span>
+                </a>
+                 <a href="https://wa.me/919746431460?text=Hi%2C%20I%27m%20interested%20in%20your%20CV%20writing%20service." target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300 flex items-center gap-2">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp Us</span>
+                </a>
+            </div>
+             <a href="https://wa.me/919746431460?text=Hi%2C%20I%27m%20interested%20in%20your%20CV%20writing%20service." target="_blank" class="md:hidden bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16 md:py-24">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">Land Your Dream Job with a Professional CV</h1>
+                <p class="text-lg md:text-xl mb-8 text-blue-100 max-w-3xl mx-auto">Our expert writers create ATS-friendly, impactful CVs that get you noticed by recruiters and hiring managers.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                    <a href="#pricing" class="bg-white text-blue-700 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 w-full md:w-auto">View Packages</a>
+                    <a href="#contact-form" class="bg-green-500 hover:bg-green-600 font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 w-full md:w-auto">Get Started Now</a>
+                </div>
+                <div class="mt-8 flex justify-center gap-6 text-sm text-blue-200">
+                    <span><i class="fas fa-check-circle mr-1"></i> ATS Optimized</span>
+                    <span><i class="fas fa-check-circle mr-1"></i> Industry Specific</span>
+                    <span><i class="fas fa-check-circle mr-1"></i> Fast Turnaround</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">How Our CV Writing Service Works</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="text-blue-600 mb-4">
+                            <i class="fas fa-shopping-cart fa-3x"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">1. Choose Your Package</h3>
+                        <p class="text-gray-600">Select the CV writing package that best suits your experience level and needs.</p>
+                    </div>
+                    <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
+                         <div class="text-blue-600 mb-4">
+                            <i class="fas fa-file-upload fa-3x"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">2. Submit Your Details</h3>
+                        <p class="text-gray-600">Provide your existing CV (if any) and fill out our simple questionnaire about your career goals.</p>
+                    </div>
+                    <div class="p-6 border border-gray-200 rounded-lg shadow-sm">
+                         <div class="text-blue-600 mb-4">
+                            <i class="fas fa-comments fa-3x"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">3. Collaborate & Receive</h3>
+                        <p class="text-gray-600">Collaborate with your writer, review the draft, and receive your final ATS-optimized CV.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">Why Choose ISSA Digital Services?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="flex items-start gap-4 p-4">
+                        <div class="text-green-500 text-2xl mt-1"><i class="fas fa-robot"></i></div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-1">ATS Optimization Experts</h3>
+                            <p class="text-gray-600 text-sm">We ensure your CV passes through Applicant Tracking Systems used by major companies.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start gap-4 p-4">
+                         <div class="text-green-500 text-2xl mt-1"><i class="fas fa-user-tie"></i></div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-1">Industry-Specific Writers</h3>
+                            <p class="text-gray-600 text-sm">Our writers have experience across various industries to tailor your CV effectively.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start gap-4 p-4">
+                         <div class="text-green-500 text-2xl mt-1"><i class="fas fa-medal"></i></div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-1">Proven Results</h3>
+                            <p class="text-gray-600 text-sm">Helping clients secure interviews and land better jobs is our primary goal.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start gap-4 p-4">
+                         <div class="text-green-500 text-2xl mt-1"><i class="fas fa-headset"></i></div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-1">Dedicated Support</h3>
+                            <p class="text-gray-600 text-sm">Direct communication with your writer and dedicated customer support.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start gap-4 p-4">
+                         <div class="text-green-500 text-2xl mt-1"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-1">Confidentiality Assured</h3>
+                            <p class="text-gray-600 text-sm">Your personal information and career details are kept strictly confidential.</p>
+                        </div>
+                    </div>
+                     <div class="flex items-start gap-4 p-4">
+                         <div class="text-green-500 text-2xl mt-1"><i class="fas fa-hand-holding-usd"></i></div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-1">Affordable Pricing</h3>
+                            <p class="text-gray-600 text-sm">Professional CV writing services that don't break the bank.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-2">Our CV Writing Packages</h2>
+                <p class="text-center text-gray-600 mb-12">Choose the package that fits your career stage.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="border border-gray-200 rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 class="text-xl font-semibold text-center mb-4">Entry Level CV</h3>
+                        <p class="text-center text-gray-500 text-sm mb-4">(Mostly Suitable for Freshers & <1 Year Experience)</p>
+                        <div class="text-center text-4xl font-bold mb-6">₹349</div>
+                        <ul class="space-y-3 text-gray-600 mb-8 flex-grow">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Professionally Written CV</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> ATS Optimized Format</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Keyword Rich Content</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Word & PDF Formats</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Delivery within 24 Hours</li>
+                        </ul>
+                        <a href="#contact-form" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg text-center transition duration-300">Order Now</a>
+                    </div>
+
+                    <div class="border-2 border-blue-600 rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition duration-300 relative">
+                        <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Most Popular</span>
+                        <h3 class="text-xl font-semibold text-center mb-4 mt-4">Mid-Career CV</h3>
+                        <p class="text-center text-gray-500 text-sm mb-4">(Mostly Suitable for 2-6 Years Experience)</p>
+                        <div class="text-center text-4xl font-bold mb-6">₹399</div>
+                        <ul class="space-y-3 text-gray-600 mb-8 flex-grow">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> All Entry Level Features</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Achievement Focused Content</li>
+                             <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Industry Tailored</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Cover Letter Option Available (Extra + Rs. 99)</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Delivery within 24 to 48 Hours</li>
+                        </ul>
+                        <a href="#contact-form" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg text-center transition duration-300">Order Now</a>
+                    </div>
+
+                     <div class="border border-gray-200 rounded-lg p-6 flex flex-col shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 class="text-xl font-semibold text-center mb-4">Senior Level CV</h3>
+                        <p class="text-center text-gray-500 text-sm mb-4">(6+ Years Experience)</p>
+                        <div class="text-center text-4xl font-bold mb-6">₹449</div>
+                        <ul class="space-y-3 text-gray-600 mb-8 flex-grow">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> All Mid-Career Features</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Leadership & Strategy Focus</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Priority Support</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Cover Letter Option Available (Extra + Rs. 99)</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Delivery within 24 to 48 Hours</li>
+                        </ul>
+                        <a href="#contact-form" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg text-center transition duration-300">Order Now</a>
+                    </div>
+                </div>
+                 <div class="text-center mt-12">
+                    <h3 class="text-2xl font-bold mb-4">Optional Add-ons</h3>
+                     <p class="text-gray-600 mb-6">Enhance your application further:</p>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm">Cover Letter: +₹99</span>
+                        <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm">LinkedIn Profile Optimization: +₹499</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact-form" class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-2xl">
+                 <h2 class="text-3xl font-bold text-center mb-4">Get Started Today!</h2>
+                 <p class="text-center text-gray-600 mb-8">Fill out the form below or contact us directly via WhatsApp.</p>
+
+                 <div class="bg-gray-50 p-8 rounded-lg shadow-md border border-gray-200">
+                     <form id="whatsapp-form-cv">
+                        <div class="mb-4">
+                            <label for="name-cv" class="block text-gray-700 text-sm font-medium mb-2">Your Name</label>
+                            <input type="text" id="name-cv" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="phone-cv" class="block text-gray-700 text-sm font-medium mb-2">Mobile Number</label>
+                            <input type="tel" id="phone-cv" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your Mobile Number" required pattern="[0-9\s+-]{8,}" title="Please enter a valid phone number">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="service-cv" class="block text-gray-700 text-sm font-medium mb-2">Service/Package Needed</label>
+                            <select id="service-cv" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" required>
+                            <option value="" disabled selected>-- Select a package --</option>
+                            <option value="Entry Level CV (₹349)">Entry Level CV (₹349)</option>
+                            <option value="Mid-Career CV (₹399)">Mid-Career CV (₹399)</option>
+                            <option value="Senior Level CV (₹449)">Senior Level CV (₹449)</option>
+                            <option value="Consultation">General Inquiry / Consultation</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="message-cv" class="block text-gray-700 text-sm font-medium mb-2">Additional Details (Optional)</label>
+                            <textarea id="message-cv" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" rows="4" placeholder="Tell us about your target roles, industries, years of experience, or any specific requirements."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp"></i> Send Inquiry via WhatsApp
+                        </button>
+                        <p class="text-xs text-gray-500 text-center mt-4">We'll contact you via WhatsApp to confirm details and process your order.</p>
+                    </form>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                 <div class="flex justify-center gap-4 mb-4">
+                    <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp" class="text-gray-300 hover:text-green-400 transition duration-300 text-xl"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook" class="text-gray-300 hover:text-blue-400 transition duration-300 text-xl"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram" class="text-gray-300 hover:text-pink-400 transition duration-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn" class="text-gray-300 hover:text-blue-300 transition duration-300 text-xl"><i class="fab fa-linkedin-in"></i></a>
+                 </div>
+                 
+                 <p class="text-sm"><a href="mailto:issadigitalservices@gmail.com" class="hover:text-white"><i class="fas fa-envelope mr-1"></i> issadigitalservices@gmail.com</a></p>
+            </div>
+            <div class="border-t border-gray-700 pt-4 mt-4">
+                <p id="copyright-cv" class="text-xs">&copy; 2025 ISSA Digital Services. All rights reserved. | <a href="index.html" class="hover:text-white">Home</a></p>
+                 <p class="text-xs mt-1">Designed by Arshad Kuttyalam</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- WhatsApp Form Submission ---
+        document.getElementById('whatsapp-form-cv').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name-cv').value.trim();
+            const phone = document.getElementById('phone-cv').value.trim();
+            const service = document.getElementById('service-cv').value;
+            const message = document.getElementById('message-cv').value.trim();
+
+            if (!name || !phone || !service) {
+                const form = document.getElementById('whatsapp-form-cv');
+                let errorMsg = form.querySelector('.error-message');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('p');
+                    errorMsg.style.color = 'red';
+                    errorMsg.style.marginTop = '10px';
+                    errorMsg.classList.add('error-message');
+                    form.insertBefore(errorMsg, form.querySelector('button[type="submit"]'));
+                }
+                errorMsg.textContent = 'Please fill in Name, Phone, and Service Needed.';
+                return;
+            } else {
+                const errorMsg = document.getElementById('whatsapp-form-cv').querySelector('.error-message');
+                if (errorMsg) errorMsg.textContent = '';
+            }
+
+            const whatsappNumber = '919746431460'; // Your WhatsApp number
+            let whatsappMessage = `Hi ISSA Digital Services,\n\nI'm interested in the *${service}*.\n\n*Name:* ${name}\n*Phone:* ${phone}\n`;
+
+            if (message) {
+                whatsappMessage += `\n*Details:* ${message}`;
+            }
+
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // --- Smooth Scrolling for Anchor Links ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#') && href.length > 1) {
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // --- Page Transition Loader ---
+        const loader = document.getElementById('loader-overlay');
+        // Function to show loader
+        function showLoader() {
+            if(loader) loader.classList.add('show');
+        }
+        // Function to hide loader
+        function hideLoader() {
+             if(loader) loader.classList.remove('show');
+        }
+
+        // Show loader for external links or non-hash links
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            const target = link.getAttribute('target');
+
+            // Exclude hash links, javascript links, blank targets, and WhatsApp links
+            if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank' && !link.closest('form') && !href.startsWith('https://wa.me')) {
+                link.addEventListener('click', function(e) {
+                    // Check if it's a link to the same domain but different page
+                    // Basic check: doesn't start with http or //
+                    const isInternalPageLink = !href.startsWith('http') && !href.startsWith('//') && href.includes('.html'); // Adjust if using different extensions or routing
+
+                    if (isInternalPageLink || !href.startsWith('http')) { // Assume relative links are internal pages
+                         e.preventDefault();
+                         showLoader();
+                         // Allow time for loader to show before navigating
+                         setTimeout(() => {
+                             window.location.href = href;
+                         }, 150);
+                    }
+                    // External links will navigate normally without loader unless you want to add it
+                });
+            }
+        });
+
+        // Hide loader when page is shown (e.g., after back button or initial load)
+        window.addEventListener('pageshow', function (event) {
+            // Hide loader immediately if page is from bfcache
+            if (event.persisted) {
+                 hideLoader();
+            }
+        });
+        // Ensure loader is hidden on initial load completion
+        window.addEventListener('load', hideLoader);
+
+
+        // --- Dynamic Copyright Year ---
+        const copyrightElement = document.getElementById('copyright-cv');
+        if (copyrightElement) {
+            const currentYear = new Date().getFullYear();
+            // Preserve existing structure, only update year
+            copyrightElement.innerHTML = `&copy; ${currentYear} ISSA Digital Services. All rights reserved. | <a href="index.html" class="hover:text-white">Home</a>`;
+        }
+
+    </script>
+
+</body>
+</html>
+
