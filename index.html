@@ -3,15 +3,15 @@
 <head>
   <meta name="google-site-verification" content="AR5t1Mg7u4S-Shm94R9An4yiA8l3UoWwPFOBrheWRpM" />
   <meta charset="UTF-8" />
-  <meta name="description" content="Professional CV writing services, ATS-optimized resumes, cover letters, LinkedIn profiles, and personal portfolios to boost your career opportunities.">
-  <meta property="og:title" content="ISSA Digital Services | Professional CV Writing & Career Services" />
-  <meta property="og:description" content="Get noticed with our expert CV writing, cover letters, LinkedIn optimization, and personal portfolios at affordable prices." />
+  <meta name="description" content="ISSA Digital Services offers expert CV writing, cover letters, Excel masterclasses, accounting courses, and spoken English classes to enhance your skills and career prospects.">
+  <meta property="og:title" content="ISSA Digital Services | Skill Advancement & Professional Services" />
+  <meta property="og:description" content="Advance your career with ISSA Digital Services. We offer CV writing, cover letters, Excel, Accounting, and Spoken English classes." />
   <meta property="og:image" content="https://www.issadigitalservices.com/assets/Images/Issa-Logo.png" />
   <meta property="og:url" content="https://www.issadigitalservices.com" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="ISSA Digital Services" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ISSA Digital Services | Professional CV Writing & Career Services</title>
+  <title>ISSA Digital Services | Skill Advancement & Professional Services</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -194,12 +194,17 @@
       padding: 0 1rem;
     }
 
+    /* Updated Hero Headline */
     .hero h1 {
       font-size: 1.75rem;
       margin-bottom: 1rem;
       color: white;
     }
 
+    /* Removed welcome message style */
+    /* .hero .welcome-message { ... } */
+
+    /* Updated Hero Description */
     .hero p {
       font-size: 1rem;
       margin-bottom: 1.5rem;
@@ -217,7 +222,8 @@
     /* Services Section */
     .services-grid {
       display: grid;
-      grid-template-columns: 1fr; /* Single column on mobile */
+      /* Adjust grid columns for 5 items */
+      grid-template-columns: 1fr; /* Start with 1 column */
       gap: 1.5rem;
       margin-top: 2rem;
     }
@@ -283,7 +289,7 @@
       flex-grow: 1;
     }
 
-    .service-price {
+    .service-price { /* Keep for potential future use, but hide if not needed */
       font-weight: 600;
       color: var(--primary-color);
       margin-bottom: 1rem;
@@ -544,6 +550,7 @@
         gap: 1.5rem;
       }
 
+      /* Adjust grid for potentially 5 items */
       .services-grid {
         grid-template-columns: repeat(2, 1fr); /* Two columns */
       }
@@ -572,10 +579,19 @@
         padding: 4rem 0;
       }
 
+      /* Adjust grid for potentially 5 items */
       .services-grid {
-        grid-template-columns: repeat(4, 1fr); /* Four columns on large screens */
+        /* Use 3 columns on larger screens if 5 items look too cramped in 4 */
+        grid-template-columns: repeat(3, 1fr);
       }
     }
+     @media (min-width: 1200px) {
+         /* Optional: Go back to 5 columns on very large screens if desired */
+         /* .services-grid { grid-template-columns: repeat(5, 1fr); } */
+         /* Or keep 3 for consistency */
+         .services-grid { grid-template-columns: repeat(3, 1fr); }
+     }
+
   </style>
 </head>
 <body>
@@ -598,10 +614,10 @@
   <main>
       <section class="hero" id="home">
         <div class="hero-content container">
-          <h1>Professional CV Writing Services</h1>
-          <p>Get noticed by employers with our ATS-optimized resumes, compelling cover letters, and professional LinkedIn profiles tailored for your career success.</p>
+           <h1>Unlock Your Potential with ISSA Digital Services</h1>
+          <p>Elevate your career with our expert CV writing, professional development courses, and language training designed for your success.</p>
           <div class="hero-btns">
-             <a href="cv.html" class="btn btn-secondary">Get Started Now</a>
+             <a href="#services" class="btn btn-secondary">Explore Our Services</a>
           </div>
         </div>
       </section>
@@ -610,58 +626,66 @@
         <div class="container">
           <div class="section-title">
             <h2>Our Services</h2>
-            <p>Professional career documents to help you stand out</p>
+             <p>Professional Training & Career Document Services</p>
           </div>
 
           <div class="services-grid">
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-file-alt"></i>
-                <h3>ATS-Optimized CV</h3>
+                <h3>CV & Resume Writing</h3>
               </div>
               <div class="service-content">
-                <p>Resume designed to pass Applicant Tracking Systems and impress recruiters.</p>
-                <span class="service-price">Starting at ₹999</span>
-                <a href="cv.html#pricing" class="btn">Order Now</a>
+                <p>Get ATS-friendly and professionally designed CVs tailored to impress recruiters.</p>
+                <a href="cv.html#pricing" class="btn">Learn More & Order</a>
               </div>
             </div>
 
             <div class="service-card">
-               <div class="service-icon">
+              <div class="service-icon">
                 <i class="fas fa-envelope-open-text"></i>
-                 <h3>Professional Cover Letter</h3>
+                <h3>Cover Letter Writing</h3>
               </div>
               <div class="service-content">
-                 <p>Custom-written letter that highlights your unique qualifications.</p>
-                <span class="service-price">Starting at ₹599</span>
-                 <a href="#contact" class="btn">Order Now</a>
+                <p>Craft compelling cover letters that highlight your unique qualifications.</p>
+                 <span class="service-price">Starting at ₹599</span>
+                <a href="#contact" class="btn">Inquire Now</a>
               </div>
             </div>
 
             <div class="service-card">
-               <div class="service-icon">
-                <i class="fab fa-linkedin"></i>
-                 <h3>LinkedIn Profile</h3>
+              <div class="service-icon">
+                 <i class="fas fa-file-excel"></i>
+                <h3>Excel Master Class</h3>
               </div>
               <div class="service-content">
-                 <p>Optimized profile to attract recruiters and build your network.</p>
-                <span class="service-price">Starting at ₹1299</span>
-                 <a href="#contact" class="btn">Order Now</a>
+                <p>Master essential Excel skills for data analysis and reporting. Starts July 1st, 2025!</p>
+                 <a href="#contact" class="btn">Inquire Now</a>
               </div>
             </div>
 
             <div class="service-card">
-               <div class="service-icon">
-                <i class="fas fa-briefcase"></i>
-                 <h3>Personal Portfolio</h3>
+              <div class="service-icon">
+                 <i class="fas fa-calculator"></i>
+                <h3>Accounting Class</h3>
               </div>
               <div class="service-content">
-                 <p>Custom website to showcase your work and achievements.</p>
-                <span class="service-price">Starting at ₹2499</span>
-                 <a href="#contact" class="btn">Order Now</a>
+                <p>Learn fundamental accounting principles and practices for career growth.</p>
+                 <a href="#contact" class="btn">Inquire Now</a>
               </div>
             </div>
-          </div>
+
+            <div class="service-card">
+              <div class="service-icon">
+                 <i class="fas fa-comments"></i>
+                <h3>Spoken English Class</h3>
+              </div>
+              <div class="service-content">
+                <p>Improve your fluency and confidence with our practical online English classes.</p>
+                 <a href="#contact" class="btn">Inquire Now</a>
+              </div>
+            </div>
+            </div>
         </div>
       </section>
 
@@ -672,28 +696,29 @@
                <p>Your Partner in Career Advancement</p>
            </div>
           <div class="about-content">
-            <div class="about-text"> <p>ISSA Digital Services specializes in crafting professional career documents that get results. We understand the nuances of the modern job market, what employers look for, and how Applicant Tracking Systems (ATS) screen candidates.</p>
-              <p>Our team combines HR insights with expert writing skills to present your qualifications effectively. We focus on highlighting your achievements and tailoring your documents to specific roles, ensuring you stand out from the competition.</p>
-              <p>We are committed to providing high-quality, affordable career support because we believe everyone deserves the chance to succeed professionally.</p>
+            <div class="about-text">
+              <p>ISSA Digital Services specializes in crafting professional career documents and delivering high-quality training that gets results. We understand the nuances of the modern job market and the skills needed to succeed.</p>
+              <p>Our team combines industry insights with expert writing and teaching skills to present your qualifications effectively and enhance your capabilities. We focus on helping you stand out from the competition.</p>
+              <p>We are committed to providing high-quality, affordable career support and training because we believe everyone deserves the chance to succeed professionally.</p>
               <a href="#contact" class="btn" style="margin-top: 1rem;">Learn More</a>
             </div>
-            </div>
+          </div>
         </div>
       </section>
 
       <section class="cta">
         <div class="container">
-          <h2>Ready to Transform Your Career Prospects?</h2>
-          <p>Invest in professionally crafted documents designed to open doors and secure interviews. Get started today with our affordable, high-quality services.</p>
-          <a href="cv.html" class="btn btn-light" style="background-color: white; color: var(--secondary-dark);">Get Started Now</a>
-        </div>
+          <h2>Ready to Advance Your Career or Skills?</h2>
+          <p>Invest in your future with professionally crafted documents or skill-enhancing classes. Get started today!</p>
+           <a href="cv.html" class="btn btn-light" style="background-color: white; color: var(--secondary-dark);">Focus on Your CV</a>
+          </div>
       </section>
 
       <section class="section" id="contact">
         <div class="container">
           <div class="section-title">
             <h2>Contact Us</h2>
-            <p>Send us your details via WhatsApp to get started</p>
+            <p>Send us your details via WhatsApp for inquiries</p>
           </div>
 
           <div class="contact-form">
@@ -709,21 +734,21 @@
               </div>
 
               <div class="form-group">
-                <label for="service">Service Needed</label>
+                <label for="service">Service Interested In</label>
                 <select id="service" class="form-control" required>
                   <option value="" disabled selected>-- Select a service --</option>
-                  <option value="ATS CV">ATS-Optimized CV (from ₹999)</option>
-                  <option value="Professional CV">Professional Designed CV (from ₹999)</option>
-                  <option value="Cover Letter">Cover Letter (from ₹599)</option>
-                  <option value="LinkedIn Profile">LinkedIn Profile (from ₹1299)</option>
-                  <option value="Portfolio">Personal Portfolio (from ₹2499)</option>
-                  <option value="Consultation">General Inquiry / Consultation</option>
+                  <option value="CV Writing (ATS/Professional)">CV Writing (ATS/Professional)</option>
+                  <option value="Cover Letter">Cover Letter Writing</option>
+                  <option value="Excel Master Class">Excel Master Class</option>
+                  <option value="Accounting Class">Accounting Class</option>
+                  <option value="Spoken English Class">Spoken English Class</option>
+                  <option value="General Inquiry">General Inquiry</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="message">Additional Details (Optional)</label>
-                <textarea id="message" class="form-control" placeholder="Tell us more about your needs (e.g., target industry, years of experience)"></textarea>
+                <textarea id="message" class="form-control" placeholder="Tell us more about your needs..."></textarea>
               </div>
 
               <button type="submit" class="btn" style="width: 100%; background-color: #25D366;"> <i class="fab fa-whatsapp"></i> Send via WhatsApp
@@ -754,13 +779,13 @@
       <div class="footer-content">
         <div class="footer-column">
           <h3>ISSA Digital Services</h3>
-          <p>Your dedicated partner for professional CV writing and career document services. We help you make the best impression and achieve your career goals.</p>
+           <p>Your dedicated partner for professional development, offering CV writing, career documents, and skill enhancement classes.</p>
         </div>
 
         <div class="footer-column">
           <h3>Contact Info</h3>
           <ul class="footer-links">
-            <li><a href="tel:+919746431460"><i class="fas fa-phone-alt"></i> +91 9746431460</a></li>
+            <li><a href="tel:+919746431460"><i class="fas fa-phone-alt"></i> +91 9746431460 (Whatsapp Only)</a></li>
             <li><a href="mailto:issadigitalservices@gmail.com"><i class="fas fa-envelope"></i> issadigitalservices@gmail.com</a></li>
             <li><a href="https://wa.me/919746431460" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a></li>
           </ul>
@@ -808,7 +833,7 @@
 
       // Construct WhatsApp message
       const whatsappNumber = '919746431460'; // Your WhatsApp number
-      let whatsappMessage = `Hi ISSA Digital Services,\n\nI'm interested in the *${service}* service.\n\n*Name:* ${name}\n*Phone:* ${phone}\n`;
+      let whatsappMessage = `Hi ISSA Digital Services,\n\nI'm interested in the *${service}* service/class.\n\n*Name:* ${name}\n*Phone:* ${phone}\n`; // Updated text slightly
 
       if (message) {
         whatsappMessage += `\n*Details:* ${message}`;
