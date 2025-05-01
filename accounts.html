@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="ISSA Digital Services offers comprehensive Accounting Classes covering basic to advanced topics with real-world practices. Certificate included. Starts Aug 1st, 2025.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accounting Classes | Basic to Advanced | ISSA Digital Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Style for the loader */
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #loader-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .spinner {
+            border: 6px solid #f3f3f3;
+            /* CHANGE: Use a color suitable for 'Accounting' theme, e.g., a professional grey or different blue */
+            border-top: 6px solid #4b5563; /* Grey */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 0.9s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* Custom highlight color for this page */
+        :root {
+             --page-highlight-color: #4b5563; /* Grey */
+             --page-highlight-dark: #1f2937; /* Darker Grey */
+        }
+        .highlight-text { color: var(--page-highlight-color); }
+        .highlight-bg { background-color: var(--page-highlight-color); }
+        .highlight-bg-dark:hover { background-color: var(--page-highlight-dark); }
+        .highlight-border { border-color: var(--page-highlight-color); }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div id="loader-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="bg-gray-800 text-white sticky top-0 z-40 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2"> <img src="assets/Images/Issa-Logo.png" alt="ISSA Digital Services Logo" class="h-10 w-auto bg-white rounded-full p-1"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+                <span style="display:none; background: #2563eb; color: white; padding: 8px; border-radius: 50%; font-weight: bold; width: 40px; height: 40px; text-align: center; line-height: 24px;">IS</span>
+                <div>
+                    <h1 class="text-lg font-semibold">ISSA Digital Services</h1>
+                    <p class="text-xs text-gray-300">Skill Advancement Experts</p>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center gap-4">
+          
+        </div>
+    </header>
+
+    <main>
+
+        <section class="bg-gradient-to-r from-gray-700 to-gray-900 text-white py-16 md:py-20">
+            <div class="container mx-auto px-4 text-center">
+                <span class="text-sm font-semibold bg-white text-gray-700 px-3 py-1 rounded-full mb-4 inline-block">Starts August 1st, 2025</span>
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">Master Practical Accounting: Basic to Advanced</h1>
+                <p class="text-lg md:text-xl mb-8 text-gray-300 max-w-3xl mx-auto">Gain comprehensive accounting knowledge with real-world company practices, covering all essential areas. Certificate upon completion.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                    <a href="#course-curriculum" class="bg-white text-gray-700 hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 w-full md:w-auto">View Curriculum</a>
+                    <a href="#enroll-accounting" class="highlight-bg highlight-bg-dark text-white font-semibold py-3 px-8 rounded-lg shadow-md transition duration-300 w-full md:w-auto">Enroll Now</a>
+                </div>
+                 <div class="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-200">
+                    <span><i class="fas fa-check-circle mr-1"></i> Basic to Advanced</span>
+                    <span><i class="fas fa-check-circle mr-1"></i> Real Company Practices</span>
+                    <span><i class="fas fa-check-circle mr-1"></i> Certificate Included</span>
+                    <span><i class="fas fa-check-circle mr-1"></i> Bonus File Provided</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="course-curriculum" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">What You'll Learn in Our Accounting Class</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-book-open"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Accounting Fundamentals</h3>
+                        <p class="text-gray-600 text-sm">Master core principles, the accounting cycle, debits/credits, and financial statement basics (Balance Sheet, Income Statement).</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-building"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Real Company Practices</h3>
+                        <p class="text-gray-600 text-sm">Apply concepts using practical examples and case studies based on actual business scenarios and documentation.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-chart-pie"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Covering All Key Areas</h3>
+                        <p class="text-gray-600 text-sm">Explore essential topics like accounts payable/receivable, payroll, inventory, taxation basics, and financial reporting.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-level-up-alt"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Advanced Concepts</h3>
+                        <p class="text-gray-600 text-sm">Progress to advanced topics including budgeting, forecasting, cost accounting principles, and financial analysis techniques.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-gift"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Exclusive Bonus File</h3>
+                        <p class="text-gray-600 text-sm">Receive supplementary materials, templates, and resources to support your learning and practical application.</p>
+                    </div>
+                     <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition duration-300">
+                        <div class="highlight-text mb-3 text-3xl"><i class="fas fa-certificate"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Certificate of Completion</h3>
+                        <p class="text-gray-600 text-sm">Validate your skills and enhance your resume with an official certificate upon successful course completion.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section class="py-16 bg-gray-100">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <h2 class="text-3xl font-bold text-center mb-12">Who Will Benefit From This Course?</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-700">
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Aspiring accountants and bookkeepers.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Business owners managing their own finances.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Students pursuing commerce or finance degrees.</span></li>
+                    </ul>
+                     <ul class="space-y-3">
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Professionals seeking to understand financial statements.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Individuals wanting a career change into accounting.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle highlight-text mt-1 mr-2"></i><span>Anyone needing practical, real-world accounting skills.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="enroll-accounting" class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-2xl">
+                 <h2 class="text-3xl font-bold text-center mb-4">Enroll in the Accounting Class!</h2>
+                 <p class="text-center text-gray-600 mb-8">Course starts <strong class="highlight-text">August 1st, 2025</strong>. Secure your spot today!</p>
+
+                 <div class="bg-gray-50 p-8 rounded-lg shadow-md border border-gray-200">
+                     <form id="whatsapp-form-accounting">
+                        <div class="mb-4">
+                            <label for="name-accounting" class="block text-gray-700 text-sm font-medium mb-2">Your Name</label>
+                            <input type="text" id="name-accounting" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500" placeholder="Enter your full name" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="phone-accounting" class="block text-gray-700 text-sm font-medium mb-2">Mobile Number (WhatsApp)</label>
+                            <input type="tel" id="phone-accounting" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500" placeholder="Enter your WhatsApp number" required pattern="[0-9\s+-]{8,}" title="Please enter a valid phone number">
+                        </div>
+
+                         <input type="hidden" id="course-accounting" value="Accounting Class (Basic to Advanced)">
+
+                        <div class="mb-6">
+                            <label for="message-accounting" class="block text-gray-700 text-sm font-medium mb-2">Message (Optional)</label>
+                            <textarea id="message-accounting" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-gray-500 focus:border-gray-500" rows="3" placeholder="Any specific questions about the course or enrollment?"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full highlight-bg highlight-bg-dark text-white font-bold py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp"></i> Inquire / Enroll via WhatsApp
+                        </button>
+                        <p class="text-xs text-gray-500 text-center mt-4">We'll reply via WhatsApp with enrollment details and answer your questions.</p>
+                    </form>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-4">
+                 <div class="flex justify-center gap-4 mb-4">
+                    <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp" class="text-gray-300 hover:text-green-400 transition duration-300 text-xl"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook" class="text-gray-300 hover:text-blue-400 transition duration-300 text-xl"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram" class="text-gray-300 hover:text-pink-400 transition duration-300 text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn" class="text-gray-300 hover:text-blue-300 transition duration-300 text-xl"><i class="fab fa-linkedin-in"></i></a>
+                 </div>
+                 <p class="text-sm mb-1"><a href="tel:+919746431460" class="hover:text-white"><i class="fas fa-phone-alt mr-1"></i> +91 9746431460</a></p>
+                 <p class="text-sm"><a href="mailto:issadigitalservices@gmail.com" class="hover:text-white"><i class="fas fa-envelope mr-1"></i> issadigitalservices@gmail.com</a></p>
+            </div>
+            <div class="border-t border-gray-700 pt-4 mt-4">
+                <p id="copyright-accounts" class="text-xs">&copy; 2025 ISSA Digital Services. All rights reserved. | <a href="index.html" class="hover:text-white">Home</a></p>
+                 <p class="text-xs mt-1">Designed by Arshad Kuttyalam</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- WhatsApp Form Submission ---
+        document.getElementById('whatsapp-form-accounting').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name-accounting').value.trim();
+            const phone = document.getElementById('phone-accounting').value.trim();
+            const course = document.getElementById('course-accounting').value; // Get course name
+            const message = document.getElementById('message-accounting').value.trim();
+
+            if (!name || !phone) {
+                const form = document.getElementById('whatsapp-form-accounting');
+                let errorMsg = form.querySelector('.error-message');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('p');
+                    errorMsg.style.color = 'red';
+                    errorMsg.style.marginTop = '10px';
+                    errorMsg.classList.add('error-message');
+                    form.insertBefore(errorMsg, form.querySelector('button[type="submit"]'));
+                }
+                errorMsg.textContent = 'Please fill in Your Name and Mobile Number.';
+                return;
+            } else {
+                const errorMsg = document.getElementById('whatsapp-form-accounting').querySelector('.error-message');
+                if (errorMsg) errorMsg.textContent = '';
+            }
+
+            const whatsappNumber = '919746431460'; // Your WhatsApp number
+            let whatsappMessage = `Hi ISSA Digital Services,\n\nI'm interested in enrolling in the *${course}* (Starts Aug 1st).\n\n*Name:* ${name}\n*Phone:* ${phone}\n`;
+
+            if (message) {
+                whatsappMessage += `\n*Message:* ${message}`;
+            } else {
+                 whatsappMessage += `\nPlease send me the enrollment details.`;
+            }
+
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // --- Smooth Scrolling for Anchor Links ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#') && href.length > 1) {
+                    const targetElement = document.querySelector(href);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // --- Page Transition Loader ---
+        const loader = document.getElementById('loader-overlay');
+        function showLoader() { if(loader) loader.classList.add('show'); }
+        function hideLoader() { if(loader) loader.classList.remove('show'); }
+
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            const target = link.getAttribute('target');
+            if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank' && !link.closest('form') && !href.startsWith('https://wa.me')) {
+                link.addEventListener('click', function(e) {
+                    const isInternalPageLink = !href.startsWith('http') && !href.startsWith('//') && href.includes('.html');
+                    if (isInternalPageLink || !href.startsWith('http')) {
+                         e.preventDefault();
+                         showLoader();
+                         setTimeout(() => { window.location.href = href; }, 150);
+                    }
+                });
+            }
+        });
+        window.addEventListener('pageshow', function (event) { if (event.persisted) { hideLoader(); } });
+        window.addEventListener('load', hideLoader);
+
+
+        // --- Dynamic Copyright Year ---
+        const copyrightElement = document.getElementById('copyright-accounts');
+        if (copyrightElement) {
+            const currentYear = new Date().getFullYear();
+            copyrightElement.innerHTML = `&copy; ${currentYear} ISSA Digital Services. All rights reserved. | <a href="index.html" class="hover:text-white">Home</a>`;
+        }
+
+    </script>
+
+</body>
+</html>
