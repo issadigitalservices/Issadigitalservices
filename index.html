@@ -78,6 +78,68 @@
       display: block;
     }
 
+
+    /* === CSS for Animated Flowers === */
+.sslc-promo-flowers-container {
+    position: absolute; /* Changed from .sslc-promo-flowers */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Flowers won't interfere with clicks */
+    z-index: 0; /* Position behind the text content */
+}
+
+.flower {
+    position: absolute;
+    font-size: 1.5rem; /* Base size of flowers, can be varied */
+    opacity: 0;
+    animation: fallAndSway 10s linear infinite;
+    user-select: none; /* Prevent text selection of flowers */
+}
+
+/* Define different flower styles and animation delays */
+.flower.f1  { animation-delay: 0s;  left: 10%; font-size: 1.6rem; color: #FF69B4; } /* Hot Pink */
+.flower.f2  { animation-delay: 1s;  left: 20%; font-size: 1.3rem; color: #FFD700; } /* Gold */
+.flower.f3  { animation-delay: 2s;  left: 30%; font-size: 1.7rem; color: #ADFF2F; } /* Green Yellow */
+.flower.f4  { animation-delay: 3s;  left: 40%; font-size: 1.4rem; color: #1E90FF; } /* Dodger Blue */
+.flower.f5  { animation-delay: 4s;  left: 50%; font-size: 1.8rem; color: #FF4500; } /* Orange Red */
+.flower.f6  { animation-delay: 5s;  left: 60%; font-size: 1.5rem; color: #BA55D3; } /* Medium Orchid */
+.flower.f7  { animation-delay: 6s;  left: 70%; font-size: 1.2rem; color: #FF69B4; }
+.flower.f8  { animation-delay: 7s;  left: 80%; font-size: 1.6rem; color: #FFD700; }
+.flower.f9  { animation-delay: 8s;  left: 90%; font-size: 1.4rem; color: #ADFF2F; }
+.flower.f10 { animation-delay: 9s;  left: 5%;  font-size: 1.7rem; color: #1E90FF; }
+.flower.f11 { animation-delay: 2.5s; left: 65%; font-size: 1.3rem; color: #FF4500; }
+.flower.f12 { animation-delay: 6.5s; left: 35%; font-size: 1.5rem; color: #BA55D3; }
+
+
+@keyframes fallAndSway {
+    0% {
+        top: -15%; /* Start further above */
+        opacity: 1;
+        transform: translateX(0px) rotate(0deg);
+    }
+    20% {
+        transform: translateX(-20px) rotate(30deg); /* More sway */
+    }
+    40% {
+        transform: translateX(20px) rotate(60deg);
+    }
+    60% {
+        transform: translateX(-20px) rotate(90deg);
+    }
+    80% {
+        transform: translateX(20px) rotate(120deg);
+    }
+    100% {
+        top: 115%; /* Fall further below */
+        opacity: 0;
+        transform: translateX(0px) rotate(150deg);
+    }
+}
+/* === End of CSS for Animated Flowers === */
+
     /* Utility Classes */
     .container {
       width: 100%;
@@ -634,6 +696,24 @@
              <p>Professional Training & Career Document Services</p>
           </div>
 
+          <section id="sslc-career-promo" class="section" style="background-color: #e6f7ff; padding-top: 2.5rem; padding-bottom: 2.5rem; border-top: 2px solid var(--primary-color); border-bottom: 2px solid var(--primary-color); position: relative; overflow: hidden;">
+    
+            <div class="container" style="text-align: center; position: relative; z-index: 1;"> <h2 style="font-size: 1.9rem; color: var(--dark-color); margin-bottom: 1rem;">
+                    SSLC Results Are Out! What's Your Next Big Step?
+                </h2>
+                <p style="font-size: 1.1rem; color: var(--text-color); margin-bottom: 1rem; max-width: 750px; margin-left: auto; margin-right: auto;">
+                    Hearty <strong style="color: var(--secondary-color); font-weight: 700;">Congratulations</strong> on your SSLC results! This is a pivotal moment to plan your future. Our expert Career Guidance can illuminate the best paths forward for you.
+                </p>
+                <p style="font-size: 1rem; color: var(--text-light); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    Join our dedicated session to explore suitable courses, understand your strengths, and make confident decisions for a successful academic and professional journey.
+                </p>
+                <a href="career.html" class="btn btn-secondary" style="font-size: 1.05rem; padding: 0.9rem 1.8rem; text-transform: uppercase; box-shadow: var(--shadow);">
+                    <i class="fas fa-graduation-cap" style="margin-right: 8px;"></i> Join Career Guidance Class
+                </a>
+            </div>
+        </section>
+
+
           <div class="services-grid">
             <div class="service-card">
               <div class="service-icon">
@@ -977,5 +1057,62 @@
     }
 
   </script>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const promoSection = document.getElementById('sslc-career-promo');
+  
+      if (promoSection && typeof confetti === 'function') { // Check if promoSection and confetti library exist
+          
+          function launchBigCelebration() {
+              const rect = promoSection.getBoundingClientRect();
+              const originX = (rect.left + rect.width / 2) / window.innerWidth;
+              const originY = (rect.top + rect.height / 3) / window.innerHeight; // Originating slightly higher in the section
+  
+              const blastColors = ['#2563eb', '#10b981', '#FFD700', '#FF69B4', '#FFFFFF', '#FF4500', '#f0f8ff']; // Your theme + festive
+  
+              function shootConfetti(particleMultiplier, angleOffset = 0) {
+                  confetti({
+                      particleCount: Math.floor(200 * particleMultiplier), // More particles for a big effect
+                      angle: 90 + angleOffset, // General direction (90 is straight up)
+                      spread: 180 + Math.random() * 90, // Wide, somewhat random spread
+                      origin: { x: originX, y: originY },
+                      gravity: 0.4 + Math.random() * 0.3, // Let them float a bit
+                      drift: Math.random() * 0.5 - 0.25, // Random horizontal drift
+                      ticks: 300 + Math.random() * 100, // How long particles last
+                      scalar: Math.random() * 0.6 + 0.8, // Varying sizes (0.8 to 1.4)
+                      colors: blastColors,
+                      zIndex: 2000 // Ensure confetti is on top of most things
+                  });
+              }
+  
+              // Create a "bomb blast" effect with multiple shots in quick succession
+              // This will create a layered, energetic burst.
+              setTimeout(() => shootConfetti(0.8), 0);    // Main burst
+              setTimeout(() => shootConfetti(0.5, -30), 50); // Slightly left burst
+              setTimeout(() => shootConfetti(0.5, 30), 100); // Slightly right burst
+              setTimeout(() => shootConfetti(0.3), 200);   // Smaller follow-up
+          }
+  
+          // Use Intersection Observer to trigger when the section is visible
+          const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                      launchBigCelebration();
+                      observer.unobserve(promoSection); // Fire only once when section becomes visible
+                  }
+              });
+          }, { threshold: 0.3 }); // Trigger when 30% of the element is visible
+  
+          observer.observe(promoSection);
+      } else {
+          if (!promoSection) console.error("Promo section #sslc-career-promo not found.");
+          if (typeof confetti !== 'function') console.error("Canvas-confetti library not loaded.");
+      }
+  });
+  </script>
+
 </body>
 </html>
