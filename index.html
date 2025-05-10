@@ -683,13 +683,40 @@
   </header>
 
 
-<!-- Limited Time ₹50 OFF Banner with Countdown -->
-<div class="bg-yellow-300 text-gray-900 text-center py-4 px-4 shadow-md sticky top-16 z-30">
-  <p class="text-lg md:text-xl font-bold">
-    🎉 Special Offer: ₹50 OFF on all CV Packages – <span id="countdown" class="text-red-600">3d 00h 00m 00s</span> left!
-    <a href="cv.html" class="underline text-blue-800 hover:text-blue-900 ml-2">Order Now →</a>
+<!-- 🔥 Attractive Discount Banner -->
+<div style="
+  background: linear-gradient(90deg, #ffe259, #ffa751);
+  color: #1f2937;
+  padding: 20px;
+  text-align: center;
+  border: 3px solid #f59e0b;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+  z-index: 1000;
+">
+  <h2 style="font-size: 28px; font-weight: 800; margin: 0;">
+    🎉 Limited-Time Offer: <span style="color:#b91c1c">₹50 OFF</span> on all CV Packages!
+  </h2>
+  <p style="font-size: 20px; font-weight: 500; margin: 10px 0;">
+    Hurry up! Offer ends in <span id="countdown" style="font-weight: bold; color: #2563eb;">3d 00h 00m 00s</span>
   </p>
+  <a href="cv.html" style="
+    display: inline-block;
+    margin-top: 12px;
+    background-color: #059669;
+    color: white;
+    padding: 12px 28px;
+    font-size: 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  ">Claim Now →</a>
 </div>
+
+
+
 
 
   <main>
@@ -1120,7 +1147,6 @@
   </script>
 
 <script>
-  // Countdown Timer – 3 Days from now
   const offerEndDate = new Date();
   offerEndDate.setDate(offerEndDate.getDate() + 3);
 
@@ -1141,9 +1167,10 @@
     document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 
-  updateCountdown(); // initial
-  setInterval(updateCountdown, 1000); // update every second
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 </script>
+
 
 
 
