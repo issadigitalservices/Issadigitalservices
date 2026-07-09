@@ -13,9 +13,10 @@
 </script>
   <meta name="google-site-verification" content="AR5t1Mg7u4S-Shm94R9An4yiA8l3UoWwPFOBrheWRpM" />
   <meta charset="UTF-8" />
-  <meta name="description" content="ISSA Digital Services offers expert CV writing, cover letters, Excel masterclasses, accounting courses, and spoken English classes to enhance your skills and career prospects.">
+  <meta name="description" content="ISSA Digital Services provides ATS Resume Writing, Microsoft Excel Mastery Course, Website Development and Mobile App Development services.">
   <meta property="og:title" content="ISSA Digital Services | Skill Advancement & Professional Services" />
-  <meta property="og:description" content="Advance your career with ISSA Digital Services. We offer CV writing, cover letters, Excel, Accounting, and Spoken English classes." />
+  <meta property="og:description"
+content="Advance your career with ATS Resume Writing, Microsoft Excel Mastery, Website Development, and Mobile App Development from ISSA Digital Services.">
   <meta property="og:image" content="https://www.issadigitalservices.com/assets/Images/Issa-Logo.png" />
   <meta property="og:url" content="https://www.issadigitalservices.com" />
   <meta property="og:type" content="website" />
@@ -273,9 +274,54 @@
       color: white;
     }
 
-    /* Removed welcome message style */
-    /* .hero .welcome-message { ... } */
+  .hero-container{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:50px;
+}
 
+.hero-left{
+    flex:1;
+    text-align:left;
+}
+
+.hero-right{
+    flex:1;
+    text-align:center;
+}
+
+.hero-right img{
+    max-width:100%;
+    width:420px;
+}
+
+.hero-buttons{
+    margin-top:30px;
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+@media(max-width:768px){
+
+.hero-container{
+    flex-direction:column;
+}
+
+.hero-left{
+    text-align:center;
+}
+
+.hero-buttons{
+    justify-content:center;
+}
+
+.hero-right img{
+    width:280px;
+}
+
+}
     /* Updated Hero Description */
     .hero p {
       font-size: 1rem;
@@ -291,14 +337,13 @@
       align-items: center;
     }
 
-    /* Services Section */
-    .services-grid {
-      display: grid;
-      /* Adjust grid columns for 5 items */
-      grid-template-columns: 1fr; /* Start with 1 column */
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
+   /* Services Section */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
 
     .service-card {
       background: white;
@@ -597,7 +642,16 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+    100%{transform:translateY(0);}
+}
 
+.hero-right img{
+  width: 500px;
+    animation:float 4s ease-in-out infinite;
+}
     /* Desktop Styles (Media Queries) */
     @media (min-width: 768px) {
       .container {
@@ -624,7 +678,7 @@
 
       /* Adjust grid for potentially 5 items */
       .services-grid {
-        grid-template-columns: repeat(2, 1fr); /* Two columns */
+        grid-template-columns: repeat(4, 1fr); /* Two columns */
       }
 
       .about-content {
@@ -640,30 +694,7 @@
         grid-template-columns: repeat(2, 1fr); /* Two columns for footer */
         gap: 3rem; /* Increase gap */
       }
-    }
-
-    @media (min-width: 992px) {
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-
-       .hero {
-        padding: 4rem 0;
-      }
-
-      /* Adjust grid for potentially 5 items */
-      .services-grid {
-        /* Use 3 columns on larger screens if 5 items look too cramped in 4 */
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-     @media (min-width: 1200px) {
-         /* Optional: Go back to 5 columns on very large screens if desired */
-         /* .services-grid { grid-template-columns: repeat(5, 1fr); } */
-         /* Or keep 3 for consistency */
-         .services-grid { grid-template-columns: repeat(3, 1fr); }
-     }
-
+    }    
   </style>
 </head>
 <body>
@@ -684,54 +715,44 @@
   </header>
 
 
-<!-- 🔥 Attractive Discount Banner -->
-<div style="
-display: none;
-  background: linear-gradient(90deg, #ffe259, #ffa751);
-  color: #1f2937;
-  padding: 20px;
-  text-align: center;
-  border: 3px solid #f59e0b;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  font-family: 'Segoe UI', sans-serif;
-  position: relative;
-  z-index: 1000;
-">
-  <h2 style="font-size: 28px; font-weight: 800; margin: 0;" >
-    🎉 Limited-Time Offer: <span style="color:#b91c1c">₹50 OFF</span> on all CV Packages!
-  </h2>
-  <p style="font-size: 20px; font-weight: 500; margin: 10px 0;">
-    Hurry up! Offer ends in <span id="countdown" style="font-weight: bold; color: #2563eb;">3d 00h 00m 00s</span>
-  </p>
-  <a href="cv.html" style="
-    display: inline-block;
-    margin-top: 12px;
-    background-color: #059669;
-    color: white;
-    padding: 12px 28px;
-    font-size: 18px;
-    border-radius: 6px;
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  ">Claim Now →</a>
-</div>
-
-
-
-
-
   <main>
       <section class="hero" id="home">
-        <div class="hero-content container">
-           <h1>Unlock Your Potential with ISSA Digital Services</h1>
+
+<div class="container hero-container">
+
+    <div class="hero-left">
+
+        <h1>
+            Build Your Career with Professional Digital Solutions
+        </h1>
+    <p>
+ATS Resume Writing • Microsoft Excel Mastery • Website Development • Mobile App Development
+</p>
+          <div class="hero-buttons">
+
+            <a href="#services" class="btn">
+                Explore Services
+            </a>
+
+            <a href="excel.html" class="btn btn-secondary">
+                Explore Excel Mastery Course
+            </a>
+
         </div>
-      </section>
 
-      
-       
+    </div>
 
-          <section id="sslc-career-promo" class="section" style="background-color: #e6f7ff; padding-top: 2.5rem; padding-bottom: 2.5rem; border-top: 2px solid var(--primary-color); border-bottom: 2px solid var(--primary-color); position: relative; overflow: hidden; display: none;">
+    <div class="hero-right">
+
+        <img src="assets/Images/laptop.png" alt="Laptop">
+
+    </div>
+
+</div>
+
+</section>
+
+                <section id="sslc-career-promo" class="section" style="background-color: #e6f7ff; padding-top: 2.5rem; padding-bottom: 2.5rem; border-top: 2px solid var(--primary-color); border-bottom: 2px solid var(--primary-color); position: relative; overflow: hidden; display: none;">
     
             <div class="container" style="text-align: center; position: relative; z-index: 1;"> <h2 style="font-size: 1.9rem; color: var(--dark-color); margin-bottom: 1rem;">
                     SSLC Results Are Out! What's Your Next Big Step?
@@ -746,116 +767,69 @@ display: none;
             </div>
         </section>
 
-        <section class="section" id="services"></section>
+        <section class="section" id="services">
         <div class="container">
           <div class="section-title">
             <h2>Our Services</h2>
              <p>Professional Training & Career Document Services</p>
           </div>
-
-
+          
           <div class="services-grid">
             <div class="service-card">
               <div class="service-icon">
                 <i class="fas fa-file-alt"></i>
-                <h3>CV & Resume Writing</h3>
+                <h3>Professional CV & Resume Writing</h3>
               </div>
               <div class="service-content">
-                <p>Get ATS-friendly and professionally designed CVs tailored to impress.</p>
-                <a href="cv.html#CV-Writing" class="btn">Learn More & Order</a>
+                <p>✔ ATS Friendly
+✔ Professional Design
+✔ Word & PDF Format
+✔ Fast Delivery</p>
+                <a href="cv.html#CV-Writing" class="btn">Order Now</a>
               </div>
             </div>
 
-            <div class="service-card">
-              <div class="service-icon">
-                 <i class="fas fa-star"></i>
-                <h3>Power-Packed Course</h3>
-              </div>
-              <div class="service-content">
-                 <p>Learn many skills in one course! Designing, Video, Language, Tech & more. Special offer!</p>
-                 <a href="powerpack.html" class="btn">Course Details</a>
-              </div>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="fas fa-envelope-open-text"></i>
-                <h3>Career Guidance</h3>
-              </div>
-              <div class="service-content">
-                <p>Confused about what to do after SSLC or Plus Two? Get expert career guidance to secure your future. </p>
-              
-                <a href="career.html#Career-Guidance" class="btn">Get Guidance</a>
-              </div>
-            </div>
-
-            <div class="service-card">
+                      <div class="service-card">
               <div class="service-icon">
                  <i class="fas fa-file-excel"></i>
-                <h3>Excel Master Class</h3>
+                <h3>Excel Mastery Class</h3>
               </div>
               <div class="service-content">
-                <p>Master essential Excel skills for data analysis and reporting. Starts July 1st, 2025!</p>
-                <a href="excel.html#Excel_Masterclass" class="btn">Book your Seat Now</a>
+                <p>✔ Beginner to Advanced
+✔ Recorded Classes
+✔ Practice Files
+✔ Certificate</p>
+                <a href="excel.html#Excel_Masterclass" class="btn">Enroll Now</a>
               </div>
             </div>
-
-            <div class="service-card" style="display: none;">
-              <div class="service-icon">
-                 <i class="fas fa-calculator"></i>
-                <h3>Accounting Class</h3>
-              </div>
-              <div class="service-content" >
-                <p>Learn basic accounting rules and methods for your job. Class starts Aug 1st, 2025</p>
-                <a href="accounts.html#Accounts_Masterclass" class="btn">Book your Seat Now</a>
-              </div>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                 <i class="fas fa-comments"></i>
-                <h3>Spoken English Class</h3>
-              </div>
-              <div class="service-content">
-                <p>Improve your fluency and confidence with our practical online English classes.</p>
-                <a href="english.html#Spoken-English" class="btn">Enroll Now</a>
-              </div>
-            </div>
-
+          
             <div class="service-card">
               <div class="service-icon">
                  <i class="fas fa-laptop-code"></i>
                 <h3>Website Development</h3>
               </div>
               <div class="service-content">
-                 <p>Websites for your personal use or for your business needs.</p>
+                 <p>✔ Business Websites
+✔ Portfolio Websites
+✔ Responsive Design
+✔ Modern UI</p>
                  <a href="website.html#Website-Development" class="btn">Book Now</a>
               </div>
             </div>
 
-            <div class="service-card" style="display: none;">
+            <div class="service-card">
               <div class="service-icon">
-                 <i class="fas fa-star"></i>
-                <h3>Interview Tips & Tricks</h3>
+                 <i class="fas fa-mobile-screen-button"></i>
+                <h3>App Development</h3>
               </div>
               <div class="service-content">
-                 <p>Interview Tips & Tricks and lot are loading..Coming Soon...</p>
-                 <a href="interview.html" class="btn">Contact Now</a>
+                 <p>✔ Android Apps
+✔ Flutter Development
+✔ Firebase Integration
+✔ Business Solutions</p>
+                 <a href="app.html#Application-Development" class="btn">Book Now</a>
               </div>
             </div>
-
-
-            <div class="service-card" style="display: none;">
-              <div class="service-icon">
-                 <i class="fas fa-star"></i>
-                <h3>Other Services</h3>
-              </div>
-              <div class="service-content">
-                 <p>OtherServices, Updatings are going on... Coming soon</p>
-                 <a href="other.html" class="btn">Details</a>
-              </div>
-            </div>
-
 
             </div>
         </div>
@@ -864,14 +838,12 @@ display: none;
       <section class="section" id="about">
         <div class="container">
            <div class="section-title">
-               <h2>About Our Service</h2>
+               <h2>Why Choose ISSA Digital Services</h2>
                
            </div>
           <div class="about-content">
             <div class="about-text">
-              <p>ISSA Digital Services specializes in crafting professional career documents and delivering high-quality training that gets results. We understand the nuances of the modern job market and the skills needed to succeed.</p>
-              <p>Our team combines industry insights with expert writing and teaching skills to present your qualifications effectively and enhance your capabilities. We focus on helping you stand out from the competition.</p>
-              <p>We are committed to providing high-quality, affordable career support and training because we believe everyone deserves the chance to succeed professionally.</p>
+              <p>ISSA Digital Services helps students, job seekers, and professionals through ATS Resume Writing, Microsoft Excel Mastery Training, Website Development, and Mobile App Development. Our goal is to provide practical digital solutions that help you build your career and business.</p>
               <a href="#contact" class="btn" style="margin-top: 1rem;">Need More Details</a>
             </div>
           </div>
@@ -904,11 +876,10 @@ display: none;
                 <select id="service" class="form-control" required>
                   <option value="" disabled selected>-- Select a service --</option>
                   <option value="CV Writing (ATS/Professional)">CV Writing (ATS/Professional)</option>
-                  <option value="Career Guidance">Career Guidance</option>
-                  <option value="Excel Master Class">Excel Master Class</option>
-                  <option value="Power Packed Bundle course">Power Packed Bundle course</option>
-                  <option value="Spoken English Class">Spoken English Class</option>
-                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="Excel Mastery Class">Excel Mastery Class</option>               
+                  <option value="Website Development">Website Development</option>
+                  <option value="App Development">App Development</option>
+                  <option value="General Enquiry">General Enquiry</option>
                 </select>
               </div>
 
@@ -928,9 +899,11 @@ display: none;
               <a href="https://facebook.com/yourprofile" class="social-link" target="_blank" title="Facebook" style="background-color: #1877F2;">
                 <i class="fab fa-facebook-f"></i>
               </a>
-              <a href="https://instagram.com/issadigitalservices/" class="social-link" target="_blank" title="Instagram" style="background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);">
-                <i class="fab fa-instagram"></i>
-   <a href="https://www.youtube.com/@issadigitalservices" class="social-link" target="_blank" title="YouTube" style="background-color: #FF0000;">
+              <a href="https://instagram.com/issadigitalservices/" class="social-link" target="_blank">
+    <i class="fab fa-instagram"></i>
+</a>
+
+<a href="https://www.youtube.com/@issadigitalservices" class="social-link" target="_blank">
     <i class="fab fa-youtube"></i>
 </a>
 
@@ -945,7 +918,7 @@ display: none;
       <div class="footer-content">
         <div class="footer-column">
           <h3>ISSA Digital Services</h3>
-           <p>Your dedicated partner for professional development, offering CV writing, career documents, and skill enhancement classes.</p>
+           <p>Your trusted partner for ATS Resume Writing, Microsoft Excel Mastery, Website Development, and Mobile App Development.</p>
         </div>
 
         <div class="footer-column">
@@ -1087,94 +1060,11 @@ display: none;
     const copyrightElement = document.getElementById('copyright');
     if (copyrightElement) {
         const currentYear = new Date().getFullYear();
-        copyrightElement.innerHTML = `&copy; ${currentYear} ISSA Digital Services | All rights reserved | Designed by ISSA Expert Team;
+        copyrightElement.innerHTML =
+`&copy; ${currentYear} ISSA Digital Services | All Rights Reserved | Designed by ISSA Expert Team`;
     }
 
   </script>
-
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-      const promoSection = document.getElementById('sslc-career-promo');
-  
-      if (promoSection && typeof confetti === 'function') { // Check if promoSection and confetti library exist
-          
-          function launchBigCelebration() {
-              const rect = promoSection.getBoundingClientRect();
-              const originX = (rect.left + rect.width / 2) / window.innerWidth;
-              const originY = (rect.top + rect.height / 3) / window.innerHeight; // Originating slightly higher in the section
-  
-              const blastColors = ['#2563eb', '#10b981', '#FFD700', '#FF69B4', '#FFFFFF', '#FF4500', '#f0f8ff']; // Your theme + festive
-  
-              function shootConfetti(particleMultiplier, angleOffset = 0) {
-                  confetti({
-                      particleCount: Math.floor(200 * particleMultiplier), // More particles for a big effect
-                      angle: 90 + angleOffset, // General direction (90 is straight up)
-                      spread: 180 + Math.random() * 90, // Wide, somewhat random spread
-                      origin: { x: originX, y: originY },
-                      gravity: 0.4 + Math.random() * 0.3, // Let them float a bit
-                      drift: Math.random() * 0.5 - 0.25, // Random horizontal drift
-                      ticks: 300 + Math.random() * 100, // How long particles last
-                      scalar: Math.random() * 0.6 + 0.8, // Varying sizes (0.8 to 1.4)
-                      colors: blastColors,
-                      zIndex: 2000 // Ensure confetti is on top of most things
-                  });
-              }
-  
-              // Create a "bomb blast" effect with multiple shots in quick succession
-              // This will create a layered, energetic burst.
-              setTimeout(() => shootConfetti(0.8), 0);    // Main burst
-              setTimeout(() => shootConfetti(0.5, -30), 50); // Slightly left burst
-              setTimeout(() => shootConfetti(0.5, 30), 100); // Slightly right burst
-              setTimeout(() => shootConfetti(0.3), 200);   // Smaller follow-up
-          }
-  
-          // Use Intersection Observer to trigger when the section is visible
-          const observer = new IntersectionObserver((entries) => {
-              entries.forEach(entry => {
-                  if (entry.isIntersecting) {
-                      launchBigCelebration();
-                      observer.unobserve(promoSection); // Fire only once when section becomes visible
-                  }
-              });
-          }, { threshold: 0.3 }); // Trigger when 30% of the element is visible
-  
-          observer.observe(promoSection);
-      } else {
-          if (!promoSection) console.error("Promo section #sslc-career-promo not found.");
-          if (typeof confetti !== 'function') console.error("Canvas-confetti library not loaded.");
-      }
-  });
-  </script>
-
-<script>
-  const offerEndDate = new Date();
-  offerEndDate.setDate(offerEndDate.getDate() + 3);
-
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = offerEndDate - now;
-
-    if (distance < 0) {
-      document.getElementById("countdown").innerHTML = "Expired";
-      return;
-    }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-</script>
-
-
-
 
 </body>
 </html>
