@@ -1,0 +1,353 @@
+"use strict";
+
+/* ==========================================================================
+   ISSA Academy
+   My Courses
+   ========================================================================== */
+
+import {
+
+    auth,
+    db
+
+} from "../core/firebase-config.js";
+
+import {
+
+    onAuthStateChanged,
+    signOut
+
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+
+    collection,
+    query,
+    where,
+    getDocs,
+    getDoc,
+    doc
+
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+/* ==========================================================================
+   DOM
+   ========================================================================== */
+
+const coursesGrid =
+    document.getElementById("coursesGrid");
+
+const emptyState =
+    document.getElementById("emptyState");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const loader =
+    document.getElementById("pageLoader");
+
+const toastContainer =
+    document.getElementById("toastContainer");
+
+/* ==========================================================================
+   AUTH
+   ========================================================================== */
+
+onAuthStateChanged(
+
+    auth,
+
+    async user=>{
+
+        if(!user){
+
+            location.replace(
+
+                "login.html"
+
+            );
+
+            return;
+
+        }
+
+        showLoader();
+
+        await loadCourses(
+
+            user.uid
+
+        );
+
+        hideLoader();
+
+    }
+
+);
+
+/* ==========================================================================
+   LOAD COURSES
+   ========================================================================== */
+
+async function loadCourses(studentId){
+
+    coursesGrid.innerHTML="";
+
+    const snapshot =
+
+        await getDocs(
+
+            query(
+
+                collection(
+
+                    db,
+
+                    "enrollments"
+
+                ),
+
+                where(
+
+                    "studentId",
+
+                    "==",
+
+                    studentId
+
+                ),
+
+                where(
+
+                    "approvalStatus",
+
+                    "==",
+
+                    "Approved"
+
+                )
+
+            )
+
+        );
+
+    if(snapshot.empty){
+
+        emptyState.classList.remove(
+
+            "hidden"
+
+        );
+
+        return;
+
+    }
+
+    emptyState.classList.add(
+
+        "hidden"
+
+    );
+
+    for(const enrollment of snapshot.docs){
+
+        const data =
+
+            enrollment.data();
+
+        const courseSnap =
+
+            await getDoc(
+
+                doc(
+
+                    db,
+
+                    "courses",
+
+                    data.courseId
+
+                )
+
+            );
+
+        if(!courseSnap.exists()){
+
+            continue;
+
+        }
+
+        const course =
+
+            courseSnap.data();
+
+        coursesGrid.innerHTML += `
+
+            <article class="course-card">
+
+                <img
+    src="${course.thumbnail ? "../" + course.thumbnail : "../assets/images/course-placeholder.jpg"}"
+    alt="${course.title}"
+    onerror="this.src='../assets/images/course-placeholder.jpg'">
+
+                <div class="course-content">
+
+                    <h3>
+
+                        ${course.title}
+
+                    </h3>
+
+                    <p>
+
+                        ${course.description || ""}
+
+                    </p>
+
+                    <div class="progress">
+
+                        <div
+
+                            class="progress-bar"
+
+                            style="width:${data.progress || 0}%">
+
+                        </div>
+
+                    </div>
+
+                    <div class="course-footer">
+
+                        <span>
+
+                            ${data.progress || 0}% Complete
+
+                        </span>
+
+                        <a
+
+                            href="course.html?id=${data.courseId}"
+
+                            class="btn btn-primary">
+
+                            Continue
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        `;
+
+    }
+
+}
+
+/* ==========================================================================
+   LOGOUT
+   ========================================================================== */
+
+logoutBtn.addEventListener(
+
+    "click",
+
+    async event=>{
+
+        event.preventDefault();
+
+        await signOut(
+
+            auth
+
+        );
+
+        location.href =
+
+            "login.html";
+
+    }
+
+);
+
+/* ==========================================================================
+   LOADER
+   ========================================================================== */
+
+function showLoader(){
+
+    loader.classList.remove(
+
+        "hidden"
+
+    );
+
+}
+
+function hideLoader(){
+
+    loader.classList.add(
+
+        "hidden"
+
+    );
+
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+
+function showToast(
+
+    message,
+
+    type="success"
+
+){
+
+    const toast =
+
+        document.createElement(
+
+            "div"
+
+        );
+
+    toast.className =
+
+        `toast ${type}`;
+
+    toast.textContent =
+
+        message;
+
+    toastContainer.appendChild(
+
+        toast
+
+    );
+
+    requestAnimationFrame(()=>{
+
+        toast.classList.add(
+
+            "show"
+
+        );
+
+    });
+
+    setTimeout(()=>{
+
+        toast.remove();
+
+    },3000);
+
+}
+
+/* ==========================================================================
+   END OF FILE
+   ========================================================================== */

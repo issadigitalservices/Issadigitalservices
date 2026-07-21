@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Course Details | ISSA Academy</title>
+
+    <meta name="theme-color"
+          content="#2563EB">
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/student/course.css">
+
+          <link rel="stylesheet"
+      href="../assets/css/student/dashboard.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- ================= Sidebar ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo-area">
+
+            <img
+                src="../assets/images/Issa-Logo.png"
+                alt="ISSA Academy">
+
+            <h2>
+
+                ISSA Academy
+
+            </h2>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+
+                    <a href="dashboard.html">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="my-courses.html">
+
+                        <i class="fa-solid fa-book-open"></i>
+
+                        My Courses
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="profile.html">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Profile
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="certificate.html">
+
+                        <i class="fa-solid fa-award"></i>
+
+                        Certificates
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a
+                        href="login.html"
+                        id="logoutBtn">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Logout
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <!-- ================= Content ================= -->
+
+    <main class="content">
+
+        <header class="top-bar">
+
+            <div>
+
+                <h1 id="courseTitle">
+
+                    Loading...
+
+                </h1>
+
+                <p id="courseCategory">
+
+                    Please wait...
+
+                </p>
+
+            </div>
+
+        </header>
+
+        <!-- ================= Banner ================= -->
+
+        <section class="course-banner">
+
+            <img
+
+                id="courseThumbnail"
+
+                src="../assets/images/course-placeholder.jpg"
+
+                alt="Course">
+
+            <div class="banner-content">
+
+                <h2 id="bannerTitle">
+
+                    Loading...
+
+                </h2>
+
+                <p id="courseDescription">
+
+                </p>
+
+                <div class="course-meta">
+
+                    <span>
+
+                        <i class="fa-solid fa-video"></i>
+
+                        <span id="lessonCount">
+
+                            0
+
+                        </span>
+
+                        Lessons
+
+                    </span>
+
+                    <span>
+
+    <i class="fa-solid fa-chart-line"></i>
+
+    <span id="progressText">
+
+        0%
+
+    </span>
+
+</span>
+                        
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="progress-card">
+
+    <div class="progress-header">
+
+        <div>
+
+            <h3>
+
+                Your Progress
+
+            </h3>
+
+            <p class="progress-subtitle">
+
+                <span id="completedLessons">
+
+                    0
+
+                </span>
+
+                of
+
+                <span id="lessonCountProgress">
+
+                    0
+
+                </span>
+
+                lessons completed
+
+            </p>
+
+        </div>
+
+        <span id="overallProgress">
+
+            0%
+
+        </span>
+
+    </div>
+
+    <div class="progress">
+
+        <div
+    id="overallProgressBar"
+    class="course-progress-fill"
+    style="width:0%">
+</div>
+    </div>
+
+</section>
+
+<section class="course-info">
+
+    <div class="info-card">
+
+        <i class="fa-solid fa-layer-group"></i>
+
+        <h4>Total Modules</h4>
+
+        <span id="moduleCount">
+            0
+        </span>
+
+    </div>
+
+    <div class="info-card">
+
+        <i class="fa-solid fa-video"></i>
+
+        <h4>Total Lessons</h4>
+
+        <span id="lessonCountCard">
+            0
+        </span>
+
+    </div>
+
+    <div class="info-card">
+
+        <i class="fa-solid fa-award"></i>
+
+        <h4>Certificate</h4>
+
+        <span id="certificateStatus">
+
+            Locked
+
+        </span>
+
+    </div>
+
+</section>
+
+        <!-- ================= Modules ================= -->
+
+        <section class="course-section">
+
+            <div class="section-header">
+
+                <h2>
+
+                    Course Modules
+
+                </h2>
+
+            </div>
+
+            <div
+                id="moduleList"
+                class="module-list">
+
+            </div>
+
+            <!-- ================= Final Exam ================= -->
+
+<div
+    id="finalExamContainer">
+</div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+
+            src="../assets/images/Issa-Logo.png"
+
+            class="loader-logo"
+
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Course...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div
+
+    id="toastContainer"
+
+    class="toast-container">
+
+</div>
+
+<script
+
+    type="module"
+
+    src="../assets/js/student/course.js">
+
+</script>
+
+</body>
+
+</html>

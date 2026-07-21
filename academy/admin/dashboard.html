@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | ISSA Academy</title>
+
+    <meta name="theme-color"
+          content="#2563EB">
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/admin/dashboard.css">
+
+          <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- ================= Sidebar ================= -->
+
+<aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <!-- ================= Main ================= -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Dashboard
+
+                </h1>
+
+                <p>
+
+                    Welcome back Administrator
+
+                </p>
+
+            </div>
+
+            <div class="top-actions">
+
+                <button class="icon-btn">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                </button>
+
+                <button class="icon-btn">
+
+                    <i class="fa-solid fa-user"></i>
+
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- ================= Statistics ================= -->
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-users"></i>
+
+                <div>
+
+                    <h3 id="totalStudents">0</h3>
+
+                    <span>Total Students</span>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-book"></i>
+
+                <div>
+
+                    <h3 id="totalCourses">0</h3>
+
+                    <span>Total Courses</span>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-video"></i>
+
+                <div>
+
+                    <h3 id="totalLessons">0</h3>
+
+                    <span>Total Lessons</span>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-credit-card"></i>
+
+                <div>
+
+                    <h3 id="totalRevenue">SAR 0</h3>
+
+                    <span>Revenue</span>
+
+                </div>
+
+            </article>
+
+        </section>
+
+                <!-- ================= Dashboard Content ================= -->
+
+        <section class="dashboard-grid">
+
+            <!-- Recent Courses -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+
+                        Recent Courses
+
+                    </h2>
+
+                    <a href="courses.html">
+
+                        View All
+
+                    </a>
+
+                </div>
+
+                <div
+                    id="recentCourses"
+                    class="card-body">
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-book-open"></i>
+
+                        <p>
+
+                            No courses available.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Recent Students -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+
+                        Latest Students
+
+                    </h2>
+
+                    <a href="students.html">
+
+                        View All
+
+                    </a>
+
+                </div>
+
+                <div
+                    id="recentStudents"
+                    class="card-body">
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-user-graduate"></i>
+
+                        <p>
+
+                            No students found.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= Bottom Section ================= -->
+
+        <section class="dashboard-grid">
+
+            <!-- Payments -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+
+                        Latest Payments
+
+                    </h2>
+
+                    <a href="payments.html">
+
+                        View All
+
+                    </a>
+
+                </div>
+
+                <div
+                    id="recentPayments"
+                    class="card-body">
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-credit-card"></i>
+
+                        <p>
+
+                            No payments found.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Activity -->
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+
+                    <h2>
+
+                        Recent Activity
+
+                    </h2>
+
+                </div>
+
+                <div
+                    id="activityTimeline"
+                    class="card-body">
+
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <div>
+
+                            <strong>
+
+                                Welcome to ISSA Academy
+
+                            </strong>
+
+                            <p>
+
+                                Start creating your first course.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Dashboard...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+    type="module"
+    src="../assets/js/admin/dashboard.js">
+
+</script>
+
+</body>
+
+</html>

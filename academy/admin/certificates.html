@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Certificates | ISSA Academy</title>
+
+<meta name="theme-color"
+content="#2563EB">
+
+<link rel="icon"
+href="../assets/images/Issa-Logo.png">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link rel="stylesheet"
+href="../assets/css/main.css">
+
+<link rel="stylesheet"
+href="../assets/css/admin/certificates.css">
+
+<link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+
+    <aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Certificates
+
+                </h1>
+
+                <p>
+
+                    Manage all issued certificates.
+
+                </p>
+
+            </div>
+
+        </header>
+
+        <!-- Stats -->
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-award"></i>
+
+                <div>
+
+                    <h3 id="totalCertificates">
+
+                        0
+
+                    </h3>
+
+                    <span>
+
+                        Total Certificates
+
+                    </span>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                <div>
+
+                    <h3 id="completedStudents">
+
+                        0
+
+                    </h3>
+
+                    <span>
+
+                        Completed Students
+
+                    </span>
+
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- Toolbar -->
+
+        <section class="toolbar">
+
+            <input
+
+                id="searchInput"
+
+                type="search"
+
+                placeholder="Search Student or Course">
+
+        </section>
+
+        <!-- Table -->
+
+        <div class="table-card">
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            Student
+
+                        </th>
+
+                        <th>
+
+                            Course
+
+                        </th>
+
+                        <th>
+
+                            Certificate No
+
+                        </th>
+
+                        <th>
+
+                            Date
+
+                        </th>
+
+                        <th>
+
+                            Action
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="certificateTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- Empty -->
+
+        <div
+
+            id="emptyState"
+
+            class="empty-state hidden">
+
+            <i class="fa-solid fa-award"></i>
+
+            <h2>
+
+                No Certificates Found
+
+            </h2>
+
+            <p>
+
+                Certificates will appear here automatically.
+
+            </p>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- Loader -->
+
+<div
+
+id="pageLoader"
+
+class="page-loader hidden">
+
+<div class="loader-card">
+
+<img
+
+src="../assets/images/Issa-Logo.png"
+
+class="loader-logo">
+
+<div class="loader-spinner"></div>
+
+<p>
+
+Loading Certificates...
+
+</p>
+
+</div>
+
+</div>
+
+<!-- Toast -->
+
+<div
+
+id="toastContainer"
+
+class="toast-container">
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+
+type="module"
+
+src="../assets/js/admin/certificates.js">
+
+</script>
+
+</body>
+
+</html>

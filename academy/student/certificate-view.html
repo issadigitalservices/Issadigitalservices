@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Certificate | ISSA Academy</title>
+
+<link rel="icon"
+      href="../assets/images/Issa-Logo.png">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link rel="stylesheet"
+      href="../assets/css/main.css">
+
+<link rel="stylesheet"
+      href="../assets/css/student/certificate-view.css">
+
+</head>
+
+<body>
+
+<div class="certificate-page">
+
+    <div class="certificate-actions">
+
+        <button
+            id="backBtn"
+            class="btn btn-secondary">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back
+
+        </button>
+
+        <button
+    id="printBtn"
+    class="btn btn-primary">
+
+    <i class="fa-solid fa-download"></i>
+
+    Download PDF
+
+</button>
+    </div>
+
+    <section
+        id="certificate"
+        class="certificate">
+
+        <div class="certificate-border">
+
+            <div class="certificate-header">
+
+                <img
+                    id="academyLogo"
+                    src="../assets/images/Issa-Logo.png"
+                    alt="Academy Logo">
+
+                <h1 id="academyName">
+
+                    ISSA Academy
+
+                </h1>
+
+                <p>
+
+                    CERTIFICATE OF COMPLETION
+
+                </p>
+
+            </div>
+
+            <div class="certificate-body">
+
+                <p>
+
+                    This Certificate is Proudly Presented To
+
+                </p>
+
+                <h2 id="studentName">
+
+                    Loading...
+
+                </h2>
+
+                <p>
+
+                    For Successfully Completing
+
+                </p>
+
+                <h3 id="courseName">
+
+                    Loading...
+
+                </h3>
+
+            </div>
+
+            <div class="certificate-details">
+
+                <div>
+
+                    <strong>
+
+                        Certificate No
+
+                    </strong>
+
+                    <p id="certificateNumber"></p>
+
+                </div>
+
+                <div>
+
+                    <strong>
+
+                        Issue Date
+
+                    </strong>
+
+                    <p id="issueDate"></p>
+
+                </div>
+
+            </div>
+
+            <div class="certificate-footer">
+
+                <div>
+
+                    <img
+                        id="signatureImage"
+                        alt="Signature">
+
+                    <div class="signature-line"></div>
+
+                    <h4 id="instructorName">
+
+                        Loading...
+
+                    </h4>
+
+                    <p id="designation">
+
+                    </p>
+
+                </div>
+
+                <div class="certificate-verification">
+
+    <div id="qrCode"></div>
+
+    <p>
+
+        Scan to Verify
+
+    </p>
+
+</div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            class="loader-logo">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Certificate...
+
+        </p>
+
+    </div>
+
+</div>
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script
+    type="module"
+    src="../assets/js/student/certificate-view.js">
+
+</script>
+
+</body>
+
+</html>

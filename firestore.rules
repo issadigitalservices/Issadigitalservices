@@ -1,0 +1,155 @@
+rules_version = '2';
+
+service cloud.firestore {
+
+  match /databases/{database}/documents {
+
+    /* ==========================================================
+       Helpers
+       ========================================================== */
+
+    function isSignedIn() {
+
+      return request.auth != null;
+
+    }
+
+    function isOwner(uid) {
+
+      return isSignedIn()
+
+        && request.auth.uid == uid;
+
+    }
+
+    /* ==========================================================
+       Students
+       ========================================================== */
+
+    match /students/{studentId} {
+
+      allow read, update:
+
+        if isOwner(studentId);
+
+      allow create:
+
+        if isSignedIn();
+
+    }
+
+    /* ==========================================================
+       Courses
+       ========================================================== */
+
+    match /courses/{courseId} {
+
+      allow read:
+
+        if isSignedIn();
+
+      allow write:
+
+        if isSignedIn();
+
+    }
+
+    /* ==========================================================
+       Modules
+       ========================================================== */
+
+    match /modules/{moduleId} {
+
+      allow read:
+
+        if isSignedIn();
+
+      allow write:
+
+        if isSignedIn();
+
+    }
+
+    /* ==========================================================
+       Lessons
+       ========================================================== */
+
+    match /lessons/{lessonId} {
+
+      allow read:
+
+        if isSignedIn();
+
+      allow write:
+
+        if isSignedIn();
+
+    }
+
+    /* ==========================================================
+       Enrollments
+       ========================================================== */
+
+    match /enrollments/{enrollmentId} {
+
+      allow read:
+
+        if isSignedIn();
+
+      allow write:
+
+        if isSignedIn();
+
+    }
+
+    /* ==========================================================
+       Payments
+       ========================================================== */
+
+    match /payments/{paymentId} {
+
+      allow read:
+
+        if isSignedIn();
+
+      allow write:
+
+        if isSignedIn();
+
+    }
+
+    /* ==========================================================
+       Certificates
+       ========================================================== */
+
+    match /certificates/{certificateId} {
+
+      allow read:
+
+        if isSignedIn();
+
+      allow write:
+
+        if isSignedIn();
+
+    }
+
+    /* ==========================================================
+       Settings
+       ========================================================== */
+
+    match /settings/{settingId} {
+
+      allow read:
+
+        if isSignedIn();
+
+      allow write:
+
+        if isSignedIn();
+
+    }
+
+  }
+
+}

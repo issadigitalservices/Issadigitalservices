@@ -1,0 +1,87 @@
+rules_version = '2';
+
+service firebase.storage {
+
+  match /b/{bucket}/o {
+
+    /* ==========================================================
+       Course Thumbnails
+       ========================================================== */
+
+    match /courses/{allPaths=**} {
+
+      allow read:
+
+        if true;
+
+      allow write:
+
+        if request.auth != null;
+
+    }
+
+    /* ==========================================================
+       Lesson Videos
+       ========================================================== */
+
+    match /videos/{allPaths=**} {
+
+      allow read:
+
+        if request.auth != null;
+
+      allow write:
+
+        if request.auth != null;
+
+    }
+
+    /* ==========================================================
+       Certificates
+       ========================================================== */
+
+    match /certificates/{allPaths=**} {
+
+      allow read:
+
+        if request.auth != null;
+
+      allow write:
+
+        if request.auth != null;
+
+    }
+
+    /* ==========================================================
+       Student Profile Images
+       ========================================================== */
+
+    match /students/{userId}/{allPaths=**} {
+
+      allow read:
+
+        if request.auth != null;
+
+      allow write:
+
+        if request.auth != null
+
+        && request.auth.uid == userId;
+
+    }
+
+    /* ==========================================================
+       Default
+       ========================================================== */
+
+    match /{allPaths=**} {
+
+      allow read, write:
+
+        if false;
+
+    }
+
+  }
+
+}

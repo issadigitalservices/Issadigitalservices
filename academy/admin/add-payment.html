@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Add Payment | ISSA Academy</title>
+
+<link rel="icon"
+      href="../assets/images/Issa-Logo.png">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link rel="stylesheet"
+      href="../assets/css/main.css">
+
+<link rel="stylesheet"
+      href="../assets/css/admin/add-payment.css">
+
+      <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+<aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+<main class="main-content">
+
+<header class="topbar">
+
+<div>
+
+<h1>
+
+Add Payment
+
+</h1>
+
+<p>
+
+Verify manual payment received from student.
+
+</p>
+
+</div>
+
+</header>
+
+<form
+id="paymentForm"
+class="form-card">
+
+<div class="grid">
+
+<div class="form-group">
+
+<label>
+
+Student
+
+</label>
+
+<select
+id="studentSelect"
+required>
+
+<option value="">
+
+Select Student
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Course
+
+</label>
+
+<select
+id="courseSelect"
+required>
+
+<option value="">
+
+Select Course
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Amount
+
+</label>
+
+<input
+id="amount"
+type="number"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Currency
+
+</label>
+
+<select
+id="currency">
+
+<option value="SAR">
+
+SAR
+
+</option>
+
+<option value="INR">
+
+INR
+
+</option>
+
+<option value="USD">
+
+USD
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Payment Method
+
+</label>
+
+<select
+id="paymentMethod">
+
+<option>
+
+GPay
+
+</option>
+
+<option>
+
+UPI
+
+</option>
+
+<option>
+
+Bank Transfer
+
+</option>
+
+<option>
+
+Cash
+
+</option>
+
+<option>
+
+STC Pay
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Transaction Number
+
+</label>
+
+<input
+id="transactionNumber"
+type="text"
+placeholder="Reference Number">
+
+</div>
+
+<div class="form-group full">
+
+<label>
+
+Remarks
+
+</label>
+
+<textarea
+id="remarks"
+rows="4"
+placeholder="Optional remarks..."></textarea>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<button
+type="submit"
+class="btn btn-success">
+
+<i class="fa-solid fa-circle-check"></i>
+
+Save & Verify Payment
+
+</button>
+
+<a
+href="payments.html"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+</div>
+
+</form>
+
+</main>
+
+</div>
+
+<div
+id="pageLoader"
+class="page-loader hidden">
+
+<div class="loader-card">
+
+<img
+src="../assets/images/Issa-Logo.png"
+class="loader-logo">
+
+<div class="loader-spinner"></div>
+
+<p>
+
+Saving Payment...
+
+</p>
+
+</div>
+
+</div>
+
+<div
+id="toastContainer"
+class="toast-container">
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+type="module"
+src="../assets/js/admin/add-payment.js">
+
+</script>
+
+</body>
+
+</html>

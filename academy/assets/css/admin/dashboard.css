@@ -1,0 +1,265 @@
+/* ==========================================================================
+   ISSA Academy
+   Admin Dashboard
+   Version : 1.0.0
+   ========================================================================== */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+
+    gap:1.5rem;
+
+    margin-bottom:2rem;
+
+}
+
+.stat-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1rem;
+
+    background:#fff;
+
+    border-radius:14px;
+
+    padding:1.5rem;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.stat-card i{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:var(--primary-light);
+
+    color:var(--primary);
+
+    font-size:1.4rem;
+
+}
+
+.stat-card h3{
+
+    font-size:1.8rem;
+
+    margin-bottom:.3rem;
+
+}
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(420px,1fr));
+
+    gap:1.5rem;
+
+    margin-bottom:2rem;
+
+}
+
+.dashboard-card{
+
+    background:#fff;
+
+    border-radius:14px;
+
+    box-shadow:var(--shadow-sm);
+
+    overflow:hidden;
+
+}
+
+.card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:1.2rem 1.5rem;
+
+    border-bottom:1px solid var(--border-color);
+
+}
+
+.card-header h2{
+
+    font-size:1.1rem;
+
+}
+
+.card-header a{
+
+    color:var(--primary);
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.card-body{
+
+    padding:1rem 1.5rem;
+
+}
+
+.list-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:1rem 0;
+
+    border-bottom:1px solid var(--border-color);
+
+}
+
+.list-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.list-item strong{
+
+    display:block;
+
+    margin-bottom:.25rem;
+
+}
+
+.list-item p{
+
+    color:var(--text-secondary);
+
+    font-size:.9rem;
+
+}
+
+.empty-state{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:.8rem;
+
+    padding:3rem 1rem;
+
+    color:var(--text-secondary);
+
+}
+
+.empty-state i{
+
+    font-size:2rem;
+
+    color:var(--primary);
+
+}
+
+.timeline-item{
+
+    display:flex;
+
+    gap:1rem;
+
+    padding:1rem 0;
+
+}
+
+.timeline-dot{
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    margin-top:.35rem;
+
+    flex-shrink:0;
+
+}
+
+.timeline-item strong{
+
+    display:block;
+
+    margin-bottom:.25rem;
+
+}
+
+.timeline-item p{
+
+    color:var(--text-secondary);
+
+    font-size:.92rem;
+
+}
+
+@media(max-width:992px){
+
+    .admin-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .main-content{
+
+        padding:1rem;
+
+    }
+
+    .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:1rem;
+
+    }
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

@@ -1,0 +1,294 @@
+/* ==========================================================================
+   ISSA Academy
+   Typography
+   Version : 1.0.0
+   ========================================================================== */
+
+/* ==========================================================
+   BODY
+   ========================================================== */
+
+body{
+
+    font-family:var(--font-family);
+
+    font-size:var(--font-size-md);
+
+    font-weight:var(--font-normal);
+
+    line-height:var(--line-height);
+
+    color:var(--text-primary);
+
+    background:var(--body-bg);
+
+}
+
+/* ==========================================================
+   HEADINGS
+   ========================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+    font-weight:var(--font-bold);
+
+    line-height:1.25;
+
+    color:var(--text-primary);
+
+}
+
+h1{
+
+    font-size:var(--font-size-4xl);
+
+}
+
+h2{
+
+    font-size:var(--font-size-3xl);
+
+}
+
+h3{
+
+    font-size:var(--font-size-2xl);
+
+}
+
+h4{
+
+    font-size:var(--font-size-xl);
+
+}
+
+h5{
+
+    font-size:var(--font-size-lg);
+
+}
+
+h6{
+
+    font-size:var(--font-size-md);
+
+}
+
+/* ==========================================================
+   PARAGRAPHS
+   ========================================================== */
+
+p{
+
+    color:var(--text-secondary);
+
+    margin-bottom:var(--space-4);
+
+}
+
+/* ==========================================================
+   LINKS
+   ========================================================== */
+
+a{
+
+    color:var(--primary);
+
+    transition:color var(--transition-fast);
+
+}
+
+a:hover{
+
+    color:var(--primary-dark);
+
+}
+
+/* ==========================================================
+   LABELS
+   ========================================================== */
+
+label{
+
+    display:block;
+
+    margin-bottom:var(--space-2);
+
+    font-weight:var(--font-medium);
+
+    color:var(--text-primary);
+
+}
+
+/* ==========================================================
+   SMALL TEXT
+   ========================================================== */
+
+small{
+
+    font-size:var(--font-size-sm);
+
+    color:var(--text-muted);
+
+}
+
+/* ==========================================================
+   STRONG
+   ========================================================== */
+
+strong{
+
+    font-weight:var(--font-semibold);
+
+}
+
+/* ==========================================================
+   CODE
+   ========================================================== */
+
+code{
+
+    padding:.15rem .35rem;
+
+    border-radius:var(--radius-sm);
+
+    background:var(--gray-100);
+
+    color:var(--danger);
+
+    font-family:
+
+        Consolas,
+
+        Monaco,
+
+        monospace;
+
+    font-size:.9em;
+
+}
+
+/* ==========================================================
+   BLOCKQUOTE
+   ========================================================== */
+
+blockquote{
+
+    margin:var(--space-6) 0;
+
+    padding-left:var(--space-4);
+
+    border-left:4px solid var(--primary);
+
+    color:var(--text-secondary);
+
+    font-style:italic;
+
+}
+
+/* ==========================================================
+   LISTS
+   ========================================================== */
+
+ul li,
+
+ol li{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================================
+   TEXT UTILITIES
+   ========================================================== */
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.text-left{
+
+    text-align:left;
+
+}
+
+.text-right{
+
+    text-align:right;
+
+}
+
+.text-primary{
+
+    color:var(--primary);
+
+}
+
+.text-success{
+
+    color:var(--success);
+
+}
+
+.text-danger{
+
+    color:var(--danger);
+
+}
+
+.text-warning{
+
+    color:var(--warning);
+
+}
+
+.text-muted{
+
+    color:var(--text-muted);
+
+}
+
+/* ==========================================================
+   SELECTION
+   ========================================================== */
+
+::selection{
+
+    background:var(--primary);
+
+    color:var(--white);
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width:768px){
+
+    h1{
+
+        font-size:2rem;
+
+    }
+
+    h2{
+
+        font-size:1.6rem;
+
+    }
+
+    h3{
+
+        font-size:1.35rem;
+
+    }
+
+}

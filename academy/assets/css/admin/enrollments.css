@@ -1,0 +1,440 @@
+/* ==========================================================================
+   ISSA Academy
+   Admin Enrollments
+   ========================================================================== */
+
+.toolbar{
+
+    display:flex;
+
+    gap:1rem;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    margin-bottom:2rem;
+
+}
+
+.toolbar input{
+
+    flex:1;
+
+    min-width:280px;
+
+    height:48px;
+
+    padding:0 1rem;
+
+    border:1px solid var(--border-color);
+
+    border-radius:10px;
+
+    outline:none;
+
+}
+
+.toolbar select{
+
+    width:200px;
+
+    height:48px;
+
+    padding:0 1rem;
+
+    border:1px solid var(--border-color);
+
+    border-radius:10px;
+
+    outline:none;
+
+    background:#ffffff;
+
+}
+
+.table-card{
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.data-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.data-table thead{
+
+    background:var(--gray-100);
+
+}
+
+.data-table th{
+
+    padding:1rem;
+
+    text-align:left;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+    color:var(--text-primary);
+
+}
+
+.data-table td{
+
+    padding:1rem;
+
+    border-top:1px solid var(--border-color);
+
+    vertical-align:middle;
+
+}
+
+.student-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.25rem;
+
+}
+
+.student-info strong{
+
+    color:var(--text-primary);
+
+}
+
+.student-info small{
+
+    color:var(--text-secondary);
+
+}
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:95px;
+
+    padding:.45rem .9rem;
+
+    border-radius:999px;
+
+    font-size:.75rem;
+
+    font-weight:600;
+
+}
+
+.status.pending{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+.status.approved{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+.status.rejected{
+
+    background:#FEE2E2;
+
+    color:#B91C1C;
+
+}
+
+.actions{
+
+    display:flex;
+
+    gap:.5rem;
+
+    flex-wrap:wrap;
+
+}
+
+.actions button{
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:.6rem .9rem;
+
+    border-radius:8px;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.btn-approve{
+
+    background:var(--success);
+
+    color:#ffffff;
+
+}
+
+.btn-approve:hover{
+
+    background:#15803D;
+
+}
+
+.btn-reject{
+
+    background:var(--danger);
+
+    color:#ffffff;
+
+}
+
+.btn-reject:hover{
+
+    background:#B91C1C;
+
+}
+
+.btn-view{
+
+    background:var(--primary);
+
+    color:#ffffff;
+
+}
+
+.btn-view:hover{
+
+    background:var(--primary-dark);
+
+}
+
+.empty-state{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:5rem 2rem;
+
+}
+
+.empty-state i{
+
+    font-size:4rem;
+
+    color:var(--primary);
+
+    margin-bottom:1rem;
+
+}
+
+.empty-state h2{
+
+    margin-bottom:.5rem;
+
+}
+
+.empty-state p{
+
+    color:var(--text-secondary);
+
+}
+
+/* ==========================================================================
+   APPROVE MODAL
+========================================================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:9999;
+
+    padding:20px;
+
+}
+
+.modal.hidden{
+
+    display:none;
+
+}
+
+.modal-card{
+
+    width:100%;
+
+    max-width:480px;
+
+    background:#FFFFFF;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.18);
+
+    animation:modalIn .25s ease;
+
+}
+
+.modal-header{
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+    padding:22px;
+
+    text-align:center;
+
+}
+
+.modal-header i{
+
+    font-size:42px;
+
+    margin-bottom:12px;
+
+}
+
+.modal-header h2{
+
+    margin:0;
+
+    font-size:24px;
+
+}
+
+.modal-body{
+
+    padding:24px;
+
+    line-height:1.9;
+
+    color:#374151;
+
+}
+
+.modal-body p{
+
+    margin:12px 0;
+
+}
+
+.modal-footer{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+    padding:20px 24px;
+
+    border-top:1px solid #E5E7EB;
+
+}
+
+@keyframes modalIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@media(max-width:992px){
+
+    .table-card{
+
+        overflow-x:auto;
+
+    }
+
+    .data-table{
+
+        min-width:900px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .toolbar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .toolbar input,
+
+    .toolbar select{
+
+        width:100%;
+
+    }
+
+}

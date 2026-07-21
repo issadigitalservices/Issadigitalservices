@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | ISSA Academy</title>
+
+    <meta name="theme-color"
+          content="#2563EB">
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/admin/login.css">
+
+</head>
+
+<body>
+
+<div class="login-page">
+
+    <div class="login-card">
+
+        <div class="logo-area">
+
+            <img
+                src="../assets/images/Issa-Logo.png"
+                alt="ISSA Academy">
+
+            <h1>
+
+                Administrator Login
+
+            </h1>
+
+            <p>
+
+                Sign in to manage ISSA Academy.
+
+            </p>
+
+        </div>
+
+        <form
+            id="loginForm"
+            novalidate>
+
+            <div class="form-group">
+
+                <label>
+
+                    Email Address
+
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter administrator email"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Password
+
+                </label>
+
+                <div class="password-box">
+
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Enter password"
+                        required>
+
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="password-toggle">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="form-options">
+
+                <label class="remember-me">
+
+                    <input
+                        id="rememberMe"
+                        type="checkbox">
+
+                    Remember Me
+
+                </label>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary login-btn">
+
+                <i class="fa-solid fa-right-to-bracket"></i>
+
+                Login
+
+            </button>
+
+        </form>
+
+        <div class="back-link">
+
+            <a href="../student/login.html">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Student Login
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            class="loader-logo"
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Signing In...
+
+        </p>
+
+    </div>
+
+</div>
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+
+<script
+    type="module"
+    src="../assets/js/admin/login.js">
+
+</script>
+
+</body>
+
+</html>

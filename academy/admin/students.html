@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Students | ISSA Academy</title>
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/admin/students.css">
+
+          <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Students
+
+                </h1>
+
+                <p>
+
+                    Manage academy students.
+
+                </p>
+
+            </div>
+
+        </header>
+
+        <section class="toolbar">
+
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search students...">
+
+        </section>
+
+        <section class="table-card">
+
+            <table class="students-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Courses</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="studentsTableBody">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Students...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+    type="module"
+    src="../assets/js/admin/students.js">
+
+</script>
+
+</body>
+
+</html>

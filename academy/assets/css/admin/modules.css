@@ -1,0 +1,373 @@
+/* ==========================================================================
+   ISSA Academy
+   Modules
+   Version : 2.0.0
+   ========================================================================== */
+
+.main-content{
+
+    flex:1;
+
+    padding:2rem;
+
+    background:#f8fafc;
+
+}
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:1rem;
+
+    margin-bottom:2rem;
+
+}
+
+.topbar h1{
+
+    font-size:2rem;
+
+    color:#111827;
+
+    font-weight:700;
+
+    margin-bottom:.35rem;
+
+}
+
+.topbar p{
+
+    color:#6b7280;
+
+}
+
+.toolbar{
+
+    display:flex;
+
+    gap:1rem;
+
+    margin-bottom:2rem;
+
+    flex-wrap:wrap;
+
+}
+
+.toolbar input,
+
+.toolbar select{
+
+    padding:.85rem 1rem;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    background:#ffffff;
+
+    min-width:250px;
+
+    font-size:.95rem;
+
+    transition:.25s;
+
+}
+
+.toolbar input:focus,
+
+.toolbar select:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+.modules-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+
+    gap:1.5rem;
+
+}
+
+.module-card{
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    border:1px solid #e5e7eb;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+
+    padding:1.5rem;
+
+    transition:.25s;
+
+}
+
+.module-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.module-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:1rem;
+
+    margin-bottom:1rem;
+
+}
+
+.module-title{
+
+    font-size:1.15rem;
+
+    font-weight:600;
+
+    color:#111827;
+
+}
+
+.module-order{
+
+    background:#2563eb;
+
+    color:#ffffff;
+
+    padding:.35rem .8rem;
+
+    border-radius:30px;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+}
+
+.module-course{
+
+    font-size:.9rem;
+
+    color:#2563eb;
+
+    font-weight:600;
+
+    margin-bottom:.75rem;
+
+}
+
+.module-description{
+
+    color:#6b7280;
+
+    line-height:1.6;
+
+    margin-bottom:1.2rem;
+
+}
+
+.module-meta{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:1.5rem;
+
+    color:#6b7280;
+
+    font-size:.9rem;
+
+}
+
+.module-meta span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.45rem;
+
+}
+
+.module-status{
+
+    font-weight:600;
+
+    color:#16a34a;
+
+}
+
+.module-actions{
+
+    display:flex;
+
+    gap:.75rem;
+
+}
+
+.module-actions button{
+
+    flex:1;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:.8rem;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.btn-edit{
+
+    background:#2563eb;
+
+    color:#ffffff;
+
+}
+
+.btn-edit:hover{
+
+    background:#1d4ed8;
+
+}
+
+.btn-delete{
+
+    background:#ef4444;
+
+    color:#ffffff;
+
+}
+
+.btn-delete:hover{
+
+    background:#dc2626;
+
+}
+
+.empty-state{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:5rem 2rem;
+
+}
+
+.empty-state i{
+
+    font-size:4rem;
+
+    color:#cbd5e1;
+
+    margin-bottom:1rem;
+
+}
+
+.empty-state h2{
+
+    color:#111827;
+
+    margin-bottom:.5rem;
+
+}
+
+.empty-state p{
+
+    color:#6b7280;
+
+    margin-bottom:2rem;
+
+}
+
+.hidden{
+
+    display:none!important;
+
+}
+
+@media(max-width:992px){
+
+    .modules-grid{
+
+        grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .main-content{
+
+        padding:1rem;
+
+    }
+
+    .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .toolbar{
+
+        flex-direction:column;
+
+    }
+
+    .toolbar input,
+
+    .toolbar select{
+
+        width:100%;
+
+        min-width:100%;
+
+    }
+
+    .module-actions{
+
+        flex-direction:column;
+
+    }
+
+}

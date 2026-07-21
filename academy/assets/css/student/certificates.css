@@ -1,0 +1,218 @@
+/* ==========================================================================
+   ISSA Academy
+   Student Certificates
+   ========================================================================== */
+
+.main-content{
+
+    flex:1;
+
+    padding:2rem;
+
+    background:#f8fafc;
+
+    overflow-x:hidden;
+
+}
+
+.topbar{
+
+    margin-bottom:2rem;
+
+}
+
+.topbar h1{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.student-layout{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+.sidebar{
+
+    width:260px;
+
+    flex-shrink:0;
+
+}
+
+.main-content{
+
+    flex:1;
+
+    overflow-x:hidden;
+
+}
+
+.certificates-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+
+    gap:1.5rem;
+
+}
+
+.certificate-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:2rem;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+
+    transition:.25s;
+
+}
+
+.certificate-card:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.certificate-icon{
+
+    width:90px;
+
+    height:90px;
+
+    margin:0 auto 1.5rem;
+
+    border-radius:50%;
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:2.5rem;
+
+}
+
+.certificate-title{
+
+    font-size:1.2rem;
+
+    font-weight:600;
+
+    color:#111827;
+
+    margin-bottom:.75rem;
+
+}
+
+.certificate-id{
+
+    color:#6b7280;
+
+    font-size:.9rem;
+
+    margin-bottom:.75rem;
+
+}
+
+.certificate-date{
+
+    color:#6b7280;
+
+    margin-bottom:1.5rem;
+
+}
+
+.btn-download{
+
+    width:100%;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+.btn-download:hover{
+
+    background:#1d4ed8;
+
+}
+
+.empty-state{
+
+    grid-column:1/-1;
+
+    background:#fff;
+
+    border-radius:16px;
+
+    padding:4rem 2rem;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+
+}
+
+.empty-state i{
+
+    font-size:3rem;
+
+    color:#2563eb;
+
+    margin-bottom:1rem;
+
+}
+
+.empty-state h2{
+
+    margin-bottom:.75rem;
+
+    color:#111827;
+
+}
+
+.empty-state p{
+
+    color:#6b7280;
+
+}
+
+@media(max-width:768px){
+
+    .main-content{
+
+        padding:1rem;
+
+    }
+
+}

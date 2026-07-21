@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Enroll Course | ISSA Academy</title>
+
+    <meta name="theme-color"
+          content="#2563EB">
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/student/enroll.css">
+
+</head>
+
+<body>
+
+<div class="enroll-page">
+
+    <div class="enroll-card">
+
+        <div class="logo-area">
+
+            <img
+                src="../assets/images/Issa-Logo.png"
+                alt="ISSA Academy">
+
+            <h1>Microsoft Excel Mastery</h1>
+
+<p>
+Review your enrollment status and continue your learning journey.
+</p>
+
+        </div>
+
+        <div class="course-summary">
+
+            <img
+
+                id="courseThumbnail"
+
+                src="../assets/images/courses/dashboard.jpg"
+
+                alt="Course">
+
+            <div>
+
+                <h2 id="courseTitle">
+
+                    Loading...
+
+                </h2>
+
+                <p id="courseCategory">
+
+                </p>
+
+                <p id="courseDescription">
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="price-card">
+
+            <div>
+
+                <span>
+
+                    Course Fee
+
+                </span>
+
+                <h2 id="coursePrice">
+
+                    ₹0
+
+                </h2>
+
+            </div>
+
+            <div class="status-card">
+
+    <span class="status-label">
+
+        Enrollment Status
+
+    </span>
+
+    <h3 id="enrollmentStatus">
+
+        Checking...
+
+    </h3>
+
+    <p id="statusMessage">
+
+        Please wait while we verify your enrollment.
+
+    </p>
+
+</div>
+
+            <div>
+
+                <span>
+
+                    Payment Method
+
+                </span>
+
+                <strong>
+
+                    Manual (WhatsApp)
+
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div class="important-note">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>
+
+                    Enrollment Process
+
+                </strong>
+
+                <p id="instructionText">
+
+Loading enrollment details...
+
+</p>
+
+            </div>
+
+        </div>
+
+        <button
+
+            id="enrollBtn"
+
+            class="btn btn-primary enroll-btn">
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+            Continue to WhatsApp
+
+        </button>
+
+        <a
+
+id="supportBtn"
+
+class="btn btn-outline">
+
+<i class="fa-brands fa-whatsapp"></i>
+
+Contact Support
+
+</a>
+
+        <a
+
+            href="../excel.html"
+
+            class="btn btn-secondary back-btn">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back to Courses
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div
+
+    id="pageLoader"
+
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+
+            src="../assets/images/Issa-Logo.png"
+
+            class="loader-logo"
+
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Preparing Enrollment...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div
+
+    id="toastContainer"
+
+    class="toast-container">
+
+</div>
+
+<script
+
+    type="module"
+
+    src="../assets/js/student/enroll.js">
+
+</script>
+
+</body>
+
+</html>

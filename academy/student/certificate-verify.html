@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Certificate Verification | ISSA Academy</title>
+
+<meta name="theme-color"
+      content="#2563EB">
+
+<link rel="icon"
+      href="../assets/images/Issa-Logo.png">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link rel="stylesheet"
+      href="../assets/css/main.css">
+
+<link rel="stylesheet"
+      href="../assets/css/student/certificate-verify.css">
+
+</head>
+
+<body>
+
+<div class="verify-page">
+
+    <div class="verify-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            class="academy-logo"
+            alt="ISSA Academy">
+
+        <h1>
+
+            Certificate Verification
+
+        </h1>
+
+        <p class="subtitle">
+
+            Verify the authenticity of an ISSA Academy Certificate.
+
+        </p>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="certificateNumber"
+                placeholder="Enter Certificate Number">
+
+            <button
+                id="verifyBtn">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                Verify
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div
+        id="resultContainer">
+
+    </div>
+
+</div>
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            class="loader-logo">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Verifying Certificate...
+
+        </p>
+
+    </div>
+
+</div>
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+
+<script
+    type="module"
+    src="../assets/js/student/certificate-verify.js">
+
+</script>
+
+</body>
+
+</html>

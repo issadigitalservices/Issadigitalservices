@@ -1,0 +1,388 @@
+/* ==========================================================================
+   ISSA Academy
+   Admin Payments
+   ========================================================================== */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:1.5rem;
+
+    margin-bottom:2rem;
+
+}
+
+.stat-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1rem;
+
+    padding:1.5rem;
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.stat-card i{
+
+    width:60px;
+
+    height:60px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:var(--primary-light);
+
+    color:var(--primary);
+
+    font-size:1.5rem;
+
+}
+
+.stat-card h3{
+
+    margin-bottom:.35rem;
+
+    font-size:1.8rem;
+
+    font-weight:700;
+
+}
+
+.stat-card span{
+
+    color:var(--text-secondary);
+
+}
+
+.toolbar{
+
+    display:flex;
+
+    gap:1rem;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    margin-bottom:2rem;
+
+}
+
+.toolbar input{
+
+    flex:1;
+
+    min-width:260px;
+
+    height:48px;
+
+    padding:0 1rem;
+
+    border:1px solid var(--border-color);
+
+    border-radius:10px;
+
+    outline:none;
+
+}
+
+.toolbar select{
+
+    width:200px;
+
+    height:48px;
+
+    padding:0 1rem;
+
+    border:1px solid var(--border-color);
+
+    border-radius:10px;
+
+    outline:none;
+
+    background:#ffffff;
+
+}
+
+.table-card{
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.data-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.data-table thead{
+
+    background:var(--gray-100);
+
+}
+
+.data-table th{
+
+    padding:1rem;
+
+    text-align:left;
+
+    font-weight:600;
+
+    color:var(--text-primary);
+
+    white-space:nowrap;
+
+}
+
+.data-table td{
+
+    padding:1rem;
+
+    border-top:1px solid var(--border-color);
+
+    vertical-align:middle;
+
+}
+
+.student-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.3rem;
+
+}
+
+.student-info strong{
+
+    color:var(--text-primary);
+
+}
+
+.student-info small{
+
+    color:var(--text-secondary);
+
+}
+
+.payment-status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:100px;
+
+    padding:.45rem .9rem;
+
+    border-radius:999px;
+
+    font-size:.75rem;
+
+    font-weight:600;
+
+}
+
+.payment-status.verified{
+
+    background:var(--success-light);
+
+    color:var(--success);
+
+}
+
+.payment-status.pending{
+
+    background:var(--warning-light);
+
+    color:#B45309;
+
+}
+
+.payment-status.rejected{
+
+    background:var(--danger-light);
+
+    color:var(--danger);
+
+}
+
+.action-group{
+
+    display:flex;
+
+    gap:.5rem;
+
+    flex-wrap:wrap;
+
+}
+
+.action-group button{
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:.6rem .9rem;
+
+    border-radius:8px;
+
+    font-size:.85rem;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.btn-verify{
+
+    background:var(--success);
+
+    color:#ffffff;
+
+}
+
+.btn-verify:hover{
+
+    background:#15803D;
+
+}
+
+.btn-edit{
+
+    background:var(--primary);
+
+    color:#ffffff;
+
+}
+
+.btn-edit:hover{
+
+    background:var(--primary-dark);
+
+}
+
+.btn-delete{
+
+    background:var(--danger);
+
+    color:#ffffff;
+
+}
+
+.btn-delete:hover{
+
+    background:#B91C1C;
+
+}
+
+.empty-state{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:5rem 2rem;
+
+}
+
+.empty-state i{
+
+    font-size:4rem;
+
+    color:var(--primary);
+
+    margin-bottom:1rem;
+
+}
+
+.empty-state h2{
+
+    margin-bottom:.5rem;
+
+}
+
+.empty-state p{
+
+    color:var(--text-secondary);
+
+}
+
+@media(max-width:992px){
+
+    .table-card{
+
+        overflow-x:auto;
+
+    }
+
+    .data-table{
+
+        min-width:1100px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .toolbar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .toolbar input,
+
+    .toolbar select{
+
+        width:100%;
+
+    }
+
+}

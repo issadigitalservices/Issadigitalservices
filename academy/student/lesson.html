@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Lesson | ISSA Academy</title>
+
+    <meta name="theme-color"
+          content="#2563EB">
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/student/lesson.css">
+
+          <link rel="stylesheet"
+href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
+</head>
+
+<body>
+
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+
+<div class="dashboard">
+
+    <!-- ================= Sidebar ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo-area">
+
+            <img
+                src="../assets/images/Issa-Logo.png"
+                alt="ISSA Academy">
+
+            <h2>
+
+                ISSA Academy
+
+            </h2>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+
+                    <a href="dashboard.html">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+                <li class="active">
+
+                    <a href="my-courses.html">
+
+                        <i class="fa-solid fa-book-open"></i>
+
+                        My Courses
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="profile.html">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Profile
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a href="certificate.html">
+
+                        <i class="fa-solid fa-award"></i>
+
+                        Certificates
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a
+                        href="login.html"
+                        id="logoutBtn">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+
+                        Logout
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </aside>
+
+    <!-- ================= Content ================= -->
+
+    <main class="content">
+
+        <header class="top-bar">
+
+    <div>
+
+        <div class="lesson-breadcrumb">
+
+            <span id="courseName">
+
+                Microsoft Excel Masterclass
+
+            </span>
+
+            <i class="fa-solid fa-angle-right"></i>
+
+            <span id="moduleTitle">
+
+                Module 1
+
+            </span>
+
+            <i class="fa-solid fa-angle-right"></i>
+
+            <span id="lessonNumber">
+
+                Lesson 1
+
+            </span>
+
+        </div>
+
+        <h1 id="lessonTitle" class="lesson-title"></h1>
+
+    </div>
+
+</header>
+
+        <section class="progress-card">
+
+    <div class="progress-header">
+
+        <h3>Course Progress</h3>
+
+        <span id="progressPercent">
+
+            0%
+
+        </span>
+
+    </div>
+
+    <div class="progress-bar">
+
+    <div
+        id="progressBar"
+        class="progress-fill">
+
+    </div>
+
+</div>
+
+</section>
+
+        <!-- ================= Video ================= -->
+
+        <section class="video-card">
+
+    <div class="video-wrapper">
+
+        <video
+    id="lessonVideo"
+    playsinline
+    controls
+    controlsList="nodownload"
+    disablePictureInPicture
+    oncontextmenu="return false">
+</video>
+
+     </div>
+
+</section>
+
+        <section class="lesson-info">
+
+    <div class="lesson-info-card">
+
+        <i class="fa-solid fa-circle-play"></i>
+
+        <div>
+
+            <small>Lesson Type</small>
+
+            <strong>
+
+                Video Lesson
+
+            </strong>
+
+        </div>
+
+    </div>
+
+    <div class="lesson-info-card">
+
+        <i class="fa-regular fa-clock"></i>
+
+        <div>
+
+            <small>Duration</small>
+
+            <strong id="lessonDuration">
+
+    Loading...
+
+</strong>
+
+        </div>
+
+    </div>
+
+    <div class="lesson-info-card">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <div>
+
+            <small>Status</small>
+
+            <strong id="lessonStatusText">
+
+                In Progress
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+        <!-- ================= Lesson Details ================= -->
+
+        <section class="lesson-card">
+
+            <h2>
+
+                Description
+
+            </h2>
+
+            <p id="lessonDescription">
+
+            </p>
+
+        </section>
+
+        <!-- ================= Resources ================= -->
+
+        <section class="lesson-card">
+
+            <h2>
+
+                Resources
+
+            </h2>
+
+            <a
+
+                id="downloadBtn"
+
+                class="btn btn-secondary"
+
+                target="_blank">
+
+                <i class="fa-solid fa-download"></i>
+
+                Download Attachment
+
+            </a>
+
+        </section>
+
+        <!-- ================= Navigation ================= -->
+
+        <section class="lesson-navigation">
+
+    <button
+
+        id="previousLesson"
+
+        class="lesson-nav-btn secondary">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        <div>
+
+            <small>
+
+                Previous Lesson
+
+            </small>
+
+            <strong>
+
+                Previous
+
+            </strong>
+
+        </div>
+
+    </button>
+
+    <div
+
+        id="lessonStatus"
+
+        class="lesson-status-card">
+
+        <i class="fa-solid fa-clock"></i>
+
+        <div>
+
+            <small>
+
+                Lesson Status
+
+            </small>
+
+            <strong>
+
+                In Progress
+
+            </strong>
+
+        </div>
+
+    </div>
+
+    <button
+
+        id="nextLesson"
+
+        class="lesson-nav-btn primary">
+
+        <div>
+
+            <small>
+
+                Next Lesson
+
+            </small>
+
+            <strong>
+
+                Continue
+
+            </strong>
+
+        </div>
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </button>
+
+</section>
+
+    </main>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div
+
+    id="pageLoader"
+
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+
+            src="../assets/images/Issa-Logo.png"
+
+            class="loader-logo"
+
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+    </div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div
+
+    id="toastContainer"
+
+    class="toast-container">
+
+</div>
+
+<script
+
+    type="module"
+
+    src="../assets/js/student/lesson.js">
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,334 @@
+/* ==========================================================================
+   ISSA Academy
+   Cards
+   Version : 1.0.0
+   ========================================================================== */
+
+/* ==========================================================
+   Base Card
+   ========================================================== */
+
+.card,
+.profile-card,
+.course-card,
+.lesson-card,
+.sidebar-card,
+.stat-card,
+.certificate-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border-color);
+
+    border-radius:var(--radius-lg);
+
+    box-shadow:var(--shadow-sm);
+
+    transition:
+
+        transform var(--transition-fast),
+
+        box-shadow var(--transition-fast),
+
+        border-color var(--transition-fast);
+
+}
+
+/* ==========================================================
+   Hover
+   ========================================================== */
+
+.card:hover,
+.course-card:hover,
+.lesson-card:hover,
+.certificate-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-md);
+
+    border-color:var(--primary-light);
+
+}
+
+/* ==========================================================
+   Standard Card
+   ========================================================== */
+
+.card{
+
+    padding:var(--space-6);
+
+}
+
+/* ==========================================================
+   Sidebar Card
+   ========================================================== */
+
+.sidebar-card{
+
+    padding:var(--space-5);
+
+    margin-bottom:var(--space-5);
+
+}
+
+/* ==========================================================
+   Statistics Card
+   ========================================================== */
+
+.stat-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    gap:var(--space-2);
+
+    padding:var(--space-6);
+
+    min-height:170px;
+
+}
+
+.stat-card i{
+
+    font-size:2rem;
+
+    color:var(--primary);
+
+}
+
+.stat-card h3{
+
+    font-size:2rem;
+
+    font-weight:var(--font-bold);
+
+    color:var(--text-primary);
+
+}
+
+.stat-card span{
+
+    color:var(--text-secondary);
+
+    font-size:var(--font-size-sm);
+
+}
+
+/* ==========================================================
+   Course Card
+   ========================================================== */
+
+.course-card{
+
+    overflow:hidden;
+
+}
+
+.course-card img{
+
+    width:100%;
+
+    aspect-ratio:16/9;
+
+    object-fit:cover;
+
+}
+
+.course-card-body{
+
+    padding:var(--space-5);
+
+}
+
+.course-card-title{
+
+    margin-bottom:var(--space-2);
+
+}
+
+.course-card-description{
+
+    color:var(--text-secondary);
+
+    margin-bottom:var(--space-4);
+
+}
+
+/* ==========================================================
+   Lesson Card
+   ========================================================== */
+
+.lesson-card{
+
+    padding:var(--space-4);
+
+}
+
+.lesson-card:hover{
+
+    background:var(--surface-alt);
+
+}
+
+/* ==========================================================
+   Certificate Card
+   ========================================================== */
+
+.certificate-card{
+
+    overflow:hidden;
+
+}
+
+.certificate-thumbnail img{
+
+    width:100%;
+
+    aspect-ratio:16/10;
+
+    object-fit:cover;
+
+}
+
+.certificate-body{
+
+    padding:var(--space-5);
+
+}
+
+.certificate-actions{
+
+    display:flex;
+
+    gap:var(--space-3);
+
+    margin-top:var(--space-5);
+
+}
+
+/* ==========================================================
+   Profile Card
+   ========================================================== */
+
+.profile-card{
+
+    padding:var(--space-6);
+
+}
+
+/* ==========================================================
+   Section Header
+   ========================================================== */
+
+.section-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:var(--space-3);
+
+    margin-bottom:var(--space-5);
+
+}
+
+.section-header h2{
+
+    margin:0;
+
+}
+
+/* ==========================================================
+   Grid Helpers
+   ========================================================== */
+
+.cards-grid{
+
+    display:grid;
+
+    gap:var(--space-5);
+
+}
+
+.cards-grid.two{
+
+    grid-template-columns:
+
+        repeat(2,1fr);
+
+}
+
+.cards-grid.three{
+
+    grid-template-columns:
+
+        repeat(3,1fr);
+
+}
+
+.cards-grid.four{
+
+    grid-template-columns:
+
+        repeat(4,1fr);
+
+}
+
+/* ==========================================================
+   Responsive
+   ========================================================== */
+
+@media (max-width:992px){
+
+    .cards-grid.four{
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+    }
+
+    .cards-grid.three{
+
+        grid-template-columns:
+
+            repeat(2,1fr);
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .cards-grid.two,
+    .cards-grid.three,
+    .cards-grid.four{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .stat-card{
+
+        min-height:150px;
+
+    }
+
+    .certificate-actions{
+
+        flex-direction:column;
+
+    }
+
+}

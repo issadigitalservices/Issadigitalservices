@@ -1,0 +1,284 @@
+/* ==========================================================================
+   ISSA Academy
+   Student Registration
+   ========================================================================== */
+
+.register-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:2rem;
+
+    background:linear-gradient(135deg,#eff6ff,#f8fafc);
+
+}
+
+.register-card{
+
+    width:100%;
+
+    max-width:520px;
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:2.5rem;
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+.logo-area{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    margin-bottom:2rem;
+
+}
+
+.logo-area img{
+
+    width:90px;
+
+    height:90px;
+
+    object-fit:contain;
+
+    margin-bottom:1rem;
+
+}
+
+.logo-area h1{
+
+    margin:0;
+
+    font-size:2rem;
+
+    color:var(--text-primary);
+
+}
+
+.logo-area p{
+
+    margin-top:.5rem;
+
+    color:var(--text-secondary);
+
+    text-align:center;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:.5rem;
+
+    margin-bottom:1.25rem;
+
+}
+
+.form-group label{
+
+    font-weight:600;
+
+    color:var(--text-primary);
+
+}
+
+.form-group input{
+
+    width:100%;
+
+    height:52px;
+
+    padding:0 1rem;
+
+    border:1px solid var(--border-color);
+
+    border-radius:10px;
+
+    font-size:.95rem;
+
+    transition:.25s;
+
+    outline:none;
+
+}
+
+.form-group input:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 3px rgba(37,99,235,.15);
+
+}
+
+.password-box{
+
+    position:relative;
+
+}
+
+.password-box input{
+
+    padding-right:55px;
+
+}
+
+.password-toggle{
+
+    position:absolute;
+
+    top:50%;
+
+    right:12px;
+
+    transform:translateY(-50%);
+
+    width:36px;
+
+    height:36px;
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    color:var(--text-secondary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.password-toggle:hover{
+
+    color:var(--primary);
+
+}
+
+.register-btn{
+
+    width:100%;
+
+    height:52px;
+
+    margin-top:1rem;
+
+}
+
+.login-link{
+
+    margin-top:2rem;
+
+    text-align:center;
+
+    color:var(--text-secondary);
+
+}
+
+.login-link a{
+
+    color:var(--primary);
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.login-link a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* =====================================================
+   Full Name Certificate Notice
+===================================================== */
+
+.form-note{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:.5rem;
+
+    margin-top:.25rem;
+
+    padding:.75rem .9rem;
+
+    background:#EFF6FF;
+
+    border:1px solid #BFDBFE;
+
+    border-left:4px solid #2563EB;
+
+    border-radius:10px;
+
+    font-size:.82rem;
+
+    line-height:1.5;
+
+    color:#1E3A8A;
+
+}
+
+.form-note i{
+
+    margin-top:2px;
+
+    color:#2563EB;
+
+    flex-shrink:0;
+
+}
+
+@media(max-width:768px){
+
+    .register-page{
+
+        padding:1rem;
+
+    }
+
+    .register-card{
+
+        padding:1.5rem;
+
+    }
+
+    .logo-area img{
+
+        width:70px;
+
+        height:70px;
+
+    }
+
+    .logo-area h1{
+
+        font-size:1.6rem;
+
+    }
+
+}

@@ -1,0 +1,242 @@
+/* ==========================================================================
+   ISSA Academy
+   Certificate Verification
+   ========================================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+body{
+
+    font-family:"Poppins",sans-serif;
+
+    background:#f3f6fb;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:30px;
+
+}
+
+.verify-page{
+
+    width:100%;
+
+    max-width:850px;
+
+}
+
+.verify-card{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:40px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+    margin-bottom:30px;
+
+}
+
+.academy-logo{
+
+    width:90px;
+
+    margin-bottom:20px;
+
+}
+
+.verify-card h1{
+
+    font-size:2rem;
+
+    color:#1e3a8a;
+
+    margin-bottom:10px;
+
+}
+
+.subtitle{
+
+    color:#6b7280;
+
+    margin-bottom:30px;
+
+}
+
+.search-box{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+.search-box input{
+
+    flex:1;
+
+    height:52px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    padding:0 18px;
+
+    font-size:16px;
+
+    outline:none;
+
+}
+
+.search-box input:focus{
+
+    border-color:#2563eb;
+
+}
+
+.search-box button{
+
+    height:52px;
+
+    padding:0 28px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.search-box button:hover{
+
+    background:#1d4ed8;
+
+}
+
+.result-card{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:35px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
+}
+
+.result-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.result-header i{
+
+    font-size:60px;
+
+    color:#16a34a;
+
+    margin-bottom:15px;
+
+}
+
+.result-header h2{
+
+    color:#111827;
+
+}
+
+.result-grid{
+
+    display:grid;
+
+    grid-template-columns:180px 1fr;
+
+    gap:16px;
+
+}
+
+.result-label{
+
+    font-weight:600;
+
+    color:#374151;
+
+}
+
+.result-value{
+
+    color:#111827;
+
+}
+
+.invalid{
+
+    text-align:center;
+
+    color:#dc2626;
+
+}
+
+.invalid i{
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+}
+
+@media(max-width:768px){
+
+    .search-box{
+
+        flex-direction:column;
+
+    }
+
+    .search-box button{
+
+        width:100%;
+
+    }
+
+    .result-grid{
+
+        grid-template-columns:1fr;
+
+        gap:8px;
+
+    }
+
+}

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Module | ISSA Academy</title>
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/admin/add-module.css">
+
+          <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Add Module
+
+                </h1>
+
+                <p>
+
+                    Create a new module.
+
+                </p>
+
+            </div>
+
+        </header>
+
+        <form
+            id="moduleForm"
+            class="form-card">
+
+            <div class="form-group">
+
+                <label>
+
+                    Course
+
+                </label>
+
+                <select
+                    id="courseId"
+                    required>
+
+                    <option value="">
+
+                        Select Course
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Module Title
+
+                </label>
+
+                <input
+                    type="text"
+                    id="moduleTitle"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Description
+
+                </label>
+
+                <textarea
+                    id="moduleDescription"
+                    rows="5">
+
+                </textarea>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label>
+
+                        Order
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="moduleOrder"
+                        value="1"
+                        min="1">
+
+                </div>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Module
+
+            </button>
+
+        </form>
+
+    </main>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Saving Module...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+    type="module"
+    src="../assets/js/admin/add-module.js">
+
+</script>
+
+</body>
+
+</html>

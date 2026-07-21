@@ -1,0 +1,1363 @@
+"use strict";
+
+/* ==========================================================================
+   ISSA Academy
+   Student Quiz
+   ========================================================================== */
+
+import {
+
+    auth,
+    db
+
+} from "../core/firebase-config.js";
+
+import {
+
+    onAuthStateChanged
+
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+
+    collection,
+    query,
+    where,
+    orderBy,
+    getDocs,
+    getDoc,
+    addDoc,
+    updateDoc,
+    doc,
+    serverTimestamp,
+    Timestamp
+
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+/* ==========================================================================
+   URL
+   ========================================================================== */
+
+const params =
+    new URLSearchParams(location.search);
+
+const quizId =
+    params.get("id");
+
+/* ==========================================================================
+   DOM
+   ========================================================================== */
+
+const quizTitle =
+    document.getElementById("quizTitle");
+
+const currentQuestion =
+    document.getElementById("currentQuestion");
+
+const totalQuestions =
+    document.getElementById("totalQuestions");
+
+const timer =
+    document.getElementById("timer");
+
+const questionText =
+    document.getElementById("questionText");
+
+const optionsList =
+    document.getElementById("optionsList");
+
+const palette =
+    document.getElementById("palette");
+
+const previousBtn =
+    document.getElementById("previousBtn");
+
+const nextBtn =
+    document.getElementById("nextBtn");
+
+const submitBtn =
+    document.getElementById("submitBtn");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const pageLoader =
+    document.getElementById("pageLoader");
+
+const toastContainer =
+    document.getElementById("toastContainer");
+
+/* ==========================================================================
+   GLOBALS
+   ========================================================================== */
+
+let studentId = "";
+
+let quiz = {};
+
+let questions = [];
+
+let answers = {};
+
+let current = 0;
+
+let seconds = 0;
+
+let timerInterval;
+
+let attemptId = "";
+
+/* ==========================================================================
+   AUTH
+   ========================================================================== */
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+
+        location.replace("login.html");
+
+        return;
+
+    }
+
+    studentId = user.uid;
+
+    showLoader();
+
+    // Load quiz first
+    const quizLoaded = await loadQuiz();
+
+    if (!quizLoaded) {
+
+        hideLoader();
+
+        return;
+
+    }
+
+    // Already passed?
+    const passedSnapshot = await getDocs(
+
+        query(
+
+            collection(db, "quizAttempts"),
+
+            where("studentId", "==", studentId),
+
+            where("quizId", "==", quizId),
+
+            where("passed", "==", true)
+
+        )
+
+    );
+
+    if (!passedSnapshot.empty) {
+
+    location.replace(`course.html?id=${quiz.courseId}`);
+
+    return;
+
+}
+
+    // Resume existing attempt
+    const attemptSnapshot = await getDocs(
+
+        query(
+
+            collection(db, "quizAttempts"),
+
+            where("studentId", "==", studentId),
+
+            where("quizId", "==", quizId),
+
+            where("submittedAt", "==", null)
+
+        )
+
+    );
+
+    if (!attemptSnapshot.empty) {
+
+        const attemptDoc = attemptSnapshot.docs[0];
+
+        attemptId = attemptDoc.id;
+
+        const attempt = attemptDoc.data();
+
+        answers = attempt.answers || {};
+
+        current = attempt.currentQuestion || 0;
+
+        if (attempt.expiresAt) {
+
+            seconds = Math.max(
+
+                0,
+
+                Math.floor(
+
+                    (attempt.expiresAt.toMillis() - Date.now()) / 1000
+
+                )
+
+            );
+
+        }
+
+    } else {
+
+        seconds = (quiz.duration || 30) * 60;
+
+        const newAttempt = await addDoc(
+
+            collection(db, "quizAttempts"),
+
+            {
+    studentId,
+
+    quizId,
+
+    answers: {},
+
+    currentQuestion: 0,
+
+    score: 0,
+
+    totalMarks: 0,
+
+    percentage: 0,
+
+    passed: false,
+
+    submittedAt: null,
+
+    startedAt: serverTimestamp(),
+
+    expiresAt: Timestamp.fromMillis(
+
+        Date.now() + seconds * 1000
+
+    )
+
+}
+
+        );
+
+        attemptId = newAttempt.id;
+
+    }
+
+    await loadQuestions();
+
+    if (questions.length === 0) {
+
+        showToast(
+
+            "No questions found for this assessment.",
+
+            "error"
+
+        );
+
+        hideLoader();
+
+        return;
+
+    }
+
+    renderQuestion();
+
+    startTimer();
+
+    hideLoader();
+
+});
+
+/* ==========================================================================
+   LOAD QUIZ
+========================================================================== */
+
+async function loadQuiz() {
+
+    const quizDoc = await getDoc(
+        doc(db, "quizzes", quizId)
+    );
+
+    if (!quizDoc.exists()) {
+
+        showToast("Quiz not found.", "error");
+
+        return false;
+
+    }
+
+    quiz = {
+
+        id: quizDoc.id,
+
+        ...quizDoc.data()
+
+    };
+
+    quizTitle.textContent = quiz.title;
+
+    if (seconds === 0) {
+
+        seconds = (quiz.duration || 30) * 60;
+
+    }
+
+    return true;
+
+}
+
+/* ==========================================================================
+   LOAD QUESTIONS
+   ========================================================================== */
+
+async function loadQuestions(){
+
+    const snapshot = await getDocs(
+
+        query(
+
+            collection(db,"quizQuestions"),
+
+            where("quizId","==",quizId)
+
+        )
+
+    );
+
+    questions = [];
+
+    snapshot.forEach(doc=>{
+
+        questions.push({
+
+            id:doc.id,
+
+            ...doc.data()
+
+        });
+
+    });
+
+    totalQuestions.textContent =
+        questions.length;
+
+    updatePalette();
+
+}
+
+/* ==========================================================================
+   RENDER QUESTION
+   ========================================================================== */
+
+function renderQuestion(){
+
+    currentQuestion.textContent =
+        current + 1;
+
+    const q =
+        questions[current];
+
+    questionText.textContent =
+    q.question;
+
+const attachment =
+    document.getElementById(
+        "questionAttachment"
+    );
+
+if (q.attachmentUrl) {
+
+    attachment.classList.remove(
+        "hidden"
+    );
+
+    const extension =
+
+    q.attachmentName
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+let icon = "fa-file";
+
+switch (extension) {
+
+    case "xlsx":
+    case "xls":
+    case "csv":
+
+        icon = "fa-file-excel";
+        break;
+
+    case "pdf":
+
+        icon = "fa-file-pdf";
+        break;
+
+    case "doc":
+    case "docx":
+
+        icon = "fa-file-word";
+        break;
+
+    case "ppt":
+    case "pptx":
+
+        icon = "fa-file-powerpoint";
+        break;
+
+    case "jpg":
+    case "jpeg":
+    case "png":
+    case "gif":
+    case "webp":
+
+        icon = "fa-file-image";
+        break;
+
+    case "zip":
+    case "rar":
+    case "7z":
+
+        icon = "fa-file-zipper";
+        break;
+
+}
+
+    attachment.innerHTML = `
+
+<div class="question-file">
+
+    <div class="question-file-info">
+
+        <i class="fa-solid ${icon} question-file-icon"></i>
+
+        <div>
+
+            <div class="question-file-title">
+                Question Attachment
+            </div>
+
+            <div class="question-file-name">
+                ${q.attachmentName.replace(/^\d+-/, "")}
+            </div>
+
+        </div>
+
+    </div>
+
+    <a
+        href="${q.attachmentUrl}"
+        target="_blank"
+        class="question-file-button">
+
+        <i class="fa-solid fa-download"></i>
+        Open
+
+    </a>
+
+</div>
+
+`;
+
+}
+
+else {
+
+    attachment.classList.add(
+        "hidden"
+    );
+
+    attachment.innerHTML = "";
+
+}
+
+optionsList.innerHTML = "";
+
+    const options = [
+
+        {
+
+            key:"A",
+
+            value:q.optionA
+
+        },
+
+        {
+
+            key:"B",
+
+            value:q.optionB
+
+        },
+
+        {
+
+            key:"C",
+
+            value:q.optionC
+
+        },
+
+        {
+
+            key:"D",
+
+            value:q.optionD
+
+        }
+
+    ];
+
+    options.forEach(option=>{
+
+        const selected =
+
+            answers[q.id]===option.key
+
+            ?
+
+            "selected"
+
+            :
+
+            "";
+
+        optionsList.innerHTML += `
+
+<label class="option ${selected}">
+
+<input
+
+type="radio"
+
+name="answer"
+
+value="${option.key}"
+
+${selected?"checked":""}>
+
+<strong>
+
+${option.key}.
+
+</strong>
+
+${option.value}
+
+</label>
+
+`;
+
+    });
+
+    document
+
+        .querySelectorAll(
+
+            ".option"
+
+        )
+
+        .forEach(item=>{
+
+            item.addEventListener(
+
+    "click",
+
+    async ()=>{
+
+        document
+
+            .querySelectorAll(
+
+                ".option"
+
+            )
+
+            .forEach(
+
+                option=>option.classList.remove(
+
+                    "selected"
+
+                )
+
+            );
+
+        item.classList.add(
+
+            "selected"
+
+        );
+
+        answers[q.id] =
+
+            item.querySelector(
+
+                "input"
+
+            ).value;
+
+        updatePalette();
+
+        await updateDoc(
+
+            doc(
+
+                db,
+
+                "quizAttempts",
+
+                attemptId
+
+            ),
+
+            {
+
+                answers,
+
+                currentQuestion:current
+
+            }
+
+        );
+
+    }
+
+);
+        });
+
+    progressBar.style.width =
+
+        `${((current+1)/questions.length)*100}%`;
+
+    previousBtn.disabled =
+
+        current===0;
+
+    nextBtn.classList.toggle(
+
+        "hidden",
+
+        current===questions.length-1
+
+    );
+
+    submitBtn.classList.toggle(
+
+        "hidden",
+
+        current!==questions.length-1
+
+    );
+
+}
+
+/* ==========================================================================
+   PALETTE
+   ========================================================================== */
+
+function buildPalette(){
+
+    palette.innerHTML = "";
+
+    questions.forEach((question,index)=>{
+
+        const button =
+
+            document.createElement(
+
+                "button"
+
+            );
+
+        button.textContent =
+
+            index+1;
+
+        if(index===0){
+
+            button.classList.add(
+
+                "active"
+
+            );
+
+        }
+
+        button.onclick = ()=>{
+
+            current = index;
+
+            updatePalette();
+
+renderQuestion();
+
+        };
+
+        palette.appendChild(
+
+            button
+
+        );
+
+    });
+
+}
+
+function updatePalette(){
+
+    palette.innerHTML = "";
+
+    questions.forEach((question,index)=>{
+
+        const button =
+
+            document.createElement("button");
+
+        button.textContent =
+
+            index + 1;
+
+        if(index===current){
+
+            button.classList.add(
+
+                "active"
+
+            );
+
+        }
+
+        if(answers[question.id]){
+
+            button.classList.add(
+
+                "answered"
+
+            );
+
+        }
+
+        button.addEventListener(
+
+            "click",
+
+            async ()=>{
+
+                current = index;
+
+updatePalette();
+
+renderQuestion();
+
+await updateDoc(
+
+                    doc(
+
+                        db,
+
+                        "quizAttempts",
+
+                        attemptId
+
+                    ),
+
+                    {
+
+                        currentQuestion:current
+
+                    }
+
+                );
+
+            }
+
+        );
+
+        palette.appendChild(
+
+            button
+
+        );
+
+    });
+
+}
+
+/* ==========================================================================
+   TIMER
+   ========================================================================== */
+
+function startTimer(){
+
+    updateTimer();
+
+    timerInterval = setInterval(
+
+        async ()=>{
+
+            seconds--;
+
+            updateTimer();
+
+            if(seconds % 30 === 0){
+
+    await updateDoc(
+
+        doc(
+
+            db,
+
+            "quizAttempts",
+
+            attemptId
+
+        ),
+
+        {
+
+            expiresAt: Timestamp.fromMillis(
+
+                Date.now() +
+
+                seconds * 1000
+
+            ),
+
+            currentQuestion: current,
+
+            answers,
+
+            lastActivity: serverTimestamp()
+
+        }
+
+    );
+
+}
+
+            if(seconds<=0){
+
+                clearInterval(
+
+                    timerInterval
+
+                );
+
+                submitQuiz();
+
+            }
+
+        },
+
+        1000
+
+    );
+
+}
+
+function updateTimer(){
+
+    if(seconds < 0){
+
+        seconds = 0;
+
+    }
+
+    const minutes =
+
+        Math.floor(seconds / 60);
+
+    const remaining =
+
+        seconds % 60;
+
+    timer.textContent =
+
+        `${String(minutes).padStart(2,"0")}:${String(remaining).padStart(2,"0")}`;
+
+}
+
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
+
+previousBtn.addEventListener(
+
+    "click",
+
+    async ()=>{
+
+        if(current>0){
+
+            current--;
+
+            await updateDoc(
+
+                doc(
+
+                    db,
+
+                    "quizAttempts",
+
+                    attemptId
+
+                ),
+
+                {
+
+                    currentQuestion:current
+
+                }
+
+            );
+
+            updatePalette();
+
+renderQuestion();
+
+        }
+
+    }
+
+);
+
+nextBtn.addEventListener(
+
+    "click",
+
+    async ()=>{
+
+        if(current<questions.length-1){
+
+            current++;
+
+            await updateDoc(
+
+                doc(
+
+                    db,
+
+                    "quizAttempts",
+
+                    attemptId
+
+                ),
+
+                {
+
+                    currentQuestion:current
+
+                }
+
+            );
+
+            renderQuestion();
+
+            updatePalette();
+
+        }
+
+    }
+
+);
+
+submitBtn.addEventListener(
+
+    "click",
+
+    ()=>{
+
+        const answered = Object.keys(answers).length;
+
+        const unanswered = questions.length - answered;
+
+        let message = "";
+
+        if(unanswered > 0){
+
+            message =
+
+`You have answered ${answered} of ${questions.length} questions.
+
+${unanswered} question(s) are still unanswered.
+
+Do you want to submit anyway?`;
+
+        }
+
+        else{
+
+            message =
+
+`You have answered all ${questions.length} questions.
+
+Are you sure you want to submit your assessment?`;
+
+        }
+
+        const confirmed = confirm(message);
+
+        if(!confirmed){
+
+            return;
+
+        }
+
+        submitQuiz();
+
+    }
+
+);
+
+/* ==========================================================================
+   SUBMIT QUIZ
+   ========================================================================== */
+
+async function submitQuiz(){
+
+    clearInterval(
+
+        timerInterval
+
+    );
+
+    let score = 0;
+
+    questions.forEach(question=>{
+
+        if(
+
+            answers[question.id]===question.correctAnswer
+
+        ){
+
+            score +=
+
+                question.marks || 1;
+
+        }
+
+    });
+
+    const totalMarks =
+
+        questions.reduce(
+
+            (total,question)=>
+
+                total+(question.marks||1),
+
+            0
+
+        );
+
+    const percentage =
+
+    totalMarks===0
+
+    ? 0
+
+    : Math.round(
+
+        (score/totalMarks)*100
+
+    );
+    const passed =
+
+        percentage >=
+
+        (quiz.passMark || 70);
+
+    await updateDoc(
+
+    doc(
+
+        db,
+
+        "quizAttempts",
+
+        attemptId
+
+    ),
+
+    {
+
+        score,
+
+        totalMarks,
+
+        percentage,
+
+        passed,
+
+        answers,
+
+        currentQuestion:current,
+
+        submittedAt:
+
+            serverTimestamp()
+
+    }
+
+);
+
+if (passed) {
+
+    const quizDoc = await getDoc(
+        doc(
+            db,
+            "quizzes",
+            quizId
+        )
+    );
+
+    const quizData = quizDoc.data();
+
+    /* ===========================================================
+       MODULE QUIZ
+    =========================================================== */
+
+    if (quizData.type === "module") {
+
+        const progressSnapshot = await getDocs(
+
+            query(
+
+                collection(db, "moduleProgress"),
+
+                where("studentId", "==", studentId),
+
+                where("courseId", "==", quizData.courseId),
+
+                where("moduleId", "==", quizData.moduleId)
+
+            )
+
+        );
+
+        if (progressSnapshot.empty) {
+
+            await addDoc(
+
+                collection(db, "moduleProgress"),
+
+                {
+
+                    studentId,
+
+                    courseId: quizData.courseId,
+
+                    moduleId: quizData.moduleId,
+
+                    passed: true,
+
+                    passedAt: serverTimestamp()
+
+                }
+
+            );
+
+        }
+
+    }
+
+    /* ===========================================================
+       FINAL EXAM
+    =========================================================== */
+
+    else if (quizData.type === "final") {
+
+        // Check if certificate already exists
+
+        const certificateSnapshot = await getDocs(
+
+            query(
+
+                collection(db, "certificates"),
+
+                where("studentId", "==", studentId),
+
+                where("courseId", "==", quizData.courseId)
+
+            )
+
+        );
+
+        if (certificateSnapshot.empty) {
+
+            // Student Details
+
+const studentDoc = await getDoc(
+    doc(db, "students", studentId)
+);
+
+const student = studentDoc.exists()
+    ? studentDoc.data()
+    : {};
+
+const studentNameValue =
+    student.fullName ||
+    student.name ||
+    student.studentName ||
+    auth.currentUser.displayName ||
+    auth.currentUser.email.split("@")[0];
+
+const studentEmailValue =
+    student.email ||
+    auth.currentUser.email;
+
+            // Course Details
+
+            const courseDoc = await getDoc(
+
+                doc(db, "courses", quizData.courseId)
+
+            );
+
+            const course = courseDoc.exists()
+                ? courseDoc.data()
+                : {};
+
+            // Generate Certificate Number
+
+            const certificateNumber =
+                "ISSA-" +
+                Date.now();
+
+            await addDoc(
+
+                collection(db, "certificates"),
+
+                {
+
+                    studentId,
+
+                    studentName:
+    studentNameValue,
+
+studentEmail:
+    studentEmailValue,
+
+                    courseId:
+                        quizData.courseId,
+
+                    courseName:
+                        course.title || quizData.courseName,
+
+                    certificateNumber,
+
+                    issueDate:
+                        serverTimestamp(),
+
+                    quizId,
+
+                    percentage,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+
+            );
+
+        }
+
+    }
+
+}
+
+location.href =
+`quiz-result.html?id=${quizId}&score=${score}&total=${totalMarks}&percentage=${percentage}&passed=${passed}`;
+}
+
+/* ==========================================================================
+   LOADER
+   ========================================================================== */
+
+function showLoader(){
+
+    pageLoader.classList.remove(
+
+        "hidden"
+
+    );
+
+}
+
+function hideLoader(){
+
+    pageLoader.classList.add(
+
+        "hidden"
+
+    );
+
+}
+
+/* ==========================================================================
+   TOAST
+   ========================================================================== */
+
+function showToast(
+
+    message,
+
+    type="success"
+
+){
+
+    const toast =
+
+        document.createElement(
+
+            "div"
+
+        );
+
+    toast.className =
+
+        `toast ${type}`;
+
+    toast.textContent =
+
+        message;
+
+    toastContainer.appendChild(
+
+        toast
+
+    );
+
+    requestAnimationFrame(()=>{
+
+        toast.classList.add(
+
+            "show"
+
+        );
+
+    });
+
+    setTimeout(()=>{
+
+        toast.remove();
+
+    },3000);
+
+}
+
+/* ==========================================================================
+   END
+   ========================================================================== */

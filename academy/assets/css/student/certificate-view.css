@@ -1,0 +1,405 @@
+/* ==========================================================================
+   ISSA Academy
+   Certificate View
+   ========================================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+body{
+
+    font-family:"Poppins",sans-serif;
+
+    background:#eef3fb;
+
+    padding:40px;
+
+}
+
+.certificate-page{
+
+    max-width:1200px;
+
+    margin:auto;
+
+}
+
+.certificate-actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+
+.certificate-verification{
+
+    margin-top:20px;
+
+    text-align:center;
+
+}
+
+#qrCode{
+
+    width:90px;
+
+    height:90px;
+
+    margin:0 auto 10px;
+
+}
+
+.certificate-verification p{
+
+    font-size:13px;
+
+    color:#666;
+
+}
+
+.certificate{
+
+    background:#ffffff;
+
+    padding:30px;
+
+    border-radius:16px;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+
+}
+
+.certificate-border{
+
+    border:12px solid #2563eb;
+
+    padding:45px;
+
+    position:relative;
+
+    min-height:auto;
+
+    overflow:hidden;
+
+    background:#ffffff;
+
+}
+
+.certificate-border::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:url("../../images/Issa-Logo.png") center center no-repeat;
+
+    background-size:320px;
+
+    opacity:.05;
+
+    pointer-events:none;
+
+    z-index:0;
+
+}
+
+.certificate-border>*{
+
+    position:relative;
+
+    z-index:1;
+
+}
+
+.certificate-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+.certificate-header img{
+
+    width:110px;
+
+    height:110px;
+
+    object-fit:contain;
+
+    margin-bottom:15px;
+
+}
+
+.certificate-header h1{
+
+    font-size:42px;
+
+    color:#1e3a8a;
+
+    font-weight:700;
+
+}
+
+.certificate-header p{
+
+    margin-top:10px;
+
+    font-size:20px;
+
+    letter-spacing:5px;
+
+    color:#555;
+
+}
+
+.certificate-body{
+
+    text-align:center;
+
+    margin-top:35px;
+
+}
+
+#studentName{
+
+    font-size:48px;
+
+    color:#111827;
+
+    margin-bottom:30px;
+
+    font-weight:700;
+
+}
+
+#courseName{
+
+    font-size:34px;
+
+    color:#2563eb;
+
+    margin-top:10px;
+
+    font-weight:600;
+
+}
+.certificate-details{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:30px;
+
+}
+
+.certificate-details div{
+
+    text-align:center;
+
+    width:250px;
+
+}
+
+.certificate-details strong{
+
+    display:block;
+
+    margin-bottom:10px;
+
+    color:#111827;
+
+}
+
+.certificate-details p{
+
+    color:#444;
+
+}
+
+.certificate-footer{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin-top:30px;
+
+}
+
+.certificate-footer div{
+
+    text-align:center;
+
+    width:280px;
+
+}
+
+#signatureImage{
+
+    width:180px;
+
+    height:80px;
+
+    object-fit:contain;
+
+}
+
+.signature-line{
+
+    width:220px;
+
+    height:2px;
+
+    background:#111827;
+
+    margin:10px auto;
+
+}
+
+#instructorName{
+
+    font-size:22px;
+
+    color:#111827;
+
+}
+
+#designation{
+
+    color:#666;
+
+    margin-top:6px;
+
+}
+
+@media(max-width:900px){
+
+    body{
+
+        padding:15px;
+
+    }
+
+.certificate-border{
+
+    padding:30px;
+
+}
+
+    .certificate-details{
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:40px;
+
+    }
+
+    .certificate-footer{
+
+        justify-content:center;
+
+    }
+
+    #studentName{
+
+        font-size:34px;
+
+    }
+
+    #courseName{
+
+        font-size:26px;
+
+    }
+
+}
+
+/* ==========================================================================
+   PRINT
+   ========================================================================== */
+
+@page{
+
+    size:A4 landscape;
+
+    margin:0;
+
+}
+
+@media print{
+
+    html,
+    body{
+
+        width:297mm;
+
+        height:210mm;
+
+        margin:0;
+
+        padding:0;
+
+        overflow:hidden;
+
+        background:#ffffff;
+
+    }
+
+    .certificate-actions{
+
+        display:none !important;
+
+    }
+
+    .certificate{
+
+        margin:0;
+
+        padding:0;
+
+        box-shadow:none;
+
+        border-radius:0;
+
+        background:transparent;
+
+    }
+
+    .certificate-border{
+
+        width:297mm;
+
+        height:210mm;
+
+        margin:0;
+
+        padding:20mm;
+
+        border:8px solid #2563eb;
+
+        box-sizing:border-box;
+
+        overflow:hidden;
+
+    }
+
+}

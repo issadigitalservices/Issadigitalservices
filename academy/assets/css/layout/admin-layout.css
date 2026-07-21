@@ -1,0 +1,273 @@
+/* ==========================================================================
+   ISSA Academy
+   Admin Layout
+   File: assets/css/layout/admin-layout.css
+   ========================================================================== */
+
+/* ===============================
+   Root Layout
+================================ */
+
+.admin-layout{
+
+    display:flex;
+
+    min-height:100vh;
+
+    background:#f8fafc;
+
+}
+
+/* ===============================
+   Sidebar
+================================ */
+
+.sidebar{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:280px;
+
+    height:100vh;
+
+    overflow-y:auto;
+
+    background:#0f172a;
+
+    color:#ffffff;
+
+    z-index:1000;
+
+    box-shadow:4px 0 15px rgba(0,0,0,.08);
+
+}
+
+/* ===============================
+   Main Content
+================================ */
+
+.main-content{
+
+    flex:1;
+
+    margin-left:280px;
+
+    min-height:100vh;
+
+    padding:2rem;
+
+    background:#f8fafc;
+
+    overflow-x:hidden;
+
+}
+
+/* ===============================
+   Page Header
+================================ */
+
+.page-header,
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:1rem;
+
+    margin-bottom:2rem;
+
+}
+
+.page-header h1,
+
+.topbar h1{
+
+    margin:0;
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.page-header p,
+
+.topbar p{
+
+    margin-top:.4rem;
+
+    color:#6b7280;
+
+}
+
+/* ===============================
+   Cards
+================================ */
+
+.card{
+
+    background:#ffffff;
+
+    border-radius:16px;
+
+    padding:1.5rem;
+
+    border:1px solid #e5e7eb;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+}
+
+/* ===============================
+   Toolbar
+================================ */
+
+.toolbar{
+
+    display:flex;
+
+    gap:1rem;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    margin-bottom:2rem;
+
+}
+
+.toolbar input,
+
+.toolbar select{
+
+    min-width:240px;
+
+}
+
+/* ===============================
+   Empty State
+================================ */
+
+.empty-state{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:5rem 2rem;
+
+}
+
+.empty-state i{
+
+    font-size:4rem;
+
+    color:#cbd5e1;
+
+    margin-bottom:1rem;
+
+}
+
+.empty-state h2{
+
+    margin-bottom:.5rem;
+
+    color:#111827;
+
+}
+
+.empty-state p{
+
+    color:#6b7280;
+
+    margin-bottom:2rem;
+
+}
+
+/* ===============================
+   Utilities
+================================ */
+
+.hidden{
+
+    display:none !important;
+
+}
+
+/* ===============================
+   Responsive
+================================ */
+
+@media (max-width:992px){
+
+    .sidebar{
+
+        transform:translateX(-100%);
+
+        transition:.3s;
+
+    }
+
+    .sidebar.show{
+
+        transform:translateX(0);
+
+    }
+
+    .main-content{
+
+        margin-left:0;
+
+        padding:1.25rem;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .page-header,
+
+    .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .toolbar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .toolbar input,
+
+    .toolbar select{
+
+        width:100%;
+
+        min-width:100%;
+
+    }
+
+}

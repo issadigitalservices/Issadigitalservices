@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Quiz Result | ISSA Academy</title>
+
+<link rel="icon"
+href="../assets/images/Issa-Logo.png">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link rel="stylesheet"
+href="../assets/css/main.css">
+
+<link rel="stylesheet"
+href="../assets/css/student/quiz-result.css">
+
+</head>
+
+<body>
+
+<div class="result-wrapper">
+
+    <div
+    id="resultLoader"
+    class="page-loader">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            class="loader-logo">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Result...
+
+        </p>
+
+    </div>
+
+</div>
+
+<div
+    class="result-card hidden"
+    id="resultCard">
+
+<div
+id="resultIcon"
+class="result-icon">
+
+<i
+id="resultIconSymbol"
+class="fa-solid fa-circle-check">
+
+</i>
+
+</div>
+
+<h1
+id="resultTitle">
+
+Module Assessment Completed
+
+</h1>
+
+<p
+id="resultMessage">
+
+Congratulations!
+
+</p>
+
+<div class="score-grid">
+
+<div class="score-box">
+
+<h2
+id="score">
+
+0
+
+</h2>
+
+<span>
+
+Score
+
+</span>
+
+</div>
+
+<div class="score-box">
+
+<h2
+id="percentage">
+
+0%
+
+</h2>
+
+<span>
+
+Percentage
+
+</span>
+
+</div>
+
+<div class="score-box">
+
+<h2
+id="status">
+
+PASS
+
+</h2>
+
+<span>
+
+Status
+
+</span>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<a
+id="continueBtn"
+href="dashboard.html"
+class="btn btn-primary">
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+Continue Learning
+
+</a>
+
+<a
+id="reviewBtn"
+href="#"
+class="btn btn-secondary">
+
+<i class="fa-solid fa-eye"></i>
+
+Review Answers
+
+</a>
+
+<a
+id="retryBtn"
+href="#"
+class="btn btn-danger hidden">
+
+<i class="fa-solid fa-rotate-right"></i>
+
+Retake Assessment
+
+</a>
+
+</div>
+
+<!-- ================= Question Review ================= -->
+
+<section
+id="reviewSection"
+class="review-section hidden">
+
+<h2>
+
+Assessment Review
+
+</h2>
+
+<p>
+
+Review your answers and learn from your mistakes.
+
+</p>
+
+<div
+id="reviewContainer">
+
+</div>
+
+</section>
+
+</div>
+
+
+
+<div
+id="toastContainer"
+class="toast-container">
+
+</div>
+
+<script
+type="module"
+src="../assets/js/student/quiz-result.js">
+
+</script>
+
+</body>
+
+</html>

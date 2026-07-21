@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Enrollments | ISSA Academy</title>
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/admin/enrollments.css">
+
+          <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- ================= Sidebar ================= -->
+
+    <aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <!-- ================= Main ================= -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Enrollment Requests
+
+                </h1>
+
+                <p>
+
+                    Approve or reject student enrollment requests.
+
+                </p>
+
+            </div>
+
+        </header>
+
+        <!-- ================= Toolbar ================= -->
+
+        <section class="toolbar">
+
+            <input
+
+                id="searchInput"
+
+                type="search"
+
+                placeholder="Search student or course...">
+
+            <select id="statusFilter">
+
+                <option value="">
+
+                    All Status
+
+                </option>
+
+                <option value="Pending">
+
+                    Pending
+
+                </option>
+
+                <option value="Approved">
+
+                    Approved
+
+                </option>
+
+                <option value="Rejected">
+
+                    Rejected
+
+                </option>
+
+            </select>
+
+        </section>
+
+        <!-- ================= Table ================= -->
+
+        <div class="table-card">
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            Student
+
+                        </th>
+
+                        <th>
+
+                            Course
+
+                        </th>
+
+                        <th>
+
+                            Amount
+
+                        </th>
+
+                        <th>
+
+                            Payment
+
+                        </th>
+
+                        <th>
+
+                            Status
+
+                        </th>
+
+                        <th>
+
+                            Action
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="enrollmentTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- ================= Empty ================= -->
+
+        <div
+
+            id="emptyState"
+
+            class="empty-state hidden">
+
+            <i class="fa-solid fa-user-check"></i>
+
+            <h2>
+
+                No Enrollment Requests
+
+            </h2>
+
+            <p>
+
+                Student requests will appear here.
+
+            </p>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div
+
+    id="pageLoader"
+
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+
+            src="../assets/images/Issa-Logo.png"
+
+            class="loader-logo"
+
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Enrollments...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div
+
+    id="toastContainer"
+
+    class="toast-container">
+
+</div>
+
+<!-- ================= Approve Modal ================= -->
+
+<div
+
+    id="approveModal"
+
+    class="modal hidden">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <h2>
+
+                Approve Enrollment
+
+            </h2>
+
+        </div>
+
+        <div class="modal-body">
+
+            <p>
+
+                <strong>
+
+                    Student:
+
+                </strong>
+
+                <span id="modalStudentName">
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>
+
+                    Course:
+
+                </strong>
+
+                <span id="modalCourseName">
+
+                </span>
+
+            </p>
+
+            <p>
+
+                Payment has already been verified in WhatsApp.
+
+            </p>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+
+                id="cancelApprove"
+
+                class="btn btn-secondary">
+
+                Cancel
+
+            </button>
+
+            <button
+
+                id="confirmApprove"
+
+                class="btn btn-primary">
+
+                Approve
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+
+    type="module"
+
+    src="../assets/js/admin/enrollments.js">
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Modules | ISSA Academy</title>
+
+    <link
+        rel="icon"
+        href="../assets/images/Issa-Logo.png">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/main.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/admin/modules.css">
+
+        <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- ================= Sidebar ================= -->
+
+    <aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <!-- ================= Main ================= -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Modules
+
+                </h1>
+
+                <p>
+
+                    Manage all course modules.
+
+                </p>
+
+            </div>
+
+            <a
+                href="add-module.html"
+                class="btn btn-primary">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Module
+
+            </a>
+
+        </header>
+
+        <!-- ================= Toolbar ================= -->
+
+        <section class="toolbar">
+
+            <select
+                id="courseFilter">
+
+                <option value="">
+
+                    All Courses
+
+                </option>
+
+            </select>
+
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search modules...">
+
+        </section>
+
+        <!-- ================= Module Grid ================= -->
+
+        <section
+            id="modulesGrid"
+            class="modules-grid">
+
+        </section>
+
+        <!-- ================= Empty State ================= -->
+
+        <div
+            id="emptyState"
+            class="empty-state hidden">
+
+            <i class="fa-solid fa-layer-group"></i>
+
+            <h2>
+
+                No Modules Found
+
+            </h2>
+
+            <p>
+
+                Create your first module.
+
+            </p>
+
+            <a
+                href="add-module.html"
+                class="btn btn-primary">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Module
+
+            </a>
+
+        </div>
+
+        <!-- ================= Card Template ================= -->
+
+        <template id="moduleCardTemplate">
+
+            <article class="module-card">
+
+                <div class="module-header">
+
+                    <h3 class="module-title">
+
+                    </h3>
+
+                    <span class="module-order">
+
+                    </span>
+
+                </div>
+
+                <p class="module-course">
+
+                </p>
+
+                <p class="module-description">
+
+                </p>
+
+                <div class="module-meta">
+
+                    <span>
+
+                        <i class="fa-solid fa-video"></i>
+
+                        <span class="lesson-count">
+
+                            0
+
+                        </span>
+
+                        Lessons
+
+                    </span>
+
+                    
+                </div>
+
+                <div class="module-actions">
+
+                    <button
+                        class="btn-edit">
+
+                        <i class="fa-solid fa-pen"></i>
+
+                        Edit
+
+                    </button>
+
+                    <button
+                        class="btn-delete">
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </article>
+
+        </template>
+
+    </main>
+
+</div>
+
+<!-- ================= Loader ================= -->
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Modules...
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ================= Toast ================= -->
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+    type="module"
+    src="../assets/js/admin/modules.js">
+
+</script>
+
+</body>
+
+</html>

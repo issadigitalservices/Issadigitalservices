@@ -1,0 +1,319 @@
+/* ==========================================================================
+   ISSA Academy
+   Progress Components
+   Version : 1.0.0
+   ========================================================================== */
+
+/* ==========================================================
+   Progress Wrapper
+   ========================================================== */
+
+.progress-wrapper{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:var(--space-3);
+
+    width:100%;
+
+}
+
+/* ==========================================================
+   Progress Bar
+   ========================================================== */
+
+.progress-bar{
+
+    width:100%;
+
+    height:10px;
+
+    background:var(--gray-200);
+
+    border-radius:var(--radius-round);
+
+    overflow:hidden;
+
+    position:relative;
+
+}
+
+/* ==========================================================
+   Progress Fill
+   ========================================================== */
+
+.progress-fill{
+
+    width:0;
+
+    height:100%;
+
+    border-radius:inherit;
+
+    background:linear-gradient(
+
+        90deg,
+
+        var(--primary),
+
+        var(--primary-dark)
+
+    );
+
+    transition:width .6s ease;
+
+}
+
+/* ==========================================================
+   Progress Information
+   ========================================================== */
+
+.progress-info,
+.progress-details{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:var(--space-3);
+
+    font-size:var(--font-size-sm);
+
+    color:var(--text-secondary);
+
+}
+
+.progress-info strong{
+
+    color:var(--text-primary);
+
+}
+
+/* ==========================================================
+   Percentage Badge
+   ========================================================== */
+
+.progress-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:70px;
+
+    padding:.45rem .85rem;
+
+    border-radius:var(--radius-round);
+
+    background:var(--primary-light);
+
+    color:var(--primary-dark);
+
+    font-weight:var(--font-semibold);
+
+    font-size:var(--font-size-sm);
+
+}
+
+/* ==========================================================
+   Status Badges
+   ========================================================== */
+
+.status-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:.45rem .9rem;
+
+    border-radius:var(--radius-round);
+
+    font-size:var(--font-size-sm);
+
+    font-weight:var(--font-medium);
+
+}
+
+.status-success{
+
+    background:var(--success-light);
+
+    color:var(--success);
+
+}
+
+.status-warning{
+
+    background:var(--warning-light);
+
+    color:var(--warning);
+
+}
+
+.status-danger{
+
+    background:var(--danger-light);
+
+    color:var(--danger);
+
+}
+
+.status-info{
+
+    background:var(--info-light);
+
+    color:var(--info);
+
+}
+
+/* ==========================================================
+   Lesson Status
+   ========================================================== */
+
+.status-pending{
+
+    color:var(--warning);
+
+    font-weight:var(--font-semibold);
+
+}
+
+.status-complete{
+
+    color:var(--success);
+
+    font-weight:var(--font-semibold);
+
+}
+
+/* ==========================================================
+   Circular Progress (Future Ready)
+   ========================================================== */
+
+.circular-progress{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:120px;
+
+    height:120px;
+
+    border-radius:50%;
+
+    background:conic-gradient(
+
+        var(--primary) 0deg,
+
+        var(--gray-200) 0deg
+
+    );
+
+}
+
+.circular-progress::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:92px;
+
+    height:92px;
+
+    border-radius:50%;
+
+    background:var(--surface);
+
+}
+
+.circular-progress-value{
+
+    position:relative;
+
+    z-index:1;
+
+    font-size:var(--font-size-xl);
+
+    font-weight:var(--font-bold);
+
+    color:var(--text-primary);
+
+}
+
+/* ==========================================================
+   Progress Animation
+   ========================================================== */
+
+@keyframes progressGrow{
+
+    from{
+
+        width:0;
+
+    }
+
+}
+
+.progress-fill.animate{
+
+    animation:progressGrow .8s ease forwards;
+
+}
+
+/* ==========================================================
+   Responsive
+   ========================================================== */
+
+@media (max-width:768px){
+
+    .progress-info,
+    .progress-details{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:var(--space-2);
+
+    }
+
+    .progress-badge{
+
+        min-width:60px;
+
+        font-size:var(--font-size-xs);
+
+    }
+
+    .circular-progress{
+
+        width:96px;
+
+        height:96px;
+
+    }
+
+    .circular-progress::before{
+
+        width:74px;
+
+        height:74px;
+
+    }
+
+}

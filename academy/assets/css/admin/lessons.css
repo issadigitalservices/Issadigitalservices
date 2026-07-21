@@ -1,0 +1,288 @@
+/* ==========================================================================
+   ISSA Academy
+   Lessons
+   ========================================================================== */
+
+.main-content{
+
+    flex:1;
+
+    padding:2rem;
+
+    background:#f8fafc;
+
+    overflow-x:hidden;
+
+}
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:2rem;
+
+}
+
+.topbar h1{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.topbar p{
+
+    color:#6b7280;
+
+    margin-top:.35rem;
+
+}
+
+.toolbar{
+
+    display:flex;
+
+    gap:1rem;
+
+    margin-bottom:2rem;
+
+}
+
+.toolbar input{
+
+    flex:1;
+
+    height:48px;
+
+    padding:0 1rem;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    background:#fff;
+
+}
+
+.toolbar select{
+
+    width:220px;
+
+    height:48px;
+
+    padding:0 .75rem;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    background:#fff;
+
+}
+
+.lessons-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+
+    gap:1.5rem;
+
+}
+
+.lesson-card{
+
+    background:#fff;
+
+    border-radius:16px;
+
+    padding:1.5rem;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+    transition:.25s;
+
+}
+
+.lesson-card:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.lesson-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:1rem;
+
+}
+
+.lesson-title{
+
+    font-size:1.1rem;
+
+    font-weight:600;
+
+    margin-bottom:.35rem;
+
+}
+
+.lesson-module{
+
+    color:#2563eb;
+
+    font-size:.9rem;
+
+}
+
+.lesson-order{
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+    padding:.35rem .8rem;
+
+    border-radius:30px;
+
+    font-size:.8rem;
+
+    font-weight:600;
+
+}
+
+.lesson-meta{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:1rem 0;
+
+    color:#6b7280;
+
+    font-size:.9rem;
+
+}
+
+.lesson-meta span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:.45rem;
+
+}
+
+.lesson-actions{
+
+    display:flex;
+
+    gap:1rem;
+
+    margin-top:1.5rem;
+
+}
+
+.lesson-actions button{
+
+    flex:1;
+
+    height:44px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.btn-edit{
+
+    background:#2563eb;
+
+    color:#fff;
+
+}
+
+.btn-delete{
+
+    background:#ef4444;
+
+    color:#fff;
+
+}
+
+.empty-state{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:4rem 2rem;
+
+}
+
+.empty-state i{
+
+    font-size:3rem;
+
+    color:#2563eb;
+
+    margin-bottom:1rem;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+@media(max-width:768px){
+
+    .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:1rem;
+
+    }
+
+    .toolbar{
+
+        flex-direction:column;
+
+    }
+
+    .toolbar select{
+
+        width:100%;
+
+    }
+
+}

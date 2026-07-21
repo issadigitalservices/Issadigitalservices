@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Course Payments | ISSA Academy</title>
+
+    <meta name="theme-color"
+          content="#2563EB">
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/admin/payments.css">
+
+          <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Payments
+
+                </h1>
+
+                <p>
+
+                    Manual payment management for ISSA Academy.
+
+                </p>
+
+            </div>
+
+        </header>
+
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-money-bill-wave"></i>
+
+                <div>
+
+                    <h3 id="totalRevenue">
+
+                        ₹0
+
+                    </h3>
+
+                    <span>
+
+                        Total Revenue
+
+                    </span>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <div>
+
+                    <h3 id="verifiedPayments">
+
+                        0
+
+                    </h3>
+
+                    <span>
+
+                        Approved Enrollments
+
+                    </span>
+
+                </div>
+
+            </article>
+
+            <article class="stat-card">
+
+                <i class="fa-solid fa-clock"></i>
+
+                <div>
+
+                    <h3 id="pendingPayments">
+
+                        0
+
+                    </h3>
+
+                    <span>
+
+                        Pending Payments
+
+                    </span>
+
+                </div>
+
+            </article>
+
+        </section>
+
+        <section class="toolbar">
+
+            <input
+
+                id="searchInput"
+
+                type="search"
+
+                placeholder="Search Student...">
+
+            <select id="statusFilter">
+
+                <option value="">
+
+                    All Payments
+
+                </option>
+
+                <option value="Approved">
+    Approved
+</option>
+
+<option value="Pending">
+    Pending
+</option>
+
+<option value="Rejected">
+    Rejected
+</option>
+
+            </select>
+
+        </section>
+
+        <div class="table-card">
+
+            <table class="data-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+
+                            Student
+
+                        </th>
+
+                        <th>
+
+                            Course
+
+                        </th>
+
+                        <th>
+
+                            Amount
+
+                        </th>
+
+                        <th>
+
+                            WhatsApp
+
+                        </th>
+
+                        <th>
+
+                            Status
+
+                        </th>
+
+                        <th>
+
+                            Date
+
+                        </th>
+
+                        <th>
+
+                            Action
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="paymentTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div
+
+            id="emptyState"
+
+            class="empty-state hidden">
+
+            <i class="fa-solid fa-credit-card"></i>
+
+            <h2>
+
+                No Payments Found
+
+            </h2>
+
+            <p>
+
+                Manual payments will appear here.
+
+            </p>
+
+        </div>
+
+    </main>
+
+</div>
+
+<div
+
+    id="pageLoader"
+
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+
+            src="../assets/images/Issa-Logo.png"
+
+            class="loader-logo"
+
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Payments...
+
+        </p>
+
+    </div>
+
+</div>
+
+<div
+
+    id="toastContainer"
+
+    class="toast-container">
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+
+    type="module"
+
+    src="../assets/js/admin/payments.js">
+
+</script>
+
+</body>
+
+</html>

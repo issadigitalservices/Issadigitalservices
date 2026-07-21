@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Lesson | ISSA Academy</title>
+
+    <link rel="icon"
+          href="../assets/images/Issa-Logo.png">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/main.css">
+
+    <link rel="stylesheet"
+          href="../assets/css/admin/add-lesson.css">
+
+          <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Edit Lesson</h1>
+
+                <p>Update lesson details.</p>
+
+            </div>
+
+            <a href="lessons.html"
+               class="btn btn-secondary">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </header>
+
+        <form id="lessonForm"
+              class="form-card">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>Course</label>
+
+                    <select id="courseId" required>
+
+                        <option>Loading...</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Module</label>
+
+                    <select id="moduleId" required>
+
+                        <option>Select Module</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Lesson Order</label>
+
+                    <input
+                        id="lessonOrder"
+                        type="number"
+                        min="1"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Status</label>
+
+                    <select id="lessonStatus">
+
+                        <option value="draft">Draft</option>
+
+                        <option value="published">Published</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Lesson Title</label>
+
+                <input
+                    id="lessonTitle"
+                    type="text"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Description</label>
+
+                <textarea
+                    id="lessonDescription"
+                    rows="5">
+
+                </textarea>
+
+            </div>
+
+            <div class="form-group">
+
+    <label>Replace Lesson Video</label>
+
+    <input
+        type="file"
+        id="videoFile"
+        accept="video/mp4,video/webm,video/mov">
+
+    <div class="upload-progress">
+
+        <progress
+            id="uploadProgress"
+            value="0"
+            max="100"></progress>
+
+        <span id="uploadPercent">0%</span>
+
+    </div>
+
+    <input
+        type="hidden"
+        id="videoUrl">
+
+</div>
+
+<div class="form-group">
+
+    <label>Current Video</label>
+
+    <p id="currentVideo">
+
+    Current video will appear here.
+
+</p>
+
+</div>
+
+<div class="form-group">
+
+    <label>Duration</label>
+
+    <input
+        id="lessonDuration"
+        type="text"
+        placeholder="00:00">
+
+</div>
+
+            <div class="form-group">
+
+                <label>Attachment URL</label>
+
+                <input
+                    id="attachmentUrl"
+                    type="url">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Preview Lesson
+
+                </label>
+
+                <select id="preview">
+
+                    <option value="false">
+
+                        No
+
+                    </option>
+
+                    <option value="true">
+
+                        Yes
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Update Lesson
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+</div>
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Loading Lesson...
+
+        </p>
+
+    </div>
+
+</div>
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+    type="module"
+    src="../assets/js/admin/edit-lesson.js">
+
+</script>
+
+</body>
+
+</html>

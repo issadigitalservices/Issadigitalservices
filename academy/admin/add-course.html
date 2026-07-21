@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Add Course | ISSA Academy</title>
+
+    <meta
+        name="theme-color"
+        content="#2563EB">
+
+    <link
+        rel="icon"
+        href="../assets/images/Issa-Logo.png">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/main.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/sidebar.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/admin/add-course.css">
+
+        <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- ================= Sidebar ================= -->
+
+    <aside
+    class="sidebar"
+    id="adminSidebar">
+</aside>
+
+    <!-- ================= Main ================= -->
+
+    <main class="main-content">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+
+                    Add Course
+
+                </h1>
+
+                <p>
+
+                    Create a new course for ISSA Academy.
+
+                </p>
+
+            </div>
+
+            <a
+                href="courses.html"
+                class="btn-secondary">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Back
+
+            </a>
+
+        </div>
+
+        <form
+            id="courseForm">
+
+            <!-- ================= Course Information ================= -->
+
+            <div class="card">
+
+                <h3>
+
+                    Course Information
+
+                </h3>
+
+                <div class="grid-2">
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Course Title
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="courseTitle"
+                            required>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Slug
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="courseSlug"
+                            readonly>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Category
+
+                        </label>
+
+                        <select
+                            id="courseCategory"
+                            required>
+
+                            <option value="">
+
+                                Select Category
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Instructor
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="courseInstructor"
+                            value="ISSA Academy">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Language
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="courseLanguage"
+                            value="Malayalam">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Level
+
+                        </label>
+
+                        <select
+                            id="courseLevel">
+
+                            <option>
+
+                                Beginner
+
+                            </option>
+
+                            <option>
+
+                                Intermediate
+
+                            </option>
+
+                            <option>
+
+                                Advanced
+
+                            </option>
+
+                            <option>
+
+                                Beginner to Advanced
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Duration
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="courseDuration"
+                            placeholder="25 Hours">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= Pricing ================= -->
+
+            <div class="card">
+
+                <h3>
+
+                    Pricing
+
+                </h3>
+
+                <div class="grid-3">
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Original Price
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="coursePrice">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Offer Price
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="courseOfferPrice">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Currency
+
+                        </label>
+
+                        <select
+                            id="courseCurrency">
+
+                            <option>
+
+                                INR
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= Media ================= -->
+
+            <div class="card">
+
+                <h3>
+
+                    Media
+
+                </h3>
+
+                <div class="grid-2">
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Thumbnail
+
+                        </label>
+
+                        <input
+                            type="file"
+                            id="courseThumbnail"
+                            accept="image/*">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Trailer URL
+
+                        </label>
+
+                        <input
+                            type="url"
+                            id="courseTrailer">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= Description ================= -->
+
+            <div class="card">
+
+                <h3>
+
+                    Description
+
+                </h3>
+
+                <div class="form-group">
+
+                    <label>
+
+                        Short Description
+
+                    </label>
+
+                    <textarea
+                        id="shortDescription"
+                        rows="3"></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+
+                        Full Description
+
+                    </label>
+
+                    <textarea
+                        id="fullDescription"
+                        rows="8"></textarea>
+
+                </div>
+
+            </div>
+
+            <!-- ================= Settings ================= -->
+
+            <div class="card">
+
+                <h3>
+
+                    Settings
+
+                </h3>
+
+                <div class="grid-3">
+
+                    <label class="checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="featuredCourse">
+
+                        Featured Course
+
+                    </label>
+
+                    <label class="checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="certificate"
+                            checked>
+
+                        Certificate Available
+
+                    </label>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Status
+
+                        </label>
+
+                        <select
+                            id="courseStatus">
+
+                            <option>
+
+                                Published
+
+                            </option>
+
+                            <option>
+
+                                Draft
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= Buttons ================= -->
+
+            <div class="button-area">
+
+                <button
+                    type="reset"
+                    class="btn-light">
+
+                    Reset
+
+                </button>
+
+                <a
+                    href="courses.html"
+                    class="btn-secondary">
+
+                    Cancel
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn-primary">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Course
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </main>
+
+</div>
+
+<div
+    id="pageLoader"
+    class="page-loader hidden">
+
+    <div class="loader-card">
+
+        <img
+            src="../assets/images/Issa-Logo.png"
+            alt="ISSA Academy">
+
+        <div class="loader-spinner"></div>
+
+        <p>
+
+            Saving Course...
+
+        </p>
+
+    </div>
+
+</div>
+
+<div
+    id="toastContainer"
+    class="toast-container">
+
+</div>
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+    type="module"
+    src="../assets/js/admin/add-course.js">
+
+</script>
+
+</body>
+
+</html>

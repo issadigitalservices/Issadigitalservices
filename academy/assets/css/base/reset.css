@@ -1,0 +1,172 @@
+/* ==========================================================================
+   ISSA Academy
+   CSS Reset
+   Version : 1.0.0
+   ========================================================================== */
+
+/* Box Sizing */
+
+*,
+*::before,
+*::after{
+
+    box-sizing:border-box;
+
+}
+
+/* Remove Default Margin */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+}
+
+/* Root */
+
+html{
+
+    scroll-behavior:smooth;
+
+    -webkit-text-size-adjust:100%;
+
+}
+
+/* Body */
+
+body{
+
+    min-height:100vh;
+
+    text-rendering:optimizeLegibility;
+
+    -webkit-font-smoothing:antialiased;
+
+    -moz-osx-font-smoothing:grayscale;
+
+    font-family:"Poppins",sans-serif;
+
+    overflow-x:hidden;
+
+}
+
+/* Images */
+
+img,
+picture{
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+}
+
+/* SVG */
+
+svg{
+
+    display:block;
+
+}
+
+/* Video */
+
+video{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+/* Forms */
+
+input,
+button,
+textarea,
+select{
+
+    font:inherit;
+
+}
+
+/* Buttons */
+
+button{
+
+    border:none;
+
+    outline:none;
+
+    background:none;
+
+    cursor:pointer;
+
+}
+
+/* Links */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+/* Lists */
+
+ul,
+ol{
+
+    list-style:none;
+
+}
+
+/* Tables */
+
+table{
+
+    border-collapse:collapse;
+
+    border-spacing:0;
+
+}
+
+/* Textarea */
+
+textarea{
+
+    resize:vertical;
+
+}
+
+/* Disabled */
+
+button:disabled{
+
+    cursor:not-allowed;
+
+    opacity:.65;
+
+}
+
+/* Hidden */
+
+[hidden]{
+
+    display:none !important;
+
+}
+
+/* Utility */
+
+.hidden{
+
+    display:none !important;
+
+}
