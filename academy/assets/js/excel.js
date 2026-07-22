@@ -284,11 +284,11 @@ document.querySelectorAll(".demo-card").forEach(card => {
 
         const popup = document.createElement("div");
 
-        popup.className = "video-popup";
+        popup.className = "video-modal show";
 
         popup.innerHTML = `
 
-            <div class="video-content">
+            <div class="video-box">
 
                 <span class="close-video">&times;</span>
 
