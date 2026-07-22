@@ -43,6 +43,18 @@ Dashboard
 
 </li>
 
+<li class="${currentPage==="enrollments.html"?"active":""}">
+
+<i class="fa-solid fa-square-plus"></i>
+
+<a href="enrollments.html">
+
+Enrollments
+
+</a>
+
+</li>
+
 <li class="${currentPage==="courses.html"?"active":""}">
 
 <i class="fa-solid fa-book"></i>
