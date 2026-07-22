@@ -39,11 +39,14 @@
 
 <body>
 
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <div class="dashboard">
 
     <!-- ================= Sidebar ================= -->
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
+
 
         <div class="logo-area">
 
@@ -58,6 +61,10 @@
             </h2>
 
         </div>
+
+        <button class="sidebar-close" id="sidebarClose">
+    <i class="fas fa-times"></i>
+</button>
 
         <nav>
 
@@ -140,7 +147,13 @@
 
             <div class="top-left">
 
-                <div>
+    <button id="menuToggle" class="menu-toggle">
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+    <div>
 
                     <h1>
 

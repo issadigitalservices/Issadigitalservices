@@ -352,13 +352,19 @@
 
         position:fixed;
 
-        left:-280px;
+        top:0;
+
+        left:-100%;
 
         width:280px;
+
+        max-width:80%;
 
         height:100vh;
 
         z-index:1000;
+
+        transition:left .3s ease;
 
     }
 
@@ -389,6 +395,86 @@
     .logo-area h2{
 
         font-size:1.1rem;
+
+    }
+
+    .sidebar{
+
+        width:280px;
+
+        max-width:80%;
+
+    }
+
+}
+
+/* ==========================================================
+   Sidebar Overlay & Close Button
+   ========================================================== */
+
+.sidebar-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:999;
+
+}
+
+.sidebar-overlay.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.sidebar-close{
+
+    position:absolute;
+
+    top:15px;
+
+    right:15px;
+
+    width:36px;
+
+    height:36px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.12);
+
+    color:#fff;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    display:none;
+
+}
+
+@media(max-width:992px){
+
+    .sidebar-close{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
 
     }
 

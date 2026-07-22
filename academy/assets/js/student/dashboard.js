@@ -495,6 +495,35 @@ function showToast(
 
 }
 
+// ================================
+// Mobile Sidebar
+// ================================
+
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const sidebarClose = document.getElementById("sidebarClose");
+const menuToggle = document.getElementById("menuToggle");
+
+if(menuToggle){
+    menuToggle.addEventListener("click", () => {
+    sidebar.classList.add("open");
+    sidebarOverlay.classList.add("show");
+    menuToggle.style.display = "none";
+});
+
+sidebarClose.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+    sidebarOverlay.classList.remove("show");
+    menuToggle.style.display = "flex";
+});
+
+sidebarOverlay.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+    sidebarOverlay.classList.remove("show");
+    menuToggle.style.display = "flex";
+});
+}
+
 /* ==========================================================================
    END
    ========================================================================== */
