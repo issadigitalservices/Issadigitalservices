@@ -290,7 +290,9 @@ document.querySelectorAll(".demo-card").forEach(card => {
 
             <div class="video-box">
 
-                <span class="close-video">&times;</span>
+                <button class="close-video" type="button">
+    <i class="fa-solid fa-xmark"></i>
+</button>
 
                 <video
                     id="demoPlayer"
