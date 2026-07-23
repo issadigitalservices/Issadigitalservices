@@ -2,248 +2,233 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Registration | ISSA Academy</title>
+    <meta name="theme-color" content="#2563EB">
 
-    <meta name="theme-color"
-          content="#2563EB">
+    <link rel="icon" href="../assets/images/Issa-Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- International Telephone Input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
 
-    <link rel="icon"
-          href="../assets/images/Issa-Logo.png">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/student/register.css">
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+    <!-- Styles for Central Modal Popup -->
+    <style>
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
+        .custom-modal-overlay.hidden {
+            display: none;
+            opacity: 0;
+        }
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+        .custom-modal-card {
+            background: #ffffff;
+            padding: 32px 28px;
+            border-radius: 18px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+            animation: modalPop 0.3s ease-out forwards;
+        }
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-    <link rel="stylesheet"
-          href="../assets/css/main.css">
+        .modal-icon {
+            font-size: 52px;
+            color: #10b981;
+            margin-bottom: 16px;
+        }
 
-    <link rel="stylesheet"
-          href="../assets/css/student/register.css">
+        .custom-modal-card h3 {
+            margin: 0 0 12px 0;
+            font-size: 22px;
+            color: #1f2937;
+            font-weight: 600;
+        }
 
+        .custom-modal-card p {
+            margin: 0 0 24px 0;
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .modal-btn {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 12px 36px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+
+        .modal-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .modal-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="register-page">
+<div class="register-container">
+    
+    <!-- Branding & Visual Panel -->
+    <div class="register-hero">
+        <div class="hero-content">
+            <div class="brand-badge">
+                <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy Logo">
+                <span>ISSA ACADEMY</span>
+            </div>
 
-    <div class="register-card">
+            <h2>Empower Your Future with Industry Certification</h2>
+            <p>Join thousands of professionals expanding their skillsets with practical, hands-on masterclasses and accredited certifications.</p>
 
-        <div class="logo-area">
-
-            <img
-                src="../assets/images/Issa-Logo.png"
-                alt="ISSA Academy">
-
-            <h1>
-
-                Student Registration
-
-            </h1>
-
-            <p>
-
-                Create your ISSA Academy account
-
-            </p>
-
+            <ul class="feature-list">
+                <li><i class="fa-solid fa-circle-check"></i> Interactive, real-world course material</li>
+                <li><i class="fa-solid fa-circle-check"></i> Official verifiable certificate upon completion</li>
+                <li><i class="fa-solid fa-circle-check"></i> Lifetime access to learning resources</li>
+            </ul>
         </div>
+        
+        <div class="hero-footer">
+            &copy; ISSA Academy. All rights reserved.
+        </div>
+    </div>
 
-        <form
-            id="registerForm"
-            novalidate>
+    <!-- Registration Form Container -->
+    <div class="register-card-wrapper">
+        <div class="register-card">
 
-            <div class="form-group">
-
-    <label>
-
-        Full Name (As per Government ID)
-
-    </label>
-
-    <input
-        id="fullName"
-        type="text"
-        placeholder="Enter your full name"
-        required>
-
-    <small class="form-note">
-
-        <i class="fa-solid fa-circle-info"></i>
-
-        Enter your full name exactly as it appears on your Passport, National ID, Aadhaar, or other official government ID. This name will be printed on your course certificate and cannot be changed after certificate issuance.
-
-    </small>
-
-</div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Email Address
-
-                </label>
-
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    required>
-
+            <div class="logo-area">
+                <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy">
+                <h1>Student Registration</h1>
+                <p>Create your ISSA Academy account</p>
             </div>
 
-            <div class="form-group">
+            <form id="registerForm" novalidate>
 
-                <label>
-
-                    Mobile Number
-
-                </label>
-
-                <input
-                    id="mobile"
-                    type="tel"
-                    placeholder="Enter your mobile number"
-                    required>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Password
-
-                </label>
-
-                <div class="password-box">
-
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="Create password"
-                        required>
-
-                    <button
-                        type="button"
-                        id="togglePassword"
-                        class="password-toggle">
-
-                        <i class="fa-solid fa-eye"></i>
-
-                    </button>
-
+                <div class="form-group">
+                    <label for="fullName">Full Name (As per Government ID)</label>
+                    <input id="fullName" type="text" placeholder="Enter your full name" required>
+                    
+                    <div class="form-note">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>Enter your full name exactly as it appears on your official ID (Passport, National ID). This name will appear on your final certificate.</span>
+                    </div>
                 </div>
 
-            </div>
-
-            <div class="form-group">
-
-                <label>
-
-                    Confirm Password
-
-                </label>
-
-                <div class="password-box">
-
-                    <input
-                        id="confirmPassword"
-                        type="password"
-                        placeholder="Confirm password"
-                        required>
-
-                    <button
-                        type="button"
-                        id="toggleConfirmPassword"
-                        class="password-toggle">
-
-                        <i class="fa-solid fa-eye"></i>
-
-                    </button>
-
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input id="email" type="email" placeholder="name@example.com" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input id="mobile" type="tel" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-box">
+                        <input id="password" type="password" placeholder="Create password" required>
+                        <button type="button" id="togglePassword" class="password-toggle">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="password-box">
+                        <input id="confirmPassword" type="password" placeholder="Confirm password" required>
+                        <button type="button" id="toggleConfirmPassword" class="password-toggle">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn register-btn">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Create Account
+                </button>
+
+            </form>
+
+            <div class="login-link">
+                Already have an account? <a href="login.html">Login Here</a>
             </div>
 
-            <button
-                type="submit"
-                class="btn btn-primary register-btn">
-
-                <i class="fa-solid fa-user-plus"></i>
-
-                Create Account
-
-            </button>
-
-        </form>
-
-        <div class="login-link">
-
-            Already have an account?
-
-            <a href="login.html">
-
-                Login Here
-
-            </a>
-
         </div>
-
     </div>
 
 </div>
 
-<div
-    id="pageLoader"
-    class="page-loader hidden">
-
+<!-- Loader -->
+<div id="pageLoader" class="page-loader hidden">
     <div class="loader-card">
-
-        <img
-            src="../assets/images/Issa-Logo.png"
-            alt="ISSA Academy"
-            class="loader-logo">
-
+        <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy" class="loader-logo">
         <div class="loader-spinner"></div>
-
-        <p>
-
-            Creating Account...
-
-        </p>
-
+        <p>Creating Account...</p>
     </div>
-
 </div>
 
-<div
-    id="toastContainer"
-    class="toast-container">
-
+<!-- Custom Central Success Popup Modal -->
+<div id="successModal" class="custom-modal-overlay hidden">
+    <div class="custom-modal-card">
+        <div class="modal-icon">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h3>Registration Successful!</h3>
+        <p>A verification link has been sent to your email address. Please check your inbox and verify before logging in.</p>
+        <button id="modalOkBtn" class="modal-btn">OK</button>
+    </div>
 </div>
 
-<script
-    type="module"
-    src="../assets/js/student/register.js">
+<div id="toastContainer" class="toast-container"></div>
 
-</script>
+<!-- International Telephone Input Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script type="module" src="../assets/js/student/register.js"></script>
 
 </body>
-
 </html>

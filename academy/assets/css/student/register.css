@@ -1,284 +1,367 @@
 /* ==========================================================================
    ISSA Academy
-   Student Registration
+   Student Registration Styles
    ========================================================================== */
 
-.register-page{
-
-    min-height:100vh;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:2rem;
-
-    background:linear-gradient(135deg,#eff6ff,#f8fafc);
-
+/* Page Layout Container */
+.register-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
 }
 
-.register-card{
+/* ==========================================================================
+   Left Hero Panel (Branding & Features)
+   ========================================================================== */
 
-    width:100%;
-
-    max-width:520px;
-
-    background:#ffffff;
-
-    border-radius:20px;
-
-    padding:2.5rem;
-
-    box-shadow:var(--shadow-lg);
-
+.register-hero {
+    flex: 1;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
 }
 
-.logo-area{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    margin-bottom:2rem;
-
+.register-hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 350px;
+    height: 350px;
+    background: rgba(37, 99, 235, 0.15);
+    border-radius: 50%;
+    filter: blur(80px);
 }
 
-.logo-area img{
-
-    width:90px;
-
-    height:90px;
-
-    object-fit:contain;
-
-    margin-bottom:1rem;
-
+.brand-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    color: #ffffff;
 }
 
-.logo-area h1{
-
-    margin:0;
-
-    font-size:2rem;
-
-    color:var(--text-primary);
-
+.brand-badge img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
 }
 
-.logo-area p{
-
-    margin-top:.5rem;
-
-    color:var(--text-secondary);
-
-    text-align:center;
-
+.hero-content {
+    max-width: 500px;
+    margin: auto 0;
+    z-index: 1;
 }
 
-.form-group{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:.5rem;
-
-    margin-bottom:1.25rem;
-
+.hero-content h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 1.25rem;
+    color: #ffffff;
 }
 
-.form-group label{
-
-    font-weight:600;
-
-    color:var(--text-primary);
-
+.hero-content p {
+    color: #94a3b8;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
 }
 
-.form-group input{
-
-    width:100%;
-
-    height:52px;
-
-    padding:0 1rem;
-
-    border:1px solid var(--border-color);
-
-    border-radius:10px;
-
-    font-size:.95rem;
-
-    transition:.25s;
-
-    outline:none;
-
+.feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 0;
 }
 
-.form-group input:focus{
-
-    border-color:var(--primary);
-
-    box-shadow:0 0 0 3px rgba(37,99,235,.15);
-
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.95rem;
+    color: #e2e8f0;
 }
 
-.password-box{
-
-    position:relative;
-
+.feature-list i {
+    color: var(--primary, #2563eb);
+    font-size: 1.2rem;
 }
 
-.password-box input{
-
-    padding-right:55px;
-
+.hero-footer {
+    font-size: 0.85rem;
+    color: #64748b;
+    z-index: 1;
 }
 
-.password-toggle{
+/* ==========================================================================
+   Right Side Form Card
+   ========================================================================== */
 
-    position:absolute;
-
-    top:50%;
-
-    right:12px;
-
-    transform:translateY(-50%);
-
-    width:36px;
-
-    height:36px;
-
-    border:none;
-
-    background:none;
-
-    cursor:pointer;
-
-    color:var(--text-secondary);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
+.register-card-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+    background: var(--bg-body, #f8fafc);
+    overflow-y: auto;
 }
 
-.password-toggle:hover{
-
-    color:var(--primary);
-
+.register-card {
+    width: 100%;
+    max-width: 500px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg, 0 10px 25px -5px rgba(0, 0, 0, 0.1));
+    border: 1px solid var(--border-color, #e2e8f0);
 }
 
-.register-btn{
-
-    width:100%;
-
-    height:52px;
-
-    margin-top:1rem;
-
+.logo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
-.login-link{
-
-    margin-top:2rem;
-
-    text-align:center;
-
-    color:var(--text-secondary);
-
+.logo-area img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 1rem;
 }
 
-.login-link a{
-
-    color:var(--primary);
-
-    text-decoration:none;
-
-    font-weight:600;
-
+.logo-area h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--text-primary, #0f172a);
+    font-weight: 700;
 }
 
-.login-link a:hover{
-
-    text-decoration:underline;
-
+.logo-area p {
+    margin-top: 0.4rem;
+    color: var(--text-secondary, #64748b);
+    font-size: 0.925rem;
 }
 
-/* =====================================================
-   Full Name Certificate Notice
-===================================================== */
+/* ==========================================================================
+   Form Fields
+   ========================================================================== */
 
-.form-note{
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:.5rem;
-
-    margin-top:.25rem;
-
-    padding:.75rem .9rem;
-
-    background:#EFF6FF;
-
-    border:1px solid #BFDBFE;
-
-    border-left:4px solid #2563EB;
-
-    border-radius:10px;
-
-    font-size:.82rem;
-
-    line-height:1.5;
-
-    color:#1E3A8A;
-
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
 }
 
-.form-note i{
-
-    margin-top:2px;
-
-    color:#2563EB;
-
-    flex-shrink:0;
-
+.form-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary, #1e293b);
 }
 
-@media(max-width:768px){
+.form-group input {
+    width: 100%;
+    height: 50px;
+    padding: 0 1rem;
+    border: 1px solid var(--border-color, #cbd5e1);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background-color: #ffffff !important;
+    color: var(--text-primary, #0f172a);
+    transition: all 0.25s ease;
+    outline: none;
+}
 
-    .register-page{
+/* Prevents Chrome autofill from turning inputs blue/yellow */
+.form-group input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+    -webkit-text-fill-color: #0f172a !important;
+}
 
-        padding:1rem;
+.form-group input:focus {
+    border-color: var(--primary, #2563eb);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
 
+/* ==========================================================================
+   International Telephone Input (intl-tel-input) Overrides
+   ========================================================================== */
+
+.iti {
+    width: 100%;
+}
+
+.iti__selected-flag {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 0 12px 0 14px;
+    background-color: #f8fafc;
+    border-right: 1px solid var(--border-color, #cbd5e1);
+    transition: background-color 0.2s ease;
+}
+
+.iti__selected-flag:hover {
+    background-color: #f1f5f9;
+}
+
+.iti__country-list {
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg, 0 10px 25px -5px rgba(0, 0, 0, 0.15));
+    border: 1px solid var(--border-color, #e2e8f0);
+    z-index: 100;
+    font-family: inherit;
+    font-size: 0.9rem;
+    margin-top: 6px;
+    max-height: 220px;
+}
+
+.iti__country {
+    padding: 10px 14px;
+    color: var(--text-primary, #0f172a);
+    transition: background 0.15s ease;
+}
+
+.iti__country:hover, 
+.iti__country.iti__highlight {
+    background-color: #f1f5f9;
+}
+
+.iti__country-name {
+    color: var(--text-primary, #0f172a);
+}
+
+.iti__dial-code {
+    color: var(--text-secondary, #64748b);
+}
+
+/* Password Toggle Field */
+.password-box {
+    position: relative;
+}
+
+.password-box input {
+    padding-right: 50px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--text-secondary, #64748b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: var(--primary, #2563eb);
+    background-color: #f1f5f9;
+}
+
+.password-toggle:active {
+    transform: translateY(-50%) scale(0.9);
+}
+
+/* Full Name Certificate Notice */
+.form-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-top: 0.35rem;
+    padding: 0.85rem 1rem;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-left: 4px solid var(--primary, #2563EB);
+    border-radius: 10px;
+    font-size: 0.825rem;
+    line-height: 1.5;
+    color: #1E3A8A;
+}
+
+.form-note i {
+    margin-top: 2px;
+    color: var(--primary, #2563eb);
+    flex-shrink: 0;
+}
+
+/* Buttons and Bottom Links */
+.register-btn {
+    width: 100%;
+    height: 50px;
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.login-link {
+    margin-top: 1.75rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary, #64748b);
+}
+
+.login-link a {
+    color: var(--primary, #2563eb);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+
+@media (max-width: 992px) {
+    .register-container {
+        flex-direction: column;
     }
 
-    .register-card{
-
-        padding:1.5rem;
-
+    .register-hero {
+        padding: 2.5rem 1.5rem;
     }
 
-    .logo-area img{
-
-        width:70px;
-
-        height:70px;
-
+    .hero-content h2 {
+        font-size: 1.75rem;
     }
 
-    .logo-area h1{
-
-        font-size:1.6rem;
-
+    .register-card-wrapper {
+        padding: 2rem 1rem;
     }
 
+    .register-card {
+        padding: 1.75rem;
+        box-shadow: none;
+    }
+
+    .logo-area img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .logo-area h1 {
+        font-size: 1.5rem;
+    }
 }

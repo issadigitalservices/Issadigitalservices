@@ -41,122 +41,164 @@
 
 <div class="login-page">
 
-    <div class="login-card">
-
-        <div class="logo-area">
-
-            <img
-                src="../assets/images/Issa-Logo.png"
-                alt="ISSA Academy">
-
-            <h1>
-
-                Student Login
-
-            </h1>
-
-            <p>
-
-                Welcome back to ISSA Academy
-
-            </p>
-
+    <!-- Brand / Visual Side (Left) -->
+    <div class="brand-side">
+        <div class="brand-header">
+            <img src="../assets/images/Issa-Logo.png"
+                 alt="ISSA Academy Logo"
+                 class="brand-logo">
+            <span class="brand-name">ISSA Academy</span>
         </div>
 
-        <form
-            id="loginForm"
-            novalidate>
+        <div class="brand-content">
+            <h2>Master Skills That Drive Your Career Forward</h2>
+            <p>Access high-quality masterclasses, hands-on practice files, and recognized certifications.</p>
 
-            <div class="form-group">
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Practical Real-World Skills</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Step-by-Step Interactive Lessons</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Verified Course Certificates</span>
+                </div>
+            </div>
+        </div>
 
-                <label>
+        <div class="brand-footer">
+            <p>© ISSA Academy. All rights reserved.</p>
+        </div>
+    </div>
 
-                    Email Address
+    <!-- Form Side (Right) -->
+    <div class="form-side">
+        <div class="login-card">
 
-                </label>
+            <div class="logo-area">
 
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    required>
+                <img
+                    src="../assets/images/Issa-Logo.png"
+                    alt="ISSA Academy">
+
+                <h1>
+
+                    Student Login
+
+                </h1>
+
+                <p>
+
+                    Welcome back to ISSA Academy
+
+                </p>
 
             </div>
 
-            <div class="form-group">
+            <form
+                id="loginForm"
+                novalidate>
 
-                <label>
+                <div class="form-group">
 
-                    Password
+                    <label>
 
-                </label>
+                        Email Address
 
-                <div class="password-box">
+                    </label>
 
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="Enter your password"
-                        required>
-
-                    <button
-                        type="button"
-                        id="togglePassword"
-                        class="password-toggle">
-
-                        <i class="fa-solid fa-eye"></i>
-
-                    </button>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Enter your email"
+                            required>
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="form-group">
 
-            <div class="login-options">
+                    <label>
 
-                <label class="remember-me">
+                        Password
 
-                    <input
-                        id="rememberMe"
-                        type="checkbox">
+                    </label>
 
-                    Remember Me
+                    <div class="password-box input-wrapper">
 
-                </label>
+                        <i class="fa-solid fa-lock input-icon"></i>
 
-                <a
-                    href="forgot-password.html">
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            required>
 
-                    Forgot Password?
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="password-toggle">
+
+                            <i class="fa-solid fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="login-options">
+
+                    <label class="remember-me">
+
+                        <input
+                            id="rememberMe"
+                            type="checkbox">
+
+                        Remember Me
+
+                    </label>
+
+                    <a
+                        href="forgot-password.html">
+
+                        Forgot Password?
+
+                    </a>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary login-btn">
+
+                    <i class="fa-solid fa-right-to-bracket"></i>
+
+                    Login
+
+                </button>
+
+            </form>
+
+            <div class="register-link">
+
+                Don't have an account?
+
+                <a href="register.html">
+
+                    Register Here
 
                 </a>
 
             </div>
 
-            <button
-                type="submit"
-                class="btn btn-primary login-btn">
-
-                <i class="fa-solid fa-right-to-bracket"></i>
-
-                Login
-
-            </button>
-
-        </form>
-
-        <div class="register-link">
-
-            Don't have an account?
-
-            <a href="register.html">
-
-                Register Here
-
-            </a>
-
         </div>
-
     </div>
 
 </div>

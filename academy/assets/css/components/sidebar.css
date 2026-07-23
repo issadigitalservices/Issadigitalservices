@@ -8,474 +8,328 @@
    Main Sidebar
    ========================================================== */
 
-.sidebar{
-
-    width:280px;
-
-    min-width:280px;
-
-    min-height:100vh;
-
-    background:var(--secondary);
-
-    color:var(--white);
-
-    display:flex;
-
-    flex-direction:column;
-
-    position:sticky;
-
-    top:0;
-
-    left:0;
-
-    overflow-y:auto;
-
-    overflow-x:hidden;
-
-    z-index:100;
-
-    transition:all .3s ease;
-
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    min-height: 100vh;
+    background: var(--secondary, #0f172a);
+    color: var(--white, #ffffff);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 100;
+    transition: all .3s ease;
 }
 
 /* ==========================================================
    Logo
    ========================================================== */
 
-.logo-area{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:2rem 1.5rem;
-
-    border-bottom:1px solid rgba(255,255,255,.08);
-
+.logo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
 }
 
-.logo-area img{
-
-    width:80px;
-
-    height:80px;
-
-    object-fit:contain;
-
-    margin-bottom:1rem;
-
+.logo-area img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 1rem;
 }
 
-.logo-area h2{
-
-    color:var(--white);
-
-    font-size:1.3rem;
-
-    font-weight:700;
-
-    text-align:center;
-
+.logo-area h2 {
+    color: var(--white, #ffffff);
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
 }
 
 /* ==========================================================
    Navigation
    ========================================================== */
 
-.sidebar nav{
-
-    flex:1;
-
+.sidebar nav {
+    flex: 1;
 }
 
-.sidebar ul{
-
-    list-style:none;
-
-    display:flex;
-
-    flex-direction:column;
-
-    padding:1rem;
-
-    gap:.5rem;
-
-    margin:0;
-
+.sidebar ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: .5rem;
+    margin: 0;
 }
 
-.sidebar li{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:1rem;
-
-    padding:1rem 1.2rem;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    transition:all .25s ease;
-
-    font-weight:500;
-
+.sidebar li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .25s ease;
+    font-weight: 500;
+    color: #94a3b8; /* FIX: Sets bright readable color for list items */
 }
 
-.sidebar li:hover{
-
-    background:rgba(255,255,255,.08);
-
-    transform:translateX(4px);
-
+.sidebar li:hover {
+    background: rgba(255, 255, 255, .08);
+    color: #ffffff; /* FIX: Text turns crisp white on hover */
+    transform: translateX(4px);
 }
 
-.sidebar li.active{
-
-    background:var(--primary);
-
-    color:#fff;
-
-    box-shadow:0 8px 18px rgba(37,99,235,.25);
-
+.sidebar li.active {
+    background: var(--primary, #2563eb);
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, .25);
 }
 
-.sidebar li i{
-
-    width:22px;
-
-    text-align:center;
-
-    font-size:1rem;
-
-    flex-shrink:0;
-
+.sidebar li i {
+    width: 22px;
+    text-align: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    color: inherit; /* FIX: Makes icons match the text color */
 }
 
-.sidebar li a{
-
-    flex:1;
-
-    display:flex;
-
-    align-items:center;
-
-    color:inherit;
-
-    text-decoration:none;
-
-    font-size:.96rem;
-
-    font-weight:500;
-
+.sidebar li a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    color: #94a3b8 !important; /* FIX: Overrides global link colors */
+    text-decoration: none;
+    font-size: .96rem;
+    font-weight: 500;
+    transition: color .25s ease;
 }
 
-.sidebar li.active a{
-
-    color:#fff;
-
+.sidebar li:hover a {
+    color: #ffffff !important;
 }
 
-.sidebar li.active i{
+.sidebar li.active a {
+    color: #ffffff !important;
+}
 
-    color:#fff;
-
+.sidebar li.active i {
+    color: #ffffff !important;
 }
 
 /* ==========================================================
    Lesson Sidebar
    ========================================================== */
 
-.lesson-sidebar{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:1.5rem;
-
+.lesson-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.sidebar-module{
-
-    border:1px solid var(--border-color);
-
-    border-radius:var(--radius-md);
-
-    overflow:hidden;
-
-    background:var(--surface);
-
+.sidebar-module {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface);
 }
 
-.sidebar-module-header{
-
-    width:100%;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:1rem;
-
-    background:var(--gray-50);
-
-    font-weight:600;
-
-    cursor:pointer;
-
+.sidebar-module-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--gray-50);
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.sidebar-module-header:hover{
-
-    background:var(--gray-100);
-
+.sidebar-module-header:hover {
+    background: var(--gray-100);
 }
 
-.sidebar-module-title{
-
-    color:var(--text-primary);
-
+.sidebar-module-title {
+    color: var(--text-primary);
 }
 
-.sidebar-lesson-list{
-
-    display:none;
-
+.sidebar-lesson-list {
+    display: none;
 }
 
-.sidebar-lesson-list.open{
-
-    display:block;
-
+.sidebar-lesson-list.open {
+    display: block;
 }
 
-.sidebar-lesson{
-
-    width:100%;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:.75rem;
-
-    padding:.9rem 1rem;
-
-    border-top:1px solid var(--border-color);
-
-    text-align:left;
-
-    transition:background .25s ease;
-
+.sidebar-lesson {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .9rem 1rem;
+    border-top: 1px solid var(--border-color);
+    text-align: left;
+    transition: background .25s ease;
 }
 
-.sidebar-lesson:hover{
-
-    background:var(--gray-50);
-
+.sidebar-lesson:hover {
+    background: var(--gray-50);
 }
 
-.sidebar-lesson.active{
-
-    background:var(--primary-light);
-
+.sidebar-lesson.active {
+    background: var(--primary-light);
 }
 
-.sidebar-lesson.completed{
-
-    color:var(--success);
-
+.sidebar-lesson.completed {
+    color: var(--success);
 }
 
-.sidebar-lesson.locked{
-
-    opacity:.6;
-
-    pointer-events:none;
-
+.sidebar-lesson.locked {
+    opacity: .6;
+    pointer-events: none;
 }
 
-.sidebar-lesson-status{
-
-    width:24px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
+.sidebar-lesson-status {
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ==========================================================
    Scrollbar
    ========================================================== */
 
-.sidebar::-webkit-scrollbar{
-
-    width:6px;
-
+.sidebar::-webkit-scrollbar {
+    width: 6px;
 }
 
-.sidebar::-webkit-scrollbar-thumb{
-
-    background:rgba(255,255,255,.15);
-
-    border-radius:20px;
-
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .15);
+    border-radius: 20px;
 }
 
-.sidebar::-webkit-scrollbar-track{
-
-    background:transparent;
-
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 /* ==========================================================
    Responsive
    ========================================================== */
 
-@media(max-width:992px){
-
-    .sidebar{
-
-        position:fixed;
-
-        top:0;
-
-        left:-100%;
-
-        width:280px;
-
-        max-width:80%;
-
-        height:100vh;
-
-        z-index:1000;
-
-        transition:left .3s ease;
-
+@media(max-width: 992px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        max-width: 80%;
+        height: 100vh;
+        z-index: 1000;
+        transition: left .3s ease;
     }
 
-    .sidebar.open{
-
-        left:0;
-
+    .sidebar.open {
+        left: 0;
     }
-
 }
 
-@media(max-width:768px){
-
-    .logo-area{
-
-        padding:1.5rem;
-
+@media(max-width: 768px) {
+    .logo-area {
+        padding: 1.5rem;
     }
 
-    .logo-area img{
-
-        width:60px;
-
-        height:60px;
-
+    .logo-area img {
+        width: 60px;
+        height: 60px;
     }
 
-    .logo-area h2{
-
-        font-size:1.1rem;
-
+    .logo-area h2 {
+        font-size: 1.1rem;
     }
 
-    .sidebar{
-
-        width:280px;
-
-        max-width:80%;
-
+    .sidebar {
+        width: 280px;
+        max-width: 80%;
     }
-
 }
 
 /* ==========================================================
    Sidebar Overlay & Close Button
    ========================================================== */
 
-.sidebar-overlay{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.45);
-
-    opacity:0;
-
-    visibility:hidden;
-
-    transition:.3s;
-
-    z-index:999;
-
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    z-index: 999;
 }
 
-.sidebar-overlay.show{
-
-    opacity:1;
-
-    visibility:visible;
-
+.sidebar-overlay.show {
+    opacity: 1;
+    visibility: visible;
 }
 
-.sidebar-close{
-
-    position:absolute;
-
-    top:15px;
-
-    right:15px;
-
-    width:36px;
-
-    height:36px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.12);
-
-    color:#fff;
-
-    font-size:18px;
-
-    cursor:pointer;
-
-    display:none;
-
+.sidebar-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
 }
 
-@media(max-width:992px){
-
-    .sidebar-close{
-
-        display:flex;
-
-        align-items:center;
-
-        justify-content:center;
-
+@media(max-width: 992px) {
+    .sidebar-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+}
 
+/* ==========================================================================
+   FORCE HIGH CONTRAST SIDEBAR LINKS
+   ========================================================================== */
+
+/* Target list items and links directly */
+.sidebar nav ul li,
+.sidebar nav ul li a {
+    color: #cbd5e1 !important; /* Bright, clear light-slate color */
+}
+
+/* Ensure font awesome icons match text color */
+.sidebar nav ul li i,
+.sidebar nav ul li a i {
+    color: #cbd5e1 !important;
+}
+
+/* Hover state */
+.sidebar nav ul li:hover,
+.sidebar nav ul li:hover a,
+.sidebar nav ul li:hover a i {
+    color: #ffffff !important;
+}
+
+/* Active tab */
+.sidebar nav ul li.active,
+.sidebar nav ul li.active a,
+.sidebar nav ul li.active i {
+    color: #ffffff !important;
+    background-color: #2563eb !important;
 }

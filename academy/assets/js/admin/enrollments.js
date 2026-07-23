@@ -6,70 +6,45 @@
    ========================================================================== */
 
 import {
-
     auth,
     db
-
 } from "../core/firebase-config.js";
 
 import {
-
     onAuthStateChanged
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 import {
-
     collection,
     getDocs,
     query,
     orderBy,
     doc,
     updateDoc,
-    serverTimestamp
-
+    serverTimestamp,
+    Timestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 /* ==========================================================================
    DOM
    ========================================================================== */
 
-const table =
-    document.getElementById("enrollmentTable");
+const table = document.getElementById("enrollmentTable");
+const emptyState = document.getElementById("emptyState");
+const searchInput = document.getElementById("searchInput");
+const statusFilter = document.getElementById("statusFilter");
+const loader = document.getElementById("pageLoader");
+const toastContainer = document.getElementById("toastContainer");
 
-const emptyState =
-    document.getElementById("emptyState");
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const statusFilter =
-    document.getElementById("statusFilter");
-
-const loader =
-    document.getElementById("pageLoader");
-
-const toastContainer =
-    document.getElementById("toastContainer");
-
-    /* ==========================================================================
+/* ==========================================================================
    MODAL
-========================================================================== */
+   ========================================================================== */
 
-const approveModal =
-    document.getElementById("approveModal");
-
-const modalStudentName =
-    document.getElementById("modalStudentName");
-
-const modalCourseName =
-    document.getElementById("modalCourseName");
-
-const confirmApprove =
-    document.getElementById("confirmApprove");
-
-const cancelApprove =
-    document.getElementById("cancelApprove");
+const approveModal = document.getElementById("approveModal");
+const modalStudentName = document.getElementById("modalStudentName");
+const modalCourseName = document.getElementById("modalCourseName");
+const confirmApprove = document.getElementById("confirmApprove");
+const cancelApprove = document.getElementById("cancelApprove");
 
 let selectedEnrollmentId = null;
 
@@ -78,7 +53,6 @@ let selectedEnrollmentId = null;
    ========================================================================== */
 
 let enrollments = [];
-
 let filtered = [];
 
 /* ==========================================================================
@@ -86,672 +60,319 @@ let filtered = [];
    ========================================================================== */
 
 onAuthStateChanged(
-
     auth,
-
-    async user=>{
-
-        if(!user){
-
-            location.href="../student/login.html";
-
+    async user => {
+        if (!user) {
+            location.href = "../student/login.html";
             return;
-
         }
 
         showLoader();
-
         await loadEnrollments();
-
         hideLoader();
-
     }
-
 );
 
 /* ==========================================================================
    LOAD
    ========================================================================== */
 
-async function loadEnrollments(){
+async function loadEnrollments() {
+    const snapshot = await getDocs(
+        query(
+            collection(db, "enrollments"),
+            orderBy("createdAt", "desc")
+        )
+    );
 
-    const snapshot =
-
-        await getDocs(
-
-            query(
-
-                collection(
-
-                    db,
-
-                    "enrollments"
-
-                ),
-
-                orderBy(
-
-                    "createdAt",
-
-                    "desc"
-
-                )
-
-            )
-
-        );
-
-    enrollments=[];
-
-    snapshot.forEach(docSnap=>{
-
+    enrollments = [];
+    snapshot.forEach(docSnap => {
         enrollments.push({
-
-            id:docSnap.id,
-
+            id: docSnap.id,
             ...docSnap.data()
-
         });
-
     });
 
-    filtered=[...enrollments];
-
+    filtered = [...enrollments];
     render();
+}
 
+/* ==========================================================================
+   HELPERS
+   ========================================================================== */
+
+function formatDate(timestamp) {
+    if (!timestamp) return "N/A";
+    
+    // Check if it's a Firestore Timestamp or standard Date
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+    
+    return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+    });
+}
+
+function formatExpirationDate(item) {
+    if (item.approvalStatus === "Pending") return "Pending Approval";
+    if (item.approvalStatus === "Rejected") return "N/A";
+
+    let expiryDate = null;
+
+    // 1. If expiresAt exists in Firestore, use it
+    if (item.expiresAt) {
+        expiryDate = item.expiresAt.toDate ? item.expiresAt.toDate() : new Date(item.expiresAt);
+    } 
+    // 2. Fallback for older records: Calculate 1 year from Enrolled Date (createdAt)
+    else if (item.createdAt && item.approvalStatus === "Approved") {
+        const createdDate = item.createdAt.toDate ? item.createdAt.toDate() : new Date(item.createdAt);
+        expiryDate = new Date(createdDate);
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+    }
+
+    if (!expiryDate) return "N/A";
+
+    const now = new Date();
+
+    if (now > expiryDate) {
+        return `<span style="color: #e63946; font-weight: 600;">Expired (${formatDate(expiryDate)})</span>`;
+    }
+
+    return formatDate(expiryDate);
 }
 
 /* ==========================================================================
    RENDER
    ========================================================================== */
 
-function render(){
+function render() {
+    table.innerHTML = "";
 
-    table.innerHTML="";
-
-    if(filtered.length===0){
-
-        emptyState.classList.remove(
-
-            "hidden"
-
-        );
-
+    if (filtered.length === 0) {
+        emptyState.classList.remove("hidden");
         return;
-
     }
 
-    emptyState.classList.add(
+    emptyState.classList.add("hidden");
 
-        "hidden"
-
-    );
-
-    filtered.forEach(item=>{
-
+    filtered.forEach(item => {
         table.innerHTML += `
-
         <tr>
-
             <td>
-
                 <div class="student-info">
-
-                    <strong>
-
-                        ${item.studentName}
-
-                    </strong>
-
-                    <small>
-
-                        ${item.studentEmail}
-
-                    </small>
-
-                    <small>
-
-                        ${item.studentMobile}
-
-                    </small>
-
+                    <strong>${item.studentName}</strong>
+                    <small>${item.studentEmail}</small>
+                    <small>${item.studentMobile}</small>
                 </div>
-
             </td>
-
             <td>
-
                 ${item.courseName}
-
             </td>
-
             <td>
-
-                ${item.currency || "₹"} ${item.price || 999}
-
+                ${item.currency || "₹"} ${item.coursePrice || item.price || 999}
             </td>
-
             <td>
-
-                ${item.paymentMethod}
-
+                ${formatDate(item.createdAt)}
             </td>
-
             <td>
-
+                ${formatExpirationDate(item)}
+            </td>
+            <td>
                 <span class="status ${item.approvalStatus.toLowerCase()}">
-
                     ${item.approvalStatus}
-
                 </span>
-
             </td>
-
             <td>
-
-    <div class="actions">
-
-        <button
-
-            class="btn-view"
-
-            data-id="${item.id}">
-
-            View
-
-        </button>
-
-        ${item.approvalStatus === "Pending" ? `
-
-            <button
-
-                class="btn-approve"
-
-                data-id="${item.id}">
-
-                Approve
-
-            </button>
-
-            <button
-
-                class="btn-reject"
-
-                data-id="${item.id}">
-
-                Reject
-
-            </button>
-
-        ` : item.approvalStatus === "Approved" ? `
-
-            <button
-
-                class="btn-approved"
-
-                disabled>
-
-                <i class="fa-solid fa-circle-check"></i>
-
-                Approved
-
-            </button>
-
-        ` : `
-
-            <button
-
-                class="btn-rejected"
-
-                disabled>
-
-                <i class="fa-solid fa-circle-xmark"></i>
-
-                Rejected
-
-            </button>
-
-        `}
-
-    </div>
-
-</td>
-
+                <div class="actions">
+                    <button class="btn-view" data-id="${item.id}">
+                        View
+                    </button>
+                    ${item.approvalStatus === "Pending" ? `
+                        <button class="btn-approve" data-id="${item.id}">
+                            Approve
+                        </button>
+                        <button class="btn-reject" data-id="${item.id}">
+                            Reject
+                        </button>
+                    ` : item.approvalStatus === "Approved" ? `
+                        <button class="btn-approved" disabled>
+                            <i class="fa-solid fa-circle-check"></i>
+                            Approved
+                        </button>
+                    ` : `
+                        <button class="btn-rejected" disabled>
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            Rejected
+                        </button>
+                    `}
+                </div>
+            </td>
         </tr>
-
         `;
-
     });
 
     bindEvents();
-
 }
 
 /* ==========================================================================
    EVENTS
    ========================================================================== */
 
-function bindEvents(){
+function bindEvents() {
+    document.querySelectorAll(".btn-approve").forEach(button => {
+        button.addEventListener("click", () => approve(button.dataset.id));
+    });
 
-    document
+    document.querySelectorAll(".btn-reject").forEach(button => {
+        button.addEventListener("click", () => reject(button.dataset.id));
+    });
 
-        .querySelectorAll(
-
-            ".btn-approve"
-
-        )
-
-        .forEach(button=>{
-
-            button.addEventListener(
-
-                "click",
-
-                ()=>approve(
-
-                    button.dataset.id
-
-                )
-
-            );
-
+    document.querySelectorAll(".btn-view").forEach(button => {
+        button.addEventListener("click", () => {
+            location.href = `student-details.html?id=${button.dataset.id}`;
         });
-
-    document
-
-        .querySelectorAll(
-
-            ".btn-reject"
-
-        )
-
-        .forEach(button=>{
-
-            button.addEventListener(
-
-                "click",
-
-                ()=>reject(
-
-                    button.dataset.id
-
-                )
-
-            );
-
-        });
-
-    document
-
-        .querySelectorAll(
-
-            ".btn-view"
-
-        )
-
-        .forEach(button=>{
-
-            button.addEventListener(
-
-                "click",
-
-                ()=>{
-
-                    location.href=
-
-                    `student-details.html?id=${button.dataset.id}`;
-
-                }
-
-            );
-
-        });
-
+    });
 }
 
 /* ==========================================================================
    APPROVE
    ========================================================================== */
 
-async function approve(id){
-
-    const enrollment = enrollments.find(
-        item => item.id === id
-    );
+async function approve(id) {
+    const enrollment = enrollments.find(item => item.id === id);
 
     selectedEnrollmentId = id;
+    modalStudentName.textContent = enrollment.studentName;
+    modalCourseName.textContent = enrollment.courseName;
 
-    modalStudentName.textContent =
-        enrollment.studentName;
-
-    modalCourseName.textContent =
-        enrollment.courseName;
-
-    approveModal.classList.remove(
-        "hidden"
-    );
-
+    approveModal.classList.remove("hidden");
 }
 
 /* ==========================================================================
    REJECT
    ========================================================================== */
 
-async function reject(id){
-
-    if(
-
-        !confirm(
-
-            "Reject this enrollment?"
-
-        )
-
-    ){
-
+async function reject(id) {
+    if (!confirm("Reject this enrollment?")) {
         return;
-
     }
 
     showLoader();
 
-    try{
-
+    try {
         await updateDoc(
-
-            doc(
-
-                db,
-
-                "enrollments",
-
-                id
-
-            ),
-
+            doc(db, "enrollments", id),
             {
-
-                approvalStatus:
-
-                    "Rejected"
-
+                approvalStatus: "Rejected"
             }
-
         );
 
-        showToast(
-
-            "Enrollment Rejected."
-
-        );
-
+        showToast("Enrollment Rejected.");
         await loadEnrollments();
-
-    }
-
-    catch(error){
-
+    } catch (error) {
         console.error(error);
-
-        showToast(
-
-            error.message,
-
-            "error"
-
-        );
-
+        showToast(error.message, "error");
     }
 
     hideLoader();
-
 }
 
 /* ==========================================================================
-   SEARCH
+   SEARCH & FILTER
    ========================================================================== */
 
-searchInput.addEventListener(
+searchInput.addEventListener("input", applyFilter);
+statusFilter.addEventListener("change", applyFilter);
 
-    "input",
+function applyFilter() {
+    const keyword = searchInput.value.trim().toLowerCase();
+    const status = statusFilter.value;
 
-    applyFilter
+    filtered = enrollments.filter(item => {
+        const matchKeyword =
+            item.studentName.toLowerCase().includes(keyword) ||
+            item.courseName.toLowerCase().includes(keyword);
 
-);
+        const matchStatus = !status || item.approvalStatus === status;
 
-statusFilter.addEventListener(
-
-    "change",
-
-    applyFilter
-
-);
-
-function applyFilter(){
-
-    const keyword =
-
-        searchInput.value
-
-        .trim()
-
-        .toLowerCase();
-
-    const status =
-
-        statusFilter.value;
-
-    filtered =
-
-        enrollments.filter(item=>{
-
-            const matchKeyword =
-
-                item.studentName
-
-                .toLowerCase()
-
-                .includes(keyword)
-
-                ||
-
-                item.courseName
-
-                .toLowerCase()
-
-                .includes(keyword);
-
-            const matchStatus =
-
-                !status ||
-
-                item.approvalStatus===status;
-
-            return(
-
-                matchKeyword &&
-
-                matchStatus
-
-            );
-
-        });
-
-    render();
-
-}
-
-/* ==========================================================================
-   LOADER
-   ========================================================================== */
-
-function showLoader(){
-
-    loader.classList.remove(
-
-        "hidden"
-
-    );
-
-}
-
-function hideLoader(){
-
-    loader.classList.add(
-
-        "hidden"
-
-    );
-
-}
-
-/* ==========================================================================
-   TOAST
-   ========================================================================== */
-
-function showToast(
-
-    message,
-
-    type="success"
-
-){
-
-    const toast =
-
-        document.createElement(
-
-            "div"
-
-        );
-
-    toast.className=
-
-        `toast ${type}`;
-
-    toast.textContent=
-
-        message;
-
-    toastContainer.appendChild(
-
-        toast
-
-    );
-
-    requestAnimationFrame(()=>{
-
-        toast.classList.add(
-
-            "show"
-
-        );
-
+        return matchKeyword && matchStatus;
     });
 
-    setTimeout(()=>{
+    render();
+}
 
+/* ==========================================================================
+   LOADER & TOAST
+   ========================================================================== */
+
+function showLoader() {
+    loader.classList.remove("hidden");
+}
+
+function hideLoader() {
+    loader.classList.add("hidden");
+}
+
+function showToast(message, type = "success") {
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+
+    requestAnimationFrame(() => {
+        toast.classList.add("show");
+    });
+
+    setTimeout(() => {
         toast.remove();
-
-    },3000);
-
+    }, 3000);
 }
 
 /* ==========================================================================
    APPROVE MODAL EVENTS
-========================================================================== */
+   ========================================================================== */
 
-cancelApprove.addEventListener(
+cancelApprove.addEventListener("click", () => {
+    approveModal.classList.add("hidden");
+    selectedEnrollmentId = null;
+});
 
-    "click",
+confirmApprove.addEventListener("click", async () => {
+    if (!selectedEnrollmentId) {
+        return;
+    }
 
-    ()=>{
+    approveModal.classList.add("hidden");
+    showLoader();
 
-        approveModal.classList.add(
-            "hidden"
+    try {
+        // Calculate 1 Year Access Expiration Date from today
+        const oneYearFromNow = new Date();
+        oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+
+        await updateDoc(
+            doc(db, "enrollments", selectedEnrollmentId),
+            {
+                approvalStatus: "Approved",
+                paymentStatus: "Paid",
+                accessGranted: true,
+                approvedBy: auth.currentUser.uid,
+                approvedAt: serverTimestamp(),
+                expiresAt: Timestamp.fromDate(oneYearFromNow)
+            }
         );
+
+        showToast("Enrollment Approved (1-Year Access Granted).");
 
         selectedEnrollmentId = null;
+        await loadEnrollments();
 
+    } catch (error) {
+        console.error(error);
+        showToast(error.message, "error");
     }
 
-);
-
-confirmApprove.addEventListener(
-
-    "click",
-
-    async ()=>{
-
-        if(!selectedEnrollmentId){
-
-            return;
-
-        }
-
-        approveModal.classList.add(
-            "hidden"
-        );
-
-        showLoader();
-
-        try{
-
-            await updateDoc(
-
-                doc(
-
-                    db,
-
-                    "enrollments",
-
-                    selectedEnrollmentId
-
-                ),
-
-                {
-
-                    approvalStatus:"Approved",
-
-                    paymentStatus:"Paid",
-
-                    accessGranted:true,
-
-                    approvedBy:auth.currentUser.uid,
-
-                    approvedAt:serverTimestamp()
-
-                }
-
-            );
-
-            showToast(
-                "Enrollment Approved."
-            );
-
-            selectedEnrollmentId = null;
-
-            await loadEnrollments();
-
-        }
-
-        catch(error){
-
-            console.error(error);
-
-            showToast(
-                error.message,
-                "error"
-            );
-
-        }
-
-        hideLoader();
-
-    }
-
-);
-
-/* ==========================================================================
-   END
-   ========================================================================== */
+    hideLoader();
+});

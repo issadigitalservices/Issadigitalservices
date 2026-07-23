@@ -3,261 +3,165 @@
 /* ==========================================================================
    ISSA Academy
    Student Profile Controller
-   Version : 1.0.0
+   Version : 1.1.0
    ========================================================================== */
 
 import {
-
     auth
-
 } from "../core/firebase-config.js";
 
 import {
-
-    onAuthStateChanged
-
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 import {
-
     getFirestore,
-
     doc,
-
     getDoc,
-
-    updateDoc,
-
+    setDoc,
     serverTimestamp
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const db = getFirestore();
 
 /* ==========================================================================
-   DOM
+   DOM ELEMENTS
    ========================================================================== */
 
-const profileForm =
-    document.getElementById("profileForm");
-
-const fullName =
-    document.getElementById("fullName");
-
-const email =
-    document.getElementById("email");
-
-const phone =
-    document.getElementById("phone");
-
-const pageLoader =
-    document.getElementById("pageLoader");
-
-const toastContainer =
-    document.getElementById("toastContainer");
+const profileForm = document.getElementById("profileForm");
+const fullName = document.getElementById("fullName");
+const email = document.getElementById("email");
+const phone = document.getElementById("phone");
+const pageLoader = document.getElementById("pageLoader");
+const toastContainer = document.getElementById("toastContainer");
+const logoutBtn = document.getElementById("logoutBtn");
 
 /* ==========================================================================
-   LOADER
+   LOADER & TOAST UTILITIES
    ========================================================================== */
 
-function showLoader(){
-
-    pageLoader.classList.remove("hidden");
-
+function showLoader() {
+    if (pageLoader) pageLoader.classList.remove("hidden");
 }
 
-function hideLoader(){
-
-    pageLoader.classList.add("hidden");
-
+function hideLoader() {
+    if (pageLoader) pageLoader.classList.add("hidden");
 }
 
-/* ==========================================================================
-   TOAST
-   ========================================================================== */
+function showToast(message, type = "success") {
+    if (!toastContainer) return;
 
-function showToast(message){
-
-    const toast=document.createElement("div");
-
-    toast.className="toast";
-
-    toast.textContent=message;
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
 
     toastContainer.appendChild(toast);
 
-    requestAnimationFrame(()=>{
-
+    requestAnimationFrame(() => {
         toast.classList.add("show");
-
     });
 
-    setTimeout(()=>{
-
+    setTimeout(() => {
         toast.remove();
-
-    },3000);
-
+    }, 3000);
 }
 
 /* ==========================================================================
-   AUTH
+   AUTHENTICATION OBSERVER
    ========================================================================== */
 
-onAuthStateChanged(
-
-    auth,
-
-    async user=>{
-
-        if(!user){
-
-            location.replace("login.html");
-
-            return;
-
-        }
-
-        showLoader();
-
-        await loadProfile(user);
-
-        hideLoader();
-
+onAuthStateChanged(auth, async user => {
+    if (!user) {
+        location.replace("login.html");
+        return;
     }
 
-);
+    showLoader();
+    await loadProfile(user);
+    hideLoader();
+});
 
 /* ==========================================================================
-   LOAD PROFILE
+   LOAD PROFILE DATA
    ========================================================================== */
 
-async function loadProfile(user){
+async function loadProfile(user) {
+    try {
+        if (email) email.value = user.email || "";
 
-    try{
-
-        email.value=user.email;
-
-        const snapshot=
-
-            await getDoc(
-
-                doc(
-
-                    db,
-
-                    "students",
-
-                    user.uid
-
-                )
-
-            );
-
-        if(snapshot.exists()){
-
-            const data=snapshot.data();
-
-            fullName.value=
-
-                data.name || "";
-
-            phone.value=
-
-                data.phone || "";
-
-        }
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        showToast(
-
-            "Unable to load profile."
-
+        const snapshot = await getDoc(
+            doc(db, "students", user.uid)
         );
 
-    }
+        if (snapshot.exists()) {
+            const data = snapshot.data();
+            if (fullName) fullName.value = data.name || user.displayName || "";
+            if (phone) phone.value = data.phone || "";
+        } else if (user.displayName && fullName) {
+            fullName.value = user.displayName;
+        }
 
+    } catch (error) {
+        console.error("Failed to load profile:", error);
+        showToast("Unable to load profile data.", "error");
+    }
 }
 
 /* ==========================================================================
-   UPDATE PROFILE
+   UPDATE PROFILE DATA
    ========================================================================== */
 
-profileForm.addEventListener(
-
-    "submit",
-
-    async event=>{
-
+if (profileForm) {
+    profileForm.addEventListener("submit", async event => {
         event.preventDefault();
 
-        try{
+        const nameVal = fullName.value.trim();
+        const phoneVal = phone.value.trim();
 
+        if (!nameVal) {
+            showToast("Please enter your full name.", "error");
+            return;
+        }
+
+        try {
             showLoader();
 
-            await updateDoc(
-
-                doc(
-
-                    db,
-
-                    "students",
-
-                    auth.currentUser.uid
-
-                ),
-
+            await setDoc(
+                doc(db, "students", auth.currentUser.uid),
                 {
-
-                    name:
-
-                        fullName.value.trim(),
-
-                    phone:
-
-                        phone.value.trim(),
-
-                    updatedAt:
-
-                        serverTimestamp()
-
-                }
-
+                    name: nameVal,
+                    phone: phoneVal,
+                    email: auth.currentUser.email,
+                    updatedAt: serverTimestamp()
+                },
+                { merge: true }
             );
 
             hideLoader();
+            showToast("Profile updated successfully.", "success");
 
-            showToast(
-
-                "Profile updated successfully."
-
-            );
-
-        }
-
-        catch(error){
-
-            console.error(error);
-
+        } catch (error) {
+            console.error("Failed to update profile:", error);
             hideLoader();
-
-            showToast(
-
-                "Profile update failed."
-
-            );
-
+            showToast("Profile update failed. Please try again.", "error");
         }
-
-    }
-
-);
+    });
+}
 
 /* ==========================================================================
-   END
+   LOGOUT
    ========================================================================== */
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+            await signOut(auth);
+            location.replace("login.html");
+        } catch (error) {
+            console.error("Logout error:", error);
+            showToast("Failed to logout.", "error");
+        }
+    });
+}

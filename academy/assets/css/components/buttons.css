@@ -1,7 +1,7 @@
 /* ==========================================================================
    ISSA Academy
    Buttons
-   Version : 1.0.0
+   Version : 1.1.0
    ========================================================================== */
 
 /* ==========================================================
@@ -11,168 +11,142 @@
 .primary-btn,
 .secondary-btn,
 .danger-btn,
-.icon-btn{
+.icon-btn,
+.btn,
+button,
+input[type="submit"],
+input[type="button"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    min-height: 48px;
+    padding: .85rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-md, 10px);
+    font-size: var(--font-size-md, 1rem);
+    font-weight: var(--font-semibold, 600);
+    cursor: pointer;
+    text-decoration: none;
+    transition: 
+        background var(--transition-fast, 0.2s ease),
+        color var(--transition-fast, 0.2s ease),
+        transform var(--transition-fast, 0.2s ease),
+        box-shadow var(--transition-fast, 0.2s ease),
+        border-color var(--transition-fast, 0.2s ease);
+}
 
-    display:inline-flex;
+/* Base Active Press Feedback (Tactile scale on click) */
+.primary-btn:active,
+.secondary-btn:active,
+.danger-btn:active,
+.icon-btn:active,
+.btn:active,
+button:active {
+    transform: scale(0.97) !important;
+}
 
-    align-items:center;
-
-    justify-content:center;
-
-    gap:.6rem;
-
-    min-height:48px;
-
-    padding:.85rem 1.5rem;
-
-    border:none;
-
-    border-radius:var(--radius-md);
-
-    font-size:var(--font-size-md);
-
-    font-weight:var(--font-semibold);
-
-    cursor:pointer;
-
-    transition:
-
-        background var(--transition-fast),
-
-        color var(--transition-fast),
-
-        transform var(--transition-fast),
-
-        box-shadow var(--transition-fast);
-
+/* Accessibility Focus Ring (Keyboard Navigation) */
+.primary-btn:focus-visible,
+.secondary-btn:focus-visible,
+.danger-btn:focus-visible,
+.icon-btn:focus-visible,
+.btn:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--primary, #2563eb);
+    outline-offset: 3px;
 }
 
 /* ==========================================================
    Primary
    ========================================================== */
 
-.primary-btn{
-
-    background:var(--primary);
-
-    color:var(--white);
-
-    box-shadow:var(--shadow-sm);
-
+.primary-btn {
+    background: var(--primary, #2563eb);
+    color: var(--white, #ffffff);
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.1));
 }
 
-.primary-btn:hover{
-
-    background:var(--primary-dark);
-
-    transform:translateY(-2px);
-
-    box-shadow:var(--shadow-md);
-
-}
-
-.primary-btn:active{
-
-    transform:translateY(0);
-
+.primary-btn:hover {
+    background: var(--primary-dark, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md, 0 4px 6px rgba(0,0,0,0.12));
 }
 
 /* ==========================================================
    Secondary
    ========================================================== */
 
-.secondary-btn{
-
-    background:var(--surface);
-
-    color:var(--text-primary);
-
-    border:1px solid var(--border-color);
-
+.secondary-btn {
+    background: var(--surface, #ffffff);
+    color: var(--text-primary, #1e293b);
+    border: 1px solid var(--border-color, #e2e8f0);
 }
 
-.secondary-btn:hover{
-
-    background:var(--gray-100);
-
+.secondary-btn:hover {
+    background: var(--gray-100, #f1f5f9);
+    color: var(--primary, #2563eb);
+    border-color: var(--primary, #2563eb);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0,0,0,0.05));
 }
 
 /* ==========================================================
    Danger
    ========================================================== */
 
-.danger-btn{
-
-    background:var(--danger);
-
-    color:var(--white);
-
+.danger-btn {
+    background: var(--danger, #ef4444);
+    color: var(--white, #ffffff);
 }
 
-.danger-btn:hover{
-
-    background:#B91C1C;
-
+.danger-btn:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0,0,0,0.1));
 }
 
 /* ==========================================================
    Icon Button
    ========================================================== */
 
-.icon-btn{
-
-    width:44px;
-
-    height:44px;
-
-    padding:0;
-
-    border-radius:50%;
-
-    background:var(--gray-100);
-
-    color:var(--text-primary);
-
+.icon-btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--gray-100, #f1f5f9);
+    color: var(--text-primary, #1e293b);
 }
 
-.icon-btn:hover{
-
-    background:var(--gray-200);
-
+.icon-btn:hover {
+    background: var(--gray-200, #e2e8f0);
+    color: var(--primary, #2563eb);
+    transform: translateY(-2px);
 }
 
 /* ==========================================================
    Full Width
    ========================================================== */
 
-.btn-block{
-
-    width:100%;
-
+.btn-block {
+    width: 100%;
 }
 
 /* ==========================================================
    Sizes
    ========================================================== */
 
-.btn-sm{
-
-    min-height:38px;
-
-    padding:.55rem 1rem;
-
-    font-size:var(--font-size-sm);
-
+.btn-sm {
+    min-height: 38px;
+    padding: .55rem 1rem;
+    font-size: var(--font-size-sm, 0.875rem);
 }
 
-.btn-lg{
-
-    min-height:56px;
-
-    padding:1rem 2rem;
-
-    font-size:var(--font-size-lg);
-
+.btn-lg {
+    min-height: 56px;
+    padding: 1rem 2rem;
+    font-size: var(--font-size-lg, 1.125rem);
 }
 
 /* ==========================================================
@@ -182,30 +156,22 @@
 .primary-btn:disabled,
 .secondary-btn:disabled,
 .danger-btn:disabled,
-.icon-btn:disabled{
-
-    opacity:.6;
-
-    cursor:not-allowed;
-
-    transform:none;
-
-    box-shadow:none;
-
+.icon-btn:disabled,
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 /* ==========================================================
    Mobile
    ========================================================== */
 
-@media (max-width:768px){
-
+@media (max-width: 768px) {
     .primary-btn,
     .secondary-btn,
-    .danger-btn{
-
-        width:100%;
-
+    .danger-btn {
+        width: 100%;
     }
-
 }

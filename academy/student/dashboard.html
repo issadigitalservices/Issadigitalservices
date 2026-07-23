@@ -2,343 +2,166 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard | ISSA Academy</title>
+    <meta name="theme-color" content="#2563EB">
 
-    <meta name="theme-color"
-          content="#2563EB">
+    <link rel="icon" href="../assets/images/Issa-Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <link rel="icon"
-          href="../assets/images/Issa-Logo.png">
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-    <link rel="stylesheet"
-          href="../assets/css/main.css">
-
-    <link rel="stylesheet"
-          href="../assets/css/student/dashboard.css">
-
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/student/dashboard.css">
 </head>
 
 <body>
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<div class="dashboard">
+    <div class="dashboard">
 
-    <!-- ================= Sidebar ================= -->
+        <!-- ================= Sidebar ================= -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo-area">
+                <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy">
+                <h2>ISSA Academy</h2>
+            </div>
 
-    <aside class="sidebar" id="sidebar">
+            <button class="sidebar-close" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
 
+            <nav>
+                <ul>
+                    <li class="active">
+                        <a href="dashboard.html">
+                            <i class="fa-solid fa-house"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="my-courses.html">
+                            <i class="fa-solid fa-book-open"></i>
+                            My Courses
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <i class="fa-solid fa-user"></i>
+                            My Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="certificates.html">
+                            <i class="fa-solid fa-award"></i>
+                            View Certificate
+                        </a>
+                    </li>
+                    <li>
+                        <a href="login.html" id="logoutBtn">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
 
-        <div class="logo-area">
+        <!-- ================= Main ================= -->
+        <main class="content">
 
-            <img
-                src="../assets/images/Issa-Logo.png"
-                alt="ISSA Academy">
+            <header class="top-bar">
+                <div class="top-left">
+                    <button id="menuToggle" class="menu-toggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1>
+                            Welcome back, 
+                            <span id="studentName">Student</span>!
+                        </h1>
+                        <p>Keep learning and earn your certificate.</p>
+                    </div>
+                </div>
+            </header>
 
-            <h2>
-
-                ISSA Academy
-
-            </h2>
-
-        </div>
-
-        <button class="sidebar-close" id="sidebarClose">
-    <i class="fas fa-times"></i>
-</button>
-
-        <nav>
-
-            <ul>
-
-                <li class="active">
-
-                    <a href="dashboard.html">
-
-                        <i class="fa-solid fa-house"></i>
-
-                        Dashboard
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="my-courses.html">
-
-                        <i class="fa-solid fa-book-open"></i>
-
-                        My Courses
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a href="profile.html">
-
-                        <i class="fa-solid fa-user"></i>
-
-                        Profile
-
-                    </a>
-
-                </li>
-
-                <li>
-
-                    <a
-    class="btn btn-success"
-    href="certificate-view.html?courseId=${data.courseId}">
-
-    <i class="fa-solid fa-award"></i>
-
-    View Certificate
-
-</a>
-
-                </li>
-
-                <li>
-
-                    <a href="login.html"
-                       id="logoutBtn">
-
-                        <i class="fa-solid fa-right-from-bracket"></i>
-
-                        Logout
-
-                    </a>
-
-                </li>
-
-            </ul>
-
-        </nav>
-
-    </aside>
-
-    <!-- ================= Main ================= -->
-
-    <main class="content">
-
-        <header class="top-bar">
-
-            <div class="top-left">
-
-    <button id="menuToggle" class="menu-toggle">
-
-        <i class="fa-solid fa-bars"></i>
-
-    </button>
-
-    <div>
-
-                    <h1>
-
-                        Welcome back - 
-
-                        <span id="studentName">
-
-                            Student
-
-                        </span>
-
-                    </h1>
-
-                    <p>
-
-                        Keep learning and earn your certificate.
-
-                    </p>
-
+            <!-- ================= Stats ================= -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p>My Courses</p>
+                        <h3 id="totalCourses">0</h3>
+                    </div>
                 </div>
 
-            </div>
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p>Certificates</p>
+                        <h3 id="totalCertificates">0</h3>
+                    </div>
+                </div>
 
-            <div class="top-actions">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p>Progress</p>
+                        <h3 id="courseProgress">0%</h3>
+                    </div>
+                </div>
+            </section>
 
-                <button class="icon-btn">
+            <!-- ================= My Courses ================= -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h2>My Courses</h2>
+                </div>
 
-                    <i class="fa-solid fa-bell"></i>
+                <div id="coursesGrid">
+                    <div class="course-skeleton"></div>
+                    <div class="course-skeleton"></div>
+                    <div class="course-skeleton"></div>
+                </div>
 
-                </button>
+                <div id="emptyCourses" class="empty-state hidden">
+    <i class="fa-solid fa-book-open empty-icon"></i>
+    <h2>No Courses Yet</h2>
+    <p>Browse our courses and enroll to start learning.</p>
 
-                <button class="icon-btn">
-
-                    <i class="fa-solid fa-user"></i>
-
-                </button>
-
-            </div>
-
-        </header>
-
-        <!-- ================= Stats ================= -->
-
-        <section class="stats-grid">
-
-            <div class="stat-card">
-
-    <i class="fa-solid fa-book"></i>
-
-    <p>
-
-        My Courses
-
-    </p>
-
-    <h3 id="totalCourses">
-
-        0
-
-    </h3>
-
-</div>
-
-            <div class="stat-card">
-
-    <i class="fa-solid fa-award"></i>
-
-    <p>
-
-        Certificates
-
-    </p>
-
-    <h3 id="totalCertificates">
-
-        0
-
-    </h3>
-
-</div>
-
-            <div class="stat-card">
-
-    <i class="fa-solid fa-chart-line"></i>
-
-    <p>
-
-        Progress
-
-    </p>
-
-    <h3 id="courseProgress">
-
-        0%
-
-    </h3>
-
-</div>
-
-        </section>
-
-        <!-- ================= My Courses ================= -->
-
-        <section class="dashboard-section">
-
-            <div class="section-header">
-
-    <h2>
-
-        My Courses
-
-    </h2>
-
-    <a
-        href="my-courses.html"
-        class="view-all">
-
-        View All
-
+    <!-- Professional Prominent CTA Button -->
+    <a href="../excel.html?id=excel-masterclass" class="btn-enroll-primary">
+        <span>Enroll in Excel Course</span>
         <i class="fa-solid fa-arrow-right"></i>
-
     </a>
-
-</div>
-            <div id="coursesGrid">
-
-    <div class="course-skeleton"></div>
-
-    <div class="course-skeleton"></div>
-
-    <div class="course-skeleton"></div>
-
 </div>
 
-            <div
-                id="emptyCourses"
-                class="empty-state hidden">
+                <!-- Centered View All Button Below Courses (Hidden by default until courses exist) -->
+                <div id="viewAllCoursesWrapper" class="view-all-wrapper hidden">
+                    <a href="my-courses.html" class="view-all-btn">
+                        View All Courses
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </section>
 
-                <i class="fa-solid fa-book-open"></i>
+        </main>
 
-                <h2>
+    </div>
 
-                    No Courses Yet
+    <!-- ================= Toast Container ================= -->
+    <div id="toastContainer" class="toast-container"></div>
 
-                </h2>
-
-                <p>
-
-                    Browse our courses and enroll to start learning.
-
-                </p>
-
-                <a
-    href="../excel.html?id=excel-masterclass"
-    class="btn btn-primary">
-
-    Enroll in Excel Course
-
-</a>
-
-            </div>
-
-        </section>
-
-    </main>
-
-</div>
-
-<!-- ================= Loader ================= -->
-
-
-
-<!-- ================= Toast ================= -->
-
-<div
-    id="toastContainer"
-    class="toast-container">
-
-</div>
-
-<script
-    type="module"
-    src="../assets/js/student/dashboard.js">
-
-</script>
+    <script type="module" src="../assets/js/student/dashboard.js"></script>
 
 </body>
 

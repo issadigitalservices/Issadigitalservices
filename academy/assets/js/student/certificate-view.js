@@ -34,6 +34,7 @@ const courseId = params.get("courseId");
    DOM
    ========================================================================== */
 
+const certificateWrapper = document.getElementById("certificateWrapper");
 const academyLogo = document.getElementById("academyLogo");
 const academyName = document.getElementById("academyName");
 const studentName = document.getElementById("studentName");
@@ -68,13 +69,21 @@ onAuthStateChanged(auth, async user => {
     currentUser = user;
 
     if (!courseId) {
-        location.href = "certificates.html";
+        location.href = "dashboard.html";
         return;
     }
 
     showLoader();
-    await loadCertificate();
-    await loadAcademySettings();
+    const hasCertificate = await loadCertificate();
+
+    if (hasCertificate) {
+        await loadAcademySettings();
+        // Reveal certificate wrapper only after dynamic data load finishes
+        if (certificateWrapper) {
+            certificateWrapper.classList.remove("hidden");
+        }
+    }
+
     hideLoader();
 });
 
@@ -93,8 +102,11 @@ async function loadCertificate() {
         );
 
         if (snapshot.empty) {
-            showToast("Certificate not found.", "error");
-            return;
+            showToast("No certificate found for this course.", "error");
+            setTimeout(() => {
+                location.href = "dashboard.html";
+            }, 1800);
+            return false;
         }
 
         const data = snapshot.docs[0].data();
@@ -140,9 +152,15 @@ async function loadCertificate() {
             correctLevel: QRCode.CorrectLevel.H
         });
 
+        return true;
+
     } catch (error) {
-        console.error(error);
-        showToast(error.message, "error");
+        console.error("Error loading certificate:", error);
+        showToast("Error loading certificate.", "error");
+        setTimeout(() => {
+            location.href = "dashboard.html";
+        }, 1800);
+        return false;
     }
 }
 
@@ -183,7 +201,7 @@ async function loadAcademySettings() {
         }
 
     } catch (error) {
-        console.error(error);
+        console.error("Error loading academy settings:", error);
     }
 }
 
@@ -241,14 +259,16 @@ printBtn.addEventListener("click", async () => {
    ========================================================================== */
 
 function showLoader() {
-    pageLoader.classList.remove("hidden");
+    if (pageLoader) pageLoader.classList.remove("hidden");
 }
 
 function hideLoader() {
-    pageLoader.classList.add("hidden");
+    if (pageLoader) pageLoader.classList.add("hidden");
 }
 
 function showToast(message, type = "success") {
+    if (!toastContainer) return;
+
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
     toast.textContent = message;

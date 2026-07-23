@@ -3,248 +3,255 @@
    Student Enroll
    ========================================================================== */
 
-.enroll-page{
-
-    min-height:100vh;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:2rem;
-
-    background:linear-gradient(135deg,#eff6ff,#f8fafc);
-
+.enroll-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #eff6ff, #f8fafc);
 }
 
-.enroll-card{
-
-    width:100%;
-
-    max-width:850px;
-
-    background:#ffffff;
-
-    border-radius:20px;
-
-    padding:2.5rem;
-
-    box-shadow:var(--shadow-lg);
-
+.enroll-card {
+    width: 100%;
+    max-width: 850px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg, 0 10px 25px -5px rgba(0, 0, 0, 0.1));
 }
 
-.logo-area{
-
-    text-align:center;
-
-    margin-bottom:2rem;
-
+.logo-area {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
-.logo-area img{
-
-    width:90px;
-
-    height:90px;
-
-    object-fit:contain;
-
-    margin-bottom:1rem;
-
+.logo-area img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 1rem;
 }
 
-.logo-area h1{
-
-    margin-bottom:.5rem;
-
+.logo-area h1 {
+    margin-bottom: .5rem;
+    color: #0f172a;
 }
 
-.logo-area p{
-
-    color:var(--text-secondary);
-
+.logo-area p {
+    color: var(--text-secondary, #64748b);
 }
 
-.course-summary{
-
-    display:grid;
-
-    grid-template-columns:220px 1fr;
-
-    gap:2rem;
-
-    margin-bottom:2rem;
-
-    align-items:center;
-
+.course-summary {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    align-items: center;
 }
 
-.course-summary img{
-
-    width:100%;
-
-    height:180px;
-
-    object-fit:cover;
-
-    border-radius:14px;
-
-    box-shadow:var(--shadow-sm);
-
+.course-summary img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.1));
 }
 
-.course-summary h2{
-
-    margin-bottom:.5rem;
-
+.course-summary h2 {
+    margin-bottom: .5rem;
+    color: #0f172a;
 }
 
-.course-summary p{
-
-    color:var(--text-secondary);
-
-    line-height:1.7;
-
+.course-summary p {
+    color: var(--text-secondary, #64748b);
+    line-height: 1.7;
 }
 
-.price-card{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:2rem;
-
-    background:var(--primary-light);
-
-    border-radius:16px;
-
-    padding:1.5rem;
-
-    margin-bottom:2rem;
-
+/* Category Badge */
+.category-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 4px;
+    margin: 4px 0 8px 0;
 }
 
-.price-card span{
-
-    display:block;
-
-    color:var(--text-secondary);
-
-    margin-bottom:.4rem;
-
+.price-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    background: var(--primary-light, #eff6ff);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-.price-card h2{
-
-    color:var(--primary);
-
-    font-size:2rem;
-
+.price-card span {
+    display: block;
+    color: var(--text-secondary, #64748b);
+    margin-bottom: .4rem;
 }
 
-.price-card strong{
-
-    color:var(--success);
-
-    font-size:1rem;
-
+.price-card h2 {
+    color: var(--primary, #2563eb);
+    font-size: 2rem;
+    line-height: 1;
+    margin: 0;
 }
 
-.important-note{
-
-    display:flex;
-
-    gap:1rem;
-
-    padding:1.25rem;
-
-    margin-bottom:2rem;
-
-    border-radius:12px;
-
-    background:#fff8e6;
-
-    border-left:5px solid var(--warning);
-
+/* Price Strikethrough Wrapper */
+.price-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 4px;
 }
 
-.important-note i{
-
-    font-size:1.5rem;
-
-    color:var(--warning);
-
-    margin-top:.2rem;
-
+.original-price {
+    font-size: 1rem !important;
+    color: #9ca3af !important;
+    text-decoration: line-through;
+    font-weight: 500;
+    margin-bottom: 0 !important;
 }
 
-.important-note strong{
-
-    display:block;
-
-    margin-bottom:.5rem;
-
+.price-card strong {
+    color: var(--success, #16a34a);
+    font-size: 1rem;
 }
 
-.important-note p{
-
-    color:var(--text-secondary);
-
-    line-height:1.7;
-
+/* Important Note with Vertical Alignment */
+.important-note {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    background: #fff8e6;
+    border-left: 5px solid var(--warning, #f59e0b);
 }
 
-.enroll-btn{
-
-    width:100%;
-
-    height:56px;
-
-    font-size:1rem;
-
-    margin-bottom:1rem;
-
+.important-note .note-icon {
+    font-size: 1.5rem;
+    color: var(--warning, #f59e0b);
+    flex-shrink: 0;
 }
 
-.back-btn{
-
-    width:100%;
-
-    height:52px;
-
+.important-note strong {
+    display: block;
+    margin-bottom: .3rem;
+    color: #1e293b;
 }
 
-@media(max-width:768px){
+.important-note p {
+    color: var(--text-secondary, #64748b);
+    line-height: 1.6;
+    margin: 0;
+}
 
-    .enroll-page{
+/* ==========================================================================
+   BUTTON STYLES (Guarantees filled CTA appearance)
+   ========================================================================== */
 
-        padding:1rem;
+.enroll-btn,
+.primary-action-btn {
+    width: 100%;
+    height: 56px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--primary, #2563eb);
+    color: #ffffff !important;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
 
+.enroll-btn:hover,
+.primary-action-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.enroll-btn:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Footer Navigation Links */
+.enroll-footer-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.enroll-footer-nav .nav-link {
+    color: var(--primary, #2563eb);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+}
+
+.enroll-footer-nav .nav-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.enroll-footer-nav .nav-dot {
+    color: #9ca3af;
+    font-size: 0.8rem;
+}
+
+.back-btn {
+    width: 100%;
+    height: 52px;
+}
+
+/* Responsive Styles */
+@media(max-width:768px) {
+    .enroll-page {
+        padding: 1rem;
     }
 
-    .enroll-card{
-
-        padding:1.5rem;
-
+    .enroll-card {
+        padding: 1.5rem;
     }
 
-    .course-summary{
-
-        grid-template-columns:1fr;
-
+    .course-summary {
+        grid-template-columns: 1fr;
     }
 
-    .price-card{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
+    .price-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
     }
 
+    .enroll-footer-nav {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .enroll-footer-nav .nav-dot {
+        display: none;
+    }
 }

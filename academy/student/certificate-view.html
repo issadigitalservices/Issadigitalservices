@@ -35,8 +35,8 @@
         </button>
     </div>
 
-    <!-- Certificate Card Container -->
-    <div class="certificate-wrapper">
+    <!-- Certificate Card Container (Hidden by default to avoid flash) -->
+    <div id="certificateWrapper" class="certificate-wrapper hidden">
         <div class="certificate-border">
             
             <!-- Corner Decorative Shapes & Gold Frame -->
@@ -58,17 +58,17 @@
             </section>
 
             <!-- Main Body -->
-<main class="cert-body">
-    <p class="cert-intro">This is to certify that</p>
-    
-    <div id="studentName" class="student-name">-</div>
+            <main class="cert-body">
+                <p class="cert-intro">This is to certify that</p>
+                
+                <div id="studentName" class="student-name">-</div>
 
-    <p class="completion-text">has successfully completed the</p>
-    <h3 id="courseName" class="course-title">-</h3>
-    <p class="course-desc">
-        and demonstrated proficiency in course concepts, practical applications, problem-solving, and advanced techniques.
-    </p>
-</main>
+                <p class="completion-text">has successfully completed the</p>
+                <h3 id="courseName" class="course-title">-</h3>
+                <p class="course-desc">
+                    and demonstrated proficiency in course concepts, practical applications, problem-solving, and advanced techniques.
+                </p>
+            </main>
 
             <!-- Footer Section -->
             <footer class="cert-footer">
@@ -107,7 +107,7 @@
     </div>
 
     <!-- Page Loader -->
-    <div id="pageLoader" class="page-loader hidden">
+    <div id="pageLoader" class="page-loader">
         <div class="loader-card">
             <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy Logo" style="max-width: 100px; height: auto;">
             <div class="loader-spinner"></div>
