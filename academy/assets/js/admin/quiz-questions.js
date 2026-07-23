@@ -229,7 +229,7 @@ async function loadQuiz(){
 
         showToast(
 
-            "Quiz not found.",
+            "Exam not found.",
 
             "error"
 

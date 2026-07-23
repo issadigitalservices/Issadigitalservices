@@ -1,405 +1,357 @@
-/* ==========================================================================
-   ISSA Academy
-   Certificate View
-   ========================================================================== */
-
-*{
-
-    margin:0;
-
-    padding:0;
-
-    box-sizing:border-box;
-
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-
-    font-family:"Poppins",sans-serif;
-
-    background:#eef3fb;
-
-    padding:40px;
-
+body {
+  background-color: #f3f4f6;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 30px 15px;
+  color: #0b192c;
 }
 
-.certificate-page{
-
-    max-width:1200px;
-
-    margin:auto;
-
+/* Action Controls Header */
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 25px;
 }
 
-.certificate-actions{
+.btn-primary, .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease;
+}
 
-    display:flex;
+.btn-primary { background-color: #2563eb; color: #ffffff; }
+.btn-primary:hover { background-color: #1d4ed8; }
 
-    justify-content:flex-end;
+.btn-secondary { background-color: #e5e7eb; color: #374151; }
+.btn-secondary:hover { background-color: #d1d5db; }
 
-    gap:15px;
+/* Main Wrapper */
+.certificate-wrapper {
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+}
 
-    margin-bottom:25px;
+/* Certificate Canvas Container */
+.certificate-border {
+  width: 1000px;
+  height: 700px;
+  background-color: #fafbfc;
+  position: relative;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-sizing: border-box;
+}
 
+/* Background Watermark */
+.certificate-border::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  background-image: url('../../images/Issa-Logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Corner Shapes */
+.corner-shape.top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 310px;
+  height: 310px;
+  background: radial-gradient(circle at top left, #031b33 58%, #c59b27 72%, transparent 74%);
+  border-bottom-right-radius: 100%;
+  z-index: 1;
+}
+
+.corner-shape.bottom-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 310px;
+  height: 310px;
+  background: radial-gradient(circle at bottom right, #031b33 58%, #c59b27 72%, transparent 74%);
+  border-top-left-radius: 100%;
+  z-index: 1;
+}
+
+/* Gold Inner Border */
+.gold-border-frame {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 2px solid #c59b27;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Header & Central Logo */
+.cert-header {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.cert-logo {
+  height: 52px;
+  width: auto;
+  margin-bottom: 6px;
+  object-fit: contain;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  mix-blend-mode: multiply; /* Blends away solid light/grey backgrounds */
+}
+
+.brand-title {
+  font-family: 'Cinzel', serif;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #031b33;
+}
+
+.brand-tagline {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #555555;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+
+/* Title Section */
+.cert-title-section {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+
+.main-title {
+  font-family: 'Cinzel', serif;
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: 7px;
+  color: #031b33;
+  line-height: 1.1;
+}
+
+.sub-title {
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  letter-spacing: 5px;
+  color: #c59b27;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* Main Body */
+.cert-body {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.cert-intro {
+  font-size: 14px;
+  color: #4b5563;
 }
 
 
-.certificate-verification{
-
-    margin-top:20px;
-
-    text-align:center;
-
+.student-name {
+    font-family: 'Aptos', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 34px;
+    font-weight: 700;           /* Bold */
+    text-transform: uppercase;  /* Full Capital */
+    color: #031b33;
+    letter-spacing: 2px;        /* Gives uppercase text a premium look */
+    margin: 12px auto 16px auto;
+    text-align: center;
+    line-height: 1.2;
+    display: block;
 }
 
-#qrCode{
-
-    width:90px;
-
-    height:90px;
-
-    margin:0 auto 10px;
-
+.completion-text {
+  font-size: 13px;
+  color: #4b5563;
 }
 
-.certificate-verification p{
-
-    font-size:13px;
-
-    color:#666;
-
+.course-title {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: #0b6623;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 6px 0;
+  text-transform: uppercase;
 }
 
-.certificate{
-
-    background:#ffffff;
-
-    padding:30px;
-
-    border-radius:16px;
-
-    box-shadow:0 12px 35px rgba(0,0,0,.08);
-
+.course-desc {
+  font-size: 11.5px;
+  color: #4b5563;
+  max-width: 520px; /* Reduced width to clear side swooshes */
+  margin: 0 auto;
+  line-height: 1.5;
 }
 
-.certificate-border{
-
-    border:12px solid #2563eb;
-
-    padding:45px;
-
-    position:relative;
-
-    min-height:auto;
-
-    overflow:hidden;
-
-    background:#ffffff;
-
+/* Footer Section */
+.cert-footer {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 15px 5px 15px;
 }
 
-.certificate-border::before{
+.footer-left { text-align: left; }
 
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:url("../../images/Issa-Logo.png") center center no-repeat;
-
-    background-size:320px;
-
-    opacity:.05;
-
-    pointer-events:none;
-
-    z-index:0;
-
+.course-badge-box {
+  width: 42px;
+  height: 42px;
+  background-color: #eff6ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
 }
 
-.certificate-border>*{
-
-    position:relative;
-
-    z-index:1;
-
+.course-icon {
+  font-size: 22px;
+  color: #2563eb;
 }
 
-.certificate-header{
-
-    text-align:center;
-
-    margin-bottom:30px;
-
+.cert-id-label {
+  font-size: 11px;
+  color: #6b7280;
 }
 
-.certificate-header img{
-
-    width:110px;
-
-    height:110px;
-
-    object-fit:contain;
-
-    margin-bottom:15px;
-
+.cert-id-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: #031b33;
 }
 
-.certificate-header h1{
-
-    font-size:42px;
-
-    color:#1e3a8a;
-
-    font-weight:700;
-
+.footer-center {
+  text-align: center;
 }
 
-.certificate-header p{
-
-    margin-top:10px;
-
-    font-size:20px;
-
-    letter-spacing:5px;
-
-    color:#555;
-
+.signature-box {
+  border-bottom: 1px solid #9ca3af;
+  padding-bottom: 3px;
+  width: 230px;
+  margin: 0 auto;
+  min-height: 38px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.certificate-body{
-
-    text-align:center;
-
-    margin-top:35px;
-
+.sig-img {
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
-#studentName{
+.sig-img.hidden { display: none; }
 
-    font-size:48px;
-
-    color:#111827;
-
-    margin-bottom:30px;
-
-    font-weight:700;
-
+.signature-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: 28px;
+  color: #031b33;
 }
 
-#courseName{
-
-    font-size:34px;
-
-    color:#2563eb;
-
-    margin-top:10px;
-
-    font-weight:600;
-
-}
-.certificate-details{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin-top:30px;
-
+.instructor-title {
+  font-size: 12px;
+  color: #4b5563;
+  margin-top: 4px;
 }
 
-.certificate-details div{
-
-    text-align:center;
-
-    width:250px;
-
+.issue-date-wrap {
+  font-size: 12px;
+  color: #4b5563;
+  margin-top: 10px;
 }
 
-.certificate-details strong{
-
-    display:block;
-
-    margin-bottom:10px;
-
-    color:#111827;
-
+.footer-right {
+  text-align: center;
+  position: relative;
+  z-index: 5;
 }
 
-.certificate-details p{
-
-    color:#444;
-
+.qr-box {
+  width: 65px;
+  height: 65px;
+  border: 1px solid #e5e7eb;
+  padding: 4px;
+  background: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
-.certificate-footer{
-
-    display:flex;
-
-    justify-content:flex-end;
-
-    margin-top:30px;
-
+.qr-box img {
+  width: 100% !important;
+  height: 100% !important;
 }
 
-.certificate-footer div{
-
-    text-align:center;
-
-    width:280px;
-
+.verify-text {
+  font-size: 10px;
+  color: #374151;
+  margin-top: 6px;
+  line-height: 1.4;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 4px 8px; /* Added extra vertical padding */
+  border-radius: 4px;
 }
 
-#signatureImage{
-
-    width:180px;
-
-    height:80px;
-
-    object-fit:contain;
-
+.verify-text span {
+  font-weight: 700;
+  color: #031b33;
 }
 
-.signature-line{
-
-    width:220px;
-
-    height:2px;
-
-    background:#111827;
-
-    margin:10px auto;
-
-}
-
-#instructorName{
-
-    font-size:22px;
-
-    color:#111827;
-
-}
-
-#designation{
-
-    color:#666;
-
-    margin-top:6px;
-
-}
-
-@media(max-width:900px){
-
-    body{
-
-        padding:15px;
-
-    }
-
-.certificate-border{
-
-    padding:30px;
-
-}
-
-    .certificate-details{
-
-        flex-direction:column;
-
-        align-items:center;
-
-        gap:40px;
-
-    }
-
-    .certificate-footer{
-
-        justify-content:center;
-
-    }
-
-    #studentName{
-
-        font-size:34px;
-
-    }
-
-    #courseName{
-
-        font-size:26px;
-
-    }
-
-}
-
-/* ==========================================================================
-   PRINT
-   ========================================================================== */
-
-@page{
-
-    size:A4 landscape;
-
-    margin:0;
-
-}
-
-@media print{
-
-    html,
-    body{
-
-        width:297mm;
-
-        height:210mm;
-
-        margin:0;
-
-        padding:0;
-
-        overflow:hidden;
-
-        background:#ffffff;
-
-    }
-
-    .certificate-actions{
-
-        display:none !important;
-
-    }
-
-    .certificate{
-
-        margin:0;
-
-        padding:0;
-
-        box-shadow:none;
-
-        border-radius:0;
-
-        background:transparent;
-
-    }
-
-    .certificate-border{
-
-        width:297mm;
-
-        height:210mm;
-
-        margin:0;
-
-        padding:20mm;
-
-        border:8px solid #2563eb;
-
-        box-sizing:border-box;
-
-        overflow:hidden;
-
-    }
-
+/* Print CSS */
+@media print {
+  .no-print { display: none !important; }
+  body { padding: 0; background: none; }
+  .certificate-wrapper { box-shadow: none; border-radius: 0; }
+  @page { size: A4 landscape; margin: 0; }
 }

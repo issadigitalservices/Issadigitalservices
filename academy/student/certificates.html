@@ -2,42 +2,20 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Certificates | ISSA Academy</title>
+    <meta name="theme-color" content="#2563EB">
 
-    <meta name="theme-color"
-          content="#2563EB">
-
-    <link rel="icon"
-          href="../assets/images/Issa-Logo.png">
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-    <link rel="stylesheet"
-          href="../assets/css/main.css">
-
-    <link rel="stylesheet"
-          href="../assets/css/student/certificates.css">
-
-          <link rel="stylesheet"
-      href="../assets/css/student/dashboard.css">
-
+    <link rel="icon" href="../assets/images/Issa-Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/student/certificates.css">
+    <link rel="stylesheet" href="../assets/css/student/dashboard.css">
 </head>
 
 <body>
@@ -45,147 +23,61 @@
 <div class="student-layout">
 
     <aside class="sidebar">
-
         <div class="logo-area">
-
-            <img
-                src="../assets/images/Issa-Logo.png"
-                alt="ISSA Academy">
-
-            <h2>
-
-                ISSA Academy
-
-            </h2>
-
+            <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy" style="max-width: 40px; height: auto;">
+            <h2>ISSA Academy</h2>
         </div>
 
         <nav>
-
             <ul>
-
                 <li>
-
                     <i class="fa-solid fa-house"></i>
-
-                    <a href="dashboard.html">
-
-                        Dashboard
-
-                    </a>
-
+                    <a href="dashboard.html">Dashboard</a>
                 </li>
-
                 <li>
-
                     <i class="fa-solid fa-book-open"></i>
-
-                    <a href="my-courses.html">
-
-                        My Courses
-
-                    </a>
-
+                    <a href="my-courses.html">My Courses</a>
                 </li>
-
                 <li class="active">
-
                     <i class="fa-solid fa-award"></i>
-
-                    <a href="certificates.html">
-
-                        Certificates
-
-                    </a>
-
+                    <a href="certificates.html">Certificates</a>
                 </li>
-
                 <li>
-
                     <i class="fa-solid fa-user"></i>
-
-                    <a href="profile.html">
-
-                        My Profile
-
-                    </a>
-
+                    <a href="profile.html">My Profile</a>
                 </li>
-
                 <li>
-
                     <i class="fa-solid fa-right-from-bracket"></i>
-
-                    <a href="login.html">
-
-                        Logout
-
-                    </a>
-
+                    <a href="login.html">Logout</a>
                 </li>
-
             </ul>
-
         </nav>
-
     </aside>
 
     <main class="main-content">
-
         <header class="topbar">
-
-            <h1>
-
-                My Certificates
-
-            </h1>
-
+            <h1>My Certificates</h1>
         </header>
 
-        <section
-            id="certificatesGrid"
-            class="certificates-grid">
-
+        <section id="certificatesGrid" class="certificates-grid">
+            <!-- Dynamic content loaded via certificates.js -->
         </section>
-
     </main>
 
 </div>
 
-<div
-    id="pageLoader"
-    class="page-loader hidden">
-
+<!-- Page Loader -->
+<div id="pageLoader" class="page-loader hidden">
     <div class="loader-card">
-
-        <img
-            src="../assets/images/Issa-Logo.png"
-            alt="ISSA Academy">
-
+        <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy Logo" style="max-width: 120px; height: auto;">
         <div class="loader-spinner"></div>
-
-        <p>
-
-            Loading Certificates...
-
-        </p>
-
+        <p>Loading Certificates...</p>
     </div>
-
 </div>
 
-<div
-    id="toastContainer"
-    class="toast-container">
+<div id="toastContainer" class="toast-container"></div>
 
-</div>
-
-<script
-    type="module"
-    src="../assets/js/student/certificates.js">
-
-</script>
+<script type="module" src="../assets/js/student/certificates.js"></script>
 
 </body>
-
 </html>

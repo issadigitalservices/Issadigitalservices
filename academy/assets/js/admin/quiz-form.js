@@ -504,7 +504,7 @@ quizForm.addEventListener(
 
             showToast(
 
-                "Quiz saved successfully."
+                "Exam saved successfully."
 
             );
 

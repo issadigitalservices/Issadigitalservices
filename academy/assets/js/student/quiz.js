@@ -255,7 +255,7 @@ onAuthStateChanged(auth, async (user) => {
 
         showToast(
 
-            "No questions found for this assessment.",
+            "No questions found for this Exam.",
 
             "error"
 
@@ -1002,7 +1002,7 @@ Do you want to submit anyway?`;
 
 `You have answered all ${questions.length} questions.
 
-Are you sure you want to submit your assessment?`;
+Are you sure you want to submit your Answers?`;
 
         }
 

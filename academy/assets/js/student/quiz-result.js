@@ -170,7 +170,7 @@ async function loadResult(studentId){
             "Congratulations!";
 
         resultMessage.textContent =
-            "You have successfully passed this quiz.";
+            "You have successfully passed this Exam.";
 
         /* ================= FINAL EXAM ================= */
 
@@ -214,13 +214,11 @@ if(quiz.type === "module"){
 Congratulations! The next module has been unlocked.`;
 
     document
-
-        .querySelector(".result-card")
-
-        .appendChild(message);
+    .querySelector(".actions")
+    .after(message);
 
 }
-
+reviewBtn.classList.add("hidden");
                 reviewBtn.addEventListener(
 
     "click",
@@ -241,7 +239,7 @@ Congratulations! The next module has been unlocked.`;
 
 <h3>
 
-Assessment Review
+Exam Review
 
 </h3>
 
@@ -282,7 +280,7 @@ Question review will be available in the next update.
             "FAIL";
 
         resultTitle.textContent =
-            "Quiz Failed";
+            "Exam Failed";
 
         resultMessage.textContent =
             "Don't worry. Review the lessons and try again.";

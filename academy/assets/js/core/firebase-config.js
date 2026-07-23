@@ -3,7 +3,7 @@
 /* ==========================================================================
    ISSA Academy
    Firebase Configuration
-   Version : 1.0.0
+   Version : 1.1.0 (Optimized with Local Cache)
    ========================================================================== */
 
 import {
@@ -20,7 +20,9 @@ import {
 
 import {
 
-    getFirestore
+    initializeFirestore,
+    persistentLocalCache,
+    persistentMultipleTabManager
 
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
@@ -32,7 +34,6 @@ import {
 
 /* ==========================================================================
    FIREBASE CONFIG
-   Replace with your Firebase Project Configuration
    ========================================================================== */
 
 const firebaseConfig = {
@@ -48,6 +49,7 @@ const firebaseConfig = {
     messagingSenderId: "353505183812",
 
     appId: "1:353505183812:web:3aa93ec9bcdee902d79411",
+
     measurementId: "G-YF8TCFSEP8"
 
 };
@@ -68,11 +70,12 @@ const auth = getAuth(
 
 );
 
-const db = getFirestore(
-
-    app
-
-);
+// Initialize Firestore with local persistent caching
+const db = initializeFirestore(app, {
+    localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager()
+    })
+});
 
 const storage = getStorage(
 

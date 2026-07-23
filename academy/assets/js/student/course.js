@@ -89,6 +89,14 @@ const logoutBtn =
 
     let unlockedOrder = 1;
 
+    /* ==========================================================================
+   CACHE
+   ========================================================================== */
+
+let completedLessons = new Set();
+
+let lessonProgressSnapshot = null;
+
 /* ==========================================================================
    URL
    ========================================================================== */
@@ -123,9 +131,9 @@ onAuthStateChanged(
 
         showLoader();
 
-        await loadCourse(user.uid);
+await loadCourse(user.uid);
 
-        hideLoader();
+// Loader is now hidden inside loadCourse()
 
     }
 
@@ -239,9 +247,12 @@ if(enrollment.empty){
 
 await loadUnlockedModule(studentId);
 
-await loadModules();
+// Show the page immediately
+hideLoader();
 
-await loadCertificateStatus(studentId);
+// Load the remaining data in the background
+loadModules();
+loadCertificateStatus(studentId);
 }
 
 async function loadUnlockedModule(studentId){
@@ -271,496 +282,168 @@ async function loadUnlockedModule(studentId){
    ========================================================================== */
 
 async function loadModules() {
-
     moduleList.innerHTML = "";
 
-    let totalModules = 0;
-    let totalLessons = 0;
+    // 1. Fetch Lesson Progress and Modules concurrently
+    const [lessonProgressSnapshot, moduleSnapshot] = await Promise.all([
+        getDocs(query(collection(db, "lessonProgress"), where("studentId", "==", auth.currentUser.uid))),
+        getDocs(query(collection(db, "modules"), where("courseId", "==", courseId), orderBy("order")))
+    ]);
 
-    const moduleSnapshot = await getDocs(
+    completedLessons.clear();
+    lessonProgressSnapshot.forEach(doc => {
+        if (doc.data().completed) completedLessons.add(doc.data().lessonId);
+    });
 
-        query(
-
-            collection(db, "modules"),
-
-            where("courseId", "==", courseId),
-
-            orderBy("order")
-
-        )
-
-    );
-
-    totalModules = moduleSnapshot.size;
-
+    const totalModules = moduleSnapshot.size;
     if (moduleSnapshot.empty) {
-
         moduleList.innerHTML = "<h3>No modules found.</h3>";
-
         moduleCount.textContent = "0";
         lessonCountCard.textContent = "0";
-
         return;
-
     }
 
-    for (const moduleDoc of moduleSnapshot.docs) {
-
+    // 2. Fetch all module content IN PARALLEL instead of inside a sequential 'for...of' loop
+    const modulePromises = moduleSnapshot.docs.map(async (moduleDoc) => {
         const module = moduleDoc.data();
+        const locked = module.order > unlockedOrder;
 
-        const locked =
-
-    module.order >
-
-    unlockedOrder;
-
-        const lessonSnapshot = await getDocs(
-
-            query(
-
-                collection(db, "lessons"),
-
-                where("moduleId", "==", moduleDoc.id),
-
-                orderBy("order")
-
-            )
-
-        );
-
-        totalLessons += lessonSnapshot.size;
+        // Run lesson query and quiz query simultaneously for this module
+        const [lessonSnapshot, quizSnapshot] = await Promise.all([
+            getDocs(query(collection(db, "lessons"), where("moduleId", "==", moduleDoc.id), orderBy("order"))),
+            getDocs(query(collection(db, "quizzes"), where("courseId", "==", courseId), where("moduleId", "==", moduleDoc.id), limit(1)))
+        ]);
 
         let lessonsHTML = "";
         let quizHTML = "";
 
-if (locked) {
-
-    lessonSnapshot.forEach(docSnap => {
-
-        const lesson = docSnap.data();
-
-        lessonsHTML += `
-
-<a href="#"
-
-class="lesson-item locked">
-
-<div class="lesson-info">
-
-<i class="fa-solid fa-lock"></i>
-
-<span>
-
-${lesson.title}
-
-</span>
-
-</div>
-
-<span class="lesson-lock">
-
-Locked
-
-</span>
-
-</a>
-
-`;
-
-    });
-
-    quizHTML = `
-
-<div class="assessment-card locked">
-
-<div class="assessment-icon">
-
-<i class="fa-solid fa-lock"></i>
-
-</div>
-
-<div class="assessment-content">
-
-<h4>
-
-Module Assessment
-
-</h4>
-
-<p>
-
-Complete the previous module assessment to unlock this module.
-
-</p>
-
-</div>
-
-<div class="assessment-btn disabled">
-
-Locked
-
-</div>
-
-</div>
-
-`;
-
-}
-else{
-
-        let lessonIndex = 1;
-
-        const lessonProgressSnapshot = await getDocs(
-
-    query(
-
-        collection(db,"lessonProgress"),
-
-        where("studentId","==",auth.currentUser.uid)
-
-    )
-
-);
-
-const completedLessons = new Set();
-
-lessonProgressSnapshot.forEach(doc=>{
-
-    const progress = doc.data();
-
-    if(progress.completed){
-
-        completedLessons.add(progress.lessonId);
-
-    }
-
-});
-
-lessonSnapshot.forEach(docSnap => {
-
-    const lesson = docSnap.data();
-
-    const lessonLocked =
-
-lessonIndex === 1
-
-?
-
-false
-
-:
-
-!completedLessons.has(
-
-lessonSnapshot.docs[lessonIndex-2].id
-
-);
-
-    lessonsHTML += `
-
-<a
-
-href="${lessonLocked ? "#" : `lesson.html?id=${docSnap.id}`}"
-
-class="lesson-item ${lessonLocked ? "locked" : ""}">
-
-<div class="lesson-info">
-
-<i class="fa-solid ${lessonLocked ? "fa-lock" : "fa-circle-play"}"></i>
-
-<span>
-
-${lesson.title}
-
-</span>
-
-</div>
-
-${lessonLocked ?
-
-'<span class="lesson-lock">Locked</span>'
-
-:
-
-'<i class="fa-solid fa-chevron-right"></i>'
-
-}
-
-</a>
-
-`;
-
-    lessonIndex++;
-
-});
-
-/* ================= Assessment ================= */
-
-const allLessonsCompleted =
-
-    lessonSnapshot.docs.every(doc =>
-
-        completedLessons.has(doc.id)
-
-    );
-
-const quizSnapshot = await getDocs(
-
-    query(
-
-        collection(db,"quizzes"),
-
-        where("courseId","==",courseId),
-
-        where("moduleId","==",moduleDoc.id),
-
-        limit(1)
-
-    )
-
-);
-
-if (!quizSnapshot.empty) {
-
-    const quiz = quizSnapshot.docs[0];
-    const quizData = quiz.data();
-
-    const attemptSnapshot = await getDocs(
-
-        query(
-
-            collection(db, "quizAttempts"),
-
-            where("studentId", "==", auth.currentUser.uid),
-
-            where("quizId", "==", quiz.id),
-
-            where("passed", "==", true),
-
-            limit(1)
-
-        )
-
-    );
-
-    if (!attemptSnapshot.empty) {
-
-        const attempt = attemptSnapshot.docs[0].data();
-
-        quizHTML = `
-
-<div class="assessment-card passed">
-
-    <div class="assessment-icon">
-
-        <i class="fa-solid fa-circle-check"></i>
-
-    </div>
-
-    <div class="assessment-content">
-
-        <h4>${quizData.title}</h4>
-
-        <p>
-
-            Score: ${attempt.score}/${attempt.totalMarks}
-            (${attempt.percentage}%)
-
-            <br>
-
-            <strong style="color:#16a34a;">
-                ✅ Passed
-            </strong>
-
-        </p>
-
-    </div>
-
-</div>
-
-`;
-
-    }
-
-    else if (allLessonsCompleted) {
-
-        quizHTML = `
-
-<div class="assessment-card">
-
-    <div class="assessment-icon">
-
-        <i class="fa-solid fa-file-circle-question"></i>
-
-    </div>
-
-    <div class="assessment-content">
-
-        <h4>${quizData.title}</h4>
-
-        <p>
-
-            Complete this assessment to unlock the next module.
-
-        </p>
-
-    </div>
-
-    <a
-        href="start-assessment.html?id=${quiz.id}&courseId=${courseId}"
-        class="assessment-btn">
-
-        Start Assessment
-
-    </a>
-
-</div>
-
-`;
-
-    }
-
-    else {
-
-        quizHTML = `
-
-<div class="assessment-card locked">
-
-    <div class="assessment-icon">
-
-        <i class="fa-solid fa-lock"></i>
-
-    </div>
-
-    <div class="assessment-content">
-
-        <h4>Module Assessment</h4>
-
-        <p>
-
-            Complete all lessons to unlock this assessment.
-
-        </p>
-
-    </div>
-
-    <div class="assessment-btn disabled">
-
-        Locked
-
-    </div>
-
-</div>
-
-`;
-
-    }
-
-}
-
-/* ================= Render Module ================= */
-
-moduleList.innerHTML += `
-
-<div class="module-card">
-
-<div class="module-header">
-
-<div class="module-title">
-
-${module.order}. ${module.title}
-
-${locked
-    ? '<span class="module-lock"><i class="fa-solid fa-lock"></i> Locked</span>'
-    : ""}
-
-</div>
-
-<i class="fa-solid fa-chevron-down"></i>
-
-</div>
-
-<div class="lesson-list show">
-
-${lessonsHTML}
-
-${quizHTML}
-
-</div>
-
-</div>
-
-`;
-
-}
-    }
-
-    moduleCount.textContent = totalModules;
-
-lessonCountCard.textContent = totalLessons;
-
-/* ================= Banner Lesson Count ================= */
-
-lessonCount.textContent = totalLessons;
-
-/* ================= Progress Text ================= */
-
-const enrollmentSnapshot = await getDocs(
-
-    query(
-
-        collection(db,"lessonProgress"),
-
-        where("studentId","==",auth.currentUser.uid),
-
-        where("courseId","==",courseId)
-
-    )
-
-);
-
-const completedLessons = enrollmentSnapshot.docs.filter(
-
-    doc => doc.data().completed === true
-
-).length;
-
-const percentage =
-Math.round((completedLessons / totalLessons) * 100);
-
-progressText.textContent =
-`${percentage}%`;
-
-overallProgress.textContent =
-`${percentage}%`;
-
-overallProgressBar.style.width =
-`${percentage}%`;
-
-document.getElementById("completedLessons").textContent =
-completedLessons;
-
-document.getElementById("lessonCountProgress").textContent =
-totalLessons;
-
-    document
-
-        .querySelectorAll(".module-header")
-
-        .forEach(header => {
-
-            header.addEventListener("click", () => {
-
-                header.nextElementSibling.classList.toggle("show");
-
+        if (locked) {
+            lessonSnapshot.forEach(docSnap => {
+                const lesson = docSnap.data();
+                lessonsHTML += `
+                    <a href="#" class="lesson-item locked">
+                        <div class="lesson-info"><i class="fa-solid fa-lock"></i><span>${lesson.title}</span></div>
+                        <span class="lesson-lock">Locked</span>
+                    </a>`;
+            });
+            quizHTML = `
+                <div class="assessment-card locked">
+                    <div class="assessment-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="assessment-content"><h4>Module Exam</h4><p>Complete the previous Module Exam to unlock this module.</p></div>
+                    <div class="assessment-btn disabled">Locked</div>
+                </div>`;
+        } else {
+            let lessonIndex = 1;
+            lessonSnapshot.forEach(docSnap => {
+                const lesson = docSnap.data();
+                const lessonLocked = lessonIndex === 1 ? false : !completedLessons.has(lessonSnapshot.docs[lessonIndex - 2].id);
+
+                lessonsHTML += `
+                    <a href="${lessonLocked ? "#" : `lesson.html?id=${docSnap.id}`}" class="lesson-item ${lessonLocked ? "locked" : ""}">
+                        <div class="lesson-info">
+                            <i class="fa-solid ${lessonLocked ? "fa-lock" : "fa-circle-play"}"></i>
+                            <span>${lesson.title}</span>
+                        </div>
+                        ${lessonLocked ? '<span class="lesson-lock">Locked</span>' : '<i class="fa-solid fa-chevron-right"></i>'}
+                    </a>`;
+                lessonIndex++;
             });
 
+            const allLessonsCompleted = lessonSnapshot.docs.every(doc => completedLessons.has(doc.id));
+
+            if (!quizSnapshot.empty) {
+                const quiz = quizSnapshot.docs[0];
+                const quizData = quiz.data();
+
+                const attemptSnapshot = await getDocs(
+                    query(collection(db, "quizAttempts"), where("studentId", "==", auth.currentUser.uid), where("quizId", "==", quiz.id), where("passed", "==", true), limit(1))
+                );
+
+                if (!attemptSnapshot.empty) {
+                    const attempt = attemptSnapshot.docs[0].data();
+                    quizHTML = `
+                        <div class="assessment-card passed">
+                            <div class="assessment-icon"><i class="fa-solid fa-circle-check"></i></div>
+                            <div class="assessment-content">
+                                <h4>${quizData.title}</h4>
+                                <p>Score: ${attempt.score}/${attempt.totalMarks} (${attempt.percentage}%)<br><strong style="color:#16a34a;">✅ Passed</strong></p>
+                            </div>
+                        </div>`;
+                } else if (allLessonsCompleted) {
+                    quizHTML = `
+                        <div class="assessment-card">
+                            <div class="assessment-icon"><i class="fa-solid fa-file-circle-question"></i></div>
+                            <div class="assessment-content">
+                                <h4>${quizData.title}</h4>
+                                <p>Complete this Exam to unlock the next Module.</p>
+                            </div>
+                            <a href="start-assessment.html?id=${quiz.id}&courseId=${courseId}" class="assessment-btn">Start Exam</a>
+                        </div>`;
+                } else {
+                    quizHTML = `
+                        <div class="assessment-card locked">
+                            <div class="assessment-icon"><i class="fa-solid fa-lock"></i></div>
+                            <div class="assessment-content"><h4>Module Exam</h4><p>Complete all lessons to unlock this Exam.</p></div>
+                            <div class="assessment-btn disabled">Locked</div>
+                        </div>`;
+                }
+            }
+        }
+
+        return {
+            order: module.order,
+            totalLessons: lessonSnapshot.size,
+            html: `
+                <div class="module-card">
+                    <div class="module-header">
+                        <div class="module-title">
+                            ${module.order}. ${module.title}
+                            ${locked ? '<span class="module-lock"><i class="fa-solid fa-lock"></i> Locked</span>' : ""}
+                        </div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="lesson-list show">
+                        ${lessonsHTML}
+                        ${quizHTML}
+                    </div>
+                </div>`
+        };
+    });
+
+    // Resolve all module queries at once
+    const processedModules = await Promise.all(modulePromises);
+
+    // Render HTML sorted by module order
+    let totalLessons = 0;
+    processedModules.sort((a, b) => a.order - b.order).forEach(m => {
+        totalLessons += m.totalLessons;
+        moduleList.innerHTML += m.html;
+    });
+
+    // Update UI counters
+    moduleCount.textContent = totalModules;
+    lessonCountCard.textContent = totalLessons;
+    lessonCount.textContent = totalLessons;
+
+    const completedLessonCount = lessonProgressSnapshot.docs.filter(
+        doc => doc.data().courseId === courseId && doc.data().completed === true
+    ).length;
+
+    const percentage = totalLessons > 0 ? Math.round((completedLessonCount / totalLessons) * 100) : 0;
+    progressText.textContent = `${percentage}%`;
+    overallProgress.textContent = `${percentage}%`;
+    overallProgressBar.style.width = `${percentage}%`;
+
+    document.getElementById("completedLessons").textContent = completedLessonCount;
+    document.getElementById("lessonCountProgress").textContent = totalLessons;
+
+    document.querySelectorAll(".module-header").forEach(header => {
+        header.addEventListener("click", () => {
+            header.nextElementSibling.classList.toggle("show");
         });
+    });
 
-        /* ================= Final Exam ================= */
-
-await loadFinalExam();
-
+    await loadFinalExam();
 }
 
 async function loadCertificateStatus(studentId) {
@@ -992,7 +675,7 @@ async function loadFinalExam(){
 
         <p>
 
-            Complete all module assessments to unlock the Final Exam.
+            Complete all Module Exam to unlock the Final Exam.
 
         </p>
 

@@ -2,229 +2,123 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate | ISSA Academy</title>
 
-<meta charset="UTF-8">
+    <link rel="icon" href="../assets/images/Issa-Logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/student/certificate-view.css">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Certificate | ISSA Academy</title>
-
-<link rel="icon"
-      href="../assets/images/Issa-Logo.png">
-
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet">
-
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-<link rel="stylesheet"
-      href="../assets/css/main.css">
-
-<link rel="stylesheet"
-      href="../assets/css/student/certificate-view.css">
-
+    <!-- External PDF & Canvas Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
 
-<div class="certificate-page">
-
-    <div class="certificate-actions">
-
-        <button
-            id="backBtn"
-            class="btn btn-secondary">
-
-            <i class="fa-solid fa-arrow-left"></i>
-
-            Back
-
+    <!-- Top Action Bar -->
+    <div class="action-bar no-print">
+        <button id="backBtn" class="btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Back
         </button>
-
-        <button
-    id="printBtn"
-    class="btn btn-primary">
-
-    <i class="fa-solid fa-download"></i>
-
-    Download PDF
-
-</button>
+        <button id="printBtn" class="btn-primary">
+            <i class="fa-solid fa-download"></i> Download PDF
+        </button>
     </div>
 
-    <section
-        id="certificate"
-        class="certificate">
-
+    <!-- Certificate Card Container -->
+    <div class="certificate-wrapper">
         <div class="certificate-border">
+            
+            <!-- Corner Decorative Shapes & Gold Frame -->
+            <div class="corner-shape top-left"></div>
+            <div class="corner-shape bottom-right"></div>
+            <div class="gold-border-frame"></div>
 
-            <div class="certificate-header">
+            <!-- Header -->
+            <header class="cert-header">
+                <img id="academyLogo" src="../assets/images/Issa-Logo.png" alt="ISSA Academy Logo" class="cert-logo">
+                <h1 id="academyName" class="brand-title">ISSA ACADEMY</h1>
+                <p class="brand-tagline">Learn Today, Lead Tomorrow</p>
+            </header>
 
-                <img
-                    id="academyLogo"
-                    src="../assets/images/Issa-Logo.png"
-                    alt="Academy Logo">
+            <!-- Title Section -->
+            <section class="cert-title-section">
+                <h2 class="main-title">CERTIFICATE</h2>
+                <div class="sub-title">OF COMPLETION</div>
+            </section>
 
-                <h1 id="academyName">
+            <!-- Main Body -->
+<main class="cert-body">
+    <p class="cert-intro">This is to certify that</p>
+    
+    <div id="studentName" class="student-name">-</div>
 
-                    ISSA Academy
-
-                </h1>
-
-                <p>
-
-                    CERTIFICATE OF COMPLETION
-
-                </p>
-
-            </div>
-
-            <div class="certificate-body">
-
-                <p>
-
-                    This Certificate is Proudly Presented To
-
-                </p>
-
-                <h2 id="studentName">
-
-                    Loading...
-
-                </h2>
-
-                <p>
-
-                    For Successfully Completing
-
-                </p>
-
-                <h3 id="courseName">
-
-                    Loading...
-
-                </h3>
-
-            </div>
-
-            <div class="certificate-details">
-
-                <div>
-
-                    <strong>
-
-                        Certificate No
-
-                    </strong>
-
-                    <p id="certificateNumber"></p>
-
-                </div>
-
-                <div>
-
-                    <strong>
-
-                        Issue Date
-
-                    </strong>
-
-                    <p id="issueDate"></p>
-
-                </div>
-
-            </div>
-
-            <div class="certificate-footer">
-
-                <div>
-
-                    <img
-                        id="signatureImage"
-                        alt="Signature">
-
-                    <div class="signature-line"></div>
-
-                    <h4 id="instructorName">
-
-                        Loading...
-
-                    </h4>
-
-                    <p id="designation">
-
-                    </p>
-
-                </div>
-
-                <div class="certificate-verification">
-
-    <div id="qrCode"></div>
-
-    <p>
-
-        Scan to Verify
-
+    <p class="completion-text">has successfully completed the</p>
+    <h3 id="courseName" class="course-title">-</h3>
+    <p class="course-desc">
+        and demonstrated proficiency in course concepts, practical applications, problem-solving, and advanced techniques.
     </p>
+</main>
 
-</div>
+            <!-- Footer Section -->
+            <footer class="cert-footer">
+                
+                <!-- Left: Certificate ID -->
+                <div class="footer-left">
+                    <div class="course-badge-box">
+                        <i class="fa-solid fa-award course-icon"></i>
+                    </div>
+                    <div class="cert-id-label">Certificate ID</div>
+                    <div id="certificateNumber" class="cert-id-val">-</div>
+                </div>
 
-            </div>
+                <!-- Center: Instructor & Signature -->
+                <div class="footer-center">
+                    <div class="signature-box">
+                        <img id="signatureImage" src="" alt="Signature" class="sig-img hidden">
+                        <span id="instructorName" class="signature-text"></span>
+                    </div>
+                    <div id="designation" class="instructor-title">Instructor</div>
+                    
+                    <div class="issue-date-wrap">
+                        Issued on: <strong id="issueDate">-</strong>
+                    </div>
+                </div>
+
+                <!-- Right: QR Code -->
+                <div class="footer-right">
+                    <div id="qrCode" class="qr-box"></div>
+                    <p class="verify-text">Verify this certificate at<br><span>issaacademy.com/verify</span></p>
+                </div>
+
+            </footer>
 
         </div>
-
-    </section>
-
-</div>
-
-<div
-    id="pageLoader"
-    class="page-loader hidden">
-
-    <div class="loader-card">
-
-        <img
-            src="../assets/images/Issa-Logo.png"
-            class="loader-logo">
-
-        <div class="loader-spinner"></div>
-
-        <p>
-
-            Loading Certificate...
-
-        </p>
-
     </div>
 
-</div>
+    <!-- Page Loader -->
+    <div id="pageLoader" class="page-loader hidden">
+        <div class="loader-card">
+            <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy Logo" style="max-width: 100px; height: auto;">
+            <div class="loader-spinner"></div>
+            <p>Loading Certificate...</p>
+        </div>
+    </div>
 
-<div
-    id="toastContainer"
-    class="toast-container">
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<script
-    type="module"
-    src="../assets/js/student/certificate-view.js">
-
-</script>
+    <script type="module" src="../assets/js/student/certificate-view.js"></script>
 
 </body>
 

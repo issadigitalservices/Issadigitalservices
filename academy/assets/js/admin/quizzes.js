@@ -264,7 +264,7 @@ function renderQuizzes(){
 
             :
 
-            "Module Quiz";
+            "Module Exam";
 
         clone.querySelector(
 
@@ -474,7 +474,7 @@ async function deleteQuiz(id){
 
         !confirm(
 
-            "Delete this quiz?"
+            "Delete this Exam?"
 
         )
 
@@ -504,7 +504,7 @@ async function deleteQuiz(id){
 
         showToast(
 
-            "Quiz deleted successfully."
+            "Exam deleted successfully."
 
         );
 

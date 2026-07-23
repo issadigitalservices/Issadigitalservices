@@ -133,7 +133,7 @@ Add Lesson
 
 <a href="quizzes.html">
 
-Quizzes
+Exams
 
 </a>
 
@@ -145,7 +145,7 @@ Quizzes
 
 <a href="quiz-form.html">
 
-Add Quiz
+Add Exam
 
 </a>
 
