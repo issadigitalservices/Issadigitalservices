@@ -514,6 +514,11 @@ async function completeLesson() {
 
         showToast("Lesson automatically marked as completed.");
 
+        // Check if course is 100% complete to generate certificate automatically
+        if (progress === 100) {
+            await generateCertificate();
+        }
+
     } catch (error) {
         console.error(error);
         showToast("Unable to complete lesson.", "error");

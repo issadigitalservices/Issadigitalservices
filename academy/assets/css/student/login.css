@@ -336,8 +336,18 @@
    ========================================================================== */
 
 @media (max-width: 900px) {
+    .login-page {
+        flex-direction: column; /* Stacks the two sides vertically instead of side-by-side */
+    }
+
     .brand-side {
-        display: none;
+        display: flex; /* Ensures it is visible */
+        padding: 2rem 1.5rem; /* Reduces padding slightly for smaller viewports */
+        min-height: auto;
+    }
+
+    .brand-content h2 {
+        font-size: 1.75rem; /* Scales down heading text size for mobile */
     }
 
     .form-side {
