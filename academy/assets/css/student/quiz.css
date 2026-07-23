@@ -1,6 +1,6 @@
 /* ==========================================================================
    ISSA Academy
-   Student Quiz
+   Student Quiz (Mobile Optimized Styles)
    ========================================================================== */
 
 * {
@@ -45,14 +45,14 @@ body {
 .timer-box {
   display: flex;
   align-items: center;
-  gap: 30px;
-  padding: 24px 24px;
+  gap: 15px;
+  padding: 16px 24px;
   border-radius: 12px;
   background: #eff6ff;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   color: #2563eb;
-  min-width: 120px;
+  min-width: 140px;
   justify-content: center;
 }
 
@@ -74,8 +74,9 @@ body {
 
 .quiz-body {
   display: grid;
-  grid-template-columns: 1fr 240px;
+  grid-template-columns: 1fr 260px;
   gap: 30px;
+  align-items: start;
 }
 
 .question-area {
@@ -83,14 +84,26 @@ body {
   padding: 35px;
   border-radius: 18px;
   border: 1px solid #e5e7eb;
+  min-width: 0; /* Prevents flex/grid blowouts */
 }
 
 #questionText {
   font-size: 20px;
-  font-weight: 400;
-  line-height: 1.7;
-  margin-bottom: 10px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 20px;
   color: #111827;
+  word-break: break-word;
+}
+
+/* Bilingual text formatting support */
+#questionText .question-translation {
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  color: #64748b;
+  margin-top: 10px;
+  line-height: 1.6;
 }
 
 .question-attachment {
@@ -163,37 +176,36 @@ body {
 .options-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .option {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   padding: 18px 22px;
   border: 2px solid #e5e7eb;
   border-radius: 14px;
   cursor: pointer;
   transition: 0.25s;
   background: #ffffff;
-  min-height: 30px;
 }
 
 .option:hover {
   border-color: #2563eb;
   background: #eff6ff;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
 
 .option.selected {
-  background: #dbeafe;
+  background: #eff6ff;
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .option input {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   accent-color: #2563eb;
   cursor: pointer;
   flex-shrink: 0;
@@ -201,10 +213,11 @@ body {
 
 .option span {
   flex: 1;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
   color: #111827;
   line-height: 1.5;
+  word-break: break-word;
 }
 
 .question-palette {
@@ -212,44 +225,61 @@ body {
   padding: 25px;
   border-radius: 18px;
   border: 1px solid #e5e7eb;
+  position: sticky;
+  top: 30px;
 }
 
 .question-palette h4 {
   margin-bottom: 20px;
   color: #111827;
+  font-size: 18px;
+  text-align: center;
 }
 
 .palette {
   display: grid;
-  grid-template-columns: repeat(5, 44px);
-  justify-content: center;
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .palette button {
-  width: 44px;
+  width: 100%;
   height: 44px;
-  border: none;
+  border: 1px solid #cbd5e1;
   border-radius: 10px;
-  background: #e5e7eb;
+  background: #ffffff;
   cursor: pointer;
-  font-weight: 800;
-  font-size: 16px;
-  transition: 0.25s;
+  font-weight: 600;
+  font-size: 15px;
+  color: #334155;
+  transition: 0.2s;
 }
 
 .palette button.active {
   background: #2563eb;
   color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
 }
 
 .palette button:hover {
-  transform: translateY(-2px);
+  border-color: #2563eb;
+  transform: translateY(-1px);
 }
 
 .palette button.answered {
-  background: #22c55e;
+  background: #dcfce7;
+  color: #166534;
+  border-color: #86efac;
+}
+
+.palette button.answered.active {
+  background: #16a34a;
   color: #ffffff;
+  border-color: #16a34a;
 }
 
 /* ==========================================================================
@@ -353,28 +383,64 @@ body {
 
 @media (max-width: 900px) {
   body {
-    padding: 15px;
+    padding: 8px;
+  }
+
+  .quiz-wrapper {
+    padding: 12px;
+    border-radius: 10px;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .quiz-body {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 30px;
-    align-items: start;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .question-area {
+    padding: 20px 15px;
+  }
+
+  #questionText {
+    font-size: 17px;
+  }
+
+  .question-palette {
+    position: static;
+    padding: 15px;
+  }
+
+  .palette {
+    grid-template-columns: repeat(5, 1fr);
   }
 
   .quiz-header {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  .quiz-footer {
-    flex-wrap: wrap;
+    align-items: stretch;
     gap: 15px;
   }
 
+  .quiz-header h2 {
+    font-size: 22px;
+  }
+
+  .quiz-header p {
+    font-size: 15px;
+  }
+
+  .timer-box {
+    width: 100%;
+    font-size: 22px;
+    padding: 12px;
+  }
+
+  .quiz-footer {
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .quiz-footer .btn {
-    flex: 1;
+    width: 100%;
   }
 }
