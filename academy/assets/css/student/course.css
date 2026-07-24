@@ -575,3 +575,57 @@
 
 }
 
+/* ==========================================================
+   Mobile Header Bar & Toggle Button Styling
+   ========================================================== */
+.mobile-header-bar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    background: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    margin: 0; /* Remove negative margins since it's now fixed to the screen */
+    z-index: 99;
+}
+
+/* Add padding to the top of your main content so the fixed header doesn't overlap your banner */
+@media (max-width: 992px) {
+    .mobile-header-bar {
+        display: flex;
+    }
+    main.content {
+        padding-top: 70px; /* Adjust this value depending on your header's total height */
+    }
+}
+
+.mobile-menu-btn {
+    background: #2563EB;
+    color: #ffffff;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-brand-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #111827;
+}
+
+@media (max-width: 992px) {
+    .mobile-header-bar {
+        display: flex;
+    }
+}
+

@@ -111,6 +111,7 @@
     align-items: center;
     margin-top: 1rem;
     padding-top: 0.25rem;
+    flex-wrap: wrap;
 }
 
 .course-footer .progress-text,
@@ -241,6 +242,19 @@
     background-color: #2563eb !important;
 }
 
+.mobile-header-bar {
+    display: none; /* Hidden by default on laptops/desktops */
+    position: sticky;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    background: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    margin: -30px -30px 25px -30px;
+    border-radius: 14px 14px 0 0;
+    z-index: 99;
+}
+
 /* ==========================================================
    Responsive
    ========================================================== */
@@ -250,7 +264,24 @@
         grid-template-columns: 1fr;
     }
 
+    .mobile-header-bar {
+        display: flex;
+    }
+
     .empty-state {
         padding: 3rem 1.5rem;
+    }
+
+    @media(max-width: 480px) {
+    .course-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .course-footer .primary-btn {
+        width: 100%;
+        text-align: center;
+    }
     }
 }

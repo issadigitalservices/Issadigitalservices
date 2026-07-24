@@ -207,12 +207,30 @@
 
 }
 
-@media(max-width:768px){
+/* --------------------------------------------------------------------------
+   Mobile Header Bar (Hidden by default on laptops/desktops)
+   -------------------------------------------------------------------------- */
+.mobile-header-bar {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    background: #ffffff;
+    border-bottom: 1px solid #E5E7EB;
+    margin: -30px -30px 25px -30px;
+    border-radius: 14px 14px 0 0;
+    z-index: 99;
+}
 
-    .main-content{
-
-        padding:1rem;
-
+/* --------------------------------------------------------------------------
+   Responsive Layout (Only show on mobile/tablet widths)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .content {
+        padding: 1rem;
     }
 
+    .mobile-header-bar {
+        display: flex;
+    }
 }

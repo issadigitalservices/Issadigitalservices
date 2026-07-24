@@ -2,39 +2,17 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Courses | ISSA Academy</title>
-
-    <meta name="theme-color"
-          content="#2563EB">
-
-    <link rel="icon"
-          href="../assets/images/Issa-Logo.png">
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-    <link rel="stylesheet"
-          href="../assets/css/main.css">
-
-    <link rel="stylesheet"
-          href="../assets/css/student/my-courses.css">
-
+    <meta name="theme-color" content="#2563EB">
+    <link rel="icon" href="../assets/images/Issa-Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/student/my-courses.css">
 </head>
 
 <body>
@@ -42,189 +20,93 @@
 <div class="dashboard">
 
     <aside class="sidebar">
-
         <div class="logo-area">
-
-            <img
-                src="../assets/images/Issa-Logo.png"
-                alt="ISSA Academy">
-
-            <h2>
-
-                ISSA Academy
-
-            </h2>
-
+            <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy">
+            <h2>ISSA Academy</h2>
         </div>
-
         <nav>
-
             <ul>
-
                 <li>
-
                     <a href="dashboard.html">
-
                         <i class="fa-solid fa-house"></i>
-
                         Dashboard
-
                     </a>
-
                 </li>
-
                 <li class="active">
-
                     <a href="my-courses.html">
-
                         <i class="fa-solid fa-book-open"></i>
-
                         My Courses
-
                     </a>
-
                 </li>
-
                 <li>
-
                     <a href="profile.html">
-
                         <i class="fa-solid fa-user"></i>
-
                         My Profile
-
                     </a>
-
                 </li>
-
                 <li>
-
                     <a href="certificates.html">
-
                         <i class="fa-solid fa-award"></i>
-
                         View Certificate
-
                     </a>
-
                 </li>
-
                 <li>
-
-                    <a
-                        href="login.html"
-                        id="logoutBtn">
-
+                    <a href="login.html" id="logoutBtn">
                         <i class="fa-solid fa-right-from-bracket"></i>
-
                         Logout
-
                     </a>
-
                 </li>
-
             </ul>
-
         </nav>
-
     </aside>
 
     <main class="content">
 
-        <header class="top-bar">
-
-            <div>
-
-                <h1>
-
-                    My Courses
-
-                </h1>
-
-                <p>
-
-                    Continue your enrolled courses.
-
-                </p>
-
-            </div>
-
-        </header>
-
-        <div
-            id="coursesGrid"
-            class="courses-grid">
-
+        <!-- Mobile Header Bar -->
+        <div class="mobile-header-bar">
+            <button type="button" class="mobile-menu-btn" id="mobileMenuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <span class="mobile-brand-title">ISSA Academy</span>
         </div>
 
-        <div
-            id="emptyState"
-            class="empty-state hidden">
+        <header class="top-bar">
+            <div>
+                <h1>My Courses</h1>
+                <p>Continue your enrolled courses.</p>
+            </div>
+        </header>
 
+        <div id="coursesGrid" class="courses-grid"></div>
+
+        <div id="emptyState" class="empty-state hidden">
             <i class="fa-solid fa-book-open empty-icon"></i>
-
-            <h2>
-
-                No Enrolled Courses
-
-            </h2>
-
-            <p>
-
-                Once your enrollment is approved, your courses will appear here.
-
-            </p>
-
-            <a
-                href="../excel.html?id=excel-masterclass"
-                class="btn-enroll-primary">
-
+            <h2>No Enrolled Courses</h2>
+            <p>Once your enrollment is approved, your courses will appear here.</p>
+            <a href="../excel.html?id=excel-masterclass" class="btn-enroll-primary">
                 <span>Browse Excel Course</span>
-
                 <i class="fa-solid fa-arrow-right"></i>
-
             </a>
-
         </div>
 
     </main>
 
 </div>
 
-<div
-    id="pageLoader"
-    class="page-loader hidden">
-
+<div id="pageLoader" class="page-loader hidden">
     <div class="loader-card">
-
-        <img
-            src="../assets/images/Issa-Logo.png"
-            alt="ISSA Academy"
-            class="loader-logo">
-
+        <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy" class="loader-logo">
         <div class="loader-spinner"></div>
-
-        <p>
-
-            Loading Courses...
-
-        </p>
-
+        <p>Loading Courses...</p>
     </div>
-
 </div>
 
-<div
-    id="toastContainer"
-    class="toast-container">
+<div id="toastContainer" class="toast-container"></div>
 
-</div>
+<!-- Sidebar Overlay for Mobile View -->
+<div class="sidebar-overlay"></div>
 
-<script
-    type="module"
-    src="../assets/js/student/my-courses.js">
-
-</script>
+<script type="module" src="../assets/js/student/my-courses.js"></script>
 
 </body>
 

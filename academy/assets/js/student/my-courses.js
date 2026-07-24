@@ -91,10 +91,22 @@ async function loadCourses(studentId) {
         // Dynamically change button text if the course is completed
         const buttonText = progress === 100 ? "Review" : "Continue";
 
+        // Format Expiry Date from Firestore Timestamp
+        let expiryText = "Lifetime Access";
+        if (data.expiresAt) {
+            const expiryDateObj = data.expiresAt.toDate();
+            const formattedDate = expiryDateObj.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+            expiryText = `Expires: ${formattedDate}`;
+        }
+
         coursesGrid.innerHTML += `
             <article class="course-card">
                 <img
-                    src="${course.thumbnail ? "../" + course.thumbnail : "../assets/images/course-placeholder.jpg"}"
+                    src="${course.thumbnail ? "../" + course.thumbnail.replace(/^[\.\/]+/, '') : "../assets/images/excel-course.jpg"}"
                     alt="${course.title}"
                     onerror="this.src='../assets/images/course-placeholder.jpg'">
 
@@ -103,12 +115,18 @@ async function loadCourses(studentId) {
 
                     <p>${course.description || ""}</p>
 
+                    <!-- Course Expiry Notice -->
+                    <div class="course-expiry" style="font-size: 0.85rem; color: #6b7280; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>${expiryText}</span>
+                    </div>
+
                     <div class="progress">
                         <div
                             class="progress-bar"
                             style="width:${progress}%">
                         </div>
-                    </div>
+                  </div>
 
                     <div class="course-footer">
                         <span class="progress-text">${progress}% Complete</span>

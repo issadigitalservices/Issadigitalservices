@@ -2,196 +2,102 @@
 <html lang="en">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Exam Instructions | ISSA Academy</title>
-
-<link rel="icon"
-      href="../assets/images/Issa-Logo.png">
-
-<link rel="preconnect"
-      href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet">
-
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-<link rel="stylesheet"
-      href="../assets/css/main.css">
-
-<link rel="stylesheet"
-      href="../assets/css/student/start-assessment.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Instructions | ISSA Academy</title>
+    <link rel="icon" href="../assets/images/Issa-Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/student/start-assessment.css">
+    <style>
+        /* Center alignment override for the assessment header */
+        .assessment-header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .assessment-header img {
+            display: block;
+            margin: 0 auto 12px auto;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="assessment-container">
-
     <div class="assessment-card">
-
         <div class="assessment-header">
-
-    <img
-        src="../assets/images/Issa-Logo.png"
-        alt="ISSA Academy">
-
-    <h2 class="academy-title">
-
-        ISSA Academy
-
-    </h2>
-
-    <h1>
-
-        Exam Instructions
-
-    </h1>
-
-    <p>
-
-        Please read the following instructions carefully before starting your Exam.
-
-    </p>
-
-</div>
-
-        <div class="assessment-section">
-
-            <h2>
-
-                <i class="fa-solid fa-circle-check"></i>
-
-                Self Declaration
-
-            </h2>
-
-            <p>
-
-                By clicking <strong>"I Agree & Start Exam"</strong>, I confirm that:
-
-            </p>
-
-            <ul>
-
-                <li>I will complete this Exam on my own.</li>
-
-                <li>I will not use ChatGPT, Gemini, Copilot, Claude, or any other AI tools.</li>
-
-                <li>I will not ask friends, colleagues, family members, or anyone else for answers.</li>
-
-                <li>I will not refer to books, notes, class materials, websites, or any external resources.</li>
-
-                <li>I understand this Exam is designed to evaluate my own knowledge and understanding.</li>
-
-                <li>I will maintain honesty, integrity, and fairness throughout the Exam.</li>
-
-            </ul>
-
+            <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy" width="70">
+            <h2 class="academy-title">ISSA Academy</h2>
+            <h1>Exam Instructions</h1>
+            <p>Please read the following instructions carefully before starting your Exam.</p>
         </div>
 
         <div class="assessment-section">
-
             <h2>
-
-                <i class="fa-solid fa-circle-info"></i>
-
-                Important Information
-
+                <i class="fa-solid fa-circle-check"></i>
+                Self Declaration
             </h2>
-
+            <p>
+                By clicking <strong>"I Agree & Start Exam"</strong>, I confirm that:
+            </p>
             <ul>
-
-                <li>Treat this Exam like a real certification examination.</li>
-
-                <li>Read every question carefully before answering.</li>
-
-                <li>Do not refresh or close the browser during the Exam.</li>
-
-                <li>Your result will be displayed immediately after submission.</li>
-
-                <li>If you do not pass, don't worry—you may retake the Exam anytime.</li>
-
-                <li>Review the lessons before attempting again for better results.</li>
-
+                <li>I will complete this Exam on my own.</li>
+                <li>I will not use ChatGPT, Gemini, Copilot, Claude, or any other AI tools.</li>
+                <li>I will not ask friends, colleagues, family members, or anyone else for answers.</li>
+                <li>I will not refer to books, notes, class materials, websites, or any external resources.</li>
+                <li>I understand this Exam is designed to evaluate my own knowledge and understanding.</li>
+                <li>I will maintain honesty, integrity, and fairness throughout the Exam.</li>
             </ul>
+        </div>
 
+        <div class="assessment-section">
+            <h2>
+                <i class="fa-solid fa-circle-info"></i>
+                Important Information
+            </h2>
+            <ul>
+                <li>Treat this Exam like a real certification examination.</li>
+                <li>Read every question carefully before answering.</li>
+                <li>Do not refresh or close the browser during the Exam.</li>
+                <li>Your result will be displayed immediately after submission.</li>
+                <li>If you do not pass, don't worry—you may retake the Exam anytime.</li>
+                <li>Review the lessons before attempting again for better results.</li>
+            </ul>
         </div>
 
         <div class="assessment-checkbox">
-
             <label>
-
-                <input
-                    type="checkbox"
-                    id="agreeCheckbox">
-
+                <input type="checkbox" id="agreeCheckbox">
                 I have read and understood all the instructions above.
-
             </label>
-
         </div>
 
         <div class="assessment-buttons">
-
-            <button
-                id="disagreeBtn"
-                class="btn btn-secondary">
-
+            <button id="disagreeBtn" class="btn btn-secondary">
                 <i class="fa-solid fa-arrow-left"></i>
-
                 Back to Lesson
-
             </button>
-
-            <button
-                id="agreeBtn"
-                class="btn btn-primary"
-                disabled>
-
+            <button id="agreeBtn" class="btn btn-primary" disabled>
                 I Agree & Start Exam
-
                 <i class="fa-solid fa-arrow-right"></i>
-
             </button>
-
         </div>
 
         <div class="assessment-footer">
-
-            <h3>
-
-                Good Luck!
-
-            </h3>
-
-            <p>
-
-                We wish you success in your Exam and hope you enjoy learning with ISSA Academy.
-
-            </p>
-
+            <h3>Good Luck!</h3>
+            <p>We wish you success in your Exam and hope you enjoy learning with ISSA Academy.</p>
         </div>
-
     </div>
-
 </div>
 
-<script
-    type="module"
-    src="../assets/js/student/start-assessment.js">
-
-</script>
+<script type="module" src="../assets/js/student/start-assessment.js"></script>
 
 </body>
 
