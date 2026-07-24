@@ -3,54 +3,45 @@
    Admin Enrollments
    ========================================================================== */
 
-.toolbar{
-
-    display:flex;
-
-    gap:1rem;
-
-    align-items:center;
-
-    flex-wrap:wrap;
-
-    margin-bottom:2rem;
-
+/* Fix: Ensure topbar stays sticky and isn't overridden by page styles */
+.topbar {
+    position: sticky !important;
+    top: 0 !important;
+    background: #f8fafc !important;
+    z-index: 99 !important;
+    padding: 1rem 0 !important;
+    margin-bottom: 2rem !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
 }
 
-.toolbar input{
-
-    flex:1;
-
-    min-width:280px;
-
-    height:48px;
-
-    padding:0 1rem;
-
-    border:1px solid var(--border-color);
-
-    border-radius:10px;
-
-    outline:none;
-
+.toolbar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
 }
 
-.toolbar select{
+.toolbar input {
+    flex: 1;
+    min-width: 280px;
+    height: 48px;
+    padding: 0 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    outline: none;
+}
 
-    width:200px;
-
-    height:48px;
-
-    padding:0 1rem;
-
-    border:1px solid var(--border-color);
-
-    border-radius:10px;
-
-    outline:none;
-
-    background:#ffffff;
-
+.toolbar select {
+    width: 200px;
+    height: 48px;
+    padding: 0 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    outline: none;
+    background: #ffffff;
 }
 
 .table-card{

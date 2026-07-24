@@ -35,7 +35,7 @@ a {
 }
 
 section {
-    padding: 80px 0;
+    padding: 40px 0;
 }
 
 .container {
@@ -274,7 +274,7 @@ nav a:hover, nav a.active {
     background: #fff;
     border: 1px solid #e5e7eb;
     border-radius: 20px;
-    padding: 50px;
+    padding: 10px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
 }
 
@@ -305,7 +305,7 @@ nav a:hover, nav a.active {
     align-items: center;
     gap: 12px;
     background: #f8fafc;
-    padding: 18px;
+    padding: 12px;
     border-radius: 12px;
     font-weight: 600;
 }
@@ -313,12 +313,6 @@ nav a:hover, nav a.active {
 .trainer-grid i {
     color: #2563eb;
     font-size: 1.2rem;
-}
-
-.trainer-description {
-    text-align: center;
-    color: #6b7280;
-    line-height: 1.9;
 }
 
 /* =========================
@@ -343,8 +337,10 @@ nav a:hover, nav a.active {
 
 .card {
     background: #fff;
-    padding: 35px 30px;
+    padding: 10px 10px;
     border-radius: 18px;
+    border-color: #111111;
+    border-width: medium;
     text-align: center;
     box-shadow: 0 10px 35px rgba(0, 0, 0, .06);
     transition: .3s;
@@ -408,7 +404,9 @@ nav a:hover, nav a.active {
     background: #fff;
     border: 1px solid #e5e7eb;
     border-radius: 18px;
-    padding: 30px;
+    padding: 10px;
+    border-color: #111111;
+    border-width: medium;
     transition: .3s;
     box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
 }
@@ -457,10 +455,10 @@ nav a:hover, nav a.active {
 .demo-card {
     background: #ffffff;
     border-radius: 18px;
-    padding: 35px;
+    padding: 15px;
     text-align: center;
     cursor: pointer;
-    border: 1px solid #e5e7eb;
+    border: 5px solid #1dea0a;
     box-shadow: 0 10px 35px rgba(0, 0, 0, .06);
     transition: .3s;
 }
@@ -472,12 +470,12 @@ nav a:hover, nav a.active {
 
 .demo-card i {
     font-size: 3rem;
-    color: #2563eb;
-    margin-bottom: 20px;
+    color: #12cb40;
+    margin-bottom: 10px;
 }
 
 .demo-card h3 {
-    margin-bottom: 12px;
+    margin-bottom: 5px;
     color: #111827;
 }
 
@@ -545,48 +543,7 @@ nav a:hover, nav a.active {
     color: #ffffff;
 }
 
-/* =========================
-   COURSE CURRICULUM
-========================= */
-.syllabus {
-    background: #ffffff;
-}
 
-.syllabus h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #111827;
-}
-
-.syllabus-list {
-    max-width: 900px;
-    margin: 50px auto 0;
-}
-
-.syllabus-item {
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    margin-bottom: 18px;
-    overflow: hidden;
-    transition: .3s;
-    background: #fff;
-}
-
-.syllabus-item:hover {
-    border-color: #2563eb;
-}
-
-.syllabus-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 22px 28px;
-    font-weight: 600;
-}
-
-.syllabus-header span:last-child {
-    color: #2563eb;
-}
 
 /* =========================
    WHO CAN JOIN
@@ -599,21 +556,23 @@ nav a:hover, nav a.active {
     text-align: center;
     font-size: 2.5rem;
     color: #111827;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .join-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 25px;
+    gap: 10px;
 }
 
 .join-card {
     background: #fff;
     border-radius: 18px;
-    padding: 30px;
+    padding: 10px;
+    border-color: #1d4ed8;
+    border-width: medium;
     text-align: center;
-    border: 1px solid #e5e7eb;
+    border: 2px solid #202021;
     box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
     transition: .3s;
 }
@@ -626,7 +585,7 @@ nav a:hover, nav a.active {
 .join-card i {
     width: 75px;
     height: 75px;
-    margin: 0 auto 20px;
+    margin: 0 auto 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -637,7 +596,7 @@ nav a:hover, nav a.active {
 }
 
 .join-card h3 {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     color: #111827;
 }
 
@@ -658,7 +617,7 @@ nav a:hover, nav a.active {
     gap: 50px;
     align-items: center;
     background: #fff;
-    padding: 40px;
+    padding: 10px;
     border-radius: 20px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
 }
@@ -671,7 +630,7 @@ nav a:hover, nav a.active {
 
 .certificate-box h2 {
     font-size: 2.3rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #111827;
 }
 
@@ -691,7 +650,7 @@ nav a:hover, nav a.active {
     text-align: center;
     font-size: 2.5rem;
     color: #111827;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .faq-list {
@@ -703,7 +662,7 @@ nav a:hover, nav a.active {
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 16px;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
     overflow: hidden;
     box-shadow: 0 8px 25px rgba(0, 0, 0, .05);
 }
@@ -712,7 +671,7 @@ nav a:hover, nav a.active {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 22px 28px;
+    padding: 12px 18px;
     cursor: pointer;
     font-weight: 600;
     color: #111827;
@@ -731,7 +690,7 @@ nav a:hover, nav a.active {
     max-height: 0;
     overflow: hidden;
     transition: max-height .35s ease;
-    padding: 0 28px;
+    padding: 0 18px;
     color: #6b7280;
     line-height: 1.8;
 }
@@ -739,26 +698,26 @@ nav a:hover, nav a.active {
 /* Fix: Extended ceiling to avoid cutting off longer answers */
 .faq-item.active .faq-answer {
     max-height: 800px; 
-    padding: 0 28px 24px;
+    padding: 0 18px 14px;
 }
 
 /* =========================
    CALL TO ACTION
 ========================= */
 .cta {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: #ffffff;
+    background: linear-gradient(135deg, #aae567, #9ea0a7);
+    color: #ea0808;
     text-align: center;
 }
 
 .cta h2 {
     font-size: 2.5rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .cta h1 {
     font-size: 4rem;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: 800;
 }
 
@@ -769,7 +728,7 @@ nav a:hover, nav a.active {
 }
 
 .cta .btn {
-    margin-top: 35px;
+    margin-top: 15px;
     background: #ffffff;
     color: #2563eb;
 }
@@ -785,7 +744,7 @@ footer {
     background: #111827;
     color: #ffffff;
     text-align: center;
-    padding: 35px 20px;
+    padding: 15px 10px;
 }
 
 /* =========================
@@ -800,7 +759,7 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 10px 20px;
     box-shadow: 0 -6px 25px rgba(0, 0, 0, .12);
     z-index: 999;
 }

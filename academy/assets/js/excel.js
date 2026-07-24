@@ -166,47 +166,5 @@ window.addEventListener("load", () => {
     });
 });
 
-/* ==========================================================================
-   LOAD COURSE CURRICULUM FROM FIREBASE
-   ========================================================================== */
-async function loadCurriculum() {
-    if (!syllabusList) return;
-    syllabusList.innerHTML = "";
 
-    try {
-        const moduleSnapshot = await getDocs(collection(db, "modules"));
-        const lessonSnapshot = await getDocs(collection(db, "lessons"));
 
-        const modules = [];
-        moduleSnapshot.forEach(doc => {
-            modules.push({ id: doc.id, ...doc.data() });
-        });
-
-        modules.sort((a, b) => a.order - b.order);
-
-        modules.forEach(module => {
-            const lessonCount = lessonSnapshot.docs.filter(
-                lesson => lesson.data().moduleId === module.id
-            ).length;
-
-            syllabusList.innerHTML += `
-                <div class="syllabus-item">
-                    <div class="syllabus-header">
-                        <span>Module ${module.order} – ${module.title}</span>
-                        <span>${lessonCount} Lessons</span>
-                    </div>
-                </div>
-            `;
-        });
-    } catch (err) {
-        console.error("Error loading curriculum:", err);
-    }
-}
-
-/* ==========================================================================
-   INITIALIZATION
-   ========================================================================== */
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("ISSA Academy Excel Page Loaded");
-    loadCurriculum();
-});

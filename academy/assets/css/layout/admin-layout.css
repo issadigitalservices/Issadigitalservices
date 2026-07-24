@@ -7,267 +7,206 @@
 /* ===============================
    Root Layout
 ================================ */
-
-.admin-layout{
-
-    display:flex;
-
-    min-height:100vh;
-
-    background:#f8fafc;
-
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #f8fafc;
 }
 
 /* ===============================
    Sidebar
 ================================ */
-
-.sidebar{
-
-    position:fixed;
-
-    top:0;
-
-    left:0;
-
-    width:280px;
-
-    height:100vh;
-
-    overflow-y:auto;
-
-    background:#0f172a;
-
-    color:#ffffff;
-
-    z-index:1000;
-
-    box-shadow:4px 0 15px rgba(0,0,0,.08);
-
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    overflow-y: auto;
+    background: #0f172a;
+    color: #ffffff;
+    z-index: 1000;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, .08);
+    transition: transform 0.3s ease;
 }
 
 /* ===============================
    Main Content
 ================================ */
-
-.main-content{
-
-    flex:1;
-
-    margin-left:280px;
-
-    min-height:100vh;
-
-    padding:2rem;
-
-    background:#f8fafc;
-
-    overflow-x:hidden;
-
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    min-height: 100vh;
+    padding: 2rem;
+    background: #f8fafc;
+    /* REMOVED overflow-x: hidden; which breaks sticky positioning */
 }
 
 /* ===============================
-   Page Header
+   Page Header & Topbar
 ================================ */
-
 .page-header,
-
-.topbar{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    gap:1rem;
-
-    margin-bottom:2rem;
-
+.topbar {
+    position: sticky;
+    top: 0;
+    background: #f8fafc;
+    z-index: 99;
+    padding: 1rem 0;
+    margin-top: -1rem; /* Pulls it up slightly to account for padding */
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
 
 .page-header h1,
-
-.topbar h1{
-
-    margin:0;
-
-    font-size:2rem;
-
-    font-weight:700;
-
-    color:#111827;
-
+.topbar h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
 }
 
 .page-header p,
+.topbar p {
+    margin-top: .4rem;
+    color: #6b7280;
+}
 
-.topbar p{
-
-    margin-top:.4rem;
-
-    color:#6b7280;
-
+/* ===============================
+   Sidebar Toggle Button
+================================ */
+.sidebar-toggle-btn {
+    display: none; /* Hidden on desktop view */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #111827;
+    padding: 0;
 }
 
 /* ===============================
    Cards
 ================================ */
-
-.card{
-
-    background:#ffffff;
-
-    border-radius:16px;
-
-    padding:1.5rem;
-
-    border:1px solid #e5e7eb;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.05);
-
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .05);
 }
 
 /* ===============================
    Toolbar
 ================================ */
-
-.toolbar{
-
-    display:flex;
-
-    gap:1rem;
-
-    align-items:center;
-
-    flex-wrap:wrap;
-
-    margin-bottom:2rem;
-
+.toolbar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
 }
 
 .toolbar input,
-
-.toolbar select{
-
-    min-width:240px;
-
+.toolbar select {
+    min-width: 240px;
 }
 
 /* ===============================
    Empty State
 ================================ */
-
-.empty-state{
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    text-align:center;
-
-    padding:5rem 2rem;
-
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 5rem 2rem;
 }
 
-.empty-state i{
-
-    font-size:4rem;
-
-    color:#cbd5e1;
-
-    margin-bottom:1rem;
-
+.empty-state i {
+    font-size: 4rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
 }
 
-.empty-state h2{
-
-    margin-bottom:.5rem;
-
-    color:#111827;
-
+.empty-state h2 {
+    margin-bottom: .5rem;
+    color: #111827;
 }
 
-.empty-state p{
-
-    color:#6b7280;
-
-    margin-bottom:2rem;
-
+.empty-state p {
+    color: #6b7280;
+    margin-bottom: 2rem;
 }
 
 /* ===============================
    Utilities
 ================================ */
-
-.hidden{
-
-    display:none !important;
-
+.hidden {
+    display: none !important;
 }
 
 /* ===============================
-   Responsive
+   Sidebar Overlay (Mobile Backdrop)
 ================================ */
-
-@media (max-width:992px){
-
-    .sidebar{
-
-        transform:translateX(-100%);
-
-        transition:.3s;
-
-    }
-
-    .sidebar.show{
-
-        transform:translateX(0);
-
-    }
-
-    .main-content{
-
-        margin-left:0;
-
-        padding:1.25rem;
-
-    }
-
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Sits right under the sidebar (z-index 1000) */
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-@media (max-width:768px){
+.sidebar-overlay.show {
+    display: block;
+    opacity: 1;
+}
 
-    .page-header,
-
-    .topbar{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
+/* ===============================
+   Responsive Breakpoints
+================================ */
+@media (max-width: 992px) {
+    .sidebar-toggle-btn {
+        display: block; /* Visible on mobile & tablet */
     }
 
-    .toolbar{
+    .sidebar {
+        transform: translateX(-100%);
+    }
 
-        flex-direction:column;
+    .sidebar.show {
+        transform: translateX(0);
+    }
 
-        align-items:stretch;
+    .main-content {
+        margin-left: 0;
+        padding: 1.25rem;
+    }
+}
 
+@media (max-width: 768px) {
+    .page-header,
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .toolbar input,
-
-    .toolbar select{
-
-        width:100%;
-
-        min-width:100%;
-
+    .toolbar select {
+        width: 100%;
+        min-width: 100%;
     }
-
 }

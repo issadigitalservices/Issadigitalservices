@@ -88,6 +88,7 @@ const logoutBtn =
     document.getElementById("logoutBtn");
 
     let unlockedOrder = 1;
+    let isFinalExamAdminUnlocked = false; // Add this line
 
     /* ==========================================================================
    CACHE
@@ -178,6 +179,8 @@ async function loadCourse(studentId){
     const course =
 
         courseSnap.data();
+
+        isFinalExamAdminUnlocked = course.isFinalExamUnlocked === true; // Add this line
 
     courseTitle.textContent =
         course.title;
@@ -538,9 +541,11 @@ async function loadFinalExam(){
 
     );
 
-    const unlocked =
-
+    const modulesCompleted =
         moduleProgressSnapshot.size >= moduleSnapshot.size;
+
+    // The final exam is unlocked ONLY if modules are finished AND the admin toggle is true
+    const unlocked = modulesCompleted && isFinalExamAdminUnlocked;
 
     const attemptSnapshot = await getDocs(
 

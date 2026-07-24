@@ -216,7 +216,7 @@ async function loadStatistics(){
 
         lessonsSnapshot,
 
-        paymentsSnapshot
+        enrollmentsSnapshot
 
     ] = await Promise.all([
 
@@ -262,7 +262,7 @@ async function loadStatistics(){
 
                 db,
 
-                "payments"
+                "enrollments"
 
             )
 
@@ -281,18 +281,22 @@ async function loadStatistics(){
 
     let revenue = 0;
 
-    paymentsSnapshot.forEach(
+    enrollmentsSnapshot.forEach(
 
         docSnap=>{
 
-            const payment =
+            const enrollment =
                 docSnap.data();
 
-            revenue += Number(
+            if (enrollment.paymentStatus === "Paid" || enrollment.approvalStatus === "Approved") {
 
-                payment.amount || 0
+                revenue += Number(
 
-            );
+                    enrollment.coursePrice || 0
+
+                );
+
+            }
 
         }
 
@@ -387,11 +391,6 @@ async function loadRecentCourses(){
 
             </div>
 
-            <span>
-
-                ${course.status || "Published"}
-
-            </span>
 
         `;
 
@@ -494,7 +493,7 @@ async function loadRecentStudents(){
 }
 
 /* ==========================================================================
-   RECENT PAYMENTS
+   RECENT PAYMENTS (ENROLLMENTS)
    ========================================================================== */
 
 async function loadRecentPayments(){
@@ -515,7 +514,7 @@ async function loadRecentPayments(){
 
                 db,
 
-                "payments"
+                "enrollments"
 
             ),
 
@@ -553,7 +552,7 @@ async function loadRecentPayments(){
 
     snapshot.forEach(docSnap=>{
 
-        const payment = docSnap.data();
+        const enrollment = docSnap.data();
 
         const item = document.createElement("div");
 
@@ -565,13 +564,13 @@ async function loadRecentPayments(){
 
                 <strong>
 
-                    ${payment.studentName || "Student"}
+                    ${enrollment.studentName || "Student"}
 
                 </strong>
 
                 <p>
 
-                    ${payment.courseTitle || "Course"}
+                    ${enrollment.courseName || "Course"}
 
                 </p>
 
@@ -579,7 +578,7 @@ async function loadRecentPayments(){
 
             <span>
 
-                ₹ ${Number(payment.amount || 0).toLocaleString("en-IN")}
+                ₹ ${Number(enrollment.coursePrice || 0).toLocaleString("en-IN")}
 
             </span>
 
@@ -641,33 +640,7 @@ function addActivity(
 
 }
 
-/* ==========================================================================
-   NOTIFICATION BUTTONS
-   ========================================================================== */
 
-document
-
-    .querySelectorAll(".icon-btn")
-
-    .forEach(button=>{
-
-        button.addEventListener(
-
-            "click",
-
-            ()=>{
-
-                showToast(
-
-                    "Feature coming soon."
-
-                );
-
-            }
-
-        );
-
-    });
 
 /* ==========================================================================
    LOGOUT
