@@ -136,32 +136,49 @@ onAuthStateChanged(
 
 async function loadStudents(){
 
-    const snapshot=
+    // Fetch both students and enrollments concurrently from Firestore
+    const [studentsSnapshot, enrollmentsSnapshot] = await Promise.all([
+        getDocs(collection(db, "students")),
+        getDocs(collection(db, "enrollments"))
+    ]);
 
-        await getDocs(
-
-            collection(
-
-                db,
-
-                "students"
-
-            )
-
-        );
+    // Build a lookup map of all enrollments
+    const enrollmentsList = [];
+    enrollmentsSnapshot.forEach(docSnap => {
+        enrollmentsList.push(docSnap.data());
+    });
 
     state.students=[];
 
-    snapshot.forEach(document=>{
+    studentsSnapshot.forEach(document=>{
+        const studentData = document.data();
+        const studentId = document.id;
+
+        // Find all enrollments matching this student's ID, UID, or email
+        const studentEnrollments = enrollmentsList.filter(
+            e => e.studentId === studentId || 
+                 e.studentId === studentData.uid || 
+                 e.email === studentData.email
+        );
+
+        const courseCount = studentEnrollments.length;
+
+        // Calculate average progress percentage across their enrolled courses
+        let avgProgress = 0;
+        if (courseCount > 0) {
+            const totalProgressSum = studentEnrollments.reduce((sum, e) => sum + Number(e.progress || 0), 0);
+            avgProgress = Math.round(totalProgressSum / courseCount);
+        }
 
         state.students.push({
-
-            id:document.id,
-
-            ...document.data()
-
+            id: studentId,
+            ...studentData,
+            // Fallback map for phone/mobile fields
+            phone: studentData.phone || studentData.mobile || studentData.phoneNumber || "-",
+            // Use calculated course count, falling back to 0
+            totalCourses: courseCount > 0 ? courseCount : (studentData.totalCourses || 0),
+            progress: avgProgress
         });
-
     });
 
     state.filteredStudents=[
@@ -209,6 +226,12 @@ function renderStudents(){
             <td>
 
                 ${student.totalCourses || 0}
+
+            </td>
+
+            <td>
+
+                ${student.progress || 0}%
 
             </td>
 

@@ -6,7 +6,7 @@
    Version : 1.0.0
    ========================================================================== */
 
-import { uploadVideo } from "../services/r2-upload.js";
+import { uploadFile } from "../services/r2-upload.js";
    import { auth } from "../core/firebase-config.js";
 
 import {
@@ -301,57 +301,62 @@ lessonForm.addEventListener(
 
         try {
 
-    let uploadedUrl = videoUrl.value.trim();
+            let uploadedUrl = videoUrl.value.trim();
 
-    if (videoFile.files.length > 0) {
+            if (videoFile.files.length > 0) {
 
-        uploadedUrl = await uploadVideo(
+                const response = await uploadFile(
 
-            videoFile.files[0],
+                    videoFile.files[0],
 
-            percent => {
+                    "lessons", // 1. Correctly pass the folder name here
 
-                uploadProgress.value = percent;
+                    percent => {  // 2. Correctly pass the progress callback here
 
-                uploadPercent.textContent = percent + "%";
+                        uploadProgress.value = percent;
+
+                        uploadPercent.textContent = percent + "%";
+
+                    }
+
+                );
+
+                // 3. Extract the actual URL property from your worker's JSON response
+                uploadedUrl = response.url; 
+
+                videoUrl.value = uploadedUrl;
 
             }
 
-        );
+            await addDoc(
 
-        videoUrl.value = uploadedUrl;
+                collection(db, "lessons"),
 
-    }
+                {
+                    courseId: courseId.value,
+                    courseTitle: selectedCourse.dataset.title,
+                    moduleId: moduleId.value,
+                    moduleTitle: selectedModule.dataset.title,
+                    title: lessonTitle.value.trim(),
+                    description: lessonDescription.value.trim(),
+                    videoUrl: uploadedUrl,
+                    order: Number(lessonOrder.value),
+                    type: "Video",
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                }
 
-    await addDoc(
+            );
 
-        collection(db, "lessons"),
+            showToast("Lesson created successfully.");
 
-        {
-            courseId: courseId.value,
-            courseTitle: selectedCourse.dataset.title,
-            moduleId: moduleId.value,
-            moduleTitle: selectedModule.dataset.title,
-            title: lessonTitle.value.trim(),
-            description: lessonDescription.value.trim(),
-            videoUrl: uploadedUrl,
-            order: Number(lessonOrder.value),
-            type: "Video",
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
+            setTimeout(() => {
+
+                location.href = "lessons.html";
+
+            }, 1000);
+
         }
-
-    );
-
-    showToast("Lesson created successfully.");
-
-    setTimeout(() => {
-
-        location.href = "lessons.html";
-
-    }, 1000);
-
-}
 
 catch (error) {
 

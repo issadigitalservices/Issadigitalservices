@@ -84,8 +84,6 @@ const featuredCourse=document.getElementById("featuredCourse");
 
 const certificate=document.getElementById("certificate");
 
-const courseStatus=document.getElementById("courseStatus");
-
 const pageLoader=document.getElementById("pageLoader");
 
 const toastContainer=document.getElementById("toastContainer");
@@ -339,10 +337,6 @@ form.addEventListener(
                     certificate:
 
                         certificate.checked,
-
-                    status:
-
-                        courseStatus.value,
 
                     totalModules:0,
 

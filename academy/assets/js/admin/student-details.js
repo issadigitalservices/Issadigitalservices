@@ -25,7 +25,8 @@ import {
     getDocs,
     collection,
     query,
-    where
+    where,
+    updateDoc
 
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 

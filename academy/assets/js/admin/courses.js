@@ -1,5 +1,3 @@
-"use strict";
-
 /* ==========================================================================
    ISSA Academy
    Courses Controller
@@ -18,16 +16,13 @@ import {
 } from "../core/auth-guard.js";
 
 import {
-
     collection,
     getDocs,
     query,
     orderBy,
     doc,
     deleteDoc,
-    updateDoc,
     where
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 /* ==========================================================================
@@ -51,9 +46,6 @@ const emptyState =
 
 const searchInput =
     document.getElementById("searchInput");
-
-const statusFilter =
-    document.getElementById("statusFilter");
 
 const loader =
     document.getElementById("pageLoader");
@@ -123,17 +115,27 @@ async function loadCourses(){
 
         );
 
-    snapshot.forEach(docSnap=>{
+    for(const docSnap of snapshot.docs){
+        const courseId = docSnap.id;
+        const courseData = docSnap.data();
+
+        // Dynamically fetch actual lesson count
+        const lessonsQuery = query(collection(db, "lessons"), where("courseId", "==", courseId));
+        const lessonsSnap = await getDocs(lessonsQuery);
+        const actualLessons = lessonsSnap.size;
+
+        // Dynamically fetch actual student/enrollment count
+        const enrollmentsQuery = query(collection(db, "enrollments"), where("courseId", "==", courseId));
+        const enrollmentsSnap = await getDocs(enrollmentsQuery);
+        const actualStudents = enrollmentsSnap.size;
 
         state.courses.push({
-
-            id:docSnap.id,
-
-            ...docSnap.data()
-
+            id: courseId,
+            ...courseData,
+            totalLessons: actualLessons,
+            totalStudents: actualStudents
         });
-
-    });
+    }
 
     state.filtered=[
 
@@ -177,15 +179,11 @@ function renderCourses(){
 
             template.content.cloneNode(true);
 
-        card.querySelector(
-
-            ".thumbnail"
-
-        ).src=
-
-            course.thumbnail ||
-
-            "../assets/images/course-placeholder.jpg";
+        const thumbnailImg = card.querySelector(".thumbnail");
+        thumbnailImg.src = course.thumbnail || "../assets/images/course-placeholder.jpg";
+        thumbnailImg.onerror = function() {
+            this.src = "../assets/images/course-placeholder.jpg";
+        };
 
         card.querySelector(
 
@@ -216,16 +214,6 @@ function renderCourses(){
             course.description ||
 
             "-";
-
-        card.querySelector(
-
-            ".course-status"
-
-        ).textContent=
-
-            course.status ||
-
-            "draft";
 
         card.querySelector(
 
@@ -285,35 +273,13 @@ function renderCourses(){
 
         );
 
-        /* ================= STATUS ================= */
-
-        card.querySelector(
-
-            ".btn-publish"
-
-        ).addEventListener(
-
-            "click",
-
-            ()=>{
-
-                toggleCourseStatus(
-
-                    course.id,
-
-                    course.status
-
-                );
-
-            }
-
-        );
-
         grid.appendChild(card);
 
     });
 
 }
+
+
 
 /* ==========================================================================
    SEARCH
@@ -322,18 +288,6 @@ function renderCourses(){
 searchInput.addEventListener(
 
     "input",
-
-    applyFilters
-
-);
-
-/* ==========================================================================
-   FILTER
-   ========================================================================== */
-
-statusFilter.addEventListener(
-
-    "change",
 
     applyFilters
 
@@ -349,10 +303,6 @@ function applyFilters(){
 
         .toLowerCase();
 
-    const status =
-
-        statusFilter.value;
-
     state.filtered =
 
         state.courses.filter(course=>{
@@ -365,21 +315,7 @@ function applyFilters(){
 
                 .includes(keyword);
 
-            const matchStatus =
-
-                status === "all"
-
-                ||
-
-                (course.status || "draft") === status;
-
-            return (
-
-                matchKeyword &&
-
-                matchStatus
-
-            );
+            return matchKeyword;
 
         });
 
@@ -510,82 +446,6 @@ async function deleteCourse(courseId){
         showToast(
 
             "Course deleted successfully."
-
-        );
-
-        await loadCourses();
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        showToast(
-
-            error.message,
-
-            "error"
-
-        );
-
-    }
-
-    hideLoader();
-
-}
-
-/* ==========================================================================
-   TOGGLE STATUS
-   ========================================================================== */
-
-async function toggleCourseStatus(
-
-    courseId,
-
-    currentStatus
-
-){
-
-    showLoader();
-
-    try{
-
-        const newStatus =
-
-            currentStatus === "published"
-
-            ?
-
-            "draft"
-
-            :
-
-            "published";
-
-        await updateDoc(
-
-            doc(
-
-                db,
-
-                "courses",
-
-                courseId
-
-            ),
-
-            {
-
-                status:newStatus
-
-            }
-
-        );
-
-        showToast(
-
-            `Course ${newStatus}.`
 
         );
 

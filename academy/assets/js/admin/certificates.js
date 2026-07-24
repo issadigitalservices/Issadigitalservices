@@ -99,75 +99,30 @@ onAuthStateChanged(
    ========================================================================== */
 
 async function loadCertificates(){
-
     try{
-
-        const snapshot =
-
-            await getDocs(
-
-                query(
-
-                    collection(
-
-                        db,
-
-                        "certificates"
-
-                    ),
-
-                    orderBy(
-
-                        "issuedAt",
-
-                        "desc"
-
-                    )
-
-                )
-
-            );
-
-        certificates=[];
-
-        snapshot.forEach(document=>{
-
-            certificates.push({
-
-                id:document.id,
-
-                ...document.data()
-
-            });
-
-        });
-
-        filteredCertificates=[
-
-            ...certificates
-
-        ];
-
-        renderCertificates();
-
-        updateStatistics();
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        showToast(
-
-            "Unable to load certificates.",
-
-            "error"
-
+        const snapshot = await getDocs(
+            query(
+                collection(db, "certificates"),
+                orderBy("issueDate", "desc") // <-- Changed from issuedAt to issueDate
+            )
         );
 
-    }
+        certificates=[];
+        snapshot.forEach(document=>{
+            certificates.push({
+                id: document.id,
+                ...document.data()
+            });
+        });
 
+        filteredCertificates=[...certificates];
+        renderCertificates();
+        updateStatistics();
+    }
+    catch(error){
+        console.error(error);
+        showToast("Unable to load certificates.", "error");
+    }
 }
 
 /* ==========================================================================
@@ -175,143 +130,56 @@ async function loadCertificates(){
    ========================================================================== */
 
 function renderCertificates(){
-
+    if(!certificateTable) return;
     certificateTable.innerHTML = "";
 
     if(filteredCertificates.length === 0){
-
-        emptyState.classList.remove(
-
-            "hidden"
-
-        );
-
+        if(emptyState) emptyState.classList.remove("hidden");
         return;
-
     }
 
-    emptyState.classList.add(
-
-        "hidden"
-
-    );
+    if(emptyState) emptyState.classList.add("hidden");
 
     filteredCertificates.forEach(certificate=>{
+        const issuedDate = certificate.issueDate
+            ? certificate.issueDate.toDate().toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+              })
+            : "-";
 
-        const issuedDate =
-
-            certificate.issuedAt
-
-            ?
-
-            certificate.issuedAt
-
-                .toDate()
-
-                .toLocaleDateString()
-
-            :
-
-            "-";
+        const fileLink = certificate.fileUrl || "#";
 
         certificateTable.innerHTML += `
-
         <tr>
-
             <td>
-
                 <div class="student-info">
-
-                    <strong>
-
-                        ${certificate.studentName || "-"}
-
-                    </strong>
-
-                    <span>
-
-                        ${certificate.studentEmail || ""}
-
-                    </span>
-
+                    <strong>${certificate.studentName || "-"}</strong>
+                    <span>${certificate.studentEmail || ""}</span>
                 </div>
-
             </td>
-
+            <td>${certificate.courseName || "-"}</td>
+            <td>${certificate.certificateNumber || "-"}</td>
+            <td>${issuedDate}</td>
             <td>
-
-                ${certificate.courseName || "-"}
-
-            </td>
-
-            <td>
-
-                ${certificate.certificateNumber || "-"}
-
-            </td>
-
-            <td>
-
-                ${issuedDate}
-
-            </td>
-
-            <td>
-
                 <div class="action-group">
-
-                    <a
-
-                        href="${certificate.fileUrl || "#"}"
-
-                        target="_blank"
-
-                        class="btn btn-primary">
-
-                        <i class="fa-solid fa-eye"></i>
-
-                        View
-
+                    <a href="${fileLink}" target="_blank" class="btn btn-primary ${certificate.fileUrl ? '' : 'disabled'}">
+                        <i class="fa-solid fa-eye"></i> View
                     </a>
-
-                    <a
-
-                        href="${certificate.fileUrl || "#"}"
-
-                        download
-
-                        class="btn btn-success">
-
-                        <i class="fa-solid fa-download"></i>
-
-                        Download
-
+                    <a href="${fileLink}" download class="btn btn-success ${certificate.fileUrl ? '' : 'disabled'}">
+                        <i class="fa-solid fa-download"></i> Download
                     </a>
-
-                    <button
-
-                        class="btn btn-danger btn-delete"
-
-                        data-id="${certificate.id}">
-
-                        <i class="fa-solid fa-trash"></i>
-
-                        Delete
-
+                    <button class="btn btn-danger btn-delete" data-id="${certificate.id}">
+                        <i class="fa-solid fa-trash"></i> Delete
                     </button>
-
                 </div>
-
             </td>
-
         </tr>
-
         `;
-
     });
 
     bindEvents();
-
 }
 
 /* ==========================================================================
