@@ -7,121 +7,23 @@
     min-height: 100vh;
     display: flex;
     width: 100vw;
-    background: #ffffff;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-body, #f8fafc);
 }
 
 /* ==========================================================================
-   LEFT BRANDING SIDE
-   ========================================================================== */
-
-.brand-side {
-    flex: 1;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    color: #ffffff;
-    padding: 3rem 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Ambient glow effect */
-.brand-side::before {
-    content: '';
-    position: absolute;
-    width: 380px;
-    height: 380px;
-    background: var(--primary, #2563eb);
-    filter: blur(140px);
-    opacity: 0.25;
-    top: -60px;
-    left: -60px;
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.brand-header {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    z-index: 2;
-}
-
-.brand-logo {
-    width: 42px;
-    height: auto;
-    object-fit: contain;
-}
-
-.brand-name {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #ffffff;
-}
-
-.brand-content {
-    max-width: 480px;
-    z-index: 2;
-}
-
-/* Contrast Fix: Enforce bright text on dark background */
-.brand-content h2 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 1rem;
-    color: #ffffff !important;
-}
-
-.brand-content p {
-    color: #94a3b8 !important;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-}
-
-.feature-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.95rem;
-    color: #e2e8f0;
-}
-
-.feature-item i {
-    color: #38bdf8;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-}
-
-.brand-footer {
-    z-index: 2;
-}
-
-.brand-footer p {
-    color: #64748b !important;
-    font-size: 0.85rem;
-    margin: 0;
-}
-
-/* ==========================================================================
-   RIGHT FORM SIDE
+   FORM CONTAINER SIDE
    ========================================================================== */
 
 .form-side {
-    flex: 1;
+    width: 100%;
+    max-width: 520px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2.5rem;
-    background-color: #ffffff;
+    padding: 2rem 1.5rem;
+    background-color: transparent;
 }
 
 .login-card {
@@ -129,7 +31,9 @@
     max-width: 440px;
     background: #ffffff;
     border-radius: 20px;
-    padding: 1rem;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg, 0 10px 25px -5px rgba(0, 0, 0, 0.1));
+    border: 1px solid var(--border-color, #e2e8f0);
 }
 
 .logo-area {
@@ -311,7 +215,7 @@
 }
 
 .login-btn:hover i {
-    transform: translateX(3px); /* Subtle motion effect on the icon */
+    transform: translateX(3px);
 }
 
 .register-link {
@@ -329,40 +233,4 @@
 
 .register-link a:hover {
     text-decoration: underline;
-}
-
-/* ==========================================================================
-   RESPONSIVE ADJUSTMENTS
-   ========================================================================== */
-
-@media (max-width: 900px) {
-    .login-page {
-        flex-direction: column; /* Stacks the two sides vertically instead of side-by-side */
-    }
-
-    .brand-side {
-        display: flex; /* Ensures it is visible */
-        padding: 2rem 1.5rem; /* Reduces padding slightly for smaller viewports */
-        min-height: auto;
-    }
-
-    .brand-content h2 {
-        font-size: 1.75rem; /* Scales down heading text size for mobile */
-    }
-
-    .form-side {
-        padding: 1.5rem;
-    }
-
-    .login-card {
-        padding: 0;
-    }
-
-    .logo-area {
-        align-items: center;
-    }
-
-    .logo-area p {
-        text-align: center;
-    }
 }

@@ -3,103 +3,13 @@
    Student Registration Styles
    ========================================================================== */
 
-/* Page Layout Container */
 .register-container {
     display: flex;
     min-height: 100vh;
     width: 100%;
-}
-
-/* ==========================================================================
-   Left Hero Panel (Branding & Features)
-   ========================================================================== */
-
-.register-hero {
-    flex: 1;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    color: #ffffff;
-    padding: 3.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-}
-
-.register-hero::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 350px;
-    height: 350px;
-    background: rgba(37, 99, 235, 0.15);
-    border-radius: 50%;
-    filter: blur(80px);
-}
-
-.brand-badge {
-    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    font-size: 1rem;
-    color: #ffffff;
-}
-
-.brand-badge img {
-    height: 38px;
-    width: auto;
-    object-fit: contain;
-}
-
-.hero-content {
-    max-width: 500px;
-    margin: auto 0;
-    z-index: 1;
-}
-
-.hero-content h2 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 1.25rem;
-    color: #ffffff;
-}
-
-.hero-content p {
-    color: #94a3b8;
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 2.5rem;
-}
-
-.feature-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    padding: 0;
-}
-
-.feature-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    font-size: 0.95rem;
-    color: #e2e8f0;
-}
-
-.feature-list i {
-    color: var(--primary, #2563eb);
-    font-size: 1.2rem;
-}
-
-.hero-footer {
-    font-size: 0.85rem;
-    color: #64748b;
-    z-index: 1;
+    background: var(--bg-body, #f8fafc);
 }
 
 /* ==========================================================================
@@ -107,12 +17,14 @@
    ========================================================================== */
 
 .register-card-wrapper {
-    flex: 1;
+    width: 100%;
+    max-width: 600px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2.5rem 1.5rem;
-    background: var(--bg-body, #f8fafc);
+    padding: 2rem 1rem;
+    background: transparent;
     overflow-y: auto;
 }
 

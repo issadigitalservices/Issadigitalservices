@@ -238,7 +238,7 @@ function showToast(message, type = "success") {
 const sidebar = document.getElementById("sidebar");
 const sidebarOverlay = document.getElementById("sidebarOverlay");
 const sidebarClose = document.getElementById("sidebarClose");
-const menuToggle = document.getElementById("menuToggle");
+const menuToggle = document.getElementById("menu-toggle");
 
 if (menuToggle) {
     menuToggle.addEventListener("click", () => {
