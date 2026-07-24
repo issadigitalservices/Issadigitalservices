@@ -241,27 +241,28 @@ const sidebarClose = document.getElementById("sidebarClose");
 const menuToggle = document.getElementById("menu-toggle");
 
 if (menuToggle) {
-    menuToggle.addEventListener("click", () => {
-        sidebar.classList.add("open");
-        sidebarOverlay.classList.add("show");
-        menuToggle.style.display = "none";
+    menuToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (sidebar) sidebar.classList.add("open");
+        if (sidebarOverlay) sidebarOverlay.classList.add("show");
     });
+}
 
-    if (sidebarClose) {
-        sidebarClose.addEventListener("click", () => {
-            sidebar.classList.remove("open");
-            sidebarOverlay.classList.remove("show");
-            menuToggle.style.display = "flex";
-        });
-    }
+if (sidebarClose) {
+    sidebarClose.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (sidebar) sidebar.classList.remove("open");
+        if (sidebarOverlay) sidebarOverlay.classList.remove("show");
+    });
+}
 
-    if (sidebarOverlay) {
-        sidebarOverlay.addEventListener("click", () => {
-            sidebar.classList.remove("open");
-            sidebarOverlay.classList.remove("show");
-            menuToggle.style.display = "flex";
-        });
-    }
+if (sidebarOverlay) {
+    sidebarOverlay.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (sidebar) sidebar.classList.remove("open");
+        if (sidebarOverlay) sidebarOverlay.classList.remove("show");
+    });
 }
 
 /* ==========================================================================
