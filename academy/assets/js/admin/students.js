@@ -174,7 +174,7 @@ async function loadStudents(){
             id: studentId,
             ...studentData,
             // Fallback map for phone/mobile fields
-            phone: studentData.phone || studentData.mobile || studentData.phoneNumber || "-",
+            phone: studentData.mobile || "-",
             // Use calculated course count, falling back to 0
             totalCourses: courseCount > 0 ? courseCount : (studentData.totalCourses || 0),
             progress: avgProgress

@@ -51,7 +51,7 @@ if (mobileInput) {
             fetch("https://ipapi.co/json/")
                 .then(res => res.json())
                 .then(data => success(data.country_code))
-                .catch(() => success("sa")); // Default fallback to Saudi Arabia (SA)
+                .catch(() => success("in")); // Default fallback to Saudi Arabia (SA)
         },
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
     });
