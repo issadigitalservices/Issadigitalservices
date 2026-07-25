@@ -242,6 +242,18 @@
     background-color: #2563eb !important;
 }
 
+.sidebar-close {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #cbd5e1;
+    font-size: 20px;
+    cursor: pointer;
+}
+
 .mobile-header-bar {
     display: none; /* Hidden by default on laptops/desktops */
     position: sticky;
@@ -254,6 +266,12 @@
     border-radius: 14px 14px 0 0;
     z-index: 99;
 }
+
+@media (max-width: 900px) {
+    .sidebar-close {
+        display: block;
+    }
+    }
 
 /* ==========================================================
    Responsive

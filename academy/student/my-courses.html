@@ -20,6 +20,10 @@
 <div class="dashboard">
 
     <aside class="sidebar">
+        <button class="sidebar-close" aria-label="Close Sidebar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
         <div class="logo-area">
             <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy">
             <h2>ISSA Academy</h2>
@@ -64,7 +68,7 @@
 
         <!-- Mobile Header Bar -->
         <div class="mobile-header-bar">
-            <button type="button" class="mobile-menu-btn" id="mobileMenuToggle">
+            <button type="button" class="mobile-menu-btn" id="menu-toggle">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <span class="mobile-brand-title">ISSA Academy</span>
@@ -107,6 +111,31 @@
 <div class="sidebar-overlay"></div>
 
 <script type="module" src="../assets/js/student/my-courses.js"></script>
+
+<!-- Inline Mobile Toggle Initialization Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.sidebar-overlay');
+        const closeBtn = document.querySelector('.sidebar-close');
+        const hamburgerBtn = document.querySelector('#menu-toggle');
+
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', () => {
+                sidebar.classList.add('open');
+                overlay.classList.add('show');
+            });
+        }
+
+        const closeSidebar = () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        };
+
+        if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+        if (overlay) overlay.addEventListener('click', closeSidebar);
+    });
+</script>
 
 </body>
 
