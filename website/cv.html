@@ -66,6 +66,32 @@
         body {
             font-family: 'Poppins', sans-serif;
         }
+        #loader-overlay {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        #loader-overlay.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -74,101 +100,114 @@
         <div class="spinner"></div>
     </div>
 
-    <header class="bg-gray-800 text-white sticky top-0 z-40 shadow-md">
+    <!-- Header -->
+    <header class="bg-gray-900 text-white sticky top-0 z-40 shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2">
-                <img src="assets/Images/Issa-Logo.png" alt="ISSA Digital Services Logo" class="h-10 w-auto bg-white rounded-full p-1"
+            <a href="../index.html" class="flex items-center gap-3">
+                <img src="assets/Images/Issa-Logo.png" alt="ISSA Digital Services Logo" class="h-10 w-auto bg-white rounded-full p-1 shadow-sm"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
                 <span style="display:none; background: #2563eb; color: white; padding: 8px; border-radius: 50%; font-weight: bold; width: 40px; height: 40px; text-align: center; line-height: 24px;">IS</span>
                 <div>
-                    <h1 class="text-lg font-semibold">ISSA Digital Services</h1>
-                    <p class="text-xs text-gray-300">CV Writing Experts</p>
+                    <h1 class="text-base font-semibold leading-tight">ISSA Digital Services</h1>
+                    <p class="text-xs text-gray-400">CV Writing Experts</p>
                 </div>
             </a>
+
+            <!-- Added Navigation Links -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="../index.html" class="text-gray-300 hover:text-white transition">Home</a>
+                <a href="#pricing" class="text-gray-300 hover:text-white transition">Packages</a>
+                <a href="https://wa.me/919746431460" target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg transition shadow-sm">Contact Us</a>
+            </nav>
         </div>
     </header>
 
     <main>
-        <section class="bg-gradient-to-r from-cyan-500 to-indigo-800 text-white py-16 md:py-5 font-Roboto">
-            
-
-  <div class="max-w-2xl mx-auto text-center px-4">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-cyan-600 to-indigo-900 text-white py-16 md:py-20 shadow-inner">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">Get Hired with a Winning CV</h1>
-                <div class="mt-8 flex justify-center gap-6 text-sm text-blue-200">
-                    <span><i class="fas fa-check-circle mr-1"></i> ATS Optimized</span>
-                    <span><i class="fas fa-check-circle mr-1"></i> Industry Specific</span>
-                    <span><i class="fas fa-check-circle mr-1"></i> Fast Turnaround</span>
+                <h1 class="text-3xl md:text-5xl font-bold mb-6 tracking-tight">Get Hired with a Winning CV</h1>
+                <p class="text-blue-100 max-w-xl mx-auto text-sm md:text-base mb-8">Professional resumes built to bypass applicant tracking systems and capture recruiter attention instantly.</p>
+                <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-xs md:text-sm font-medium text-blue-100 bg-white/10 py-3 px-6 rounded-full max-w-lg mx-auto backdrop-blur-sm">
+                    <span><i class="fas fa-check-circle text-cyan-300 mr-1"></i> ATS Optimized</span>
+                    <span><i class="fas fa-check-circle text-cyan-300 mr-1"></i> Industry Specific</span>
+                    <span><i class="fas fa-check-circle text-cyan-300 mr-1"></i> Fast Turnaround</span>
                 </div>
             </div>
         </section>
 
-        <section id="pricing" class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-2">Our CV Writing Packages</h2>
-                <p class="text-center text-gray-600 mb-12"><strong>🚀 Pick a CV Plan That Fits Your Future</strong></p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-16 md:py-20 bg-gray-50">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Our CV Writing Packages</h2>
+                    <p class="text-gray-600 font-medium">🚀 Pick a CV Plan That Fits Your Future</p>
+                </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
                     <!-- Package 1 -->
-                    <div class="border-2 border-black rounded-lg p-4 flex flex-col shadow-lg hover:shadow-xl transition duration-300">
-                        <h3 class="text-lg font-semibold text-center mb-2">ATS Friendly CV</h3>
-                                                <div class="text-center text-3xl font-bold mb-4 text-blue-900">Rs. 349/-</div>
-                        <ul class="space-y-2 text-gray-600 mb-6 flex-grow text-xs">
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Optimized for ATS</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Word & PDF Formats</li>
-                            <li class="flex items-center"><i class="fas fa-edit text-blue-500 mr-2"></i> 30 Days Correction Support</li>
-                            <li class="flex items-center"><i class="fas fa-rocket text-blue-500 mr-2"></i> Faster Delivery</li>
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1 rounded-bl-xl">Popular</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">ATS Friendly CV</h3>
+                        <p class="text-xs text-gray-500 mb-4">Optimized to pass automated screening systems.</p>
+                        <div class="text-3xl font-extrabold mb-6 text-blue-600">Rs. 349<span class="text-sm font-normal text-gray-500">/-</span></div>
+                        <ul class="space-y-3 text-gray-600 mb-8 flex-grow text-sm">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3 w-4"></i> Optimized for ATS Software</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3 w-4"></i> Word & PDF Formats</li>
+                            <li class="flex items-center"><i class="fas fa-edit text-blue-500 mr-3 w-4"></i> 90 Days Correction Support</li>
+                            <li class="flex items-center"><i class="fas fa-rocket text-blue-500 mr-3 w-4"></i> Fast Delivery</li>
                         </ul>
-                        <a href="ats1.html" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg text-center transition duration-300">View CV Models</a>
+                        <a href="ats1.html" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-3 px-4 rounded-xl text-center transition duration-300 shadow-md hover:shadow-blue-200">View CV Models</a>
                     </div>
 
-                    
-                    <!-- Package 3 -->
-                    <div class="border-2 border-black rounded-lg p-4 flex flex-col shadow-lg hover:shadow-xl transition duration-300">
-                        <h3 class="text-lg font-semibold text-center mb-2">Professional Designed CV</h3>
-                                                <div class="text-center text-3xl font-bold mb-4 text-blue-900">Rs. 349/-</div>
-                        <ul class="space-y-2 text-gray-600 mb-6 flex-grow text-xs">
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Modern Visual Design</li>
-                            
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> Word & PDF Formats</li>
-                            <li class="flex items-center"><i class="fas fa-edit text-blue-500 mr-2"></i> 30 Days Correction Support</li>
-                            <li class="flex items-center"><i class="fas fa-rocket text-blue-500 mr-2"></i> Faster Delivery</li>
+                    <!-- Package 2 -->
+                    <div class="bg-white border border-gray-200 rounded-2xl p-6 flex flex-col shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-indigo-50 text-indigo-600 text-xs font-bold px-3 py-1 rounded-bl-xl">Creative</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Professionally Designed CV</h3>
+                        <p class="text-xs text-gray-500 mb-4">Modern visual layout for direct recruiter review.</p>
+                        <div class="text-3xl font-extrabold mb-6 text-blue-600">Rs. 349<span class="text-sm font-normal text-gray-500">/-</span></div>
+                        <ul class="space-y-3 text-gray-600 mb-8 flex-grow text-sm">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3 w-4"></i> Modern Visual Design</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3 w-4"></i> Word & PDF Formats</li>
+                            <li class="flex items-center"><i class="fas fa-edit text-blue-500 mr-3 w-4"></i> 90 Days Correction Support</li>
+                            <li class="flex items-center"><i class="fas fa-rocket text-blue-500 mr-3 w-4"></i> Fast Delivery</li>
                         </ul>
-                        <a href="prof1.html" class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded-lg text-center transition duration-300">View CV Models</a>
+                        <a href="prof1.html" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-3 px-4 rounded-xl text-center transition duration-300 shadow-md hover:shadow-blue-200">View CV Models</a>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- WhatsApp Quick Action Banner -->
+        <section class="bg-white py-8 border-t border-gray-100 text-center">
+            <div class="container mx-auto px-4">
+                <a href="https://wa.me/919746431460" target="_blank" class="inline-flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white text-base font-semibold py-3.5 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                    <i class="fab fa-whatsapp text-2xl"></i> WhatsApp Now for More Details
+                </a>
             </div>
         </section>
     </main>
 
-    <!-- WhatsApp Contact Section -->
-<div style="text-align:center; padding: 20px; background-color:#f1f1f1;">
-  <a href="https://wa.me/919746431460" target="_blank" style="text-decoration: none; color: white;">
-    <div style="display:inline-block; background-color:#25D366; padding:15px 25px; border-radius:30px; font-size:18px; font-weight:bold;">
-      📞 WhatsApp Now for More Details
-    </div>
-  </a>
-</div>
-
-
-    <footer class="bg-gray-800 text-gray-300 py-8">
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10">
         <div class="container mx-auto px-4 text-center">
-            <div class="mb-4">
-                <div class="flex justify-center gap-4 mb-4">
-                    <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp" class="text-gray-300 hover:text-green-400 text-xl"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook" class="text-gray-300 hover:text-blue-400 text-xl"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram" class="text-gray-300 hover:text-pink-400 text-xl"><i class="fab fa-instagram"></i></a>
-                    <a href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn" class="text-gray-300 hover:text-blue-300 text-xl"><i class="fab fa-linkedin-in"></i></a>
+            <div class="mb-6">
+                <div class="flex justify-center gap-6 mb-4">
+                    <a href="https://wa.me/919746431460" target="_blank" title="WhatsApp" class="text-gray-400 hover:text-emerald-400 text-xl transition"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://facebook.com/yourprofile" target="_blank" title="Facebook" class="text-gray-400 hover:text-blue-400 text-xl transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/yourprofile" target="_blank" title="Instagram" class="text-gray-400 hover:text-pink-400 text-xl transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank" title="LinkedIn" class="text-gray-400 hover:text-blue-300 text-xl transition"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-                <p class="text-sm"><a href="mailto:issadigitalservices@gmail.com" class="hover:text-white"><i class="fas fa-envelope mr-1"></i> issadigitalservices@gmail.com</a></p>
+                <p class="text-sm"><a href="mailto:issadigitalservices@gmail.com" class="hover:text-white transition"><i class="fas fa-envelope mr-2"></i> issadigitalservices@gmail.com</a></p>
             </div>
-            <div class="border-t border-gray-700 pt-4 mt-4">
-                <p class="text-xs">&copy; 2025 ISSA Digital Services. All rights reserved. | <a href="index.html" class="hover:text-white">Home</a></p>
-                <p class="text-xs mt-1">Designed by Arshad Kuttyalam</p>
+            <div class="border-t border-gray-800 pt-6 mt-6 max-w-md mx-auto">
+                <p class="text-xs">&copy; 2025 ISSA Digital Services. All rights reserved. | <a href="index.html" class="hover:text-white underline">Home</a></p>
+                <p class="text-xs mt-1.5 text-gray-500">Designed by Arshad Kuttyalam</p>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
         // Hide loader after page load
         window.addEventListener('load', () => {
@@ -192,7 +231,5 @@
             });
         });
     </script>
-
-    
 </body>
 </html>
