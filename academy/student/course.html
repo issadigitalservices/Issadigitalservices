@@ -45,93 +45,53 @@
 <div class="dashboard">
 
     <!-- ================= Sidebar ================= -->
-
     <aside class="sidebar">
+        <button class="sidebar-close" aria-label="Close Sidebar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
         <div class="logo-area">
-
             <img
                 src="../assets/images/Issa-Logo.png"
                 alt="ISSA Academy">
-
-            <h2>
-
-                ISSA Academy
-
-            </h2>
-
+            <h2>ISSA Academy</h2>
         </div>
-
         <nav>
-
             <ul>
-
                 <li>
-
                     <a href="dashboard.html">
-
                         <i class="fa-solid fa-house"></i>
-
                         Dashboard
-
                     </a>
-
                 </li>
-
                 <li class="active">
-
                     <a href="my-courses.html">
-
                         <i class="fa-solid fa-book-open"></i>
-
                         My Courses
-
                     </a>
-
                 </li>
-
                 <li>
-
                     <a href="profile.html">
-
                         <i class="fa-solid fa-user"></i>
-
                         Profile
-
                     </a>
-
                 </li>
-
                 <li>
-
-                    <a href="certificate.html">
-
+                    <a href="certificates.html">
                         <i class="fa-solid fa-award"></i>
-
                         Certificates
-
                     </a>
-
                 </li>
-
                 <li>
-
                     <a
                         href="login.html"
                         id="logoutBtn">
-
                         <i class="fa-solid fa-right-from-bracket"></i>
-
                         Logout
-
                     </a>
-
                 </li>
-
             </ul>
-
         </nav>
-
     </aside>
 
     <!-- ================= Content ================= -->
@@ -396,6 +356,45 @@
 
     src="../assets/js/student/course.js">
 
+</script>
+
+<!-- ================= Toast ================= -->
+<div
+    id="toastContainer"
+    class="toast-container">
+</div>
+
+<!-- Sidebar Overlay for Mobile View -->
+<div class="sidebar-overlay"></div>
+
+<script
+    type="module"
+    src="../assets/js/student/course.js">
+</script>
+
+<!-- Inline Mobile Toggle Initialization Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.sidebar-overlay');
+        const closeBtn = document.querySelector('.sidebar-close');
+        const hamburgerBtn = document.querySelector('#menu-toggle');
+
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', () => {
+                sidebar.classList.add('open');
+                overlay.classList.add('show');
+            });
+        }
+
+        const closeSidebar = () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        };
+
+        if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+        if (overlay) overlay.addEventListener('click', closeSidebar);
+    });
 </script>
 
 </body>

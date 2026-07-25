@@ -629,3 +629,60 @@
     }
 }
 
+/* ==========================================================
+   Mobile Sidebar Drawer & Overlay Rules
+   ========================================================== */
+
+.sidebar-close {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #cbd5e1;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+@media (max-width: 900px) {
+    .dashboard {
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100vh;
+        z-index: 1000;
+        background: #0f172a;
+        transition: left 0.3s ease-in-out;
+        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar-close {
+        display: block;
+    }
+
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 999;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+    }
+}
+
