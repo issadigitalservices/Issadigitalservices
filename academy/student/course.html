@@ -373,8 +373,13 @@
 
         if (hamburgerBtn) {
             hamburgerBtn.addEventListener('click', () => {
-                sidebar.classList.add('open');
-                overlay.classList.add('show');
+                // Toggle open/close state based on current class
+                if (sidebar.classList.contains('open')) {
+                    closeSidebar();
+                } else {
+                    sidebar.classList.add('open');
+                    overlay.classList.add('show');
+                }
             });
         }
 
