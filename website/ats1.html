@@ -10,9 +10,9 @@
       gtag('config', 'G-YGEEY0QX0Y');
     </script>
     <meta charset="UTF-8" />
-    <meta name="description" content="Sample and details for our ATS Friendly CV (1 Page) service, ideal for freshers and those with less than 2 years of experience.">
+    <meta name="description" content="Sample and details for our ATS Friendly CV service.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ATS Friendly CV (1 Page) Sample | ISSA Digital Services</title> 
+    <title>ATS Friendly CV Sample | ISSA Digital Services</title> 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -160,11 +160,11 @@
                         <div>
                             <p class="text-xl font-semibold text-gray-700">Choose a CV Model:</p>
                             <select id="modelSelect" class="mt-2 w-64 border border-gray-300 rounded p-2">
-                                <option value="ATS-1 Page - 301|ATS-friendly CV (1 Page)|₹349">Ref No : ATS CV - 301</option>
-                                 <option value="ATS-1 Page - 302|ATS-friendly CV (1 Page)|₹349">Ref No : ATS CV - 302</option>
-                                 <option value="ATS-1 Page - 304|ATS-friendly CV (1 Page)|₹349">Ref No : ATS CV - 303</option>
-                                  <option value="ATS-1 Page - 304|ATS-friendly CV (1 Page)|₹349">Ref No : ATS CV - 304</option>
-                                  <option value="ATS-1 Page - 304|ATS-friendly CV (1 Page)|₹349">Ref No : ATS CV     - 305</option>
+                                <option value="ATS - 301|ATS-friendly CV |₹349">Ref No : ATS CV - 301</option>
+                                 <option value="ATS - 302|ATS-friendly CV |₹349">Ref No : ATS CV - 302</option>
+                                 <option value="ATS - 304|ATS-friendly CV |₹349">Ref No : ATS CV - 303</option>
+                                  <option value="ATS - 304|ATS-friendly CV |₹349">Ref No : ATS CV - 304</option>
+                                  <option value="ATS - 304|ATS-friendly CV |₹349">Ref No : ATS CV - 305</option>
                             </select>
                             <p class="text-sm text-gray-500 mt-1"> <strong>ATS-friendly & HR Optimized CV</strong> </p>
                         </div>
@@ -241,16 +241,17 @@
         });
         window.addEventListener('load', hideLoader);
 
-        // --- WhatsApp Message Function ---
-        function sendWhatsAppMessage(modelNumber, packageName, price) {
-            const yourWhatsAppNumber = '919746431460'; // Your WhatsApp number
-            let message = `Hi ISSA Digital Services,\n\nI'm interested in CV Model *${modelNumber}* (${packageName} - ${price}).\n\nPlease provide more details or tell me how to proceed with this model.`;
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${yourWhatsAppNumber}?text=${encodedMessage}`;
-            window.open(whatsappUrl, '_blank');
-        }
+// WhatsApp function
+    function inquireModel() {
+        const selectedModel = document.getElementById("modelSelect").value;
+        const packageName = "ATS Freindly CV";
+        const price = "₹349";
+        const message = `Hi ISSA Digital Services,\n\nI'm interested in CV Model *${selectedModel}* (${packageName} - ${price}).\n\nPlease provide more details or tell me how to proceed with this model.`;
+        const encoded = encodeURIComponent(message);
+        window.open(`https://wa.me/919746431460?text=${encoded}`, "_blank");
+    }
 
-        // --- Dynamic Copyright Year ---
+               // --- Dynamic Copyright Year ---
         const copyrightElement = document.getElementById('copyright-page');
         if (copyrightElement) {
             const currentYear = new Date().getFullYear();
