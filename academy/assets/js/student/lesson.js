@@ -176,7 +176,7 @@ async function loadLesson() {
                 ],
                 settings: ["speed"],
                 speed: {
-                    selected: 1,
+                    selected: 1.25,
                     options: [0.5, 0.75, 1, 1.25, 1.5, 2]
                 }
             });
@@ -289,9 +289,9 @@ async function loadLesson() {
 
     /* ================= LAST LESSON & NEXT BUTTON ================= */
     if (currentIndex === lessons.length - 1) {
-        const quizSnapshot = await getDocs(
+        const examSnapshot = await getDocs(
             query(
-                collection(db, "quizzes"),
+                collection(db, "exams"),
                 where("moduleId", "==", lesson.moduleId),
                 limit(1)
             )
@@ -306,12 +306,12 @@ async function loadLesson() {
         `;
 
         nextLesson.onclick = () => {
-            if (quizSnapshot.empty) {
+            if (examSnapshot.empty) {
                 showToast("Module Exam not found.", "error");
                 return;
             }
-            const quizId = quizSnapshot.docs[0].id;
-            location.href = `start-assessment.html?id=${quizId}&courseId=${lesson.courseId}`;
+            const examId = examSnapshot.docs[0].id;
+            location.href = `start-assessment.html?id=${examId}&courseId=${lesson.courseId}`;
         };
     } else {
         nextLesson.innerHTML = `
@@ -408,20 +408,20 @@ nextLesson.addEventListener("click", async () => {
     }
 
     if (currentIndex === lessons.length - 1) {
-        const quizSnapshot = await getDocs(
+        const examSnapshot = await getDocs(
             query(
-                collection(db, "quizzes"),
+                collection(db, "exams"),
                 where("moduleId", "==", lessonData.moduleId),
                 limit(1)
             )
         );
 
-        if (quizSnapshot.empty) {
+        if (examSnapshot.empty) {
             showToast("Module Exam not found.", "error");
             return;
         }
 
-        location.href = `start-assessment.html?id=${quizSnapshot.docs[0].id}&courseId=${lessonData.courseId}`;
+        location.href = `start-assessment.html?id=${examSnapshot.docs[0].id}&courseId=${lessonData.courseId}`;
         return;
     }
 

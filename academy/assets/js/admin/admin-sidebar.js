@@ -48,13 +48,13 @@ if (sidebar) {
                 <i class="fa-solid fa-circle-plus"></i>
                 <a href="add-lesson.html">Add Lesson</a>
             </li>
-            <li class="${currentPage === "quizzes.html" ? "active" : ""}">
+            <li class="${currentPage === "exams.html" ? "active" : ""}">
                 <i class="fa-solid fa-file-circle-question"></i>
-                <a href="quizzes.html">Exams</a>
+                <a href="exams.html">Exams</a>
             </li>
-            <li class="${currentPage === "quiz-form.html" ? "active" : ""}">
+            <li class="${currentPage === "exam-form.html" ? "active" : ""}">
                 <i class="fa-solid fa-square-plus"></i>
-                <a href="quiz-form.html">Add Exam</a>
+                <a href="exam-form.html">Add Exam</a>
             </li>
             <li class="${currentPage === "students.html" ? "active" : ""}">
                 <i class="fa-solid fa-users"></i>

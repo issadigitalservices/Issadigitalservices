@@ -16,6 +16,11 @@
     min-width: 0;
 }
 
+/* Hide mobile header bar by default on large desktop screens */
+.mobile-header-bar {
+    display: none;
+}
+
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -91,20 +96,29 @@
     font-size: 1.5rem;
 }
 
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+/* Force courses container into a flexible multi-column layout using Flexbox wrap */
+#coursesGrid {
+    display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
 }
 
+/* Force every course card/item to take up half the width minus the gap */
+#coursesGrid > *,
 .course-card {
+    flex: 0 0 calc(50% - 0.75rem);
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     background: #ffffff;
     border-radius: 16px;
     box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.1));
     transition: .25s;
+    box-sizing: border-box;
+    margin-bottom: 0 !important;
 }
 
+#coursesGrid > *:hover,
 .course-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg, 0 10px 15px rgba(0,0,0,0.1));
@@ -112,7 +126,7 @@
 
 .course-card img {
     width: 100%;
-    height: 240px;
+    height: 200px;
     object-fit: contain;
     background: #f8fafc;
     padding: 15px;
@@ -120,6 +134,9 @@
 
 .course-content {
     padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .course-content h3 {
@@ -129,6 +146,7 @@
 .course-content p {
     color: var(--text-secondary, #64748b);
     margin-bottom: 1rem;
+    flex-grow: 1;
 }
 
 .progress-bar {
@@ -151,6 +169,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
 }
 
 .empty-state {
@@ -177,48 +196,27 @@
     margin-bottom: 2rem;
 }
 
-@media(max-width:768px) {
+@media(max-width: 768px) {
     .stats-grid {
         grid-template-columns: 1fr;
     }
 
-    .courses-grid {
-        grid-template-columns: 1fr;
+    /* Stack cards full-width on mobile screens */
+    #coursesGrid > *,
+    .course-card {
+        flex: 0 0 100% !important;
     }
 }
 
-/* Sidebar & Layout Positioning */
-.sidebar {
-    position: sticky !important;
-    top: 0;
-    left: auto;
-    flex: 0 0 280px;
-    width: 280px;
-    height: 100vh;
-}
-
-.menu-toggle {
-    display: none;
-    width: 45px;
-    height: 45px;
-    border: none;
-    border-radius: 10px;
-    background: #2563eb;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.sidebar-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.sidebar-close {
-    display: none;
-}
-
 @media (max-width: 992px) {
+    /* Show mobile header bar on smaller screens */
+    .mobile-header-bar {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
     .menu-toggle {
         display: flex;
         align-items: center;
@@ -229,52 +227,6 @@
     .top-left {
         display: flex;
         align-items: center;
-    }
-
-    .sidebar {
-        position: fixed !important;
-        top: 0;
-        left: -280px;
-        width: 280px;
-        height: 100vh;
-        z-index: 2000;
-        transition: left .3s ease;
-    }
-
-    .sidebar.open {
-        left: 0;
-    }
-
-    .sidebar-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, .45);
-        opacity: 0;
-        visibility: hidden;
-        transition: .3s;
-        z-index: 1999;
-    }
-
-    .sidebar-overlay.show {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .sidebar-close {
-        display: flex;
-        position: absolute;
-        top: 20px;
-        right: 18px;
-        width: 40px;
-        height: 40px;
-        border: none;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, .12);
-        color: #fff;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 18px;
     }
 
     .content {
@@ -432,108 +384,4 @@
 .btn-enroll-primary:active {
     transform: translateY(0);
     box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-}
-
-/* ==========================================================
-   Mobile Header Bar & Toggle Button Styling (Dashboard)
-   ========================================================== */
-.mobile-header-bar {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.8rem 1rem;
-    background: #ffffff;
-    border-bottom: 1px solid #E5E7EB;
-    z-index: 2500;
-}
-
-.mobile-menu-btn {
-    display: none; /* Hidden by default on desktop */
-    background: #2563EB;
-    color: #ffffff;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    font-size: 18px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-}
-
-.mobile-brand-title {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #111827;
-}
-
-@media (max-width: 992px) {
-    .mobile-header-bar {
-        display: flex;
-    }
-    
-    .mobile-menu-btn {
-        display: flex; /* Displays properly on mobile screens */
-    }
-
-    .top-left {
-        display: flex;
-        align-items: center;
-    }
-
-    .sidebar {
-        position: fixed !important;
-        top: 0;
-        left: -280px;
-        width: 280px;
-        height: 100vh;
-        z-index: 2000;
-        transition: left .3s ease;
-    }
-
-    .sidebar.open {
-        left: 0;
-    }
-
-    .sidebar-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, .45);
-        opacity: 0;
-        visibility: hidden;
-        transition: .3s;
-        z-index: 1999;
-    }
-
-    .sidebar-overlay.show {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .sidebar-close {
-        display: flex;
-        position: absolute;
-        top: 20px;
-        right: 18px;
-        width: 40px;
-        height: 40px;
-        border: none;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, .12);
-        color: #fff;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 18px;
-    }
-
-    .content {
-        width: 100%;
-        padding: 1.5rem;
-        padding-top: 75px; /* Pushes content down so the fixed header doesn't overlap */
-    }
 }

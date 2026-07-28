@@ -8,7 +8,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Quizzes | ISSA Academy</title>
+<title>Exams | ISSA Academy</title>
 
 <link rel="icon"
 href="../assets/images/Issa-Logo.png">
@@ -30,7 +30,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 href="../assets/css/main.css">
 
 <link rel="stylesheet"
-href="../assets/css/admin/quizzes.css">
+href="../assets/css/admin/exams.css">
 
 <link rel="stylesheet"
 href="../assets/css/layout/admin-layout.css">
@@ -67,25 +67,25 @@ href="../assets/css/layout/admin-layout.css">
 
 <h1>
 
-Quiz Management
+Exam Management
 
 </h1>
 
 <p>
 
-Manage Module Quizzes & Final Exams.
+Manage Module Exams & Final Exams.
 
 </p>
 
 </div>
 
 <a
-href="quiz-form.html"
+href="exam-form.html"
 class="btn btn-primary">
 
 <i class="fa-solid fa-plus"></i>
 
-Add Quiz
+Add Exam
 
 </a>
 
@@ -98,7 +98,7 @@ Add Quiz
 <input
 type="search"
 id="searchInput"
-placeholder="Search quiz...">
+placeholder="Search exam...">
 
 <select id="courseFilter">
 
@@ -120,7 +120,7 @@ All Types
 
 <option value="module">
 
-Module Quiz
+Module Exam
 
 </option>
 
@@ -156,11 +156,11 @@ Draft
 
 </section>
 
-<!-- ================= Quiz Grid ================= -->
+<!-- ================= Exam Grid ================= -->
 
 <section
-id="quizGrid"
-class="quiz-grid">
+id="examGrid"
+class="exam-grid">
 
 </section>
 
@@ -174,101 +174,101 @@ class="empty-state hidden">
 
 <h2>
 
-No Quizzes Found
+No Exams Found
 
 </h2>
 
 <p>
 
-Create your first quiz.
+Create your first exam.
 
 </p>
 
 <a
-href="quiz-form.html"
+href="exam-form.html"
 class="btn btn-primary">
 
 <i class="fa-solid fa-plus"></i>
 
-Add Quiz
+Add Exam
 
 </a>
 
 </div>
 
-<!-- ================= Quiz Card Template ================= -->
+<!-- ================= Exam Card Template ================= -->
 
-<template id="quizCardTemplate">
+<template id="examCardTemplate">
 
-<article class="quiz-card">
+<article class="exam-card">
 
-<div class="quiz-header">
+<div class="exam-header">
 
 <div>
 
-<h3 class="quiz-title">
+<h3 class="exam-title">
 
 </h3>
 
-<span class="quiz-course">
+<span class="exam-course">
 
 </span>
 
 </div>
 
-<span class="quiz-status">
+<span class="exam-status">
 
 </span>
 
 </div>
 
-<div class="quiz-body">
+<div class="exam-body">
 
-<div class="quiz-item">
+<div class="exam-item">
 
 <i class="fa-solid fa-layer-group"></i>
 
-<span class="quiz-module">
+<span class="exam-module">
 
 </span>
 
 </div>
 
-<div class="quiz-item">
+<div class="exam-item">
 
 <i class="fa-solid fa-list-check"></i>
 
-<span class="quiz-type">
+<span class="exam-type">
 
 </span>
 
 </div>
 
-<div class="quiz-item">
+<div class="exam-item">
 
 <i class="fa-solid fa-clock"></i>
 
-<span class="quiz-duration">
+<span class="exam-duration">
 
 </span>
 
 </div>
 
-<div class="quiz-item">
+<div class="exam-item">
 
 <i class="fa-solid fa-circle-question"></i>
 
-<span class="quiz-questions">
+<span class="exam-questions">
 
 </span>
 
 </div>
 
-<div class="quiz-item">
+<div class="exam-item">
 
 <i class="fa-solid fa-percent"></i>
 
-<span class="quiz-passmark">
+<span class="exam-passmark">
 
 </span>
 
@@ -276,7 +276,7 @@ Add Quiz
 
 </div>
 
-<div class="quiz-actions">
+<div class="exam-actions">
 
 <button class="btn-edit">
 
@@ -330,7 +330,7 @@ alt="ISSA Academy">
 
 <p>
 
-Loading Quizzes...
+Loading Exams...
 
 </p>
 
@@ -352,7 +352,7 @@ class="toast-container">
 
 <script
 type="module"
-src="../assets/js/admin/quizzes.js">
+src="../assets/js/admin/exams.js">
 
 </script>
 

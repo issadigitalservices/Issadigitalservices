@@ -108,6 +108,14 @@ const params =
 const courseId =
     params.get("id");
 
+    // Add this validation check:
+if (!courseId) {
+    showToast("No course selected.", "error");
+    setTimeout(() => {
+        location.href = "my-courses.html";
+    }, 1500);
+}
+
 /* ==========================================================================
    AUTH
    ========================================================================== */
@@ -311,14 +319,14 @@ async function loadModules() {
         const module = moduleDoc.data();
         const locked = module.order > unlockedOrder;
 
-        // Run lesson query and quiz query simultaneously for this module
-        const [lessonSnapshot, quizSnapshot] = await Promise.all([
+        // Run lesson query and exam query simultaneously for this module
+        const [lessonSnapshot, examSnapshot] = await Promise.all([
             getDocs(query(collection(db, "lessons"), where("moduleId", "==", moduleDoc.id), orderBy("order"))),
-            getDocs(query(collection(db, "quizzes"), where("courseId", "==", courseId), where("moduleId", "==", moduleDoc.id), limit(1)))
+            getDocs(query(collection(db, "exams"), where("courseId", "==", courseId), where("moduleId", "==", moduleDoc.id), limit(1)))
         ]);
 
         let lessonsHTML = "";
-        let quizHTML = "";
+        let examHTML = "";
 
         if (locked) {
             lessonSnapshot.forEach(docSnap => {
@@ -329,7 +337,7 @@ async function loadModules() {
                         <span class="lesson-lock">Locked</span>
                     </a>`;
             });
-            quizHTML = `
+            examHTML = `
                 <div class="assessment-card locked">
                     <div class="assessment-icon"><i class="fa-solid fa-lock"></i></div>
                     <div class="assessment-content"><h4>Module Exam</h4><p>Complete the previous Module Exam to unlock this module.</p></div>
@@ -354,36 +362,36 @@ async function loadModules() {
 
             const allLessonsCompleted = lessonSnapshot.docs.every(doc => completedLessons.has(doc.id));
 
-            if (!quizSnapshot.empty) {
-                const quiz = quizSnapshot.docs[0];
-                const quizData = quiz.data();
+            if (!examSnapshot.empty) {
+                const exam = examSnapshot.docs[0];
+                const examData = exam.data();
 
                 const attemptSnapshot = await getDocs(
-                    query(collection(db, "quizAttempts"), where("studentId", "==", auth.currentUser.uid), where("quizId", "==", quiz.id), where("passed", "==", true), limit(1))
+                    query(collection(db, "examAttempts"), where("studentId", "==", auth.currentUser.uid), where("examId", "==", exam.id), where("passed", "==", true), limit(1))
                 );
 
                 if (!attemptSnapshot.empty) {
                     const attempt = attemptSnapshot.docs[0].data();
-                    quizHTML = `
+                    examHTML = `
                         <div class="assessment-card passed">
                             <div class="assessment-icon"><i class="fa-solid fa-circle-check"></i></div>
                             <div class="assessment-content">
-                                <h4>${quizData.title}</h4>
+                                <h4>${examData.title}</h4>
                                 <p>Score: ${attempt.score}/${attempt.totalMarks} (${attempt.percentage}%)<br><strong style="color:#16a34a;">✅ Passed</strong></p>
                             </div>
                         </div>`;
                 } else if (allLessonsCompleted) {
-                    quizHTML = `
+                    examHTML = `
                         <div class="assessment-card">
                             <div class="assessment-icon"><i class="fa-solid fa-file-circle-question"></i></div>
                             <div class="assessment-content">
-                                <h4>${quizData.title}</h4>
+                                <h4>${examData.title}</h4>
                                 <p>Complete this Exam to unlock the next Module.</p>
                             </div>
-                            <a href="start-assessment.html?id=${quiz.id}&courseId=${courseId}" class="assessment-btn">Start Exam</a>
+                            <a href="start-assessment.html?id=${exam.id}&courseId=${courseId}" class="assessment-btn">Start Exam</a>
                         </div>`;
                 } else {
-                    quizHTML = `
+                    examHTML = `
                         <div class="assessment-card locked">
                             <div class="assessment-icon"><i class="fa-solid fa-lock"></i></div>
                             <div class="assessment-content"><h4>Module Exam</h4><p>Complete all lessons to unlock this Exam.</p></div>
@@ -407,7 +415,7 @@ async function loadModules() {
                     </div>
                     <div class="lesson-list show">
                         ${lessonsHTML}
-                        ${quizHTML}
+                        ${examHTML}
                     </div>
                 </div>`
         };
@@ -489,11 +497,11 @@ async function loadFinalExam(){
 
     finalExamContainer.innerHTML = "";
 
-    const finalQuizSnapshot = await getDocs(
+    const finalExamSnapshot = await getDocs(
 
         query(
 
-            collection(db,"quizzes"),
+            collection(db,"exams"),
 
             where("courseId","==",courseId),
 
@@ -505,15 +513,15 @@ async function loadFinalExam(){
 
     );
 
-    if(finalQuizSnapshot.empty){
+    if(finalExamSnapshot.empty){
 
         return;
 
     }
 
-    const finalQuizDoc = finalQuizSnapshot.docs[0];
+    const finalExamDoc = finalExamSnapshot.docs[0];
 
-    const finalQuiz = finalQuizDoc.data();
+    const finalExam = finalExamDoc.data();
 
     const moduleProgressSnapshot = await getDocs(
 
@@ -551,11 +559,11 @@ async function loadFinalExam(){
 
         query(
 
-            collection(db,"quizAttempts"),
+            collection(db,"examAttempts"),
 
             where("studentId","==",auth.currentUser.uid),
 
-            where("quizId","==",finalQuizDoc.id),
+            where("examId","==",finalExamDoc.id),
 
             where("passed","==",true),
 
@@ -583,7 +591,7 @@ async function loadFinalExam(){
 
         <h4>
 
-            ${finalQuiz.title}
+            ${finalExam.title}
 
         </h4>
 
@@ -630,7 +638,7 @@ async function loadFinalExam(){
 
         <h4>
 
-            ${finalQuiz.title}
+            ${finalExam.title}
 
         </h4>
 
@@ -644,7 +652,7 @@ async function loadFinalExam(){
 
     <a
 
-        href="start-assessment.html?id=${finalQuizDoc.id}&courseId=${courseId}"
+        href="start-assessment.html?id=${finalExamDoc.id}&courseId=${courseId}"
 
         class="assessment-btn">
 

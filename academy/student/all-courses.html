@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Courses | ISSA Academy</title>
+    <title>All Courses | ISSA Academy</title>
     <meta name="theme-color" content="#2563EB">
     <link rel="icon" href="../assets/images/Issa-Logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/student/my-courses.css">
+    <link rel="stylesheet" href="../assets/css/student/all-courses.css">
 </head>
 
 <body>
@@ -36,20 +37,20 @@
                         Dashboard
                     </a>
                 </li>
-                <li class="active">
+
+                <li>
                     <a href="my-courses.html">
                         <i class="fa-solid fa-book-open"></i>
                         My Courses
                     </a>
                 </li>
 
-                <li>
+                <li class="active">
                     <a href="all-courses.html">
                         <i class="fa-solid fa-compass"></i>
                         Explore Courses
                     </a>
                 </li>
-
                 <li>
                     <a href="profile.html">
                         <i class="fa-solid fa-user"></i>
@@ -84,21 +85,14 @@
 
         <header class="top-bar">
             <div>
-                <h1>My Courses</h1>
-                <p>Continue your enrolled courses.</p>
+                <h1>Explore Courses</h1>
+                <p>Browse and discover all available courses at ISSA Academy.</p>
             </div>
         </header>
 
-        <div id="coursesGrid" class="courses-grid"></div>
-
-        <div id="emptyState" class="empty-state hidden">
-            <i class="fa-solid fa-book-open empty-icon"></i>
-            <h2>No Enrolled Courses</h2>
-            <p>Once your enrollment is approved, your courses will appear here.</p>
-            <a href="all-courses.html" class="btn-enroll-primary">
-                <span>Browse Excel Course</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
+        <!-- ================= Course Grid Container ================= -->
+        <div id="allCoursesGrid" class="grid-3">
+            <!-- Dynamic courses will load here -->
         </div>
 
     </main>
@@ -118,7 +112,8 @@
 <!-- Sidebar Overlay for Mobile View -->
 <div class="sidebar-overlay"></div>
 
-<script type="module" src="../assets/js/student/my-courses.js"></script>
+<script type="module" src="../assets/js/student/student-sidebar.js"></script>
+<script type="module" src="../assets/js/student/all-courses.js"></script>
 
 <!-- Inline Mobile Toggle Initialization Script -->
 <script>

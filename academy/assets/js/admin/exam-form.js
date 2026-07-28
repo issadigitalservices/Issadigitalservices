@@ -2,7 +2,7 @@
 
 /* ==========================================================================
    ISSA Academy
-   Quiz Form
+   Exam Form
    ========================================================================== */
 
 import {
@@ -39,15 +39,15 @@ import {
 const params =
     new URLSearchParams(location.search);
 
-const quizId =
+const examId =
     params.get("id");
 
 /* ==========================================================================
    DOM
    ========================================================================== */
 
-const quizForm =
-    document.getElementById("quizForm");
+const examForm =
+    document.getElementById("examForm");
 
 const courseId =
     document.getElementById("courseId");
@@ -55,11 +55,11 @@ const courseId =
 const moduleId =
     document.getElementById("moduleId");
 
-const quizTitle =
-    document.getElementById("quizTitle");
+const examTitle =
+    document.getElementById("examTitle");
 
-const quizType =
-    document.getElementById("quizType");
+const examType =
+    document.getElementById("examType");
 
 const duration =
     document.getElementById("duration");
@@ -102,9 +102,9 @@ onAuthStateChanged(
 
         await loadCourses();
 toggleModuleField();
-        if(quizId){
+        if(examId){
 
-            await loadQuiz();
+            await loadExam();
 
         }
 
@@ -168,11 +168,11 @@ courseId.addEventListener(
 
 );
 
-quizType.addEventListener("change", toggleModuleField);
+examType.addEventListener("change", toggleModuleField);
 
 function toggleModuleField(){
 
-    if(quizType.value === "final"){
+    if(examType.value === "final"){
 
         moduleId.value = "";
 
@@ -251,10 +251,10 @@ ${module.title}
 }
 
 /* ==========================================================================
-   LOAD QUIZ
+   LOAD Exam
    ========================================================================== */
 
-async function loadQuiz(){
+async function loadExam(){
 
     const snapshot = await getDoc(
 
@@ -262,9 +262,9 @@ async function loadQuiz(){
 
             db,
 
-            "quizzes",
+            "exams",
 
-            quizId
+            examId
 
         )
 
@@ -274,7 +274,7 @@ async function loadQuiz(){
 
         showToast(
 
-            "Quiz not found.",
+            "exam not found.",
 
             "error"
 
@@ -284,49 +284,49 @@ async function loadQuiz(){
 
     }
 
-    const quiz =
+    const exam =
 
         snapshot.data();
 
     courseId.value =
 
-        quiz.courseId;
+        exam.courseId;
 
     await loadModules();
 
     moduleId.value =
 
-        quiz.moduleId || "";
+        exam.moduleId || "";
 
-    quizTitle.value =
+    examTitle.value =
 
-        quiz.title || "";
+        exam.title || "";
 
-    quizType.value =
+    examType.value =
 
-        quiz.type || "module";
+        exam.type || "module";
 
     duration.value =
 
-        quiz.duration || 30;
+        exam.duration || 30;
 
     totalQuestions.value =
 
-        quiz.totalQuestions || 10;
+        exam.totalQuestions || 10;
 
     passMark.value =
 
-        quiz.passMark || 70;
+        exam.passMark || 70;
 
    toggleModuleField();
 
 }
 
 /* ==========================================================================
-   SAVE QUIZ
+   SAVE Exam
    ========================================================================== */
 
-quizForm.addEventListener(
+examForm.addEventListener(
 
     "submit",
 
@@ -338,7 +338,7 @@ quizForm.addEventListener(
 
         if(
 
-    quizType.value === "module"
+    examType.value === "module"
 
     &&
 
@@ -404,7 +404,7 @@ quizForm.addEventListener(
 
                 title:
 
-                    quizTitle.value.trim(),
+                    examTitle.value.trim(),
 
                 courseId:
 
@@ -416,19 +416,19 @@ quizForm.addEventListener(
 
               moduleId:
 
-    quizType.value === "final"
+    examType.value === "final"
         ? ""
         : moduleId.value,
 
                 moduleName:
 
-    quizType.value === "final"
+    examType.value === "final"
         ? ""
         : moduleSnap?.data().title || "",
 
                 type:
 
-                    quizType.value,
+                    examType.value,
 
                 duration:
 
@@ -460,7 +460,7 @@ quizForm.addEventListener(
 
             };
 
-            if(quizId){
+            if(examId){
 
                 await updateDoc(
 
@@ -468,9 +468,9 @@ quizForm.addEventListener(
 
                         db,
 
-                        "quizzes",
+                        "exams",
 
-                        quizId
+                        examId
 
                     ),
 
@@ -492,7 +492,7 @@ quizForm.addEventListener(
 
                         db,
 
-                        "quizzes"
+                        "exams"
 
                     ),
 
@@ -512,7 +512,7 @@ quizForm.addEventListener(
 
                 location.href =
 
-                    "quizzes.html";
+                    "exams.html";
 
             },1200);
 

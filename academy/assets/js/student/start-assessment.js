@@ -12,7 +12,7 @@
 const params =
     new URLSearchParams(location.search);
 
-const quizId =
+const examId =
     params.get("id");
 
 const courseId =
@@ -53,7 +53,7 @@ agreeCheckbox.addEventListener(
 );
 
 /* ==========================================================================
-   START QUIZ
+   START Exam
    ========================================================================== */
 
 agreeBtn.addEventListener(
@@ -62,7 +62,7 @@ agreeBtn.addEventListener(
 
     ()=>{
 
-        if(!quizId){
+        if(!examId){
 
             alert(
 
@@ -76,7 +76,7 @@ agreeBtn.addEventListener(
 
         location.href =
 
-            `quiz.html?id=${quizId}`;
+            `exam.html?id=${examId}`;
 
     }
 

@@ -256,7 +256,7 @@ Background
 
 # Future Modules
 
-Quiz
+Exam
 
 Assignments
 

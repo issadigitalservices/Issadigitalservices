@@ -2,7 +2,7 @@
 
 /* ==========================================================================
    ISSA Academy
-   Quiz Questions
+   Exam Questions
    ========================================================================== */
 
 import {
@@ -44,15 +44,15 @@ import {
 const params =
     new URLSearchParams(location.search);
 
-const quizId =
+const examId =
     params.get("id");
 
 /* ==========================================================================
    DOM
    ========================================================================== */
 
-const quizTitle =
-    document.getElementById("quizTitle");
+const examTitle =
+    document.getElementById("examTitle");
 
 const questionForm =
     document.getElementById("questionForm");
@@ -183,11 +183,11 @@ let editQuestionId = null;
 
         }
 
-        if(!quizId){
+        if(!examId){
 
             location.href =
 
-                "quizzes.html";
+                "exams.html";
 
             return;
 
@@ -195,7 +195,7 @@ let editQuestionId = null;
 
         showLoader();
 
-        await loadQuiz();
+        await loadExam();
 
         await loadQuestions();
 
@@ -206,10 +206,10 @@ let editQuestionId = null;
 );
 
 /* ==========================================================================
-   LOAD QUIZ
+   LOAD EXAM
    ========================================================================== */
 
-async function loadQuiz(){
+async function loadExam(){
 
     const snapshot = await getDoc(
 
@@ -217,9 +217,9 @@ async function loadQuiz(){
 
             db,
 
-            "quizzes",
+            "exams",
 
-            quizId
+            examId
 
         )
 
@@ -239,7 +239,7 @@ async function loadQuiz(){
 
     }
 
-    quizTitle.textContent =
+    examTitle.textContent =
 
         snapshot.data().title;
 
@@ -274,7 +274,7 @@ if (questionAttachment.files.length) {
     const uploadedFile =
     await uploadFile(
         file,
-        "quiz-files"
+        "exam-files"
     );
 
 attachmentUrl =
@@ -287,7 +287,7 @@ attachmentName =
 
             const data = {
 
-                quizId,
+                examId,
 
                 attachmentUrl,
 
@@ -339,7 +339,7 @@ attachmentName,
 
                         db,
 
-                        "quizQuestions",
+                        "examQuestions",
 
                         editQuestionId
 
@@ -368,7 +368,7 @@ attachmentName,
 
                         db,
 
-                        "quizQuestions"
+                        "examQuestions"
 
                     ),
 
@@ -428,7 +428,7 @@ window.deleteQuestion = async function(id){
 
                 db,
 
-                "quizQuestions",
+                "examQuestions",
 
                 id
 
@@ -486,17 +486,17 @@ async function loadQuestions(){
 
                 db,
 
-                "quizQuestions"
+                "examQuestions"
 
             ),
 
             where(
 
-                "quizId",
+                "examId",
 
                 "==",
 
-                quizId
+                examId
 
             )
 
@@ -642,7 +642,7 @@ window.editQuestion = async function(id){
 
                 db,
 
-                "quizQuestions",
+                "examQuestions",
 
                 id
 

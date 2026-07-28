@@ -34,6 +34,15 @@
 
           <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
 
+<!-- Put this strictly AFTER all other stylesheets -->
+<style>
+    #pageLoader, .page-loader, .loader-card { 
+        display: none !important; 
+        visibility: hidden !important; 
+        opacity: 0 !important; 
+        pointer-events: none !important; 
+    }
+</style>
 </head>
 
 <body>
@@ -219,30 +228,6 @@
         </template>
 
     </main>
-
-</div>
-
-<!-- ================= Loader ================= -->
-
-<div
-    id="pageLoader"
-    class="page-loader hidden">
-
-    <div class="loader-card">
-
-        <img
-            src="../assets/images/Issa-Logo.png"
-            alt="ISSA Academy">
-
-        <div class="loader-spinner"></div>
-
-        <p>
-
-            Loading Courses...
-
-        </p>
-
-    </div>
 
 </div>
 

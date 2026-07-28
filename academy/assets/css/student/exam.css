@@ -1,6 +1,6 @@
 /* ==========================================================================
    ISSA Academy
-   Student Quiz (Mobile Optimized Styles)
+   Student Exam (Mobile Optimized Styles)
    ========================================================================== */
 
 * {
@@ -15,7 +15,7 @@ body {
   padding: 30px;
 }
 
-.quiz-wrapper {
+.exam-wrapper {
   max-width: 1200px;
   margin: auto;
   background: #ffffff;
@@ -24,20 +24,20 @@ body {
   box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
 }
 
-.quiz-header {
+.exam-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
 }
 
-.quiz-header h2 {
+.exam-header h2 {
   font-size: 28px;
   color: #111827;
   margin-bottom: 6px;
 }
 
-.quiz-header p {
+.exam-header p {
   color: #64748b;
   font-size: 20px;
 }
@@ -72,7 +72,7 @@ body {
   transition: 0.3s;
 }
 
-.quiz-body {
+.exam-body {
   display: grid;
   grid-template-columns: 1fr 260px;
   gap: 30px;
@@ -286,7 +286,7 @@ body {
    BUTTONS & FOOTER STYLES
    ========================================================================== */
 
-.quiz-footer {
+.exam-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -386,14 +386,14 @@ body {
     padding: 8px;
   }
 
-  .quiz-wrapper {
+  .exam-wrapper {
     padding: 12px;
     border-radius: 10px;
     width: 100%;
     overflow-x: hidden;
   }
 
-  .quiz-body {
+  .exam-body {
     grid-template-columns: 1fr;
     gap: 20px;
   }
@@ -415,17 +415,17 @@ body {
     grid-template-columns: repeat(5, 1fr);
   }
 
-  .quiz-header {
+  .exam-header {
     flex-direction: column;
     align-items: stretch;
     gap: 15px;
   }
 
-  .quiz-header h2 {
+  .exam-header h2 {
     font-size: 22px;
   }
 
-  .quiz-header p {
+  .exam-header p {
     font-size: 15px;
   }
 
@@ -435,12 +435,12 @@ body {
     padding: 12px;
   }
 
-  .quiz-footer {
+  .exam-footer {
     flex-direction: column;
     gap: 12px;
   }
 
-  .quiz-footer .btn {
+  .exam-footer .btn {
     width: 100%;
   }
 }

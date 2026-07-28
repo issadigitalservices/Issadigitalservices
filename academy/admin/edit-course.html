@@ -5,34 +5,50 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Edit Course | ISSA Academy</title>
 
-    <link rel="icon"
-          href="../assets/images/Issa-Logo.png">
+    <meta
+        name="theme-color"
+        content="#2563EB">
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+    <link
+        rel="icon"
+        href="../assets/images/Issa-Logo.png">
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet"
-          href="../assets/css/main.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <link rel="stylesheet"
-          href="../assets/css/admin/edit-course.css">
+    <link
+        rel="stylesheet"
+        href="../assets/css/main.css">
 
-<link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+    <link
+        rel="stylesheet"
+        href="../assets/css/components/sidebar.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/admin/add-course.css">
+
+    <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
 
 </head>
 
@@ -40,14 +56,18 @@
 
 <div class="admin-layout">
 
+    <!-- ================= Sidebar ================= -->
+
     <aside
     class="sidebar"
     id="adminSidebar">
 </aside>
 
+    <!-- ================= Main ================= -->
+
     <main class="main-content">
 
-        <header class="topbar">
+        <div class="page-header">
 
             <div style="display: flex; align-items: center; gap: 1rem;">
         <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Toggle Sidebar">
@@ -60,14 +80,23 @@
 
             <div>
 
-                <h1>Edit Course</h1>
+                <h1>
 
-                <p>Update course information.</p>
+                    Edit Course
+
+                </h1>
+
+                <p>
+
+                    Update existing course information for ISSA Academy.
+
+                </p>
 
             </div>
 
-            <a href="courses.html"
-               class="btn btn-secondary">
+            <a
+                href="courses.html"
+                class="btn-secondary">
 
                 <i class="fa-solid fa-arrow-left"></i>
 
@@ -75,156 +104,381 @@
 
             </a>
 
-        </header>
+        </div>
 
-        <form id="courseForm"
-              class="form-card">
+        <form
+            id="courseForm">
 
-            <div class="form-grid">
+            <!-- ================= Course Information ================= -->
 
-                <div class="form-group">
+            <div class="card">
 
-                    <label>
+                <h3>
 
-                        Course Title
+                    Course Information
 
-                    </label>
+                </h3>
 
-                    <input
-                        id="title"
-                        type="text"
-                        required>
+                <div class="grid-2">
 
-                </div>
+                    <div class="form-group">
 
-                <div class="form-group">
+                        <label>
 
-                    <label>
+                            Course Title
 
-                        Category
+                        </label>
 
-                    </label>
+                        <input
+                            type="text"
+                            id="courseTitle"
+                            required>
 
-                    <input
-                        id="category"
-                        type="text"
-                        required>
+                    </div>
 
-                </div>
+                    <div class="form-group">
 
-                <div class="form-group">
+                        <label>
 
-                    <label>
+                            Slug
 
-                        Price (₹)
+                        </label>
 
-                    </label>
+                        <input
+                            type="text"
+                            id="courseSlug"
+                            readonly>
 
-                    <input
-                        id="price"
-                        type="number"
-                        required>
+                    </div>
 
-                </div>
+                    <div class="form-group">
 
-                <div class="form-group">
+                        <label>
 
-                    <label>
+                            Category
 
-                        Duration
+                        </label>
 
-                    </label>
+                        <select
+                            id="courseCategory"
+                            required>
 
-                    <input
-                        id="duration"
-                        type="text">
+                            <option value="">
 
-                </div>
+                                Select Category
 
-                <div class="form-group">
+                            </option>
 
-                    <label>
+                        </select>
 
-                        Level
+                    </div>
 
-                    </label>
+                    <div class="form-group">
 
-                    <select id="level">
+                        <label>
 
-                        <option>Beginner</option>
+                            Instructor
 
-                        <option>Intermediate</option>
+                        </label>
 
-                        <option>Advanced</option>
+                        <input
+                            type="text"
+                            id="courseInstructor">
 
-                    </select>
+                    </div>
 
-                </div>
+                    <div class="form-group">
 
-                <div class="form-group">
+                        <label>
 
-                    <label>
+                            Language
 
-                        Status
+                        </label>
 
-                    </label>
+                        <input
+                            type="text"
+                            id="courseLanguage">
 
-                    <select id="status">
+                    </div>
 
-                        <option value="draft">
+                    <div class="form-group">
 
-                            Draft
+                        <label>
 
-                        </option>
+                            Level
 
-                        <option value="published">
+                        </label>
 
-                            Published
+                        <select
+                            id="courseLevel">
 
-                        </option>
+                            <option>
 
-                    </select>
+                                Beginner
+
+                            </option>
+
+                            <option>
+
+                                Intermediate
+
+                            </option>
+
+                            <option>
+
+                                Advanced
+
+                            </option>
+
+                            <option>
+
+                                Beginner to Advanced
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Duration
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="courseDuration"
+                            placeholder="25 Hours">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Status
+
+                        </label>
+
+                        <select
+                            id="courseStatus">
+
+                            <option value="draft">Draft</option>
+
+                            <option value="published">Published</option>
+
+                        </select>
+
+                    </div>
 
                 </div>
 
             </div>
 
-            <div class="form-group">
+            <!-- ================= Pricing ================= -->
 
-                <label>
+            <div class="card">
+
+                <h3>
+
+                    Pricing
+
+                </h3>
+
+                <div class="grid-3">
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Original Price
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="coursePrice">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Offer Price
+
+                        </label>
+
+                        <input
+                            type="number"
+                            id="courseOfferPrice">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Currency
+
+                        </label>
+
+                        <select
+                            id="courseCurrency">
+
+                            <option>
+
+                                INR
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= Media ================= -->
+
+            <div class="card">
+
+                <h3>
+
+                    Media
+
+                </h3>
+
+                <div class="grid-2">
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Thumbnail
+
+                        </label>
+
+                        <input
+                            type="file"
+                            id="courseThumbnail"
+                            accept="image/*">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Trailer URL
+
+                        </label>
+
+                        <input
+                            type="url"
+                            id="courseTrailer">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= Description ================= -->
+
+            <div class="card">
+
+                <h3>
 
                     Description
 
-                </label>
+                </h3>
 
-                <textarea
-                    id="description"
-                    rows="6">
+                <div class="form-group">
 
-                </textarea>
+                    <label>
+
+                        Short Description
+
+                    </label>
+
+                    <textarea
+                        id="shortDescription"
+                        rows="3"></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+
+                        Full Description
+
+                    </label>
+
+                    <textarea
+                        id="fullDescription"
+                        rows="8"></textarea>
+
+                </div>
 
             </div>
 
-            <div class="form-group">
+            <!-- ================= Settings ================= -->
 
-                <label>
+            <div class="card">
 
-                    Thumbnail
+                <h3>
 
-                </label>
+                    Settings
 
-                <input
-                    id="thumbnail"
-                    type="file"
-                    accept="image/*">
+                </h3>
+
+                <div class="grid-2">
+
+                    <label class="checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="featuredCourse">
+
+                        Featured Course
+
+                    </label>
+
+                    <label class="checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="certificate">
+
+                        Certificate Available
+
+                    </label>
+
+                </div>
 
             </div>
 
-            <div class="form-actions">
+            <!-- ================= Buttons ================= -->
+
+            <div class="button-area">
+
+                <a
+                    href="courses.html"
+                    class="btn-secondary">
+
+                    Cancel
+
+                </a>
 
                 <button
-                    class="btn btn-primary"
-                    type="submit">
+                    type="submit"
+                    class="btn-primary">
 
                     <i class="fa-solid fa-floppy-disk"></i>
 
@@ -254,7 +508,7 @@
 
         <p>
 
-            Updating...
+            Updating Course...
 
         </p>
 

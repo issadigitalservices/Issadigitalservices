@@ -3,7 +3,7 @@
 /* ==========================================================================
    ISSA Academy
    Student Dashboard
-   Version : 2.0.0
+   Version : 2.0.1
    ========================================================================== */
 
 import {
@@ -109,24 +109,58 @@ async function loadEnrollments(uid) {
 
     let totalProgress = 0;
 
-    // IF NO ENROLLED COURSES YET
+    // IF NO ENROLLED COURSES YET: SHOW ALL AVAILABLE COURSES CATALOG
     if (snapshot.empty) {
-        emptyCourses.classList.remove("hidden");
-
-        // Hide "View All Courses" wrapper when student has 0 courses
-        if (viewAllCoursesWrapper) {
-            viewAllCoursesWrapper.classList.add("hidden");
-        }
+        if (emptyCourses) emptyCourses.classList.add("hidden");
+        if (viewAllCoursesWrapper) viewAllCoursesWrapper.classList.remove("hidden");
 
         totalCourses.textContent = "0";
         totalCertificates.textContent = "0";
         courseProgress.textContent = "0%";
 
+        try {
+            const allCoursesSnap = await getDocs(collection(db, "courses"));
+            const catalogCards = [];
+
+            allCoursesSnap.forEach((courseDoc) => {
+                const course = courseDoc.data();
+                const courseId = courseDoc.id;
+
+                catalogCards.push(`
+                    <article class="course-card">
+                        <img src="../${course.dashboardImage || course.thumbnail || 'assets/images/course-placeholder.jpg'}" alt="${course.title || 'Course'}">
+                        <div class="course-content">
+                            <h3>${course.title || 'Untitled Course'}</h3>
+                            <p>${course.description || ""}</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width:0%"></div>
+                            </div>
+                            <div class="course-footer">
+                                <span>Not Enrolled</span>
+                                <a class="btn btn-primary" href="../student/enroll.html?id=${courseId}">
+                                    Enroll Now
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                `);
+            });
+
+            if (catalogCards.length > 0) {
+                coursesGrid.innerHTML = catalogCards.join("");
+            } else {
+                if (emptyCourses) emptyCourses.classList.remove("hidden");
+            }
+        } catch (err) {
+            console.error("Error loading course catalog:", err);
+            if (emptyCourses) emptyCourses.classList.remove("hidden");
+        }
+
         return;
     }
 
     // IF STUDENT IS ENROLLED IN AT LEAST 1 COURSE
-    emptyCourses.classList.add("hidden");
+    if (emptyCourses) emptyCourses.classList.add("hidden");
 
     // Show "View All Courses" wrapper
     if (viewAllCoursesWrapper) {

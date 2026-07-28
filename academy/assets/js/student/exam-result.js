@@ -2,7 +2,7 @@
 
 /* ==========================================================================
    ISSA Academy
-   Quiz Result
+   Exam Result
    ========================================================================== */
 
 import {
@@ -36,7 +36,7 @@ import {
 const params =
     new URLSearchParams(location.search);
 
-const quizId =
+const examId =
     params.get("id");
 
 const score =
@@ -137,29 +137,29 @@ async function loadResult(studentId){
     percentageElement.textContent =
         `${percentage}%`;
 
-    const quizSnap =
+    const examSnap =
         await getDoc(
 
             doc(
 
                 db,
 
-                "quizzes",
+                "exams",
 
-                quizId
+                examId
 
             )
 
         );
 
-    if(!quizSnap.exists()){
+    if(!examSnap.exists()){
 
         return;
 
     }
 
-    const quiz =
-        quizSnap.data();
+    const exam =
+        examSnap.data();
 
     if(passed){
 
@@ -174,7 +174,7 @@ async function loadResult(studentId){
 
         /* ================= FINAL EXAM ================= */
 
-        if(quiz.type==="final"){
+        if(exam.type==="final"){
 
             continueBtn.textContent =
                 "View Certificate";
@@ -186,7 +186,7 @@ async function loadResult(studentId){
 
         
 
-        /* ================= MODULE QUIZ ================= */
+        /* ================= MODULE exam ================= */
 
         else{
 
@@ -197,11 +197,11 @@ async function loadResult(studentId){
 Continue Learning`;
 
 continueBtn.href =
-    `course.html?id=${quiz.courseId}`;
+    `course.html?id=${exam.courseId}`;
 
     /* ================= MODULE UNLOCK MESSAGE ================= */
 
-if(quiz.type === "module"){
+if(exam.type === "module"){
 
     const message = document.createElement("p");
 
@@ -298,7 +298,7 @@ Question review will be available in the next update.
 );
 
         retryBtn.href =
-    `start-assessment.html?id=${quizId}`;
+    `start-assessment.html?id=${examId}`;
 
     }
 

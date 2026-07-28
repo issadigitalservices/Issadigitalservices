@@ -2,7 +2,7 @@
 
 /* ==========================================================================
    ISSA Academy
-   Student Quiz
+   Student Exam
    ========================================================================== */
 
 import {
@@ -41,15 +41,15 @@ import {
 const params =
     new URLSearchParams(location.search);
 
-const quizId =
+const examId =
     params.get("id");
 
 /* ==========================================================================
    DOM
    ========================================================================== */
 
-const quizTitle =
-    document.getElementById("quizTitle");
+const examTitle =
+    document.getElementById("examTitle");
 
 const currentQuestion =
     document.getElementById("currentQuestion");
@@ -93,7 +93,7 @@ const toastContainer =
 
 let studentId = "";
 
-let quiz = {};
+let exam = {};
 
 let questions = [];
 
@@ -125,10 +125,10 @@ onAuthStateChanged(auth, async (user) => {
 
     showLoader();
 
-    // Load quiz first
-    const quizLoaded = await loadQuiz();
+    // Load exam first
+    const examLoaded = await loadExam();
 
-    if (!quizLoaded) {
+    if (!examLoaded) {
 
         hideLoader();
 
@@ -141,11 +141,11 @@ onAuthStateChanged(auth, async (user) => {
 
         query(
 
-            collection(db, "quizAttempts"),
+            collection(db, "examAttempts"),
 
             where("studentId", "==", studentId),
 
-            where("quizId", "==", quizId),
+            where("examId", "==", examId),
 
             where("passed", "==", true)
 
@@ -155,7 +155,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (!passedSnapshot.empty) {
 
-    location.replace(`course.html?id=${quiz.courseId}`);
+    location.replace(`course.html?id=${exam.courseId}`);
 
     return;
 
@@ -166,11 +166,11 @@ onAuthStateChanged(auth, async (user) => {
 
         query(
 
-            collection(db, "quizAttempts"),
+            collection(db, "examAttempts"),
 
             where("studentId", "==", studentId),
 
-            where("quizId", "==", quizId),
+            where("examId", "==", examId),
 
             where("submittedAt", "==", null)
 
@@ -208,16 +208,16 @@ onAuthStateChanged(auth, async (user) => {
 
     } else {
 
-        seconds = (quiz.duration || 30) * 60;
+        seconds = (exam.duration || 30) * 60;
 
         const newAttempt = await addDoc(
 
-            collection(db, "quizAttempts"),
+            collection(db, "examAttempts"),
 
             {
     studentId,
 
-    quizId,
+    examId,
 
     answers: {},
 
@@ -276,36 +276,36 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 /* ==========================================================================
-   LOAD QUIZ
+   LOAD EXAM
 ========================================================================== */
 
-async function loadQuiz() {
+async function loadExam() {
 
-    const quizDoc = await getDoc(
-        doc(db, "quizzes", quizId)
+    const examDoc = await getDoc(
+        doc(db, "exams", examId)
     );
 
-    if (!quizDoc.exists()) {
+    if (!examDoc.exists()) {
 
-        showToast("Quiz not found.", "error");
+        showToast("Exam not found.", "error");
 
         return false;
 
     }
 
-    quiz = {
+    exam = {
 
-        id: quizDoc.id,
+        id: examDoc.id,
 
-        ...quizDoc.data()
+        ...examDoc.data()
 
     };
 
-    quizTitle.textContent = quiz.title;
+    examTitle.textContent = exam.title;
 
     if (seconds === 0) {
 
-        seconds = (quiz.duration || 30) * 60;
+        seconds = (exam.duration || 30) * 60;
 
     }
 
@@ -323,9 +323,9 @@ async function loadQuestions(){
 
         query(
 
-            collection(db,"quizQuestions"),
+            collection(db,"examQuestions"),
 
-            where("quizId","==",quizId)
+            where("examId","==",examId)
 
         )
 
@@ -615,7 +615,7 @@ ${option.value}
 
                 db,
 
-                "quizAttempts",
+                "examAttempts",
 
                 attemptId
 
@@ -766,7 +766,7 @@ await updateDoc(
 
                         db,
 
-                        "quizAttempts",
+                        "examAttempts",
 
                         attemptId
 
@@ -818,7 +818,7 @@ function startTimer(){
 
             db,
 
-            "quizAttempts",
+            "examAttempts",
 
             attemptId
 
@@ -854,7 +854,7 @@ function startTimer(){
 
                 );
 
-                submitQuiz();
+                submitExam();
 
             }
 
@@ -908,7 +908,7 @@ previousBtn.addEventListener(
 
                     db,
 
-                    "quizAttempts",
+                    "examAttempts",
 
                     attemptId
 
@@ -948,7 +948,7 @@ nextBtn.addEventListener(
 
                     db,
 
-                    "quizAttempts",
+                    "examAttempts",
 
                     attemptId
 
@@ -1014,17 +1014,17 @@ Are you sure you want to submit your Answers?`;
 
         }
 
-        submitQuiz();
+        submitExam();
 
     }
 
 );
 
 /* ==========================================================================
-   SUBMIT QUIZ
+   SUBMIT EXAM
    ========================================================================== */
 
-async function submitQuiz(){
+async function submitExam(){
 
     clearInterval(
 
@@ -1077,7 +1077,7 @@ async function submitQuiz(){
 
         percentage >=
 
-        (quiz.passMark || 70);
+        (exam.passMark || 70);
 
     await updateDoc(
 
@@ -1085,7 +1085,7 @@ async function submitQuiz(){
 
         db,
 
-        "quizAttempts",
+        "examAttempts",
 
         attemptId
 
@@ -1115,21 +1115,21 @@ async function submitQuiz(){
 
 if (passed) {
 
-    const quizDoc = await getDoc(
+    const examDoc = await getDoc(
         doc(
             db,
-            "quizzes",
-            quizId
+            "exams",
+            examId
         )
     );
 
-    const quizData = quizDoc.data();
+    const examData = examDoc.data();
 
     /* ===========================================================
-       MODULE QUIZ
+       MODULE EXAM
     =========================================================== */
 
-    if (quizData.type === "module") {
+    if (examData.type === "module") {
 
         const progressSnapshot = await getDocs(
 
@@ -1139,9 +1139,9 @@ if (passed) {
 
                 where("studentId", "==", studentId),
 
-                where("courseId", "==", quizData.courseId),
+                where("courseId", "==", examData.courseId),
 
-                where("moduleId", "==", quizData.moduleId)
+                where("moduleId", "==", examData.moduleId)
 
             )
 
@@ -1157,9 +1157,9 @@ if (passed) {
 
                     studentId,
 
-                    courseId: quizData.courseId,
+                    courseId: examData.courseId,
 
-                    moduleId: quizData.moduleId,
+                    moduleId: examData.moduleId,
 
                     passed: true,
 
@@ -1177,7 +1177,7 @@ if (passed) {
        FINAL EXAM
     =========================================================== */
 
-    else if (quizData.type === "final") {
+    else if (examData.type === "final") {
 
         // Check if certificate already exists
 
@@ -1189,7 +1189,7 @@ if (passed) {
 
                 where("studentId", "==", studentId),
 
-                where("courseId", "==", quizData.courseId)
+                where("courseId", "==", examData.courseId)
 
             )
 
@@ -1222,7 +1222,7 @@ const studentEmailValue =
 
             const courseDoc = await getDoc(
 
-                doc(db, "courses", quizData.courseId)
+                doc(db, "courses", examData.courseId)
 
             );
 
@@ -1251,17 +1251,17 @@ studentEmail:
     studentEmailValue,
 
                     courseId:
-                        quizData.courseId,
+                        examData.courseId,
 
                     courseName:
-                        course.title || quizData.courseName,
+                        course.title || examData.courseName,
 
                     certificateNumber,
 
                     issueDate:
                         serverTimestamp(),
 
-                    quizId,
+                    examId,
 
                     percentage,
 
@@ -1279,7 +1279,7 @@ studentEmail:
 }
 
 location.href =
-`quiz-result.html?id=${quizId}&score=${score}&total=${totalMarks}&percentage=${percentage}&passed=${passed}`;
+`exam-result.html?id=${examId}&score=${score}&total=${totalMarks}&percentage=${percentage}&passed=${passed}`;
 }
 
 /* ==========================================================================

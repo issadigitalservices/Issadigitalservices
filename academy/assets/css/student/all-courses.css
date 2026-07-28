@@ -1,0 +1,213 @@
+/* ==========================================================================
+   ISSA Academy - All Courses Custom Styles
+   ========================================================================== */
+
+#allCoursesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    width: 100%;
+}
+
+.course-card {
+    background: #ffffff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -4px rgba(0, 0, 0, 0.1);
+}
+
+.course-thumbnail-wrapper {
+    width: 100%;
+    height: 180px;
+    background: #f3f4f6;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.course-category-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.course-card-content {
+    padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.course-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.course-description {
+    color: #4b5563;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.course-action-container {
+    margin-top: auto;
+}
+
+/* Buttons and Actions */
+.btn {
+    display: inline-block;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+.go-to-course-btn {
+    background-color: #16a34a;
+    display: block;
+    width: 100%;
+}
+
+.go-to-course-btn:hover {
+    background-color: #15803d;
+}
+
+.btn-secondary {
+    background-color: #f3f4f6;
+    color: #9ca3af;
+    width: 100%;
+    cursor: not-allowed;
+}
+
+.pending-actions-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.btn-whatsapp-support {
+    background-color: #25d366;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-whatsapp-support:hover {
+    background-color: #20ba5a;
+}
+
+.empty-courses-heading {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #6b7280;
+    padding: 3rem;
+}
+
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.75rem;
+}
+
+.modal-text {
+    color: #4b5563;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.modal-gpay-number {
+    color: #2563eb;
+    font-size: 1rem;
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.modal-whatsapp-btn {
+    padding: 0.75rem;
+    font-weight: 600;
+}
+
+.modal-done-btn {
+    width: 100%;
+}

@@ -2,7 +2,7 @@
 
 A modern Learning Management System (LMS) developed using HTML5, CSS3, JavaScript (ES Modules), Firebase Authentication, Cloud Firestore, and Cloudflare R2 Storage.
 
-ISSA Academy provides a complete online learning experience including course management, lessons, quizzes, final examinations, certificates, progress tracking, secure file attachments, and certificate verification.
+ISSA Academy provides a complete online learning experience including course management, lessons, exams, final examinations, certificates, progress tracking, secure file attachments, and certificate verification.
 
 ---
 
@@ -14,8 +14,8 @@ ISSA Academy provides a complete online learning experience including course man
 - Course Management
 - Module Management
 - Lesson Management
-- Quiz & Assessment Management
-- Module Quizzes
+- Exam & Assessment Management
+- Module Exams
 - Final Exams
 - Question Attachments (Excel, PDF, Word, PowerPoint, Images, ZIP)
 - Student Management
@@ -32,7 +32,7 @@ ISSA Academy provides a complete online learning experience including course man
 - Lesson Player
 - Module Assessments
 - Final Examinations
-- Quiz Results
+- Exam Results
 - Certificate Download (PDF)
 - Certificate Verification
 - Student Profile
@@ -62,7 +62,7 @@ ISSA Academy provides a complete online learning experience including course man
 - Cloudflare File Upload
 - Lesson Video Streaming
 - Question File Attachments
-- Quiz Timer
+- Exam Timer
 - Question Palette
 - Progress Tracking
 - Toast Notifications
@@ -155,7 +155,7 @@ Configure:
 Used for:
 
 - Lesson Videos
-- Quiz Attachments
+- Exam Attachments
 - PDF Files
 - Images
 - Documents
@@ -168,7 +168,7 @@ Used for:
 - Courses
 - Modules
 - Lessons
-- Quizzes
+- Exams
 - Question Management
 - Students
 - Payments
@@ -185,7 +185,7 @@ Used for:
 - Lesson Viewer
 - Assessments
 - Final Exams
-- Quiz Results
+- Exam Results
 - Certificates
 - Certificate Verification
 - Profile

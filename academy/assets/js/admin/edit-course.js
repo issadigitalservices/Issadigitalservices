@@ -2,37 +2,31 @@
 
 /* ==========================================================================
    ISSA Academy
-   Edit Course
+   Edit Course (Synchronized with Add Course fields)
    ========================================================================== */
 
 import {
-
     db,
     storage
-
 } from "../core/firebase-config.js";
 
 import {
-
     requireAdmin
-
 } from "../core/auth-guard.js";
 
 import {
-
     doc,
     getDoc,
     updateDoc,
+    getDocs,
+    collection,
     serverTimestamp
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 import {
-
     ref,
     uploadBytes,
     getDownloadURL
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-storage.js";
 
 /* ==========================================================================
@@ -42,51 +36,37 @@ import {
 await requireAdmin();
 
 /* ==========================================================================
-   DOM
+   DOM ELEMENTS (Matched exactly to your Add Course form fields)
    ========================================================================== */
 
-const form =
-    document.getElementById("courseForm");
+const form = document.getElementById("courseForm");
+const courseTitle = document.getElementById("title") || document.getElementById("courseTitle");
+const courseSlug = document.getElementById("courseSlug");
+const courseCategory = document.getElementById("category") || document.getElementById("courseCategory");
+const courseInstructor = document.getElementById("instructor") || document.getElementById("courseInstructor");
+const courseLanguage = document.getElementById("language") || document.getElementById("courseLanguage");
+const courseLevel = document.getElementById("level") || document.getElementById("courseLevel");
+const courseDuration = document.getElementById("duration") || document.getElementById("courseDuration");
+const coursePrice = document.getElementById("price") || document.getElementById("coursePrice");
+const courseOfferPrice = document.getElementById("offerPrice") || document.getElementById("courseOfferPrice");
+const courseCurrency = document.getElementById("currency") || document.getElementById("courseCurrency");
+const courseThumbnail = document.getElementById("thumbnail") || document.getElementById("courseThumbnail");
+const courseTrailer = document.getElementById("trailerVideo") || document.getElementById("courseTrailer");
+const shortDescription = document.getElementById("shortDescription");
+const fullDescription = document.getElementById("description") || document.getElementById("fullDescription");
+const featuredCourse = document.getElementById("featured") || document.getElementById("featuredCourse");
+const certificate = document.getElementById("certificate");
+const courseStatus = document.getElementById("status");
 
-const title =
-    document.getElementById("title");
-
-const category =
-    document.getElementById("category");
-
-const price =
-    document.getElementById("price");
-
-const duration =
-    document.getElementById("duration");
-
-const level =
-    document.getElementById("level");
-
-const status =
-    document.getElementById("status");
-
-const description =
-    document.getElementById("description");
-
-const thumbnail =
-    document.getElementById("thumbnail");
-
-const loader =
-    document.getElementById("pageLoader");
-
-const toast =
-    document.getElementById("toastContainer");
+const loader = document.getElementById("pageLoader");
+const toastContainer = document.getElementById("toastContainer");
 
 /* ==========================================================================
    URL
    ========================================================================== */
 
-const params =
-    new URLSearchParams(location.search);
-
-const courseId =
-    params.get("id");
+const params = new URLSearchParams(location.search);
+const courseId = params.get("id");
 
 let thumbnailUrl = "";
 
@@ -97,235 +77,151 @@ let thumbnailUrl = "";
 init();
 
 async function init(){
-
     if(!courseId){
-
-        showToast(
-
-            "Course not found.",
-
-            "error"
-
-        );
-
+        showToast("Course not found.", "error");
         setTimeout(()=>{
-
-            location.href="courses.html";
-
-        },1500);
-
+            location.href = "courses.html";
+        }, 1500);
         return;
-
     }
 
+    await loadCategories();
     await loadCourse();
-
 }
 
 /* ==========================================================================
-   LOAD COURSE
+   LOAD CATEGORIES (Populate dropdown first so selection matches)
+   ========================================================================== */
+
+async function loadCategories(){
+    try {
+        const snapshot = await getDocs(collection(db, "categories"));
+        if(courseCategory){
+            snapshot.forEach(document => {
+                const data = document.data();
+                // Avoid duplicate options if already present
+                if(![...courseCategory.options].some(opt => opt.value === document.id)){
+                    courseCategory.innerHTML += `
+                        <option value="${document.id}">
+                            ${data.title}
+                        </option>
+                    `;
+                }
+            });
+        }
+    } catch(e) {
+        console.error("Error loading categories:", e);
+    }
+}
+
+/* ==========================================================================
+   LOAD COURSE DATA
    ========================================================================== */
 
 async function loadCourse(){
-
     showLoader();
 
     try{
-
-        const docRef =
-            doc(
-
-                db,
-
-                "courses",
-
-                courseId
-
-            );
-
-        const docSnap =
-            await getDoc(docRef);
+        const docRef = doc(db, "courses", courseId);
+        const docSnap = await getDoc(docRef, { source: "server" }).catch(async () => {
+            return await getDoc(docRef);
+        });
 
         if(!docSnap.exists()){
-
-            showToast(
-
-                "Course not found.",
-
-                "error"
-
-            );
-
+            showToast("Course not found.", "error");
             return;
-
         }
 
-        const course =
-            docSnap.data();
+        const course = docSnap.data();
 
-        title.value =
-            course.title || "";
+        if(courseTitle) courseTitle.value = course.title || "";
+        if(courseSlug) courseSlug.value = course.slug || courseId;
+        if(courseCategory) courseCategory.value = course.categoryId || "";
+        if(courseInstructor) courseInstructor.value = course.instructor || "";
+        if(courseLanguage) courseLanguage.value = course.language || "";
+        if(courseLevel) courseLevel.value = course.level || "Beginner";
+        if(courseDuration) courseDuration.value = course.duration || "";
+        if(coursePrice) coursePrice.value = course.price !== undefined ? course.price : "";
+        if(courseOfferPrice) courseOfferPrice.value = course.offerPrice !== undefined ? course.offerPrice : "";
+        if(courseCurrency) courseCurrency.value = course.currency || "INR";
+        if(shortDescription) shortDescription.value = course.shortDescription || "";
+        if(fullDescription) fullDescription.value = course.description || "";
+        if(courseTrailer) courseTrailer.value = course.trailerVideo || "";
+        if(courseStatus) courseStatus.value = course.status || "draft";
+        
+        if(featuredCourse) featuredCourse.checked = !!course.featured;
+        if(certificate) certificate.checked = !!course.certificate;
 
-        category.value =
-            course.category || "";
+        thumbnailUrl = course.thumbnail || "";
 
-        price.value =
-            course.price || "";
-
-        duration.value =
-            course.duration || "";
-
-        level.value =
-            course.level || "Beginner";
-
-        status.value =
-            course.status || "draft";
-
-        description.value =
-            course.description || "";
-
-        thumbnailUrl =
-            course.thumbnail || "";
-
-    }
-
-    catch(error){
-
+    } catch(error){
         console.error(error);
-
-        showToast(
-
-            error.message,
-
-            "error"
-
-        );
-
+        showToast(error.message, "error");
     }
 
     hideLoader();
-
 }
 
 /* ==========================================================================
-   UPDATE
+   UPDATE COURSE
    ========================================================================== */
 
 form.addEventListener(
-
     "submit",
-
     async event=>{
-
         event.preventDefault();
-
         showLoader();
 
         try{
-
-            if(
-
-                thumbnail.files.length
-
-            ){
-
-                const file =
-                    thumbnail.files[0];
-
-                const storageRef =
-                    ref(
-
-                        storage,
-
-                        `courses/${Date.now()}-${file.name}`
-
-                    );
-
-                await uploadBytes(
-
-                    storageRef,
-
-                    file
-
+            if(courseThumbnail && courseThumbnail.files.length){
+                const file = courseThumbnail.files[0];
+                const storageRef = ref(
+                    storage,
+                    `courses/${Date.now()}-${file.name}`
                 );
 
-                thumbnailUrl =
-                    await getDownloadURL(
-
-                        storageRef
-
-                    );
-
+                await uploadBytes(storageRef, file);
+                thumbnailUrl = await getDownloadURL(storageRef);
             }
 
             await updateDoc(
-
-                doc(
-
-                    db,
-
-                    "courses",
-
-                    courseId
-
-                ),
-
+                doc(db, "courses", courseId),
                 {
-
-                    title:title.value.trim(),
-
-                    category:category.value.trim(),
-
-                    price:Number(price.value),
-
-                    duration:duration.value.trim(),
-
-                    level:level.value,
-
-                    status:status.value,
-
-                    description:description.value.trim(),
-
-                    thumbnail:thumbnailUrl,
-
-                    updatedAt:serverTimestamp()
-
+                    title: courseTitle ? courseTitle.value.trim() : "",
+                    slug: courseSlug ? courseSlug.value : courseId,
+                    categoryId: courseCategory ? courseCategory.value : "",
+                    instructor: courseInstructor ? courseInstructor.value.trim() : "",
+                    language: courseLanguage ? courseLanguage.value : "",
+                    level: courseLevel ? courseLevel.value : "",
+                    duration: courseDuration ? courseDuration.value.trim() : "",
+                    shortDescription: shortDescription ? shortDescription.value.trim() : "",
+                    description: fullDescription ? fullDescription.value.trim() : "",
+                    thumbnail: thumbnailUrl,
+                    trailerVideo: courseTrailer ? courseTrailer.value.trim() : "",
+                    price: coursePrice ? Number(coursePrice.value) || 0 : 0,
+                    offerPrice: courseOfferPrice ? Number(courseOfferPrice.value) || 0 : 0,
+                    currency: courseCurrency ? courseCurrency.value : "INR",
+                    featured: featuredCourse ? featuredCourse.checked : false,
+                    certificate: certificate ? certificate.checked : false,
+                    status: courseStatus ? courseStatus.value : "draft",
+                    updatedAt: serverTimestamp()
                 }
-
             );
 
-            showToast(
-
-                "Course updated successfully."
-
-            );
+            showToast("Course updated successfully.");
 
             setTimeout(()=>{
-
-                location.href="courses.html";
-
-            },1200);
+                location.href = "courses.html";
+            }, 1200);
 
         }
-
         catch(error){
-
             console.error(error);
-
-            showToast(
-
-                error.message,
-
-                "error"
-
-            );
-
+            showToast(error.message, "error");
         }
 
         hideLoader();
-
     }
-
 );
 
 /* ==========================================================================
@@ -333,68 +229,36 @@ form.addEventListener(
    ========================================================================== */
 
 function showLoader(){
-
-    loader.classList.remove(
-
-        "hidden"
-
-    );
-
+    if(loader) loader.classList.remove("hidden");
 }
 
 function hideLoader(){
-
-    loader.classList.add(
-
-        "hidden"
-
-    );
-
+    if(loader) loader.classList.add("hidden");
 }
 
 /* ==========================================================================
    TOAST
    ========================================================================== */
 
-function showToast(
+function showToast(message, type="success"){
+    if(!toastContainer) {
+        alert(message);
+        return;
+    }
 
-    message,
+    const item = document.createElement("div");
+    item.className = `toast ${type}`;
+    item.textContent = message;
 
-    type="success"
-
-){
-
-    const item =
-        document.createElement(
-
-            "div"
-
-        );
-
-    item.className =
-        `toast ${type}`;
-
-    item.textContent =
-        message;
-
-    toast.appendChild(item);
+    toastContainer.appendChild(item);
 
     requestAnimationFrame(()=>{
-
-        item.classList.add(
-
-            "show"
-
-        );
-
+        item.classList.add("show");
     });
 
     setTimeout(()=>{
-
         item.remove();
-
-    },3000);
-
+    }, 3000);
 }
 
 /* ==========================================================================

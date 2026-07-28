@@ -137,7 +137,7 @@ Planned
 
 Features
 
-- Quiz engine
+- Exam engine
 - Assignments
 - Practice tests
 - Course completion logic

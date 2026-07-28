@@ -2,7 +2,7 @@
 
 /* ==========================================================================
    ISSA Academy
-   Quiz Management
+   Exam Management
    ========================================================================== */
 
 import {
@@ -33,8 +33,8 @@ import {
    DOM
    ========================================================================== */
 
-const quizGrid =
-    document.getElementById("quizGrid");
+const examGrid =
+    document.getElementById("examGrid");
 
 const searchInput =
     document.getElementById("searchInput");
@@ -58,15 +58,15 @@ const toastContainer =
     document.getElementById("toastContainer");
 
 const template =
-    document.getElementById("quizCardTemplate");
+    document.getElementById("examCardTemplate");
 
 /* ==========================================================================
    STATE
    ========================================================================== */
 
-let quizzes = [];
+let exams = [];
 
-let filteredQuizzes = [];
+let filteredExams = [];
 
 /* ==========================================================================
    AUTH
@@ -88,7 +88,7 @@ onAuthStateChanged(
 
         showLoader();
 
-        await loadQuizzes();
+        await loadExams();
 
         hideLoader();
 
@@ -97,10 +97,10 @@ onAuthStateChanged(
 );
 
 /* ==========================================================================
-   LOAD QUIZZES
+   LOAD EXAMS
    ========================================================================== */
 
-async function loadQuizzes(){
+async function loadExams(){
 
     try{
 
@@ -108,7 +108,7 @@ async function loadQuizzes(){
 
             query(
 
-                collection(db,"quizzes"),
+                collection(db,"exams"),
 
                 orderBy("createdAt","desc")
 
@@ -116,11 +116,11 @@ async function loadQuizzes(){
 
         );
 
-        quizzes = [];
+        exams = [];
 
         snapshot.forEach(docSnap=>{
 
-            quizzes.push({
+            exams.push({
 
                 id:docSnap.id,
 
@@ -130,11 +130,11 @@ async function loadQuizzes(){
 
         });
 
-        filteredQuizzes = [...quizzes];
+        filteredExams = [...exams];
 
         loadCourseFilter();
 
-        renderQuizzes();
+        renderExams();
 
     }
 
@@ -162,7 +162,7 @@ function loadCourseFilter(){
 
     const courses = [...new Set(
 
-        quizzes.map(item=>item.courseName)
+        exams.map(item=>item.courseName)
 
     )];
 
@@ -193,14 +193,14 @@ ${course}
 }
 
 /* ==========================================================================
-   RENDER QUIZZES
+   RENDER EXAMS
    ========================================================================== */
 
-function renderQuizzes(){
+function renderExams(){
 
-    quizGrid.innerHTML = "";
+    examGrid.innerHTML = "";
 
-    if(filteredQuizzes.length===0){
+    if(filteredExams.length===0){
 
         emptyState.classList.remove(
 
@@ -218,7 +218,7 @@ function renderQuizzes(){
 
     );
 
-    filteredQuizzes.forEach(quiz=>{
+    filteredExams.forEach(exam=>{
 
         const clone =
 
@@ -228,35 +228,35 @@ function renderQuizzes(){
 
         clone.querySelector(
 
-            ".quiz-title"
+            ".exam-title"
 
         ).textContent =
 
-            quiz.title || "-";
+            exam.title || "-";
 
         clone.querySelector(
 
-            ".quiz-course"
+            ".exam-course"
 
         ).textContent =
 
-            quiz.courseName || "-";
+            exam.courseName || "-";
 
         clone.querySelector(
 
-            ".quiz-module"
+            ".exam-module"
 
         ).textContent =
 
-            quiz.moduleName || "-";
+            exam.moduleName || "-";
 
         clone.querySelector(
 
-            ".quiz-type"
+            ".exam-type"
 
         ).textContent =
 
-            quiz.type==="final"
+            exam.type==="final"
 
             ?
 
@@ -268,43 +268,43 @@ function renderQuizzes(){
 
         clone.querySelector(
 
-            ".quiz-duration"
+            ".exam-duration"
 
         ).textContent =
 
-            `${quiz.duration || 30} Minutes`;
+            `${exam.duration || 30} Minutes`;
 
         clone.querySelector(
 
-            ".quiz-questions"
+            ".exam-questions"
 
         ).textContent =
 
-            `${quiz.totalQuestions || 0} Questions`;
+            `${exam.totalQuestions || 0} Questions`;
 
         clone.querySelector(
 
-            ".quiz-passmark"
+            ".exam-passmark"
 
         ).textContent =
 
-            `${quiz.passMark || 70}%`;
+            `${exam.passMark || 70}%`;
 
         const status =
 
             clone.querySelector(
 
-                ".quiz-status"
+                ".exam-status"
 
             );
 
         status.textContent =
 
-            quiz.status || "Draft";
+            exam.status || "Draft";
 
         status.classList.add(
 
-            (quiz.status || "draft")
+            (exam.status || "draft")
 
             .toLowerCase()
 
@@ -318,7 +318,7 @@ function renderQuizzes(){
 
             location.href =
 
-            `quiz-form.html?id=${quiz.id}`;
+            `exam-form.html?id=${exam.id}`;
 
         };
 
@@ -330,7 +330,7 @@ function renderQuizzes(){
 
             location.href =
 
-            `quiz-questions.html?id=${quiz.id}`;
+            `exam-questions.html?id=${exam.id}`;
 
         };
 
@@ -340,15 +340,15 @@ function renderQuizzes(){
 
         ).onclick = ()=>{
 
-            deleteQuiz(
+            deleteExam(
 
-                quiz.id
+                exam.id
 
             );
 
         };
 
-        quizGrid.appendChild(
+        examGrid.appendChild(
 
             clone
 
@@ -366,7 +366,7 @@ searchInput.addEventListener(
 
     "input",
 
-    filterQuizzes
+    filterExams
 
 );
 
@@ -374,7 +374,7 @@ courseFilter.addEventListener(
 
     "change",
 
-    filterQuizzes
+    filterExams
 
 );
 
@@ -382,7 +382,7 @@ typeFilter.addEventListener(
 
     "change",
 
-    filterQuizzes
+    filterExams
 
 );
 
@@ -390,11 +390,11 @@ statusFilter.addEventListener(
 
     "change",
 
-    filterQuizzes
+    filterExams
 
 );
 
-function filterQuizzes(){
+function filterExams(){
 
     const keyword =
 
@@ -404,9 +404,9 @@ function filterQuizzes(){
 
         .toLowerCase();
 
-    filteredQuizzes =
+    filteredExams =
 
-        quizzes.filter(item=>{
+        exams.filter(item=>{
 
             const matchKeyword =
 
@@ -460,15 +460,15 @@ function filterQuizzes(){
 
         });
 
-    renderQuizzes();
+    renderExams();
 
 }
 
 /* ==========================================================================
-   DELETE QUIZ
+   DELETE EXAM
    ========================================================================== */
 
-async function deleteQuiz(id){
+async function deleteExam(id){
 
     if(
 
@@ -494,7 +494,7 @@ async function deleteQuiz(id){
 
                 db,
 
-                "quizzes",
+                "exams",
 
                 id
 
@@ -508,7 +508,7 @@ async function deleteQuiz(id){
 
         );
 
-        await loadQuizzes();
+        await loadExams();
 
     }
 

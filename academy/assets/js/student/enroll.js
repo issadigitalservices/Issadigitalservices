@@ -58,7 +58,8 @@ const toastContainer = document.getElementById("toastContainer");
    ========================================================================== */
 
 const params = new URLSearchParams(location.search);
-const courseId = params.get("id");
+
+const courseId = params.get("courseId") || params.get("id");
 
 /* ==========================================================================
    STATE

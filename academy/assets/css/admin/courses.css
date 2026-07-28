@@ -13,6 +13,10 @@
 
 }
 
+#pageLoader {
+    display: none !important;
+}
+
 .sidebar{
 
     width:280px;

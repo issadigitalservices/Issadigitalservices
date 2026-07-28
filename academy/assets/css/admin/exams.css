@@ -1,9 +1,9 @@
 /* ==========================================================================
    ISSA Academy
-   Quizzes
+   Exams
    ========================================================================== */
 
-.quiz-grid{
+.exam-grid{
 
 display:grid;
 
@@ -15,7 +15,7 @@ margin-top:25px;
 
 }
 
-.quiz-card{
+.exam-card{
 
 background:#ffffff;
 
@@ -37,7 +37,7 @@ gap:20px;
 
 }
 
-.quiz-card:hover{
+.exam-card:hover{
 
 transform:translateY(-5px);
 
@@ -45,7 +45,7 @@ box-shadow:0 15px 40px rgba(37,99,235,.12);
 
 }
 
-.quiz-header{
+.exam-header{
 
 display:flex;
 
@@ -57,7 +57,7 @@ gap:15px;
 
 }
 
-.quiz-title{
+.exam-title{
 
 font-size:20px;
 
@@ -69,7 +69,7 @@ margin-bottom:6px;
 
 }
 
-.quiz-course{
+.exam-course{
 
 font-size:14px;
 
@@ -77,7 +77,7 @@ color:#64748b;
 
 }
 
-.quiz-status{
+.exam-status{
 
 padding:6px 12px;
 
@@ -89,7 +89,7 @@ font-weight:600;
 
 }
 
-.quiz-status.published{
+.exam-status.published{
 
 background:#dcfce7;
 
@@ -97,7 +97,7 @@ color:#15803d;
 
 }
 
-.quiz-status.draft{
+.exam-status.draft{
 
 background:#fee2e2;
 
@@ -105,7 +105,7 @@ color:#dc2626;
 
 }
 
-.quiz-body{
+.exam-body{
 
 display:grid;
 
@@ -115,7 +115,7 @@ gap:16px;
 
 }
 
-.quiz-item{
+.exam-item{
 
 display:flex;
 
@@ -129,7 +129,7 @@ color:#475569;
 
 }
 
-.quiz-item i{
+.exam-item i{
 
 width:36px;
 
@@ -151,7 +151,7 @@ font-size:15px;
 
 }
 
-.quiz-actions{
+.exam-actions{
 
 display:flex;
 
@@ -161,7 +161,7 @@ margin-top:auto;
 
 }
 
-.quiz-actions button{
+.exam-actions button{
 
 flex:1;
 
@@ -223,19 +223,19 @@ background:#dc2626;
 
 @media(max-width:768px){
 
-.quiz-grid{
+.exam-grid{
 
 grid-template-columns:1fr;
 
 }
 
-.quiz-body{
+.exam-body{
 
 grid-template-columns:1fr;
 
 }
 
-.quiz-actions{
+.exam-actions{
 
 flex-direction:column;
 

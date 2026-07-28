@@ -1,18 +1,16 @@
+"use strict";
+
 /* ==========================================================================
    ISSA Academy
-   Courses Controller
+   Courses Controller (Optimized & Error-Safe)
    ========================================================================== */
 
 import {
-
     db
-
 } from "../core/firebase-config.js";
 
 import {
-
     requireAdmin
-
 } from "../core/auth-guard.js";
 
 import {
@@ -25,628 +23,181 @@ import {
     where
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-/* ==========================================================================
-   AUTH
-   ========================================================================== */
+const grid = document.getElementById("coursesGrid");
+const template = document.getElementById("courseCardTemplate");
+const emptyState = document.getElementById("emptyState");
+const searchInput = document.getElementById("searchInput");
+const loader = document.getElementById("pageLoader");
+const toastContainer = document.getElementById("toastContainer");
 
-await requireAdmin();
-
-/* ==========================================================================
-   DOM
-   ========================================================================== */
-
-const grid =
-    document.getElementById("coursesGrid");
-
-const template =
-    document.getElementById("courseCardTemplate");
-
-const emptyState =
-    document.getElementById("emptyState");
-
-const searchInput =
-    document.getElementById("searchInput");
-
-const loader =
-    document.getElementById("pageLoader");
-
-const toastContainer =
-    document.getElementById("toastContainer");
-
-/* ==========================================================================
-   STATE
-   ========================================================================== */
-
-const state={
-
-    courses:[],
-
-    filtered:[]
-
+const state = {
+    courses: [],
+    filtered: []
 };
 
-/* ==========================================================================
-   INIT
-   ========================================================================== */
+// Run initialization safely without triggering any page loader
+(async () => {
+    try {
+        await requireAdmin();
+        await loadCourses();
+    } catch (error) {
+        console.error("Initialization error:", error);
+        showToast(error.message || "Failed to load admin panel.", "error");
+    }
+})();
 
-init();
+async function loadCourses() {
+    state.courses = [];
 
-async function init(){
+    const [coursesSnap, lessonsSnap, enrollmentsSnap] = await Promise.all([
+        getDocs(query(collection(db, "courses"), orderBy("createdAt", "desc"))),
+        getDocs(collection(db, "lessons")),
+        getDocs(collection(db, "enrollments"))
+    ]);
 
-    showLoader();
+    const lessonCounts = {};
+    lessonsSnap.forEach(doc => {
+        const courseId = doc.data().courseId;
+        lessonCounts[courseId] = (lessonCounts[courseId] || 0) + 1;
+    });
 
-    await loadCourses();
+    const studentCounts = {};
+    enrollmentsSnap.forEach(doc => {
+        const courseId = doc.data().courseId;
+        studentCounts[courseId] = (studentCounts[courseId] || 0) + 1;
+    });
 
-    hideLoader();
-
-}
-
-/* ==========================================================================
-   LOAD COURSES
-   ========================================================================== */
-
-async function loadCourses(){
-
-    state.courses=[];
-
-    const snapshot=
-
-        await getDocs(
-
-            query(
-
-                collection(
-
-                    db,
-
-                    "courses"
-
-                ),
-
-                orderBy(
-
-                    "createdAt",
-
-                    "desc"
-
-                )
-
-            )
-
-        );
-
-    for(const docSnap of snapshot.docs){
+    coursesSnap.forEach(docSnap => {
         const courseId = docSnap.id;
         const courseData = docSnap.data();
-
-        // Dynamically fetch actual lesson count
-        const lessonsQuery = query(collection(db, "lessons"), where("courseId", "==", courseId));
-        const lessonsSnap = await getDocs(lessonsQuery);
-        const actualLessons = lessonsSnap.size;
-
-        // Dynamically fetch actual student/enrollment count
-        const enrollmentsQuery = query(collection(db, "enrollments"), where("courseId", "==", courseId));
-        const enrollmentsSnap = await getDocs(enrollmentsQuery);
-        const actualStudents = enrollmentsSnap.size;
 
         state.courses.push({
             id: courseId,
             ...courseData,
-            totalLessons: actualLessons,
-            totalStudents: actualStudents
+            totalLessons: lessonCounts[courseId] || 0,
+            totalStudents: studentCounts[courseId] || 0
         });
-    }
+    });
 
-    state.filtered=[
-
-        ...state.courses
-
-    ];
-
+    state.filtered = [...state.courses];
     renderCourses();
-
 }
 
-/* ==========================================================================
-   RENDER
-   ========================================================================== */
+function renderCourses() {
+    if (!grid) return;
+    grid.innerHTML = "";
 
-function renderCourses(){
-
-    grid.innerHTML="";
-
-    if(!state.filtered.length){
-
-        emptyState.classList.remove(
-
-            "hidden"
-
-        );
-
+    if (!state.filtered.length) {
+        if (emptyState) emptyState.classList.remove("hidden");
         return;
-
     }
 
-    emptyState.classList.add(
+    if (emptyState) emptyState.classList.add("hidden");
 
-        "hidden"
-
-    );
-
-    state.filtered.forEach(course=>{
-
-        const card=
-
-            template.content.cloneNode(true);
+    state.filtered.forEach(course => {
+        const card = template.content.cloneNode(true);
 
         const thumbnailImg = card.querySelector(".thumbnail");
-        thumbnailImg.src = course.thumbnail || "../assets/images/course-placeholder.jpg";
-        thumbnailImg.onerror = function() {
-            this.src = "../assets/images/course-placeholder.jpg";
-        };
-
-        card.querySelector(
-
-            ".course-title"
-
-        ).textContent=
-
-            course.title ||
-
-            "Untitled Course";
-
-        card.querySelector(
-
-            ".course-category"
-
-        ).textContent=
-
-            course.category ||
-
-            "-";
-
-        card.querySelector(
-
-            ".course-description"
-
-        ).textContent=
-
-            course.description ||
-
-            "-";
-
-        card.querySelector(
-
-            ".lessons"
-
-        ).textContent=
-
-            course.totalLessons || 0;
-
-        card.querySelector(
-
-            ".students"
-
-        ).textContent=
-
-            course.totalStudents || 0;
-
-        /* ================= EDIT ================= */
-
-        card.querySelector(
-
-            ".btn-edit"
-
-        ).addEventListener(
-
-            "click",
-
-            ()=>{
-
-                location.href=
-
-                `edit-course.html?id=${course.id}`;
-
-            }
-
-        );
-
-        /* ================= DELETE ================= */
-
-        card.querySelector(
-
-            ".btn-delete"
-
-        ).addEventListener(
-
-            "click",
-
-            ()=>{
-
-                deleteCourse(
-
-                    course.id
-
-                );
-
-            }
-
-        );
-
-        grid.appendChild(card);
-
-    });
-
-}
-
-
-
-/* ==========================================================================
-   SEARCH
-   ========================================================================== */
-
-searchInput.addEventListener(
-
-    "input",
-
-    applyFilters
-
-);
-
-function applyFilters(){
-
-    const keyword =
-
-        searchInput.value
-
-        .trim()
-
-        .toLowerCase();
-
-    state.filtered =
-
-        state.courses.filter(course=>{
-
-            const matchKeyword =
-
-                (course.title || "")
-
-                .toLowerCase()
-
-                .includes(keyword);
-
-            return matchKeyword;
-
+        if (thumbnailImg) {
+            thumbnailImg.src = course.thumbnail || "../assets/images/course-placeholder.jpg";
+            thumbnailImg.onerror = function() {
+                this.src = "../assets/images/course-placeholder.jpg";
+            };
+        }
+
+        card.querySelector(".course-title").textContent = course.title || "Untitled Course";
+        card.querySelector(".course-category").textContent = course.category || "-";
+        card.querySelector(".course-description").textContent = course.description || "-";
+        card.querySelector(".lessons").textContent = course.totalLessons || 0;
+        card.querySelector(".students").textContent = course.totalStudents || 0;
+
+        card.querySelector(".btn-edit").addEventListener("click", () => {
+            location.href = `edit-course.html?id=${course.id}`;
         });
 
+        card.querySelector(".btn-delete").addEventListener("click", () => {
+            deleteCourse(course.id);
+        });
+
+        grid.appendChild(card);
+    });
+}
+
+if (searchInput) {
+    searchInput.addEventListener("input", applyFilters);
+}
+
+function applyFilters() {
+    const keyword = searchInput.value.trim().toLowerCase();
+    state.filtered = state.courses.filter(course => {
+        return (course.title || "").toLowerCase().includes(keyword);
+    });
     renderCourses();
-
 }
 
-/* ==========================================================================
-   DELETE COURSE
-   ========================================================================== */
+async function deleteCourse(courseId) {
+    const confirmed = confirm("Delete this course?\n\nModules and lessons related to this course will also be deleted.");
+    if (!confirmed) return;
 
-async function deleteCourse(courseId){
-
-    const confirmed =
-
-        confirm(
-
-            "Delete this course?\n\nModules and lessons related to this course will also be deleted."
-
-        );
-
-    if(!confirmed){
-
-        return;
-
-    }
-
-    showLoader();
-
-    try{
-
-        /* ================= Delete Lessons ================= */
-
-        const lessonSnapshot =
-
-            await getDocs(
-
-                query(
-
-                    collection(
-
-                        db,
-
-                        "lessons"
-
-                    ),
-
-                    where(
-
-                        "courseId",
-
-                        "==",
-
-                        courseId
-
-                    )
-
-                )
-
-            );
-
-        for(const lessonDoc of lessonSnapshot.docs){
-
-            await deleteDoc(
-
-                lessonDoc.ref
-
-            );
-
+    try {
+        const lessonSnapshot = await getDocs(query(collection(db, "lessons"), where("courseId", "==", courseId)));
+        for (const lessonDoc of lessonSnapshot.docs) {
+            await deleteDoc(lessonDoc.ref);
         }
 
-        /* ================= Delete Modules ================= */
-
-        const moduleSnapshot =
-
-            await getDocs(
-
-                query(
-
-                    collection(
-
-                        db,
-
-                        "modules"
-
-                    ),
-
-                    where(
-
-                        "courseId",
-
-                        "==",
-
-                        courseId
-
-                    )
-
-                )
-
-            );
-
-        for(const moduleDoc of moduleSnapshot.docs){
-
-            await deleteDoc(
-
-                moduleDoc.ref
-
-            );
-
+        const moduleSnapshot = await getDocs(query(collection(db, "modules"), where("courseId", "==", courseId)));
+        for (const moduleDoc of moduleSnapshot.docs) {
+            await deleteDoc(moduleDoc.ref);
         }
 
-        /* ================= Delete Course ================= */
+        await deleteDoc(doc(db, "courses", courseId));
 
-        await deleteDoc(
-
-            doc(
-
-                db,
-
-                "courses",
-
-                courseId
-
-            )
-
-        );
-
-        showToast(
-
-            "Course deleted successfully."
-
-        );
-
+        showToast("Course deleted successfully.");
         await loadCourses();
-
-    }
-
-    catch(error){
-
+    } catch (error) {
         console.error(error);
-
-        showToast(
-
-            error.message,
-
-            "error"
-
-        );
-
+        showToast(error.message, "error");
     }
-
-    hideLoader();
-
 }
 
-/* ==========================================================================
-   LOADER
-   ========================================================================== */
-
-function showLoader(){
-
-    if(loader){
-
-        loader.classList.remove(
-
-            "hidden"
-
-        );
-
-    }
-
+function showLoader() {
+    // Disabled intentionally
 }
 
-function hideLoader(){
-
-    if(loader){
-
-        loader.classList.add(
-
-            "hidden"
-
-        );
-
-    }
-
+function hideLoader() {
+    // Disabled intentionally
 }
 
-/* ==========================================================================
-   TOAST
-   ========================================================================== */
-
-function showToast(
-
-    message,
-
-    type="success"
-
-){
-
-    if(!toastContainer){
-
+function showToast(message, type = "success") {
+    if (!toastContainer) {
         alert(message);
-
         return;
-
     }
 
-    const toast =
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
 
-        document.createElement(
-
-            "div"
-
-        );
-
-    toast.className =
-
-        `toast ${type}`;
-
-    toast.textContent =
-
-        message;
-
-    toastContainer.appendChild(
-
-        toast
-
-    );
-
-    requestAnimationFrame(()=>{
-
-        toast.classList.add(
-
-            "show"
-
-        );
-
+    requestAnimationFrame(() => {
+        toast.classList.add("show");
     });
 
-    setTimeout(()=>{
-
-        toast.classList.remove(
-
-            "show"
-
-        );
-
-        setTimeout(()=>{
-
-            toast.remove();
-
-        },300);
-
-    },3000);
-
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 }
 
-/* ==========================================================================
-   REFRESH
-   ========================================================================== */
-
-async function refreshCourses(){
-
-    showLoader();
-
-    try{
-
+async function refreshCourses() {
+    try {
         await loadCourses();
-
+    } catch (error) {
+        console.error(error);
     }
-
-    finally{
-
-        hideLoader();
-
-    }
-
 }
 
-/* ==========================================================================
-   PAGE VISIBILITY
-   ========================================================================== */
-
-document.addEventListener(
-
-    "visibilitychange",
-
-    async ()=>{
-
-        if(
-
-            document.visibilityState==="visible"
-
-        ){
-
-            await refreshCourses();
-
-        }
-
-    }
-
-);
-
-/* ==========================================================================
-   OPTIONAL AUTO REFRESH
-   ========================================================================== */
-
-setInterval(
-
-    async ()=>{
-
-        await refreshCourses();
-
-    },
-
-    60000
-
-);
-
-/* ==========================================================================
-   EXPORTS (Future Use)
-   ========================================================================== */
-
-export{
-
+export {
     refreshCourses,
-
     loadCourses
-
 };
-
-/* ==========================================================================
-   END OF FILE
-   ========================================================================== */
