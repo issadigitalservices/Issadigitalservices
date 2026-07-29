@@ -25,6 +25,50 @@
 
 }
 
+.course-category-badge{
+    margin-bottom:12px;
+}
+
+.course-category{
+    display:inline-block;
+    background:#e8f0ff;
+    color:#2563eb;
+    padding:4px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.course-description{
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+
+.course-price{
+    margin:15px 0;
+}
+
+.old-price{
+    text-decoration:line-through;
+    color:#9ca3af;
+    margin-right:10px;
+}
+
+.offer-price{
+    color:#2563eb;
+    font-size:22px;
+    font-weight:700;
+}
+
+.course-meta{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin:18px 0;
+}
+
 .main-content{
 
     flex:1;

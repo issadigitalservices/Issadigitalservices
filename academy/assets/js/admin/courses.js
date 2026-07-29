@@ -108,8 +108,25 @@ function renderCourses() {
         card.querySelector(".course-title").textContent =
     course.title || "Untitled Course";
 
+const categoryNames = {
+    excel: "Microsoft Excel",
+    word: "Microsoft Word",
+    powerpoint: "PowerPoint",
+    tally: "Tally",
+    accounting: "Accounting"
+};
+
 card.querySelector(".course-category").textContent =
-    course.categoryId || "-";
+    categoryNames[course.categoryId] || course.categoryId;
+
+    card.querySelector(".modules").textContent =
+    course.totalModules || 0;
+
+    card.querySelector(".old-price").textContent =
+    `₹${course.price}`;
+
+card.querySelector(".offer-price").textContent =
+    `₹${course.offerPrice}`;
 
 card.querySelector(".course-description").textContent =
     course.shortDescription || "-";
