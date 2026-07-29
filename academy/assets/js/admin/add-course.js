@@ -10,9 +10,7 @@ import {
 
     auth,
 
-    db,
-
-    storage
+    db
 
 } from "../core/firebase-config.js";
 
@@ -35,16 +33,6 @@ import {
     setDoc
 
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
-
-import {
-
-    ref,
-
-    uploadBytes,
-
-    getDownloadURL
-
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-storage.js";
 
 /* ==========================================================================
    DOM
@@ -69,8 +57,6 @@ const coursePrice=document.getElementById("coursePrice");
 const courseOfferPrice=document.getElementById("courseOfferPrice");
 
 const courseCurrency=document.getElementById("courseCurrency");
-
-const courseThumbnail=document.getElementById("courseThumbnail");
 
 const shortDescription=document.getElementById("shortDescription");
 
@@ -210,42 +196,6 @@ form.addEventListener(
 
             showLoader();
 
-            let thumbnail="";
-
-            if(courseThumbnail.files.length){
-
-                const file=
-
-                    courseThumbnail.files[0];
-
-                const storageRef=
-
-                    ref(
-
-                        storage,
-
-                        `courses/${Date.now()}-${file.name}`
-
-                    );
-
-                await uploadBytes(
-
-                    storageRef,
-
-                    file
-
-                );
-
-                thumbnail=
-
-                    await getDownloadURL(
-
-                        storageRef
-
-                    );
-
-            }
-
             const courseId=
 
                 courseSlug.value;
@@ -291,10 +241,6 @@ form.addEventListener(
                     shortDescription:
 
                         shortDescription.value.trim(),
-
-                    thumbnail:
-
-                        thumbnail,
 
                     price:
 
