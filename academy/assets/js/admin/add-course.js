@@ -64,8 +64,6 @@ const courseLanguage=document.getElementById("courseLanguage");
 
 const courseLevel=document.getElementById("courseLevel");
 
-const courseDuration=document.getElementById("courseDuration");
-
 const coursePrice=document.getElementById("coursePrice");
 
 const courseOfferPrice=document.getElementById("courseOfferPrice");
@@ -74,15 +72,7 @@ const courseCurrency=document.getElementById("courseCurrency");
 
 const courseThumbnail=document.getElementById("courseThumbnail");
 
-const courseTrailer=document.getElementById("courseTrailer");
-
 const shortDescription=document.getElementById("shortDescription");
-
-const fullDescription=document.getElementById("fullDescription");
-
-const featuredCourse=document.getElementById("featuredCourse");
-
-const certificate=document.getElementById("certificate");
 
 const pageLoader=document.getElementById("pageLoader");
 
@@ -298,25 +288,13 @@ form.addEventListener(
 
                         courseLevel.value,
 
-                    duration:
-
-                        courseDuration.value,
-
                     shortDescription:
 
                         shortDescription.value.trim(),
 
-                    description:
-
-                        fullDescription.value.trim(),
-
                     thumbnail:
 
                         thumbnail,
-
-                    trailerVideo:
-
-                        courseTrailer.value.trim(),
 
                     price:
 
@@ -330,23 +308,11 @@ form.addEventListener(
 
                         courseCurrency.value,
 
-                    featured:
-
-                        featuredCourse.checked,
-
-                    certificate:
-
-                        certificate.checked,
-
                     totalModules:0,
 
                     totalLessons:0,
 
                     totalStudents:0,
-
-                    totalReviews:0,
-
-                    rating:0,
 
                     createdBy:
 
