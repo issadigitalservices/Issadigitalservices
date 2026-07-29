@@ -105,11 +105,20 @@ function renderCourses() {
             };
         }
 
-        card.querySelector(".course-title").textContent = course.title || "Untitled Course";
-        card.querySelector(".course-category").textContent = course.category || "-";
-        card.querySelector(".course-description").textContent = course.description || "-";
-        card.querySelector(".lessons").textContent = course.totalLessons || 0;
-        card.querySelector(".students").textContent = course.totalStudents || 0;
+        card.querySelector(".course-title").textContent =
+    course.title || "Untitled Course";
+
+card.querySelector(".course-category").textContent =
+    course.categoryId || "-";
+
+card.querySelector(".course-description").textContent =
+    course.shortDescription || "-";
+
+card.querySelector(".lessons").textContent =
+    course.totalLessons || 0;
+
+card.querySelector(".students").textContent =
+    course.totalStudents || 0;
 
         card.querySelector(".btn-edit").addEventListener("click", () => {
             location.href = `edit-course.html?id=${course.id}`;

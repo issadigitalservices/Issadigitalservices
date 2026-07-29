@@ -34,15 +34,6 @@
 
           <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
 
-<!-- Put this strictly AFTER all other stylesheets -->
-<style>
-    #pageLoader, .page-loader, .loader-card { 
-        display: none !important; 
-        visibility: hidden !important; 
-        opacity: 0 !important; 
-        pointer-events: none !important; 
-    }
-</style>
 </head>
 
 <body>
@@ -143,9 +134,10 @@
                 <div class="course-image">
 
                     <img
-                        class="thumbnail"
-                        src="../assets/images/course-placeholder.jpg"
-                        alt="Course">
+    class="thumbnail"
+    src="../assets/images/course-placeholder.jpg"
+    alt="Course Thumbnail"
+    loading="lazy">
 
                 </div>
 
@@ -202,7 +194,7 @@
                     <div class="course-actions">
 
                         <button
-                            class="btn-edit">
+                            <button type="button" class="btn-edit">
 
                             <i class="fa-solid fa-pen"></i>
 
@@ -213,9 +205,10 @@
                         
 
                         <button
-                            class="btn-delete">
+                            <button type="button" class="btn-delete">
 
-                            Delete
+                            <i class="fa-solid fa-trash"></i>
+Delete
 
                         </button>
 
