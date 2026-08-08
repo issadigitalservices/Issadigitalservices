@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/student/dashboard.css">
     <link rel="stylesheet" href="../assets/css/student/student-sidebar.css">
+    <link rel="stylesheet" href="../assets/css/components/course-card.css">
 </head>
 
 <body>
@@ -89,16 +90,25 @@
             </div>
 
             <header class="top-bar">
-                <div class="top-left">
-                    <div>
-                        <h1>
-                            Welcome - Dear 
-                            <span id="studentName">Student</span>
-                        </h1>
-                        <p>Keep learning and earn your Certificate.</p>
-                    </div>
-                </div>
-            </header>
+
+    <div class="welcome-content">
+
+        <div class="welcome-text">
+
+            <h1>
+                Welcome,
+                <span id="studentName">Student</span> 👋
+            </h1>
+
+            <p>
+                Continue your learning journey with ISSA Academy.
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
 
             <!-- ================= Stats ================= -->
             <section class="stats-grid">
@@ -107,9 +117,9 @@
                         <i class="fa-solid fa-book"></i>
                     </div>
                     <div class="stat-info">
-                        <p>My Courses</p>
-                        <h3 id="totalCourses">0</h3>
-                    </div>
+    <h3 id="totalCourses">0</h3>
+    <p>My Courses</p>
+</div>
                 </div>
 
                 <div class="stat-card">
@@ -136,10 +146,26 @@
             <!-- ================= My Courses ================= -->
             <section class="dashboard-section">
                 <div class="section-header">
-                    <h2>My Courses</h2>
-                </div>
 
-                <div id="coursesGrid">
+    <div>
+
+        <h2>My Courses</h2>
+
+        <p>Your enrolled courses and learning progress</p>
+
+    </div>
+
+    <a href="all-courses.html"
+   class="btn-enroll-primary">
+    <span>Browse Courses</span>
+    <i class="fa-solid fa-arrow-right"></i>
+</a>
+
+</div>
+
+                <div
+    id="coursesGrid"
+    class="courses-grid">
                     <div class="course-skeleton"></div>
                     <div class="course-skeleton"></div>
                     <div class="course-skeleton"></div>
@@ -147,24 +173,21 @@
 
                 <div id="emptyCourses" class="empty-state hidden">
                     <i class="fa-solid fa-book-open empty-icon"></i>
-                    <h2>No Courses Yet</h2>
-                    <p>Browse our courses and enroll to start learning.</p>
+                    <h2>Start Your Learning Journey</h2>
+
+<p>
+You haven't enrolled in any courses yet.
+Explore our courses and begin learning today.
+</p>
 
                     <!-- Professional Prominent CTA Button -->
-                    <a href="../student/enroll.html?id=excel-masterclass" class="btn-enroll-primary">
-                        <span>Enroll in Excel Course</span>
+                    <a href="all-courses.html" class="btn-enroll-primary">
+                        <span>Browse Courses</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
 
-                <!-- Centered View All Button Below Courses (Hidden by default until courses exist) -->
-                <div id="viewAllCoursesWrapper" class="view-all-wrapper hidden">
-                    <a href="all-courses.html" class="view-all-btn">
-                        View All ISSA Academy Courses
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-            </section>
+                  </section>
 
         </main>
 

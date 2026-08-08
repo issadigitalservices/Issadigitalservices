@@ -3,12 +3,10 @@
 /* ==========================================================================
    ISSA Academy
    Student Dashboard
-   Version : 2.0.1
+   Version : 2.1
    ========================================================================== */
 
-import {
-    db
-} from "../core/firebase-config.js";
+import { db } from "../core/firebase-config.js";
 
 import {
     showLoader,
@@ -19,6 +17,10 @@ import {
     requireStudent,
     logoutUser
 } from "../core/auth-manager.js";
+
+import {
+    createCourseCard
+} from "../core/course-card.js";
 
 import {
     doc,
@@ -34,28 +36,42 @@ import {
    ========================================================================== */
 
 const studentName = document.getElementById("studentName");
+
 const totalCourses = document.getElementById("totalCourses");
 const totalCertificates = document.getElementById("totalCertificates");
 const courseProgress = document.getElementById("courseProgress");
+
 const coursesGrid = document.getElementById("coursesGrid");
 const emptyCourses = document.getElementById("emptyCourses");
 const viewAllCoursesWrapper = document.getElementById("viewAllCoursesWrapper");
+
 const logoutBtn = document.getElementById("logoutBtn");
 const toastContainer = document.getElementById("toastContainer");
 
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const sidebarClose = document.getElementById("sidebarClose");
+const menuToggle = document.getElementById("menu-toggle");
+
 /* ==========================================================================
-   GLOBALS
+   GLOBAL VARIABLES
    ========================================================================== */
 
 let currentStudent = null;
 let enrollments = [];
 
 /* ==========================================================================
-   AUTH INITIALIZATION
+   INITIALIZATION
    ========================================================================== */
 
+document.addEventListener("DOMContentLoaded", initializeDashboard);
+
 async function initializeDashboard() {
+
     try {
+
+        showLoader();
+
         const user = await requireStudent();
 
         if (!user) {
@@ -64,31 +80,53 @@ async function initializeDashboard() {
 
         currentStudent = user;
 
-        loadStudent(user.uid);
-        loadEnrollments(user.uid);
-    } catch (error) {
-        console.error(error);
-        showToast("Unable to load dashboard.", "error");
-    }
-}
+        await Promise.all([
+            loadStudent(user.uid),
+            loadEnrollments(user.uid)
+        ]);
 
-initializeDashboard();
+    } catch (error) {
+
+        console.error("Dashboard initialization failed:", error);
+
+        showToast(
+            "Unable to load dashboard.",
+            "error"
+        );
+
+    } finally {
+
+        hideLoader();
+
+    }
+
+}
 
 /* ==========================================================================
    STUDENT PROFILE
    ========================================================================== */
 
 async function loadStudent(uid) {
-    const snap = await getDoc(
-        doc(db, "students", uid)
-    );
 
-    if (!snap.exists()) {
-        return;
+    try {
+
+        const snap = await getDoc(doc(db, "students", uid));
+
+        if (!snap.exists()) {
+            studentName.textContent = "Student";
+            return;
+        }
+
+        const student = snap.data();
+
+        studentName.textContent = student.name || "Student";
+
+    } catch (error) {
+
+        console.error("Unable to load student profile:", error);
+
     }
 
-    const student = snap.data();
-    studentName.textContent = student.name || "Student";
 }
 
 /* ==========================================================================
@@ -96,131 +134,147 @@ async function loadStudent(uid) {
    ========================================================================== */
 
 async function loadEnrollments(uid) {
-    const snapshot = await getDocs(
-        query(
-            collection(db, "enrollments"),
-            where("studentId", "==", uid),
-            where("approvalStatus", "==", "Approved")
-        )
-    );
 
-    enrollments = snapshot.docs;
-    coursesGrid.innerHTML = "";
+    try {
 
-    let totalProgress = 0;
-
-    // IF NO ENROLLED COURSES YET: SHOW ALL AVAILABLE COURSES CATALOG
-    if (snapshot.empty) {
-        if (emptyCourses) emptyCourses.classList.add("hidden");
-        if (viewAllCoursesWrapper) viewAllCoursesWrapper.classList.remove("hidden");
-
-        totalCourses.textContent = "0";
-        totalCertificates.textContent = "0";
-        courseProgress.textContent = "0%";
-
-        try {
-            const allCoursesSnap = await getDocs(collection(db, "courses"));
-            const catalogCards = [];
-
-            allCoursesSnap.forEach((courseDoc) => {
-                const course = courseDoc.data();
-                const courseId = courseDoc.id;
-
-                catalogCards.push(`
-                    <article class="course-card">
-                        <img src="../${course.dashboardImage || course.thumbnail || 'assets/images/course-placeholder.jpg'}" alt="${course.title || 'Course'}">
-                        <div class="course-content">
-                            <h3>${course.title || 'Untitled Course'}</h3>
-                            <p>${course.description || ""}</p>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:0%"></div>
-                            </div>
-                            <div class="course-footer">
-                                <span>Not Enrolled</span>
-                                <a class="btn btn-primary" href="../student/enroll.html?id=${courseId}">
-                                    Enroll Now
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-                `);
-            });
-
-            if (catalogCards.length > 0) {
-                coursesGrid.innerHTML = catalogCards.join("");
-            } else {
-                if (emptyCourses) emptyCourses.classList.remove("hidden");
-            }
-        } catch (err) {
-            console.error("Error loading course catalog:", err);
-            if (emptyCourses) emptyCourses.classList.remove("hidden");
-        }
-
-        return;
-    }
-
-    // IF STUDENT IS ENROLLED IN AT LEAST 1 COURSE
-    if (emptyCourses) emptyCourses.classList.add("hidden");
-
-    // Show "View All Courses" wrapper
-    if (viewAllCoursesWrapper) {
-        viewAllCoursesWrapper.classList.remove("hidden");
-    }
-
-    totalCourses.textContent = snapshot.size;
-
-    const cards = [];
-
-    for (const enrollment of snapshot.docs) {
-        const data = enrollment.data();
-        totalProgress += data.progress || 0;
-
-        const courseSnap = await getDoc(
-            doc(db, "courses", data.courseId)
+        const enrollmentSnapshot = await getDocs(
+            query(
+                collection(db, "enrollments"),
+                where("studentId", "==", uid),
+                where("approvalStatus", "==", "Approved")
+            )
         );
 
-        if (!courseSnap.exists()) {
-            continue;
+        enrollments = enrollmentSnapshot.docs;
+
+        coursesGrid.innerHTML = "";
+
+        let totalProgress = 0;
+
+        /* ---------------------------------------------------------------
+           NO ENROLLED COURSES
+        ---------------------------------------------------------------- */
+
+        if (enrollmentSnapshot.empty) {
+
+            totalCourses.textContent = "0";
+            totalCertificates.textContent = "0";
+            courseProgress.textContent = "0%";
+
+            emptyCourses?.classList.add("hidden");
+            viewAllCoursesWrapper?.classList.remove("hidden");
+
+            await loadCourseCatalog();
+
+            return;
+
         }
 
-        const course = courseSnap.data();
+        /* ---------------------------------------------------------------
+           ENROLLED COURSES
+        ---------------------------------------------------------------- */
 
-        cards.push(`
-            <article class="course-card">
-                <img src="../${course.dashboardImage || course.thumbnail || 'assets/images/course-placeholder.jpg'}" alt="${course.title}">
-                <div class="course-content">
-                    <h3>${course.title}</h3>
-                    <p>${course.description || ""}</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width:${data.progress || 0}%"></div>
-                    </div>
-                    <div class="course-footer">
-                        <span>${data.progress || 0}%</span>
-                        ${
-                            data.progress === 100
-                            ? `<a class="btn btn-success" href="certificate-view.html?courseId=${data.courseId}">
-                                <i class="fa-solid fa-award"></i> View Certificate
-                               </a>`
-                            : `<a class="btn btn-primary" href="course.html?id=${data.courseId}">
-                                Continue
-                               </a>`
-                        }
-                    </div>
-                </div>
-            </article>
-        `);
+        emptyCourses?.classList.add("hidden");
+        viewAllCoursesWrapper?.classList.remove("hidden");
+
+        totalCourses.textContent = enrollmentSnapshot.size;
+
+        const coursePromises = enrollmentSnapshot.docs.map(async (enrollmentDoc) => {
+
+            const enrollment = enrollmentDoc.data();
+
+            totalProgress += enrollment.progress || 0;
+
+            const courseSnap = await getDoc(
+                doc(db, "courses", enrollment.courseId)
+            );
+
+            if (!courseSnap.exists()) {
+                return "";
+            }
+
+            const course = {
+                id: enrollment.courseId,
+                ...courseSnap.data()
+            };
+
+            return createCourseCard(course, {
+                mode: "dashboard",
+                progress: enrollment.progress || 0,
+                completedLessons: enrollment.completedLessons || 0
+            });
+
+        });
+
+        const cards = await Promise.all(coursePromises);
+
+        coursesGrid.innerHTML = cards.join("");
+
+        const certificateSnapshot = await getDocs(
+            query(
+                collection(db, "certificates"),
+                where("studentId", "==", uid)
+            )
+        );
+
+        totalCertificates.textContent = certificateSnapshot.size;
+
+        courseProgress.textContent =
+            `${Math.round(totalProgress / enrollmentSnapshot.size)}%`;
+
+    } catch (error) {
+
+        console.error("Unable to load enrollments:", error);
+
+        showToast(
+            "Unable to load your courses.",
+            "error"
+        );
+
     }
 
-    const certificateSnapshot = await getDocs(
-        query(
-            collection(db, "certificates"),
-            where("studentId", "==", uid)
-        )
-    );
+}
 
-    totalCertificates.textContent = certificateSnapshot.size;
-    coursesGrid.innerHTML = cards.join("");
-    courseProgress.textContent = `${Math.round(totalProgress / snapshot.size)}%`;
+/* ==========================================================================
+   COURSE CATALOG
+   ========================================================================== */
+
+async function loadCourseCatalog() {
+
+    try {
+
+        const snapshot = await getDocs(collection(db, "courses"));
+
+        if (snapshot.empty) {
+
+            emptyCourses?.classList.remove("hidden");
+            return;
+
+        }
+
+        const cards = snapshot.docs.map(courseDoc => {
+
+            const course = {
+                id: courseDoc.id,
+                ...courseDoc.data()
+            };
+
+            return createCourseCard(course, {
+                mode: "student"
+            });
+
+        });
+
+        coursesGrid.innerHTML = cards.join("");
+
+    } catch (error) {
+
+        console.error("Unable to load course catalog:", error);
+
+        emptyCourses?.classList.remove("hidden");
+
+    }
+
 }
 
 /* ==========================================================================
@@ -228,19 +282,34 @@ async function loadEnrollments(uid) {
    ========================================================================== */
 
 if (logoutBtn) {
-    logoutBtn.addEventListener("click", async event => {
+
+    logoutBtn.addEventListener("click", async (event) => {
+
         event.preventDefault();
 
         try {
+
             showLoader();
+
             await logoutUser();
+
         } catch (error) {
-            console.error(error);
-            showToast("Unable to logout.", "error");
+
+            console.error("Logout failed:", error);
+
+            showToast(
+                "Unable to logout.",
+                "error"
+            );
+
         } finally {
+
             hideLoader();
+
         }
+
     });
+
 }
 
 /* ==========================================================================
@@ -248,57 +317,79 @@ if (logoutBtn) {
    ========================================================================== */
 
 function showToast(message, type = "success") {
+
     if (!toastContainer) return;
 
     const toast = document.createElement("div");
+
     toast.className = `toast ${type}`;
     toast.textContent = message;
 
     toastContainer.appendChild(toast);
 
     requestAnimationFrame(() => {
+
         toast.classList.add("show");
+
     });
 
     setTimeout(() => {
-        toast.remove();
+
+        toast.classList.remove("show");
+
+        setTimeout(() => {
+
+            toast.remove();
+
+        }, 300);
+
     }, 3000);
+
 }
 
 /* ==========================================================================
-   MOBILE SIDEBAR MENU CONTROLS
+   MOBILE SIDEBAR
    ========================================================================== */
 
-const sidebar = document.getElementById("sidebar");
-const sidebarOverlay = document.getElementById("sidebarOverlay");
-const sidebarClose = document.getElementById("sidebarClose");
-const menuToggle = document.getElementById("menu-toggle");
+function openSidebar() {
 
-if (menuToggle) {
-    menuToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (sidebar) sidebar.classList.add("open");
-        if (sidebarOverlay) sidebarOverlay.classList.add("show");
-    });
+    sidebar?.classList.add("open");
+    sidebarOverlay?.classList.add("show");
+
 }
 
-if (sidebarClose) {
-    sidebarClose.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (sidebar) sidebar.classList.remove("open");
-        if (sidebarOverlay) sidebarOverlay.classList.remove("show");
-    });
+function closeSidebar() {
+
+    sidebar?.classList.remove("open");
+    sidebarOverlay?.classList.remove("show");
+
 }
 
-if (sidebarOverlay) {
-    sidebarOverlay.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (sidebar) sidebar.classList.remove("open");
-        if (sidebarOverlay) sidebarOverlay.classList.remove("show");
-    });
-}
+menuToggle?.addEventListener("click", (event) => {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    openSidebar();
+
+});
+
+sidebarClose?.addEventListener("click", (event) => {
+
+    event.preventDefault();
+
+    closeSidebar();
+
+});
+
+sidebarOverlay?.addEventListener("click", (event) => {
+
+    event.preventDefault();
+
+    closeSidebar();
+
+});
 
 /* ==========================================================================
-   END OF SCRIPT
+   END OF FILE
    ========================================================================== */

@@ -197,6 +197,47 @@
     font-size: 1rem;
 }
 
+.course-price{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin:18px 0;
+}
+
+.old-price{
+    font-size:1rem;
+    color:#9ca3af;
+    text-decoration:line-through;
+}
+
+.offer-price{
+    font-size:1.8rem;
+    font-weight:700;
+    color:#2563eb;
+}
+
+.course-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+    padding:14px 0;
+    border-top:1px solid #eef2f7;
+    border-bottom:1px solid #eef2f7;
+    color:#6b7280;
+    font-size:.9rem;
+}
+
+.course-meta span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.course-meta i{
+    color:#2563eb;
+}
+
 .modal-actions {
     display: flex;
     flex-direction: column;
