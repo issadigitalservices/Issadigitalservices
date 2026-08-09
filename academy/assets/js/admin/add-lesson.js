@@ -72,6 +72,9 @@ const lessonOrder =
 const toastContainer =
     document.getElementById("toastContainer");
 
+    const practiceFile =
+    document.getElementById("practiceFile");
+
 /* ==========================================================================
    TOAST
    ========================================================================== */
@@ -256,50 +259,46 @@ async function loadNextLessonOrder(moduleIdValue){
 
 /* ==========================================================================
    SAVE LESSON
-   ========================================================================== */
+========================================================================== */
 
 lessonForm.addEventListener(
 
     "submit",
 
-    async event=>{
+    async event => {
 
         event.preventDefault();
 
         if (
+            !courseId.value ||
+            !moduleId.value ||
+            !lessonTitle.value.trim() ||
+            videoFile.files.length === 0
+        ){
 
-    !courseId.value ||
+            showToast(
+                "Please complete all required fields and select a video."
+            );
 
-    !moduleId.value ||
-
-    !lessonTitle.value.trim() ||
-
-    videoFile.files.length === 0
-
-){
-
-            showToast("Please complete all required fields and select a video.");
             return;
 
         }
 
-        const selectedCourse=
-
+        const selectedCourse =
             courseId.options[
-
                 courseId.selectedIndex
-
             ];
 
-        const selectedModule=
-
+        const selectedModule =
             moduleId.options[
-
                 moduleId.selectedIndex
-
             ];
 
         try {
+
+            /* ==============================================================
+               VIDEO UPLOAD
+            ============================================================== */
 
             let uploadedUrl = videoUrl.value.trim();
 
@@ -309,62 +308,134 @@ lessonForm.addEventListener(
 
                     videoFile.files[0],
 
-                    "lessons", // 1. Correctly pass the folder name here
+                    "lessons",
 
-                    percent => {  // 2. Correctly pass the progress callback here
+                    percent => {
 
                         uploadProgress.value = percent;
 
-                        uploadPercent.textContent = percent + "%";
+                        uploadPercent.textContent =
+                            percent + "%";
 
                     }
 
                 );
 
-                // 3. Extract the actual URL property from your worker's JSON response
-                uploadedUrl = response.url; 
+                uploadedUrl = response.url;
 
                 videoUrl.value = uploadedUrl;
 
             }
+
+
+            /* ==============================================================
+               PRACTICE EXCEL FILE UPLOAD
+            ============================================================== */
+
+            let practiceFileUrl = "";
+
+            if (practiceFile.files.length > 0) {
+
+                const practiceResponse =
+                    await uploadFile(
+
+                        practiceFile.files[0],
+
+                        "Lesson Practice Files",
+
+                        percent => {
+
+                            // Practice file upload
+                            // does not affect video progress.
+
+                        }
+
+                    );
+
+                practiceFileUrl =
+                    practiceResponse.url;
+
+            }
+
+
+            /* ==============================================================
+               SAVE LESSON TO FIRESTORE
+            ============================================================== */
 
             await addDoc(
 
                 collection(db, "lessons"),
 
                 {
-                    courseId: courseId.value,
-                    courseTitle: selectedCourse.dataset.title,
-                    moduleId: moduleId.value,
-                    moduleTitle: selectedModule.dataset.title,
-                    title: lessonTitle.value.trim(),
-                    description: lessonDescription.value.trim(),
-                    videoUrl: uploadedUrl,
-                    order: Number(lessonOrder.value),
-                    type: "Video",
-                    createdAt: serverTimestamp(),
-                    updatedAt: serverTimestamp()
+
+                    courseId:
+                        courseId.value,
+
+                    courseTitle:
+                        selectedCourse.dataset.title,
+
+                    moduleId:
+                        moduleId.value,
+
+                    moduleTitle:
+                        selectedModule.dataset.title,
+
+                    title:
+                        lessonTitle.value.trim(),
+
+                    description:
+                        lessonDescription.value.trim(),
+
+                    videoUrl:
+                        uploadedUrl,
+
+                    practiceFileUrl:
+                        practiceFileUrl,
+
+                    order:
+                        Number(lessonOrder.value),
+
+                    type:
+                        "Video",
+
+                    createdAt:
+                        serverTimestamp(),
+
+                    updatedAt:
+                        serverTimestamp()
+
                 }
 
             );
 
-            showToast("Lesson created successfully.");
+
+            /* ==============================================================
+               SUCCESS
+            ============================================================== */
+
+            showToast(
+                "Lesson created successfully."
+            );
 
             setTimeout(() => {
 
-                location.href = "lessons.html";
+                location.href =
+                    "lessons.html";
 
             }, 1000);
 
         }
 
-catch (error) {
+        catch (error) {
 
-    console.error(error);
+            console.error(error);
 
-    showToast("Failed to save lesson.");
+            showToast(
+                "Failed to save lesson."
+            );
 
-}
+        }
+
     }
 
 );

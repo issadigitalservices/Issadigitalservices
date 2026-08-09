@@ -196,11 +196,22 @@ async function loadLesson() {
         lessonVideo.removeAttribute("src");
     }
 
-    if (lesson.attachmentUrl) {
-        downloadBtn.href = lesson.attachmentUrl;
-    } else {
-        downloadBtn.style.display = "none";
-    }
+    if (lesson.practiceFileUrl) {
+
+    downloadBtn.href = lesson.practiceFileUrl;
+
+    downloadBtn.style.display = "inline-flex";
+
+    downloadBtn.setAttribute(
+        "download",
+        ""
+    );
+
+} else {
+
+    downloadBtn.style.display = "none";
+
+}
 
     lessonVideo.addEventListener("contextmenu", event => {
         event.preventDefault();

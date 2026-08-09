@@ -56,7 +56,9 @@
 
 .top-bar{
 
-    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    background:#69eb55;
+color:var(--text-dark);
+border:1px solid var(--border);
 
     color:#fff;
 
@@ -98,6 +100,7 @@
     opacity:.92;
 
     max-width:600px;
+    
 
     line-height:1.8;
 
