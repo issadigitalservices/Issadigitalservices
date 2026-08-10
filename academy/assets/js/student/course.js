@@ -500,15 +500,10 @@ async function loadFinalExam(){
     const finalExamSnapshot = await getDocs(
 
         query(
-
-            collection(db,"exams"),
-
-            where("courseId","==",courseId),
-
-            where("type","==","final"),
-
+            collection(db, "exams"),
+            where("courseId", "==", courseId),
+            where("type", "==", "final"),
             limit(1)
-
         )
 
     );
@@ -519,190 +514,261 @@ async function loadFinalExam(){
 
     }
 
-    const finalExamDoc = finalExamSnapshot.docs[0];
+    const finalExamDoc =
+        finalExamSnapshot.docs[0];
 
-    const finalExam = finalExamDoc.data();
+    const finalExam =
+        finalExamDoc.data();
 
-    const moduleProgressSnapshot = await getDocs(
 
-        query(
-
-            collection(db,"moduleProgress"),
-
-            where("studentId","==",auth.currentUser.uid),
-
-            where("courseId","==",courseId)
-
-        )
-
-    );
+    /* ==========================================================
+       CHECK ALL MODULE EXAMS
+       ========================================================== */
 
     const moduleSnapshot = await getDocs(
 
         query(
-
-            collection(db,"modules"),
-
-            where("courseId","==",courseId)
-
+            collection(db, "modules"),
+            where("courseId", "==", courseId)
         )
 
     );
 
-    const modulesCompleted =
-        moduleProgressSnapshot.size >= moduleSnapshot.size;
+    const moduleExamPromises =
+        moduleSnapshot.docs.map(async moduleDoc => {
 
-    // The final exam is unlocked ONLY if modules are finished AND the admin toggle is true
-    const unlocked = modulesCompleted && isFinalExamAdminUnlocked;
+            const examSnapshot = await getDocs(
+
+                query(
+                    collection(db, "exams"),
+                    where("courseId", "==", courseId),
+                    where("moduleId", "==", moduleDoc.id),
+                    where("type", "==", "module"),
+                    limit(1)
+                )
+
+            );
+
+            if(examSnapshot.empty){
+
+                return false;
+
+            }
+
+            const examDoc =
+                examSnapshot.docs[0];
+
+            const attemptSnapshot =
+                await getDocs(
+
+                    query(
+                        collection(db, "examAttempts"),
+                        where(
+                            "studentId",
+                            "==",
+                            auth.currentUser.uid
+                        ),
+                        where(
+                            "examId",
+                            "==",
+                            examDoc.id
+                        ),
+                        where(
+                            "passed",
+                            "==",
+                            true
+                        ),
+                        limit(1)
+                    )
+
+                );
+
+            return !attemptSnapshot.empty;
+
+        });
+
+
+    const moduleExamResults =
+        await Promise.all(moduleExamPromises);
+
+
+    const modulesCompleted =
+        moduleExamResults.length === moduleSnapshot.size &&
+        moduleExamResults.every(
+            passed => passed === true
+        );
+
+
+    /* ==========================================================
+       FINAL EXAM ATTEMPT
+       ========================================================== */
 
     const attemptSnapshot = await getDocs(
 
         query(
-
-            collection(db,"examAttempts"),
-
-            where("studentId","==",auth.currentUser.uid),
-
-            where("examId","==",finalExamDoc.id),
-
-            where("passed","==",true),
-
+            collection(db, "examAttempts"),
+            where(
+                "studentId",
+                "==",
+                auth.currentUser.uid
+            ),
+            where(
+                "examId",
+                "==",
+                finalExamDoc.id
+            ),
+            where(
+                "passed",
+                "==",
+                true
+            ),
             limit(1)
-
         )
 
     );
 
+
+    /* ==========================================================
+       FINAL EXAM ALREADY PASSED
+       ========================================================== */
+
     if(!attemptSnapshot.empty){
 
-        const attempt = attemptSnapshot.docs[0].data();
+        const attempt =
+            attemptSnapshot.docs[0].data();
 
         finalExamContainer.innerHTML = `
 
-<div class="assessment-card passed">
+            <div class="assessment-card passed">
 
-    <div class="assessment-icon">
+                <div class="assessment-icon">
 
-        <i class="fa-solid fa-graduation-cap"></i>
+                    <i class="fa-solid fa-graduation-cap"></i>
 
-    </div>
+                </div>
 
-    <div class="assessment-content">
+                <div class="assessment-content">
 
-        <h4>
+                    <h4>
+                        ${finalExam.title}
+                    </h4>
 
-            ${finalExam.title}
+                    <p>
 
-        </h4>
+                        Score:
+                        ${attempt.score}/${attempt.totalMarks}
 
-        <p>
+                        (${attempt.percentage}%)
 
-            Score:
-            ${attempt.score}/${attempt.totalMarks}
+                        <br>
 
-            (${attempt.percentage}%)
+                        <strong style="color:#16a34a;">
 
-            <br>
+                            ✅ Final Exam Passed
 
-            <strong style="color:#16a34a;">
+                        </strong>
 
-                ✅ Final Exam Passed
+                    </p>
 
-            </strong>
+                </div>
 
-        </p>
+            </div>
 
-    </div>
-
-</div>
-
-`;
+        `;
 
         return;
 
     }
 
-    if(unlocked){
+
+    /* ==========================================================
+       ALL MODULE EXAMS PASSED
+       ========================================================== */
+
+    if(modulesCompleted){
 
         finalExamContainer.innerHTML = `
 
-<div class="assessment-card">
+            <div class="assessment-card">
 
-    <div class="assessment-icon">
+                <div class="assessment-icon">
 
-        <i class="fa-solid fa-graduation-cap"></i>
+                    <i class="fa-solid fa-graduation-cap"></i>
 
-    </div>
+                </div>
 
-    <div class="assessment-content">
+                <div class="assessment-content">
 
-        <h4>
+                    <h4>
+                        ${finalExam.title}
+                    </h4>
 
-            ${finalExam.title}
+                    <p>
 
-        </h4>
+                        Complete the Final Exam to complete
+                        your course.
 
-        <p>
+                    </p>
 
-            Complete the Final Exam to unlock your certificate.
+                </div>
 
-        </p>
+                <a
+                    href="start-assessment.html?id=${finalExamDoc.id}&courseId=${courseId}"
+                    class="assessment-btn"
+                >
 
-    </div>
+                    Start Final Exam
 
-    <a
+                </a>
 
-        href="start-assessment.html?id=${finalExamDoc.id}&courseId=${courseId}"
+            </div>
 
-        class="assessment-btn">
-
-        Start Final Exam
-
-    </a>
-
-</div>
-
-`;
+        `;
 
     }
 
     else{
 
+        /* ======================================================
+           MODULE EXAMS NOT ALL PASSED
+           ====================================================== */
+
         finalExamContainer.innerHTML = `
 
-<div class="assessment-card locked">
+            <div class="assessment-card locked">
 
-    <div class="assessment-icon">
+                <div class="assessment-icon">
 
-        <i class="fa-solid fa-lock"></i>
+                    <i class="fa-solid fa-lock"></i>
 
-    </div>
+                </div>
 
-    <div class="assessment-content">
+                <div class="assessment-content">
 
-        <h4>
+                    <h4>
 
-            Final Certification Exam
+                        Final Certification Exam
 
-        </h4>
+                    </h4>
 
-        <p>
+                    <p>
 
-            Complete all Module Exam to unlock the Final Exam.
+                        Complete all Module Exams to unlock
+                        the Final Exam.
 
-        </p>
+                    </p>
 
-    </div>
+                </div>
 
-    <div class="assessment-btn disabled">
+                <div class="assessment-btn disabled">
 
-        Locked
+                    Locked
 
-    </div>
+                </div>
 
-</div>
+            </div>
 
-`;
+        `;
 
     }
 

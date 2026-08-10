@@ -163,38 +163,268 @@ async function loadLesson() {
     lessonTitle.textContent = lesson.title;
     lessonDescription.textContent = lesson.description || "";
 
-    /* ================= VIDEO SETUP ================= */
-    if (lesson.videoUrl) {
-        lessonVideo.src = lesson.videoUrl;
+    /* ================= PROTECTED VIDEO SETUP ================= */
 
-        if (!player) {
-            player = new Plyr(lessonVideo, {
-                controls: [
-                    "play-large", "play", "progress",
-                    "current-time", "duration", "mute",
-                    "volume", "settings", "fullscreen"
-                ],
-                settings: ["speed"],
-                speed: {
-                    selected: 1.25,
-                    options: [0.5, 0.75, 1, 1.25, 1.5, 2]
-                }
-            });
+if (lesson.videoUrl) {
+
+    try {
+
+        const currentUser = auth.currentUser;
+
+        if (!currentUser) {
+            throw new Error(
+                "Your login session has expired."
+            );
         }
 
-        lessonVideo.addEventListener("loadedmetadata", () => {
-            const durationElement = document.getElementById("lessonDuration");
-            if (!durationElement) return;
 
-            const totalSeconds = Math.floor(lessonVideo.duration);
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
+        /*
+         * Existing lessons already have videoUrl.
+         *
+         * Extract the R2 object key from the old public URL
+         * so we do not need to modify all existing lessons.
+         */
 
-            durationElement.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
-        });
-    } else {
-        lessonVideo.removeAttribute("src");
+        let videoKey = lesson.videoKey || "";
+
+        if (!videoKey) {
+
+            try {
+
+                const videoUrl =
+                    new URL(lesson.videoUrl);
+
+                videoKey =
+                    decodeURIComponent(
+                        videoUrl.pathname.replace(/^\/+/, "")
+                    );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Unable to determine video key:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        if (!videoKey) {
+
+            throw new Error(
+                "Video file information is missing."
+            );
+
+        }
+
+
+        /*
+         * Get the current Firebase ID token.
+         */
+
+        const idToken =
+            await currentUser.getIdToken();
+
+
+        /*
+         * Ask Cloudflare Worker for a temporary
+         * protected video session.
+         */
+
+        const sessionResponse =
+            await fetch(
+                "https://issa-upload-worker.issadigitalservices.workers.dev/video-session",
+                {
+                    method: "POST",
+
+                    credentials: "include",
+
+                    headers: {
+                        "Authorization":
+                            `Bearer ${idToken}`,
+
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        courseId:
+                            lesson.courseId,
+
+                        videoKey:
+                            videoKey
+
+                    })
+                }
+            );
+
+
+        const sessionData =
+            await sessionResponse.json();
+
+
+        if (
+            !sessionResponse.ok ||
+            !sessionData.success ||
+            !sessionData.token
+        ) {
+
+            throw new Error(
+                sessionData.message ||
+                "Unable to secure this video."
+            );
+
+        }
+
+
+        /*
+         * Temporary protected video URL.
+         */
+
+        const protectedVideoUrl =
+            `https://issa-upload-worker.issadigitalservices.workers.dev/video?token=${encodeURIComponent(sessionData.token)}`;
+
+
+        /*
+         * Initialize Plyr once.
+         */
+
+        if (!player) {
+
+            player = new Plyr(
+                lessonVideo,
+                {
+                    controls: [
+                        "play-large",
+                        "play",
+                        "progress",
+                        "current-time",
+                        "duration",
+                        "mute",
+                        "volume",
+                        "settings",
+                        "fullscreen"
+                    ],
+
+                    settings: [
+                        "speed"
+                    ],
+
+                    speed: {
+                        selected: 1.25,
+                        options: [
+                            0.5,
+                            0.75,
+                            1,
+                            1.25,
+                            1.5,
+                            2
+                        ]
+                    }
+                }
+            );
+
+        }
+
+
+        /*
+         * Give Plyr the protected video URL.
+         */
+
+        player.source = {
+
+            type: "video",
+
+            sources: [
+                {
+                    src:
+                        protectedVideoUrl,
+
+                    type:
+                        "video/mp4"
+                }
+            ]
+
+        };
+
+
+        lessonVideo.addEventListener(
+            "loadedmetadata",
+            () => {
+
+                const durationElement =
+                    document.getElementById(
+                        "lessonDuration"
+                    );
+
+                if (!durationElement) {
+                    return;
+                }
+
+
+                const totalSeconds =
+                    Math.floor(
+                        lessonVideo.duration
+                    );
+
+
+                const minutes =
+                    Math.floor(
+                        totalSeconds / 60
+                    );
+
+
+                const seconds =
+                    totalSeconds % 60;
+
+
+                durationElement.textContent =
+                    `${minutes}:${seconds
+                        .toString()
+                        .padStart(2, "0")}`;
+
+            },
+            {
+                once: true
+            }
+        );
+
+
     }
+
+    catch (error) {
+
+        console.error(
+            "Protected video error:",
+            error
+        );
+
+        lessonVideo.removeAttribute(
+            "src"
+        );
+
+        showToast(
+            error.message ||
+            "Unable to load video.",
+            "error"
+        );
+
+    }
+
+}
+
+else {
+
+    lessonVideo.removeAttribute(
+        "src"
+    );
+
+}
 
     if (lesson.practiceFileUrl) {
 
@@ -525,61 +755,10 @@ async function completeLesson() {
 
         showToast("Lesson automatically marked as completed.");
 
-        // Check if course is 100% complete to generate certificate automatically
-        if (progress === 100) {
-            await generateCertificate();
-        }
-
     } catch (error) {
         console.error(error);
         showToast("Unable to complete lesson.", "error");
     }
-}
-
-/* ==========================================================================
-   GENERATE CERTIFICATE
-   ========================================================================== */
-
-async function generateCertificate() {
-    console.log("generateCertificate() called");
-
-    const existing = await getDocs(
-        query(
-            collection(db, "certificates"),
-            where("studentId", "==", studentId),
-            where("courseId", "==", lessonData.courseId)
-        )
-    );
-
-    if (!existing.empty) {
-        location.href = "certificate-view.html?courseId=" + lessonData.courseId;
-        return;
-    }
-
-    const certificateNumber =
-        "ISSA-" +
-        new Date().getFullYear() +
-        "-" +
-        Date.now();
-
-    await addDoc(
-        collection(db, "certificates"),
-        {
-            studentId: studentId,
-            studentName: enrollmentData.studentName,
-            studentEmail: enrollmentData.studentEmail,
-            courseId: lessonData.courseId,
-            courseName: enrollmentData.courseName,
-            certificateNumber: certificateNumber,
-            fileUrl: "",
-            issuedAt: serverTimestamp()
-        }
-    );
-
-    showToast("🎉 Congratulations! Certificate unlocked.");
-    setTimeout(() => {
-        location.href = "certificate-view.html?courseId=" + lessonData.courseId;
-    }, 1500);
 }
 
 /* ==========================================================================

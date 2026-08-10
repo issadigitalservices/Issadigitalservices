@@ -1,579 +1,1080 @@
-"use strict";
+    "use strict";
 
-/* ==========================================================================
-   ISSA Academy
-   Student Exam
-   ========================================================================== */
+    /* ==========================================================================
+    ISSA Academy
+    Student Exam
+    ========================================================================== */
 
-import {
+    import {
 
-    auth,
-    db
+        auth,
+        db
 
-} from "../core/firebase-config.js";
+    } from "../core/firebase-config.js";
 
-import {
+    import {
 
-    onAuthStateChanged
+        onAuthStateChanged
 
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+    } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-import {
+    import {
 
-    collection,
-    query,
-    where,
-    orderBy,
-    getDocs,
-    getDoc,
-    addDoc,
-    updateDoc,
-    doc,
-    serverTimestamp,
-    Timestamp
+        collection,
+        query,
+        where,
+        orderBy,
+        getDocs,
+        getDoc,
+        addDoc,
+        updateDoc,
+        doc,
+        serverTimestamp,
+        Timestamp
 
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+    } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-/* ==========================================================================
-   URL
-   ========================================================================== */
+    /* ==========================================================================
+    URL
+    ========================================================================== */
 
-const params =
-    new URLSearchParams(location.search);
+    const params =
+        new URLSearchParams(location.search);
 
-const examId =
-    params.get("id");
+    const examId =
+        params.get("id");
 
-/* ==========================================================================
-   DOM
-   ========================================================================== */
+    /* ==========================================================================
+    DOM
+    ========================================================================== */
 
-const examTitle =
-    document.getElementById("examTitle");
+    const examTitle =
+        document.getElementById("examTitle");
 
-const currentQuestion =
-    document.getElementById("currentQuestion");
+    const currentQuestion =
+        document.getElementById("currentQuestion");
 
-const totalQuestions =
-    document.getElementById("totalQuestions");
+    const totalQuestions =
+        document.getElementById("totalQuestions");
 
-const timer =
-    document.getElementById("timer");
+    const timer =
+        document.getElementById("timer");
 
-const questionText =
-    document.getElementById("questionText");
+    const questionText =
+        document.getElementById("questionText");
 
-const optionsList =
-    document.getElementById("optionsList");
+    const optionsList =
+        document.getElementById("optionsList");
 
-const palette =
-    document.getElementById("palette");
+    const palette =
+        document.getElementById("palette");
 
-const previousBtn =
-    document.getElementById("previousBtn");
+    const previousBtn =
+        document.getElementById("previousBtn");
 
-const nextBtn =
-    document.getElementById("nextBtn");
+    const nextBtn =
+        document.getElementById("nextBtn");
 
-const submitBtn =
-    document.getElementById("submitBtn");
+    const submitBtn =
+        document.getElementById("submitBtn");
 
-const progressBar =
-    document.getElementById("progressBar");
+    const progressBar =
+        document.getElementById("progressBar");
 
-const pageLoader =
-    document.getElementById("pageLoader");
+    const pageLoader =
+        document.getElementById("pageLoader");
 
-const toastContainer =
-    document.getElementById("toastContainer");
+    const toastContainer =
+        document.getElementById("toastContainer");
 
-/* ==========================================================================
-   GLOBALS
-   ========================================================================== */
+    /* ==========================================================================
+    GLOBALS
+    ========================================================================== */
 
-let studentId = "";
+    let studentId = "";
 
-let exam = {};
+    let exam = {};
 
-let questions = [];
+    let questions = [];
 
-let answers = {};
+    let answers = {};
 
-let current = 0;
+    let current = 0;
 
-let seconds = 0;
+    let seconds = 0;
 
-let timerInterval;
+    let timerInterval;
 
-let attemptId = "";
+    let attemptId = "";
 
-/* ==========================================================================
-   AUTH
-   ========================================================================== */
+    /* ==========================================================================
+    AUTH
+    ========================================================================== */
 
-onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, async (user) => {
 
-    if (!user) {
+        if (!user) {
 
-        location.replace("login.html");
+            location.replace("login.html");
 
-        return;
-
-    }
-
-    studentId = user.uid;
-
-    showLoader();
-
-    // Load exam first
-    const examLoaded = await loadExam();
-
-    if (!examLoaded) {
-
-        hideLoader();
-
-        return;
-
-    }
-
-    // Already passed?
-    const passedSnapshot = await getDocs(
-
-        query(
-
-            collection(db, "examAttempts"),
-
-            where("studentId", "==", studentId),
-
-            where("examId", "==", examId),
-
-            where("passed", "==", true)
-
-        )
-
-    );
-
-    if (!passedSnapshot.empty) {
-
-    location.replace(`course.html?id=${exam.courseId}`);
-
-    return;
-
-}
-
-    // Resume existing attempt
-    const attemptSnapshot = await getDocs(
-
-        query(
-
-            collection(db, "examAttempts"),
-
-            where("studentId", "==", studentId),
-
-            where("examId", "==", examId),
-
-            where("submittedAt", "==", null)
-
-        )
-
-    );
-
-    if (!attemptSnapshot.empty) {
-
-        const attemptDoc = attemptSnapshot.docs[0];
-
-        attemptId = attemptDoc.id;
-
-        const attempt = attemptDoc.data();
-
-        answers = attempt.answers || {};
-
-        current = attempt.currentQuestion || 0;
-
-        if (attempt.expiresAt) {
-
-            seconds = Math.max(
-
-                0,
-
-                Math.floor(
-
-                    (attempt.expiresAt.toMillis() - Date.now()) / 1000
-
-                )
-
-            );
+            return;
 
         }
 
-    } else {
+        studentId = user.uid;
 
-        seconds = (exam.duration || 30) * 60;
+        showLoader();
 
-        const newAttempt = await addDoc(
+        // Load exam first
+        const examLoaded = await loadExam();
 
-            collection(db, "examAttempts"),
-
-            {
-    studentId,
-
-    examId,
-
-    answers: {},
-
-    currentQuestion: 0,
-
-    score: 0,
-
-    totalMarks: 0,
-
-    percentage: 0,
-
-    passed: false,
-
-    submittedAt: null,
-
-    startedAt: serverTimestamp(),
-
-    expiresAt: Timestamp.fromMillis(
-
-        Date.now() + seconds * 1000
-
-    )
-
+if (!examLoaded) {
+    hideLoader();
+    return;
 }
 
+
+/* ================================================================
+   VERIFY EXAM ACCESS
+================================================================ */
+
+const examAccessAllowed =
+    await verifyExamAccess();
+
+if (!examAccessAllowed) {
+
+    hideLoader();
+
+    return;
+}
+
+
+/* ================================================================
+   ALREADY PASSED?
+================================================================ */
+
+const passedSnapshot = await getDocs(
+
+            query(
+
+                collection(db, "examAttempts"),
+
+                where("studentId", "==", studentId),
+
+                where("examId", "==", examId),
+
+                where("passed", "==", true)
+
+            )
+
         );
 
-        attemptId = newAttempt.id;
+        if (!passedSnapshot.empty) {
 
-    }
-
-    await loadQuestions();
-
-    if (questions.length === 0) {
-
-        showToast(
-
-            "No questions found for this Exam.",
-
-            "error"
-
-        );
-
-        hideLoader();
+        location.replace(`course.html?id=${exam.courseId}`);
 
         return;
 
     }
 
-    renderQuestion();
+        // Resume existing attempt
+        const attemptSnapshot = await getDocs(
 
-    startTimer();
+            query(
 
-    hideLoader();
+                collection(db, "examAttempts"),
 
-});
+                where("studentId", "==", studentId),
 
-/* ==========================================================================
-   LOAD EXAM
-========================================================================== */
+                where("examId", "==", examId),
 
-async function loadExam() {
+                where("submittedAt", "==", null)
 
-    const examDoc = await getDoc(
-        doc(db, "exams", examId)
-    );
+            )
 
-    if (!examDoc.exists()) {
+        );
 
-        showToast("Exam not found.", "error");
+        if (!attemptSnapshot.empty) {
 
-        return false;
+            const attemptDoc = attemptSnapshot.docs[0];
 
-    }
+            attemptId = attemptDoc.id;
 
-    exam = {
+            const attempt = attemptDoc.data();
 
-        id: examDoc.id,
+            answers = attempt.answers || {};
 
-        ...examDoc.data()
+            current = attempt.currentQuestion || 0;
 
-    };
+            if (attempt.expiresAt) {
 
-    examTitle.textContent = exam.title;
+                seconds = Math.max(
 
-    if (seconds === 0) {
+                    0,
 
-        seconds = (exam.duration || 30) * 60;
+                    Math.floor(
 
-    }
+                        (attempt.expiresAt.toMillis() - Date.now()) / 1000
 
-    return true;
+                    )
 
-}
+                );
 
-/* ==========================================================================
-   LOAD QUESTIONS
-   ========================================================================== */
+            }
 
-async function loadQuestions(){
+        } else {
 
-    const snapshot = await getDocs(
+            seconds = (exam.duration || 30) * 60;
 
-        query(
+            const newAttempt = await addDoc(
 
-            collection(db,"examQuestions"),
+                collection(db, "examAttempts"),
 
-            where("examId","==",examId)
+                {
+        studentId,
+
+        examId,
+
+        answers: {},
+
+        currentQuestion: 0,
+
+        score: 0,
+
+        totalMarks: 0,
+
+        percentage: 0,
+
+        passed: false,
+
+        submittedAt: null,
+
+        startedAt: serverTimestamp(),
+
+        expiresAt: Timestamp.fromMillis(
+
+            Date.now() + seconds * 1000
 
         )
 
-    );
+    }
 
-    questions = [];
+            );
 
-    snapshot.forEach(doc=>{
+            attemptId = newAttempt.id;
 
-        questions.push({
+        }
 
-            id:doc.id,
+        await loadQuestions();
 
-            ...doc.data()
+        if (questions.length === 0) {
 
-        });
+            showToast(
+
+                "No questions found for this Exam.",
+
+                "error"
+
+            );
+
+            hideLoader();
+
+            return;
+
+        }
+
+        renderQuestion();
+
+        startTimer();
+
+        hideLoader();
 
     });
 
-    totalQuestions.textContent =
-        questions.length;
+    /* ==========================================================================
+    LOAD EXAM
+    ========================================================================== */
 
-    updatePalette();
+    async function loadExam() {
 
-}
+        const examDoc = await getDoc(
+            doc(db, "exams", examId)
+        );
 
-/* ==========================================================================
-   RENDER QUESTION
-   ========================================================================== */
+        if (!examDoc.exists()) {
 
-function renderQuestion(){
+            showToast("Exam not found.", "error");
 
-    currentQuestion.textContent =
-        current + 1;
+            return false;
 
-    const q =
-        questions[current];
+        }
 
-    questionText.textContent =
-    q.question;
+        exam = {
 
-const attachment =
-    document.getElementById(
-        "questionAttachment"
+            id: examDoc.id,
+
+            ...examDoc.data()
+
+        };
+
+        examTitle.textContent = exam.title;
+
+        if (seconds === 0) {
+
+            seconds = (exam.duration || 30) * 60;
+
+        }
+
+        return true;
+
+    }
+
+    /* ==========================================================================
+   VERIFY EXAM ACCESS
+========================================================================== */
+
+async function verifyExamAccess() {
+
+    if (!studentId || !examId || !exam.courseId) {
+
+        showToast(
+            "Unable to verify exam access.",
+            "error"
+        );
+
+        return false;
+    }
+
+
+    /* ======================================================================
+       1. VERIFY ACTIVE ENROLLMENT
+    ====================================================================== */
+
+    const enrollmentSnapshot = await getDocs(
+        query(
+            collection(db, "enrollments"),
+            where("studentId", "==", studentId),
+            where("courseId", "==", exam.courseId),
+            where("approvalStatus", "==", "Approved")
+        )
     );
 
-if (q.attachmentUrl) {
 
-    attachment.classList.remove(
-        "hidden"
-    );
+    if (enrollmentSnapshot.empty) {
 
-    const extension =
+        showToast(
+            "You are not enrolled in this course.",
+            "error"
+        );
 
-    q.attachmentName
-        .split(".")
-        .pop()
-        .toLowerCase();
+        setTimeout(() => {
 
-let icon = "fa-file";
+            location.replace(
+                "my-courses.html"
+            );
 
-switch (extension) {
+        }, 1200);
 
-    case "xlsx":
-    case "xls":
-    case "csv":
+        return false;
+    }
 
-        icon = "fa-file-excel";
-        break;
 
-    case "pdf":
+    /* ======================================================================
+       2. MODULE EXAM ACCESS
+    ====================================================================== */
 
-        icon = "fa-file-pdf";
-        break;
+    if (exam.type === "module") {
 
-    case "doc":
-    case "docx":
+        if (!exam.moduleId) {
 
-        icon = "fa-file-word";
-        break;
+            showToast(
+                "This Exam is not properly configured.",
+                "error"
+            );
 
-    case "ppt":
-    case "pptx":
+            return false;
+        }
 
-        icon = "fa-file-powerpoint";
-        break;
 
-    case "jpg":
-    case "jpeg":
-    case "png":
-    case "gif":
-    case "webp":
+        /* ================================================================
+           LOAD MODULE
+        ================================================================= */
 
-        icon = "fa-file-image";
-        break;
+        const moduleSnap = await getDoc(
+            doc(
+                db,
+                "modules",
+                exam.moduleId
+            )
+        );
 
-    case "zip":
-    case "rar":
-    case "7z":
 
-        icon = "fa-file-zipper";
-        break;
+        if (!moduleSnap.exists()) {
 
+            showToast(
+                "Module not found.",
+                "error"
+            );
+
+            return false;
+        }
+
+
+        const moduleData =
+            moduleSnap.data();
+
+        const moduleOrder =
+            Number(moduleData.order || 1);
+
+
+        /* ================================================================
+           CHECK ALL LESSONS IN THIS MODULE
+        ================================================================= */
+
+        const lessonSnapshot = await getDocs(
+            query(
+                collection(db, "lessons"),
+                where(
+                    "moduleId",
+                    "==",
+                    exam.moduleId
+                )
+            )
+        );
+
+
+        const lessonIds =
+            lessonSnapshot.docs.map(
+                lessonDoc => lessonDoc.id
+            );
+
+
+        if (lessonIds.length === 0) {
+
+            showToast(
+                "This module has no lessons.",
+                "error"
+            );
+
+            return false;
+        }
+
+
+        const progressSnapshot = await getDocs(
+            query(
+                collection(db, "lessonProgress"),
+                where(
+                    "studentId",
+                    "==",
+                    studentId
+                ),
+                where(
+                    "courseId",
+                    "==",
+                    exam.courseId
+                ),
+                where(
+                    "moduleId",
+                    "==",
+                    exam.moduleId
+                )
+            )
+        );
+
+
+        const completedLessonIds =
+            new Set();
+
+
+        progressSnapshot.forEach(
+            progressDoc => {
+
+                const progress =
+                    progressDoc.data();
+
+                if (progress.completed === true) {
+
+                    completedLessonIds.add(
+                        progress.lessonId
+                    );
+
+                }
+
+            }
+        );
+
+
+        const allLessonsCompleted =
+            lessonIds.every(
+                lessonId =>
+                    completedLessonIds.has(
+                        lessonId
+                    )
+            );
+
+
+        if (!allLessonsCompleted) {
+
+            showToast(
+                "Complete all lessons in this module before starting the Exam.",
+                "error"
+            );
+
+            setTimeout(() => {
+
+                location.replace(
+                    `course.html?id=${exam.courseId}`
+                );
+
+            }, 1200);
+
+            return false;
+        }
+
+
+        /* ================================================================
+           CHECK PREVIOUS MODULE EXAMS
+        ================================================================= */
+
+        if (moduleOrder > 1) {
+
+            const modulesSnapshot =
+                await getDocs(
+                    query(
+                        collection(db, "modules"),
+                        where(
+                            "courseId",
+                            "==",
+                            exam.courseId
+                        )
+                    )
+                );
+
+
+            const previousModules =
+                modulesSnapshot.docs.filter(
+                    moduleDoc => {
+
+                        const data =
+                            moduleDoc.data();
+
+                        return Number(
+                            data.order || 1
+                        ) < moduleOrder;
+
+                    }
+                );
+
+
+            for (
+                const previousModule
+                of previousModules
+            ) {
+
+                const previousExamSnapshot =
+                    await getDocs(
+                        query(
+                            collection(db, "exams"),
+                            where(
+                                "courseId",
+                                "==",
+                                exam.courseId
+                            ),
+                            where(
+                                "moduleId",
+                                "==",
+                                previousModule.id
+                            ),
+                            where(
+                                "type",
+                                "==",
+                                "module"
+                            )
+                        )
+                    );
+
+
+                if (
+                    previousExamSnapshot.empty
+                ) {
+
+                    showToast(
+                        "A previous Module Exam is missing.",
+                        "error"
+                    );
+
+                    return false;
+                }
+
+
+                const previousExam =
+                    previousExamSnapshot.docs[0];
+
+
+                const passedSnapshot =
+                    await getDocs(
+                        query(
+                            collection(db, "examAttempts"),
+                            where(
+                                "studentId",
+                                "==",
+                                studentId
+                            ),
+                            where(
+                                "examId",
+                                "==",
+                                previousExam.id
+                            ),
+                            where(
+                                "passed",
+                                "==",
+                                true
+                            )
+                        )
+                    );
+
+
+                if (passedSnapshot.empty) {
+
+                    showToast(
+                        "Complete the previous Module Exam first.",
+                        "error"
+                    );
+
+                    setTimeout(() => {
+
+                        location.replace(
+                            `course.html?id=${exam.courseId}`
+                        );
+
+                    }, 1200);
+
+                    return false;
+                }
+
+            }
+
+        }
+
+    }
+
+
+    /* ======================================================================
+       3. FINAL EXAM ACCESS
+    ====================================================================== */
+
+    if (exam.type === "final") {
+
+        const courseSnap =
+            await getDoc(
+                doc(
+                    db,
+                    "courses",
+                    exam.courseId
+                )
+            );
+
+
+        if (!courseSnap.exists()) {
+
+            showToast(
+                "Course not found.",
+                "error"
+            );
+
+            return false;
+        }
+
+
+        const courseData =
+            courseSnap.data();
+
+
+        /* ================================================================
+           ADMIN FINAL EXAM UNLOCK
+        ================================================================= */
+
+        if (
+            courseData.isFinalExamUnlocked !== true
+        ) {
+
+            showToast(
+                "The Final Exam is not unlocked yet.",
+                "error"
+            );
+
+            setTimeout(() => {
+
+                location.replace(
+                    `course.html?id=${exam.courseId}`
+                );
+
+            }, 1200);
+
+            return false;
+        }
+
+
+        /* ================================================================
+           VERIFY ALL MODULES PASSED
+        ================================================================= */
+
+        const modulesSnapshot =
+            await getDocs(
+                query(
+                    collection(db, "modules"),
+                    where(
+                        "courseId",
+                        "==",
+                        exam.courseId
+                    )
+                )
+            );
+
+
+        const moduleDocs =
+            modulesSnapshot.docs;
+
+
+        for (
+            const moduleDoc
+            of moduleDocs
+        ) {
+
+            const moduleExamSnapshot =
+                await getDocs(
+                    query(
+                        collection(db, "exams"),
+                        where(
+                            "courseId",
+                            "==",
+                            exam.courseId
+                        ),
+                        where(
+                            "moduleId",
+                            "==",
+                            moduleDoc.id
+                        ),
+                        where(
+                            "type",
+                            "==",
+                            "module"
+                        )
+                    )
+                );
+
+
+            if (
+                moduleExamSnapshot.empty
+            ) {
+
+                showToast(
+                    "A Module Exam is missing.",
+                    "error"
+                );
+
+                return false;
+            }
+
+
+            const moduleExam =
+                moduleExamSnapshot.docs[0];
+
+
+            const passedSnapshot =
+                await getDocs(
+                    query(
+                        collection(db, "examAttempts"),
+                        where(
+                            "studentId",
+                            "==",
+                            studentId
+                        ),
+                        where(
+                            "examId",
+                            "==",
+                            moduleExam.id
+                        ),
+                        where(
+                            "passed",
+                            "==",
+                            true
+                        )
+                    )
+                );
+
+
+            if (passedSnapshot.empty) {
+
+                showToast(
+                    "Complete all Module Exams before starting the Final Exam.",
+                    "error"
+                );
+
+                setTimeout(() => {
+
+                    location.replace(
+                        `course.html?id=${exam.courseId}`
+                    );
+
+                }, 1200);
+
+                return false;
+            }
+
+        }
+
+    }
+
+
+    return true;
 }
 
-    attachment.innerHTML = `
+    /* ==========================================================================
+    LOAD QUESTIONS
+    ========================================================================== */
 
-<div class="question-file">
+    async function loadQuestions(){
 
-    <div class="question-file-info">
+        const snapshot = await getDocs(
 
-        <i class="fa-solid ${icon} question-file-icon"></i>
+            query(
 
-        <div>
+                collection(db,"examQuestions"),
 
-            <div class="question-file-title">
-                Question Attachment
-            </div>
+                where("examId","==",examId)
 
-            <div class="question-file-name">
-                ${q.attachmentName.replace(/^\d+-/, "")}
+            )
+
+        );
+
+        questions = [];
+
+        snapshot.forEach(doc=>{
+
+            questions.push({
+
+                id:doc.id,
+
+                ...doc.data()
+
+            });
+
+        });
+
+        totalQuestions.textContent =
+            questions.length;
+
+        updatePalette();
+
+    }
+
+    /* ==========================================================================
+    RENDER QUESTION
+    ========================================================================== */
+
+    function renderQuestion(){
+
+        currentQuestion.textContent =
+            current + 1;
+
+        const q =
+            questions[current];
+
+        questionText.textContent =
+        q.question;
+
+    const attachment =
+        document.getElementById(
+            "questionAttachment"
+        );
+
+    if (q.attachmentUrl) {
+
+        attachment.classList.remove(
+            "hidden"
+        );
+
+        const extension =
+
+        q.attachmentName
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+    let icon = "fa-file";
+
+    switch (extension) {
+
+        case "xlsx":
+        case "xls":
+        case "csv":
+
+            icon = "fa-file-excel";
+            break;
+
+        case "pdf":
+
+            icon = "fa-file-pdf";
+            break;
+
+        case "doc":
+        case "docx":
+
+            icon = "fa-file-word";
+            break;
+
+        case "ppt":
+        case "pptx":
+
+            icon = "fa-file-powerpoint";
+            break;
+
+        case "jpg":
+        case "jpeg":
+        case "png":
+        case "gif":
+        case "webp":
+
+            icon = "fa-file-image";
+            break;
+
+        case "zip":
+        case "rar":
+        case "7z":
+
+            icon = "fa-file-zipper";
+            break;
+
+    }
+
+        attachment.innerHTML = `
+
+    <div class="question-file">
+
+        <div class="question-file-info">
+
+            <i class="fa-solid ${icon} question-file-icon"></i>
+
+            <div>
+
+                <div class="question-file-title">
+                    Question Attachment
+                </div>
+
+                <div class="question-file-name">
+                    ${q.attachmentName.replace(/^\d+-/, "")}
+                </div>
+
             </div>
 
         </div>
 
+        <a
+            href="${q.attachmentUrl}"
+            target="_blank"
+            class="question-file-button">
+
+            <i class="fa-solid fa-download"></i>
+            Open
+
+        </a>
+
     </div>
 
-    <a
-        href="${q.attachmentUrl}"
-        target="_blank"
-        class="question-file-button">
+    `;
 
-        <i class="fa-solid fa-download"></i>
-        Open
+    }
 
-    </a>
+    else {
 
-</div>
+        attachment.classList.add(
+            "hidden"
+        );
 
-`;
+        attachment.innerHTML = "";
 
-}
+    }
 
-else {
+    optionsList.innerHTML = "";
 
-    attachment.classList.add(
-        "hidden"
-    );
+        const options = [
 
-    attachment.innerHTML = "";
+            {
 
-}
+                key:"A",
 
-optionsList.innerHTML = "";
+                value:q.optionA
 
-    const options = [
+            },
 
-        {
+            {
 
-            key:"A",
+                key:"B",
 
-            value:q.optionA
+                value:q.optionB
 
-        },
+            },
 
-        {
+            {
 
-            key:"B",
+                key:"C",
 
-            value:q.optionB
+                value:q.optionC
 
-        },
+            },
 
-        {
+            {
 
-            key:"C",
+                key:"D",
 
-            value:q.optionC
+                value:q.optionD
 
-        },
+            }
 
-        {
+        ];
 
-            key:"D",
+        options.forEach(option=>{
 
-            value:q.optionD
+            const selected =
 
-        }
+                answers[q.id]===option.key
 
-    ];
+                ?
 
-    options.forEach(option=>{
+                "selected"
 
-        const selected =
+                :
 
-            answers[q.id]===option.key
+                "";
 
-            ?
+            optionsList.innerHTML += `
 
-            "selected"
+    <label class="option ${selected}">
 
-            :
+    <input
 
-            "";
+    type="radio"
 
-        optionsList.innerHTML += `
+    name="answer"
 
-<label class="option ${selected}">
+    value="${option.key}"
 
-<input
+    ${selected?"checked":""}>
 
-type="radio"
+    <strong>
 
-name="answer"
+    ${option.key}.
 
-value="${option.key}"
+    </strong>
 
-${selected?"checked":""}>
+    ${option.value}
 
-<strong>
+    </label>
 
-${option.key}.
+    `;
 
-</strong>
-
-${option.value}
-
-</label>
-
-`;
-
-    });
-
-    document
-
-        .querySelectorAll(
-
-            ".option"
-
-        )
-
-        .forEach(item=>{
-
-            item.addEventListener(
-
-    "click",
-
-    async ()=>{
+        });
 
         document
 
@@ -583,31 +1084,250 @@ ${option.value}
 
             )
 
-            .forEach(
+            .forEach(item=>{
 
-                option=>option.classList.remove(
+                item.addEventListener(
 
-                    "selected"
+        "click",
+
+        async ()=>{
+
+            document
+
+                .querySelectorAll(
+
+                    ".option"
 
                 )
 
+                .forEach(
+
+                    option=>option.classList.remove(
+
+                        "selected"
+
+                    )
+
+                );
+
+            item.classList.add(
+
+                "selected"
+
             );
 
-        item.classList.add(
+            answers[q.id] =
 
-            "selected"
+                item.querySelector(
+
+                    "input"
+
+                ).value;
+
+            updatePalette();
+
+            await updateDoc(
+
+                doc(
+
+                    db,
+
+                    "examAttempts",
+
+                    attemptId
+
+                ),
+
+                {
+
+                    answers,
+
+                    currentQuestion:current
+
+                }
+
+            );
+
+        }
+
+    );
+            });
+
+        progressBar.style.width =
+
+            `${((current+1)/questions.length)*100}%`;
+
+        previousBtn.disabled =
+
+            current===0;
+
+        nextBtn.classList.toggle(
+
+            "hidden",
+
+            current===questions.length-1
 
         );
 
-        answers[q.id] =
+        submitBtn.classList.toggle(
 
-            item.querySelector(
+            "hidden",
 
-                "input"
+            current!==questions.length-1
 
-            ).value;
+        );
 
-        updatePalette();
+    }
+
+    /* ==========================================================================
+    PALETTE
+    ========================================================================== */
+
+    function buildPalette(){
+
+        palette.innerHTML = "";
+
+        questions.forEach((question,index)=>{
+
+            const button =
+
+                document.createElement(
+
+                    "button"
+
+                );
+
+            button.textContent =
+
+                index+1;
+
+            if(index===0){
+
+                button.classList.add(
+
+                    "active"
+
+                );
+
+            }
+
+            button.onclick = ()=>{
+
+                current = index;
+
+                updatePalette();
+
+    renderQuestion();
+
+            };
+
+            palette.appendChild(
+
+                button
+
+            );
+
+        });
+
+    }
+
+    function updatePalette(){
+
+        palette.innerHTML = "";
+
+        questions.forEach((question,index)=>{
+
+            const button =
+
+                document.createElement("button");
+
+            button.textContent =
+
+                index + 1;
+
+            if(index===current){
+
+                button.classList.add(
+
+                    "active"
+
+                );
+
+            }
+
+            if(answers[question.id]){
+
+                button.classList.add(
+
+                    "answered"
+
+                );
+
+            }
+
+            button.addEventListener(
+
+                "click",
+
+                async ()=>{
+
+                    current = index;
+
+    updatePalette();
+
+    renderQuestion();
+
+    await updateDoc(
+
+                        doc(
+
+                            db,
+
+                            "examAttempts",
+
+                            attemptId
+
+                        ),
+
+                        {
+
+                            currentQuestion:current
+
+                        }
+
+                    );
+
+                }
+
+            );
+
+            palette.appendChild(
+
+                button
+
+            );
+
+        });
+
+    }
+
+    /* ==========================================================================
+    TIMER
+    ========================================================================== */
+
+    function startTimer(){
+
+        updateTimer();
+
+        timerInterval = setInterval(
+
+            async ()=>{
+
+                seconds--;
+
+                updateTimer();
+
+                if(seconds % 30 === 0){
 
         await updateDoc(
 
@@ -623,9 +1343,19 @@ ${option.value}
 
             {
 
+                expiresAt: Timestamp.fromMillis(
+
+                    Date.now() +
+
+                    seconds * 1000
+
+                ),
+
+                currentQuestion: current,
+
                 answers,
 
-                currentQuestion:current
+                lastActivity: serverTimestamp()
 
             }
 
@@ -633,134 +1363,63 @@ ${option.value}
 
     }
 
-);
-        });
+                if(seconds<=0){
 
-    progressBar.style.width =
+                    clearInterval(
 
-        `${((current+1)/questions.length)*100}%`;
+                        timerInterval
 
-    previousBtn.disabled =
+                    );
 
-        current===0;
+                    submitExam();
 
-    nextBtn.classList.toggle(
+                }
 
-        "hidden",
+            },
 
-        current===questions.length-1
-
-    );
-
-    submitBtn.classList.toggle(
-
-        "hidden",
-
-        current!==questions.length-1
-
-    );
-
-}
-
-/* ==========================================================================
-   PALETTE
-   ========================================================================== */
-
-function buildPalette(){
-
-    palette.innerHTML = "";
-
-    questions.forEach((question,index)=>{
-
-        const button =
-
-            document.createElement(
-
-                "button"
-
-            );
-
-        button.textContent =
-
-            index+1;
-
-        if(index===0){
-
-            button.classList.add(
-
-                "active"
-
-            );
-
-        }
-
-        button.onclick = ()=>{
-
-            current = index;
-
-            updatePalette();
-
-renderQuestion();
-
-        };
-
-        palette.appendChild(
-
-            button
+            1000
 
         );
 
-    });
+    }
 
-}
+    function updateTimer(){
 
-function updatePalette(){
+        if(seconds < 0){
 
-    palette.innerHTML = "";
-
-    questions.forEach((question,index)=>{
-
-        const button =
-
-            document.createElement("button");
-
-        button.textContent =
-
-            index + 1;
-
-        if(index===current){
-
-            button.classList.add(
-
-                "active"
-
-            );
+            seconds = 0;
 
         }
 
-        if(answers[question.id]){
+        const minutes =
 
-            button.classList.add(
+            Math.floor(seconds / 60);
 
-                "answered"
+        const remaining =
 
-            );
+            seconds % 60;
 
-        }
+        timer.textContent =
 
-        button.addEventListener(
+            `${String(minutes).padStart(2,"0")}:${String(remaining).padStart(2,"0")}`;
 
-            "click",
+    }
 
-            async ()=>{
+    /* ==========================================================================
+    NAVIGATION
+    ========================================================================== */
 
-                current = index;
+    previousBtn.addEventListener(
 
-updatePalette();
+        "click",
 
-renderQuestion();
+        async ()=>{
 
-await updateDoc(
+            if(current>0){
+
+                current--;
+
+                await updateDoc(
 
                     doc(
 
@@ -780,39 +1439,164 @@ await updateDoc(
 
                 );
 
+                updatePalette();
+
+    renderQuestion();
+
             }
 
-        );
+        }
 
-        palette.appendChild(
+    );
 
-            button
+    nextBtn.addEventListener(
 
-        );
-
-    });
-
-}
-
-/* ==========================================================================
-   TIMER
-   ========================================================================== */
-
-function startTimer(){
-
-    updateTimer();
-
-    timerInterval = setInterval(
+        "click",
 
         async ()=>{
 
-            seconds--;
+            if(current<questions.length-1){
 
-            updateTimer();
+                current++;
 
-            if(seconds % 30 === 0){
+                await updateDoc(
 
-    await updateDoc(
+                    doc(
+
+                        db,
+
+                        "examAttempts",
+
+                        attemptId
+
+                    ),
+
+                    {
+
+                        currentQuestion:current
+
+                    }
+
+                );
+
+                renderQuestion();
+
+                updatePalette();
+
+            }
+
+        }
+
+    );
+
+    submitBtn.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            const answered = Object.keys(answers).length;
+
+            const unanswered = questions.length - answered;
+
+            let message = "";
+
+            if(unanswered > 0){
+
+                message =
+
+    `You have answered ${answered} of ${questions.length} questions.
+
+    ${unanswered} question(s) are still unanswered.
+
+    Do you want to submit anyway?`;
+
+            }
+
+            else{
+
+                message =
+
+    `You have answered all ${questions.length} questions.
+
+    Are you sure you want to submit your Answers?`;
+
+            }
+
+            const confirmed = confirm(message);
+
+            if(!confirmed){
+
+                return;
+
+            }
+
+            submitExam();
+
+        }
+
+    );
+
+    /* ==========================================================================
+    SUBMIT EXAM
+    ========================================================================== */
+
+    async function submitExam(){
+
+        clearInterval(
+
+            timerInterval
+
+        );
+
+        let score = 0;
+
+        questions.forEach(question=>{
+
+            if(
+
+                answers[question.id]===question.correctAnswer
+
+            ){
+
+                score +=
+
+                    question.marks || 1;
+
+            }
+
+        });
+
+        const totalMarks =
+
+            questions.reduce(
+
+                (total,question)=>
+
+                    total+(question.marks||1),
+
+                0
+
+            );
+
+        const percentage =
+
+        totalMarks===0
+
+        ? 0
+
+        : Math.round(
+
+            (score/totalMarks)*100
+
+        );
+        const passed =
+
+            percentage >=
+
+            (exam.passMark || 70);
+
+        await updateDoc(
 
         doc(
 
@@ -826,294 +1610,27 @@ function startTimer(){
 
         {
 
-            expiresAt: Timestamp.fromMillis(
+            score,
 
-                Date.now() +
+            totalMarks,
 
-                seconds * 1000
+            percentage,
 
-            ),
-
-            currentQuestion: current,
+            passed,
 
             answers,
 
-            lastActivity: serverTimestamp()
+            currentQuestion:current,
+
+            submittedAt:
+
+                serverTimestamp()
 
         }
 
     );
 
-}
-
-            if(seconds<=0){
-
-                clearInterval(
-
-                    timerInterval
-
-                );
-
-                submitExam();
-
-            }
-
-        },
-
-        1000
-
-    );
-
-}
-
-function updateTimer(){
-
-    if(seconds < 0){
-
-        seconds = 0;
-
-    }
-
-    const minutes =
-
-        Math.floor(seconds / 60);
-
-    const remaining =
-
-        seconds % 60;
-
-    timer.textContent =
-
-        `${String(minutes).padStart(2,"0")}:${String(remaining).padStart(2,"0")}`;
-
-}
-
-/* ==========================================================================
-   NAVIGATION
-   ========================================================================== */
-
-previousBtn.addEventListener(
-
-    "click",
-
-    async ()=>{
-
-        if(current>0){
-
-            current--;
-
-            await updateDoc(
-
-                doc(
-
-                    db,
-
-                    "examAttempts",
-
-                    attemptId
-
-                ),
-
-                {
-
-                    currentQuestion:current
-
-                }
-
-            );
-
-            updatePalette();
-
-renderQuestion();
-
-        }
-
-    }
-
-);
-
-nextBtn.addEventListener(
-
-    "click",
-
-    async ()=>{
-
-        if(current<questions.length-1){
-
-            current++;
-
-            await updateDoc(
-
-                doc(
-
-                    db,
-
-                    "examAttempts",
-
-                    attemptId
-
-                ),
-
-                {
-
-                    currentQuestion:current
-
-                }
-
-            );
-
-            renderQuestion();
-
-            updatePalette();
-
-        }
-
-    }
-
-);
-
-submitBtn.addEventListener(
-
-    "click",
-
-    ()=>{
-
-        const answered = Object.keys(answers).length;
-
-        const unanswered = questions.length - answered;
-
-        let message = "";
-
-        if(unanswered > 0){
-
-            message =
-
-`You have answered ${answered} of ${questions.length} questions.
-
-${unanswered} question(s) are still unanswered.
-
-Do you want to submit anyway?`;
-
-        }
-
-        else{
-
-            message =
-
-`You have answered all ${questions.length} questions.
-
-Are you sure you want to submit your Answers?`;
-
-        }
-
-        const confirmed = confirm(message);
-
-        if(!confirmed){
-
-            return;
-
-        }
-
-        submitExam();
-
-    }
-
-);
-
-/* ==========================================================================
-   SUBMIT EXAM
-   ========================================================================== */
-
-async function submitExam(){
-
-    clearInterval(
-
-        timerInterval
-
-    );
-
-    let score = 0;
-
-    questions.forEach(question=>{
-
-        if(
-
-            answers[question.id]===question.correctAnswer
-
-        ){
-
-            score +=
-
-                question.marks || 1;
-
-        }
-
-    });
-
-    const totalMarks =
-
-        questions.reduce(
-
-            (total,question)=>
-
-                total+(question.marks||1),
-
-            0
-
-        );
-
-    const percentage =
-
-    totalMarks===0
-
-    ? 0
-
-    : Math.round(
-
-        (score/totalMarks)*100
-
-    );
-    const passed =
-
-        percentage >=
-
-        (exam.passMark || 70);
-
-    await updateDoc(
-
-    doc(
-
-        db,
-
-        "examAttempts",
-
-        attemptId
-
-    ),
-
-    {
-
-        score,
-
-        totalMarks,
-
-        percentage,
-
-        passed,
-
-        answers,
-
-        currentQuestion:current,
-
-        submittedAt:
-
-            serverTimestamp()
-
-    }
-
-);
-
-if (passed) {
+    if (passed) {
 
     const examDoc = await getDoc(
         doc(
@@ -1132,41 +1649,29 @@ if (passed) {
     if (examData.type === "module") {
 
         const progressSnapshot = await getDocs(
-
             query(
-
                 collection(db, "moduleProgress"),
-
                 where("studentId", "==", studentId),
-
                 where("courseId", "==", examData.courseId),
-
                 where("moduleId", "==", examData.moduleId)
-
             )
-
         );
 
         if (progressSnapshot.empty) {
 
             await addDoc(
-
                 collection(db, "moduleProgress"),
-
                 {
-
-                    studentId,
-
+                    studentId: studentId,
                     courseId: examData.courseId,
-
                     moduleId: examData.moduleId,
 
+                    completed: true,
                     passed: true,
 
+                    completedAt: serverTimestamp(),
                     passedAt: serverTimestamp()
-
                 }
-
             );
 
         }
@@ -1174,190 +1679,96 @@ if (passed) {
     }
 
     /* ===========================================================
-       FINAL EXAM
-    =========================================================== */
+   FINAL EXAM
+=========================================================== */
 
-    else if (examData.type === "final") {
+else if (examData.type === "final") {
 
-        // Check if certificate already exists
-
-        const certificateSnapshot = await getDocs(
-
-            query(
-
-                collection(db, "certificates"),
-
-                where("studentId", "==", studentId),
-
-                where("courseId", "==", examData.courseId)
-
-            )
-
-        );
-
-        if (certificateSnapshot.empty) {
-
-            // Student Details
-
-const studentDoc = await getDoc(
-    doc(db, "students", studentId)
-);
-
-const student = studentDoc.exists()
-    ? studentDoc.data()
-    : {};
-
-const studentNameValue =
-    student.fullName ||
-    student.name ||
-    student.studentName ||
-    auth.currentUser.displayName ||
-    auth.currentUser.email.split("@")[0];
-
-const studentEmailValue =
-    student.email ||
-    auth.currentUser.email;
-
-            // Course Details
-
-            const courseDoc = await getDoc(
-
-                doc(db, "courses", examData.courseId)
-
-            );
-
-            const course = courseDoc.exists()
-                ? courseDoc.data()
-                : {};
-
-            // Generate Certificate Number
-
-            const certificateNumber =
-                "ISSA-" +
-                Date.now();
-
-            await addDoc(
-
-                collection(db, "certificates"),
-
-                {
-
-                    studentId,
-
-                    studentName:
-    studentNameValue,
-
-studentEmail:
-    studentEmailValue,
-
-                    courseId:
-                        examData.courseId,
-
-                    courseName:
-                        course.title || examData.courseName,
-
-                    certificateNumber,
-
-                    issueDate:
-                        serverTimestamp(),
-
-                    examId,
-
-                    percentage,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-
-            );
-
-        }
-
-    }
+    console.log(
+        "Final Exam passed. Certificate requires admin approval."
+    );
 
 }
+
+/* ===========================================================
+   GO TO RESULT PAGE
+=========================================================== */
 
 location.href =
-`exam-result.html?id=${examId}&score=${score}&total=${totalMarks}&percentage=${percentage}&passed=${passed}`;
+    `exam-result.html?id=${examId}&score=${score}&total=${totalMarks}&percentage=${percentage}&passed=${passed}`;
 }
+    }
 
 /* ==========================================================================
-   LOADER
-   ========================================================================== */
+LOADER
+========================================================================== */
 
 function showLoader(){
 
     pageLoader.classList.remove(
-
         "hidden"
-
     );
 
 }
 
-function hideLoader(){
+    function hideLoader(){
 
-    pageLoader.classList.add(
+        pageLoader.classList.add(
 
-        "hidden"
-
-    );
-
-}
-
-/* ==========================================================================
-   TOAST
-   ========================================================================== */
-
-function showToast(
-
-    message,
-
-    type="success"
-
-){
-
-    const toast =
-
-        document.createElement(
-
-            "div"
+            "hidden"
 
         );
 
-    toast.className =
+    }
 
-        `toast ${type}`;
+    /* ==========================================================================
+    TOAST
+    ========================================================================== */
 
-    toast.textContent =
+    function showToast(
 
-        message;
+        message,
 
-    toastContainer.appendChild(
+        type="success"
 
-        toast
+    ){
 
-    );
+        const toast =
 
-    requestAnimationFrame(()=>{
+            document.createElement(
 
-        toast.classList.add(
+                "div"
 
-            "show"
+            );
+
+        toast.className =
+
+            `toast ${type}`;
+
+        toast.textContent =
+
+            message;
+
+        toastContainer.appendChild(
+
+            toast
 
         );
 
-    });
+        requestAnimationFrame(()=>{
 
-    setTimeout(()=>{
+            toast.classList.add(
 
-        toast.remove();
+                "show"
 
-    },3000);
+            );
 
-}
+        });
 
-/* ==========================================================================
-   END
-   ========================================================================== */
+        setTimeout(()=>{
+
+            toast.remove();
+
+        },3000);
+
+    }

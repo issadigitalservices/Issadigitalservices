@@ -78,9 +78,6 @@ const correctAnswer =
 const marks =
     document.getElementById("marks");
 
-const explanation =
-    document.getElementById("explanation");
-
     const questionAttachment =
     document.getElementById(
         "questionAttachment"
@@ -316,10 +313,6 @@ attachmentName,
                 correctAnswer:
 
                     correctAnswer.value,
-
-                explanation:
-
-                    explanation.value.trim(),
 
                 marks:
 
@@ -692,10 +685,6 @@ window.editQuestion = async function(id){
 
             data.marks;
 
-        explanation.value =
-
-            data.explanation || "";
-
         saveBtnText.textContent =
     "Update Question";
 
@@ -750,8 +739,6 @@ function resetForm(){
     marks.value = 1;
 
     correctAnswer.value = "A";
-
-    explanation.value = "";
 
     editQuestionId = null;
 

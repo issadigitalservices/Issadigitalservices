@@ -6,8 +6,7 @@
    ========================================================================== */
 
 import {
-    db,
-    storage
+    db
 } from "../core/firebase-config.js";
 
 import {
@@ -23,11 +22,7 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-storage.js";
+import { uploadFile } from "../services/r2-upload.js";
 
 /* ==========================================================================
    AUTH
@@ -173,16 +168,20 @@ form.addEventListener(
         showLoader();
 
         try{
-            if(courseThumbnail && courseThumbnail.files.length){
-                const file = courseThumbnail.files[0];
-                const storageRef = ref(
-                    storage,
-                    `courses/${Date.now()}-${file.name}`
-                );
+            if (courseThumbnail && courseThumbnail.files.length) {
 
-                await uploadBytes(storageRef, file);
-                thumbnailUrl = await getDownloadURL(storageRef);
-            }
+    const file = courseThumbnail.files[0];
+
+    const response = await uploadFile(
+        file,
+        "course-thumbnails",
+        percent => {
+            console.log(`Thumbnail upload: ${percent}%`);
+        }
+    );
+
+    thumbnailUrl = response.url;
+}
 
             await updateDoc(
                 doc(db, "courses", courseId),

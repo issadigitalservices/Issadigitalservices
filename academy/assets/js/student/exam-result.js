@@ -3,35 +3,30 @@
 /* ==========================================================================
    ISSA Academy
    Exam Result
-   ========================================================================== */
+========================================================================== */
 
 import {
-
     auth,
     db
-
 } from "../core/firebase-config.js";
 
 import {
-
     onAuthStateChanged
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 import {
-
     doc,
     getDoc,
     collection,
     getDocs,
     query,
     where
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
 
 /* ==========================================================================
    URL
-   ========================================================================== */
+========================================================================== */
 
 const params =
     new URLSearchParams(location.search);
@@ -49,23 +44,20 @@ const percentage =
     Number(params.get("percentage"));
 
 const passed =
-    params.get("passed")==="true";
+    params.get("passed") === "true";
+
 
 /* ==========================================================================
    DOM
-   ========================================================================== */
+========================================================================== */
 
 const resultLoader =
-    document.getElementById(
-        "resultLoader"
-    );
+    document.getElementById("resultLoader");
 
 const resultCard =
-    document.getElementById(
-        "resultCard"
-    );
+    document.getElementById("resultCard");
 
-   const resultIcon =
+const resultIcon =
     document.getElementById("resultIcon");
 
 const resultIconSymbol =
@@ -92,7 +84,7 @@ const continueBtn =
 const retryBtn =
     document.getElementById("retryBtn");
 
-    const reviewBtn =
+const reviewBtn =
     document.getElementById("reviewBtn");
 
 const reviewSection =
@@ -101,19 +93,18 @@ const reviewSection =
 const reviewContainer =
     document.getElementById("reviewContainer");
 
+
 /* ==========================================================================
    AUTH
-   ========================================================================== */
+========================================================================== */
 
 onAuthStateChanged(
-
     auth,
+    async user => {
 
-    async user=>{
+        if (!user) {
 
-        if(!user){
-
-            location.href="login.html";
+            location.href = "login.html";
 
             return;
 
@@ -122,14 +113,14 @@ onAuthStateChanged(
         await loadResult(user.uid);
 
     }
-
 );
+
 
 /* ==========================================================================
    LOAD RESULT
-   ========================================================================== */
+========================================================================== */
 
-async function loadResult(studentId){
+async function loadResult(studentId) {
 
     scoreElement.textContent =
         `${score} / ${total}`;
@@ -137,31 +128,47 @@ async function loadResult(studentId){
     percentageElement.textContent =
         `${percentage}%`;
 
+
+    /* ======================================================================
+       LOAD EXAM
+    ====================================================================== */
+
     const examSnap =
         await getDoc(
-
             doc(
-
                 db,
-
                 "exams",
-
                 examId
-
             )
-
         );
 
-    if(!examSnap.exists()){
+
+    if (!examSnap.exists()) {
+
+        resultLoader.classList.add("hidden");
+
+        resultCard.classList.remove("hidden");
+
+        resultTitle.textContent =
+            "Exam Not Found";
+
+        resultMessage.textContent =
+            "We could not find this exam.";
 
         return;
 
     }
 
+
     const exam =
         examSnap.data();
 
-    if(passed){
+
+    /* ======================================================================
+       PASSED
+    ====================================================================== */
+
+    if (passed) {
 
         statusElement.textContent =
             "PASS";
@@ -172,105 +179,176 @@ async function loadResult(studentId){
         resultMessage.textContent =
             "You have successfully passed this Exam.";
 
-        /* ================= FINAL EXAM ================= */
 
-        if(exam.type==="final"){
+        /* ================================================================
+           FINAL EXAM
+        ================================================================= */
+
+        if (exam.type === "final") {
+
+            /*
+             * The Final Exam does NOT automatically issue a certificate.
+             *
+             * The certificate must be created by the admin.
+             */
+
+            const certificateSnapshot =
+                await getDocs(
+                    query(
+                        collection(
+                            db,
+                            "certificates"
+                        ),
+                        where(
+                            "studentId",
+                            "==",
+                            studentId
+                        ),
+                        where(
+                            "courseId",
+                            "==",
+                            exam.courseId
+                        )
+                    )
+                );
+
+
+            /* ============================================================
+               CERTIFICATE ALREADY ISSUED
+            ============================================================ */
+
+            if (!certificateSnapshot.empty) {
+
+                continueBtn.textContent =
+                    "View Certificate";
+
+                continueBtn.href =
+                    `certificate-view.html?courseId=${exam.courseId}`;
+
+                continueBtn.classList.remove("hidden");
+
+            }
+
+
+            /* ============================================================
+               CERTIFICATE NOT YET ISSUED
+            ============================================================ */
+
+            else {
+
+                continueBtn.textContent =
+                    "Certificate Pending";
+
+                continueBtn.removeAttribute("href");
+
+                continueBtn.classList.remove("hidden");
+
+                continueBtn.classList.add(
+                    "certificate-pending"
+                );
+
+                resultMessage.textContent =
+                    "You have successfully passed the Final Exam. Your certificate is pending admin approval.";
+            }
+
+
+            /*
+             * Final Exam does not need a Review button here.
+             */
+
+            reviewBtn.classList.add("hidden");
+
+        }
+
+
+        /* ================================================================
+           MODULE EXAM
+        ================================================================= */
+
+        else {
 
             continueBtn.textContent =
-                "View Certificate";
+                "Continue Learning";
 
             continueBtn.href =
-                "certificates.html";
+                `course.html?id=${exam.courseId}`;
 
-        }
+            continueBtn.classList.remove("hidden");
 
-        
 
-        /* ================= MODULE exam ================= */
+            /* ============================================================
+               MODULE UNLOCK MESSAGE
+            ============================================================ */
 
-        else{
+            if (exam.type === "module") {
 
-            continueBtn.innerHTML =
+                const message =
+                    document.createElement("p");
 
-`<i class="fa-solid fa-book-open"></i>
+                message.className =
+                    "unlock-message";
 
-Continue Learning`;
+                message.textContent =
+                    "Congratulations! The next module has been unlocked.";
 
-continueBtn.href =
-    `course.html?id=${exam.courseId}`;
+                const actions =
+                    document.querySelector(".actions");
 
-    /* ================= MODULE UNLOCK MESSAGE ================= */
+                if (actions) {
 
-if(exam.type === "module"){
+                    actions.after(message);
 
-    const message = document.createElement("p");
+                }
 
-    message.className = "unlock-message";
+            }
 
-    message.innerHTML =
 
-`<i class="fa-solid fa-lock-open"></i>
+            /* ============================================================
+               REVIEW BUTTON
+            ============================================================ */
 
-Congratulations! The next module has been unlocked.`;
+            reviewBtn.classList.add("hidden");
 
-    document
-    .querySelector(".actions")
-    .after(message);
+            reviewBtn.addEventListener(
+                "click",
+                async event => {
 
-}
-reviewBtn.classList.add("hidden");
-                reviewBtn.addEventListener(
+                    event.preventDefault();
 
-    "click",
+                    reviewSection.classList.remove(
+                        "hidden"
+                    );
 
-    async event=>{
+                    reviewContainer.innerHTML = `
+                        <div class="review-placeholder">
+                            <h3>Exam Review</h3>
+                            <p>
+                                Question review will be available
+                                in the next update.
+                            </p>
+                        </div>
+                    `;
 
-        event.preventDefault();
+                    reviewSection.scrollIntoView({
+                        behavior: "smooth"
+                    });
 
-        reviewSection.classList.remove(
-
-            "hidden"
-
-        );
-
-        reviewContainer.innerHTML =
-
-`<div class="lesson-card">
-
-<h3>
-
-Exam Review
-
-</h3>
-
-<p>
-
-Question review will be available in the next update.
-
-</p>
-
-</div>`;
-
-        reviewSection.scrollIntoView({
-
-            behavior:"smooth"
-
-        });
-
-    }
-
-);
+                }
+            );
 
         }
 
     }
 
-    else{
+
+    /* ======================================================================
+       FAILED
+    ====================================================================== */
+
+    else {
 
         resultIcon.classList.add(
-
             "fail"
-
         );
 
         resultIconSymbol.className =
@@ -286,35 +364,29 @@ Question review will be available in the next update.
             "Don't worry. Review the lessons and try again.";
 
         retryBtn.classList.remove(
-
             "hidden"
-
         );
 
-        reviewBtn.classList.add(
-
-    "hidden"
-
-);
-
         retryBtn.href =
-    `start-assessment.html?id=${examId}`;
+            `start-assessment.html?id=${examId}`;
+
+        reviewBtn.classList.add(
+            "hidden"
+        );
 
     }
 
-        /* ================= SHOW RESULT ================= */
+
+    /* ======================================================================
+       SHOW RESULT
+    ====================================================================== */
 
     resultLoader.classList.add(
-
         "hidden"
-
     );
 
     resultCard.classList.remove(
-
         "hidden"
-
     );
 
 }
-
