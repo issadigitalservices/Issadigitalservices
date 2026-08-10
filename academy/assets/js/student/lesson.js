@@ -291,13 +291,20 @@ if (lesson.videoUrl) {
 
 
         /*
-         * Initialize Plyr once.
-         */
+ * Allow the video element to send the
+ * protected session cookie to Cloudflare Worker.
+ */
 
-        if (!player) {
+lessonVideo.crossOrigin = "use-credentials";
 
-            player = new Plyr(
-                lessonVideo,
+/*
+ * Initialize Plyr once.
+ */
+
+if (!player) {
+
+    player = new Plyr(
+        lessonVideo,
                 {
                     controls: [
                         "play-large",

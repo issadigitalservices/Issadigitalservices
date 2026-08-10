@@ -1,9 +1,38 @@
-const corsHeaders = {
-    "Access-Control-Allow-Origin": "http://127.0.0.1:5500",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Authorization, Content-Type",
-    "Access-Control-Allow-Credentials": "true"
-};
+const allowedOrigins = [
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "https://www.issadigitalservices.com",
+    "https://issadigitalservices.com"
+];
+
+function getCorsHeaders(request) {
+
+    const origin =
+        request.headers.get("Origin");
+
+    const headers = {
+        "Access-Control-Allow-Methods":
+            "GET, POST, OPTIONS",
+
+        "Access-Control-Allow-Headers":
+            "Authorization, Content-Type",
+
+        "Access-Control-Allow-Credentials":
+            "true"
+    };
+
+    if (
+        origin &&
+        allowedOrigins.includes(origin)
+    ) {
+
+        headers["Access-Control-Allow-Origin"] =
+            origin;
+
+    }
+
+    return headers;
+}
 
 const FIREBASE_PROJECT_ID = "issa-academy";
 
@@ -15,6 +44,7 @@ const VIDEO_TOKEN_LIFETIME = 15 * 60;
 export default {
 
   async fetch(request, env) {
+    const corsHeaders = getCorsHeaders(request);
    /* ============================================================
    PROTECTED VIDEO SESSION + VIDEO STREAM
    ============================================================ */
