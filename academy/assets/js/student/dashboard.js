@@ -338,9 +338,13 @@ if (coursesGrid) {
         if (enrollBtn) {
 
             const courseId = enrollBtn.dataset.courseId;
+            console.log("Enroll button clicked! Course ID:", courseId);
 
             if (courseId) {
-                window.location.href = `enroll.html?id=${courseId}`;
+                // Navigates directly to enroll.html in the same student/ directory
+                window.location.href = `./enroll.html?id=${courseId}`;
+            } else {
+                console.error("No dataset.courseId found on enroll button!");
             }
 
         }
