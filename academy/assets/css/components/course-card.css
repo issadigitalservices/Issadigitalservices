@@ -281,3 +281,26 @@
     }
 
 }
+
+/* Replace or add this at the very bottom of course-card.css */
+
+.course-card .enroll-btn,
+.course-card .btn-primary {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    padding: 12px 20px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    border-radius: 10px !important;
+    border: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
+}
+
+.course-card .enroll-btn:hover {
+    background-color: #1d4ed8 !important;
+}
