@@ -326,6 +326,30 @@ async function loadCourseCatalog() {
 }
 
 /* ==========================================================================
+   COURSE CARD CLICK HANDLERS (ENROLL NOW)
+   ========================================================================== */
+
+if (coursesGrid) {
+
+    coursesGrid.addEventListener("click", (event) => {
+
+        const enrollBtn = event.target.closest(".enroll-btn");
+
+        if (enrollBtn) {
+
+            const courseId = enrollBtn.dataset.courseId;
+
+            if (courseId) {
+                window.location.href = `enroll.html?id=${courseId}`;
+            }
+
+        }
+
+    });
+
+}
+
+/* ==========================================================================
    LOGOUT HANDLER
    ========================================================================== */
 
