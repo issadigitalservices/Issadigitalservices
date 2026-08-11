@@ -313,7 +313,26 @@ async function loadCourseCatalog() {
 
         const cards = await Promise.all(cardsPromises);
 
+        // Inject HTML
         coursesGrid.innerHTML = cards.join("");
+
+        // ATTACH CLICK LISTENERS DIRECTLY TO ENROLL BUTTONS
+        const enrollButtons = coursesGrid.querySelectorAll(".enroll-btn");
+        
+        enrollButtons.forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const courseId = btn.getAttribute("data-course-id") || btn.dataset.courseId;
+                
+                if (courseId) {
+                    window.location.href = `enroll.html?id=${courseId}`;
+                } else {
+                    alert("Course ID missing on button!");
+                }
+            });
+        });
 
     } catch (error) {
 
