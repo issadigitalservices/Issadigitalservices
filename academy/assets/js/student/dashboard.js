@@ -183,127 +183,59 @@ async function loadEnrollments(uid) {
             async (enrollmentDoc) => {
 
                 const enrollment = enrollmentDoc.data();
-
-                const enrollmentProgress =
-                    Number(enrollment.progress) || 0;
-
-/* -------------------------------------------------------
-   LOAD MODULES & LESSONS FOR THIS COURSE
-------------------------------------------------------- */
-const [moduleSnapshot, lessonSnapshot] = await Promise.all([
-    getDocs(query(collection(db, "modules"), where("courseId", "==", enrollment.courseId))),
-    getDocs(query(collection(db, "lessons"), where("courseId", "==", enrollment.courseId)))
-]);
-
-/* -------------------------------------------------------
-   COURSE OBJECT
-------------------------------------------------------- */
-const course = {
-    id: enrollment.courseId,
-    ...courseSnap.data(),
-    totalModules: moduleSnapshot.size, // ✅ Added module count
-    totalLessons: lessonSnapshot.size
-};
+                const enrollmentProgress = Number(enrollment.progress) || 0;
 
                 /* -------------------------------------------------------
-                   QUERY COMPLETED LESSONS FROM LESSONPROGRESS
+                   FETCH COURSE DETAILS & SUBCOLLECTION COUNTS IN PARALLEL
                 ------------------------------------------------------- */
-                const completedLessonsSnapshot = await getDocs(
-                    query(
-                        collection(db, "lessonProgress"),
-                        where("studentId", "==", uid),
-                        where("courseId", "==", enrollment.courseId),
-                        where("completed", "==", true)
+                const [courseSnap, moduleSnapshot, lessonSnapshot, completedLessonsSnapshot] = await Promise.all([
+                    getDoc(doc(db, "courses", enrollment.courseId)),
+                    getDocs(query(collection(db, "modules"), where("courseId", "==", enrollment.courseId))),
+                    getDocs(query(collection(db, "lessons"), where("courseId", "==", enrollment.courseId))),
+                    getDocs(
+                        query(
+                            collection(db, "lessonProgress"),
+                            where("studentId", "==", uid),
+                            where("courseId", "==", enrollment.courseId),
+                            where("completed", "==", true)
+                        )
                     )
-                );
+                ]);
 
-                const enrollmentCompletedLessons = completedLessonsSnapshot.size;
+                if (!courseSnap.exists()) {
+                    return "";
+                }
 
                 totalProgress += enrollmentProgress;
 
                 /* -------------------------------------------------------
-                   LOAD COURSE
+                   CONSTRUCT COURSE OBJECT WITH DYNAMIC COUNTS
                 ------------------------------------------------------- */
-
-                const courseSnap = await getDoc(
-                    doc(
-                        db,
-                        "courses",
-                        enrollment.courseId
-                    )
-                );
-
-                if (!courseSnap.exists()) {
-
-                    return "";
-
-                }
-
-                /* -------------------------------------------------------
-                   LOAD ACTUAL LESSONS FOR THIS COURSE
-                ------------------------------------------------------- */
-
-                const lessonSnapshot = await getDocs(
-                    query(
-                        collection(db, "lessons"),
-                        where(
-                            "courseId",
-                            "==",
-                            enrollment.courseId
-                        )
-                    )
-                );
-
-                const totalLessons =
-                    lessonSnapshot.size;
-
-                /* -------------------------------------------------------
-                   COURSE OBJECT
-                ------------------------------------------------------- */
-
                 const course = {
-
-                    id:
-                        enrollment.courseId,
-
+                    id: enrollment.courseId,
                     ...courseSnap.data(),
-
-                    totalLessons:
-                        totalLessons
-
+                    totalModules: moduleSnapshot.size,
+                    totalLessons: lessonSnapshot.size
                 };
 
                 /* -------------------------------------------------------
-                   COURSE CARD
+                   CREATE COURSE CARD
                 ------------------------------------------------------- */
-
                 return createCourseCard(
-
                     course,
-
                     {
-
-                        mode:
-                            "dashboard",
-
-                        progress:
-                            enrollmentProgress,
-
-                        completedLessons:
-                            enrollmentCompletedLessons
-
+                        mode: "dashboard",
+                        progress: enrollmentProgress,
+                        completedLessons: completedLessonsSnapshot.size
                     }
-
                 );
 
             }
         );
 
-        const cards =
-            await Promise.all(coursePromises);
+        const cards = await Promise.all(coursePromises);
 
-        coursesGrid.innerHTML =
-            cards.join("");
+        coursesGrid.innerHTML = cards.join("");
 
         /* ---------------------------------------------------------------
            CERTIFICATES
@@ -312,35 +244,23 @@ const course = {
         const certificateSnapshot = await getDocs(
             query(
                 collection(db, "certificates"),
-                where(
-                    "studentId",
-                    "==",
-                    uid
-                )
+                where("studentId", "==", uid)
             )
         );
 
-        totalCertificates.textContent =
-            certificateSnapshot.size;
+        totalCertificates.textContent = certificateSnapshot.size;
 
         /* ---------------------------------------------------------------
            OVERALL PROGRESS
         ---------------------------------------------------------------- */
 
-        courseProgress.textContent =
-            `${Math.round(
-                totalProgress /
-                enrollmentSnapshot.size
-            )}%`;
+        courseProgress.textContent = `${Math.round(
+            totalProgress / enrollmentSnapshot.size
+        )}%`;
 
-    }
+    } catch (error) {
 
-    catch (error) {
-
-        console.error(
-            "Unable to load enrollments:",
-            error
-        );
+        console.error("Unable to load enrollments:", error);
 
         showToast(
             "Unable to load your courses.",
