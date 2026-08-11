@@ -196,20 +196,51 @@
 }
 
 /* =========================================
-   Buttons
+   Buttons & CTA Styling
 ========================================= */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
 
 .enroll-btn,
 .continue-btn,
 .go-to-course-btn,
-.btn-whatsapp-support{
-    width:100%;
+.btn-whatsapp-support {
+    width: 100%;
 }
 
-.pending-actions-wrapper{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+.pending-actions-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* =========================================
