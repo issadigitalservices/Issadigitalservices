@@ -187,6 +187,24 @@ async function loadEnrollments(uid) {
                 const enrollmentProgress =
                     Number(enrollment.progress) || 0;
 
+/* -------------------------------------------------------
+   LOAD MODULES & LESSONS FOR THIS COURSE
+------------------------------------------------------- */
+const [moduleSnapshot, lessonSnapshot] = await Promise.all([
+    getDocs(query(collection(db, "modules"), where("courseId", "==", enrollment.courseId))),
+    getDocs(query(collection(db, "lessons"), where("courseId", "==", enrollment.courseId)))
+]);
+
+/* -------------------------------------------------------
+   COURSE OBJECT
+------------------------------------------------------- */
+const course = {
+    id: enrollment.courseId,
+    ...courseSnap.data(),
+    totalModules: moduleSnapshot.size, // ✅ Added module count
+    totalLessons: lessonSnapshot.size
+};
+
                 /* -------------------------------------------------------
                    QUERY COMPLETED LESSONS FROM LESSONPROGRESS
                 ------------------------------------------------------- */
@@ -338,41 +356,42 @@ async function loadEnrollments(uid) {
    ========================================================================== */
 
 async function loadCourseCatalog() {
-
     try {
-
         const snapshot = await getDocs(collection(db, "courses"));
 
         if (snapshot.empty) {
-
             emptyCourses?.classList.remove("hidden");
             return;
-
         }
 
-        const cards = snapshot.docs.map(courseDoc => {
+        const cardsPromises = snapshot.docs.map(async (courseDoc) => {
+            const courseId = courseDoc.id;
+
+            // Fetch lesson and module counts for catalog cards
+            const [moduleSnapshot, lessonSnapshot] = await Promise.all([
+                getDocs(query(collection(db, "modules"), where("courseId", "==", courseId))),
+                getDocs(query(collection(db, "lessons"), where("courseId", "==", courseId)))
+            ]);
 
             const course = {
-                id: courseDoc.id,
-                ...courseDoc.data()
+                id: courseId,
+                ...courseDoc.data(),
+                totalModules: moduleSnapshot.size,
+                totalLessons: lessonSnapshot.size
             };
 
             return createCourseCard(course, {
                 mode: "student"
             });
-
         });
 
+        const cards = await Promise.all(cardsPromises);
         coursesGrid.innerHTML = cards.join("");
 
     } catch (error) {
-
         console.error("Unable to load course catalog:", error);
-
         emptyCourses?.classList.remove("hidden");
-
     }
-
 }
 
 /* ==========================================================================
