@@ -572,8 +572,14 @@ if (
 
 
         /* ========================================================
-           CREATE TEMPORARY TOKEN
+           CREATE TEMPORARY TOKEN (BOUND TO DEVICE & IP)
         ======================================================== */
+
+        const clientIP =
+            request.headers.get("CF-Connecting-IP") || "";
+
+        const userAgent =
+            request.headers.get("User-Agent") || "";
 
         const payload = {
 
@@ -583,6 +589,12 @@ if (
             courseId,
 
             videoKey,
+
+            ip:
+                clientIP,
+
+            ua:
+                userAgent,
 
             expiresAt:
                 Date.now() +
@@ -697,25 +709,47 @@ if (
     requestUrl.pathname === "/video"
 ) {
 
-  
-  /* ========================================================
-   REQUIRE SIGNED VIDEO TOKEN
-======================================================== */
+    /* ========================================================
+       RESTRICT DIRECT BROWSER ADDRESS BAR PASTES
+    ======================================================== */
 
-const token =
-    requestUrl.searchParams.get("token");
+    const referer =
+        request.headers.get("Referer") || "";
 
-if (!token) {
+    const isAllowedReferer =
+        allowedOrigins.some(origin => referer.startsWith(origin));
 
-    return new Response(
-        "Video access denied.",
-        {
-            status: 403,
-            headers: corsHeaders
-        }
-    );
+    if (!isAllowedReferer) {
 
-}
+        return new Response(
+            "Access denied: Direct links are not allowed.",
+            {
+                status: 403,
+                headers: corsHeaders
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       REQUIRE SIGNED VIDEO TOKEN
+    ======================================================== */
+
+    const token =
+        requestUrl.searchParams.get("token");
+
+    if (!token) {
+
+        return new Response(
+            "Video access denied.",
+            {
+                status: 403,
+                headers: corsHeaders
+            }
+        );
+
+    }
 
 
 try {
@@ -877,6 +911,48 @@ try {
 
             return new Response(
                 "Video session expired.",
+                {
+                    status: 403,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        /* ========================================================
+           VERIFY IP & USER-AGENT MATCH
+        ======================================================== */
+
+        const currentIP =
+            request.headers.get("CF-Connecting-IP") || "";
+
+        if (
+            payload.ip &&
+            payload.ip !== currentIP
+        ) {
+
+            return new Response(
+                "Access denied: Network mismatch.",
+                {
+                    status: 403,
+                    headers: corsHeaders
+                }
+            );
+
+        }
+
+
+        const currentUA =
+            request.headers.get("User-Agent") || "";
+
+        if (
+            payload.ua &&
+            payload.ua !== currentUA
+        ) {
+
+            return new Response(
+                "Access denied: Browser environment mismatch.",
                 {
                     status: 403,
                     headers: corsHeaders
