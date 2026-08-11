@@ -106,7 +106,12 @@ async function loadCourses(studentId) {
         coursesGrid.innerHTML += `
             <article class="course-card">
                 <img
-                    src="${course.thumbnail ? "../" + course.thumbnail.replace(/^[\.\/]+/, '') : "../assets/images/excel-course.jpg"}"
+                    /* AFTER (Fixes full Cloudflare/Firebase URLs and keeps relative paths working): */
+src="${
+    course.thumbnail 
+        ? (course.thumbnail.startsWith('http') ? course.thumbnail : "../" + course.thumbnail.replace(/^[\.\/]+/, '')) 
+        : "../assets/images/excel-course.jpg"
+}"
                     alt="${course.title}"
                     onerror="this.src='../assets/images/course-placeholder.jpg'">
 

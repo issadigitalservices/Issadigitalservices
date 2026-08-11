@@ -105,7 +105,8 @@
     flex: 1;
     display: flex;
     align-items: center;
-    color: #94a3b8 !important; /* FIX: Overrides global link colors */
+    gap: 1rem; /* ADDED: Ensures spacing if icon is inside <a> */
+    color: #94a3b8 !important; 
     text-decoration: none;
     font-size: .96rem;
     font-weight: 500;

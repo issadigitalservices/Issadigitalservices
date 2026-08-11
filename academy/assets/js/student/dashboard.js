@@ -187,8 +187,19 @@ async function loadEnrollments(uid) {
                 const enrollmentProgress =
                     Number(enrollment.progress) || 0;
 
-                const enrollmentCompletedLessons =
-                    Number(enrollment.completedLessons) || 0;
+                /* -------------------------------------------------------
+                   QUERY COMPLETED LESSONS FROM LESSONPROGRESS
+                ------------------------------------------------------- */
+                const completedLessonsSnapshot = await getDocs(
+                    query(
+                        collection(db, "lessonProgress"),
+                        where("studentId", "==", uid),
+                        where("courseId", "==", enrollment.courseId),
+                        where("completed", "==", true)
+                    )
+                );
+
+                const enrollmentCompletedLessons = completedLessonsSnapshot.size;
 
                 totalProgress += enrollmentProgress;
 

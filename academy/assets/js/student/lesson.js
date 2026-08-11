@@ -306,6 +306,7 @@ if (!player) {
     player = new Plyr(
         lessonVideo,
                 {
+                    blankVideo: "",
                     controls: [
                         "play-large",
                         "play",
@@ -360,46 +361,35 @@ if (!player) {
         };
 
 
-        lessonVideo.addEventListener(
-            "loadedmetadata",
-            () => {
+        /* ========================================================
+           NEW PLYR METADATA LISTENER
+        ======================================================== */
 
-                const durationElement =
-                    document.getElementById(
-                        "lessonDuration"
-                    );
+        const updateDurationUI = () => {
+            const durationElement = document.getElementById("lessonDuration");
+            if (!durationElement) return;
 
-                if (!durationElement) {
-                    return;
-                }
+            // Use Plyr's duration or fallback to raw element duration
+            const durationVal = player.duration || lessonVideo.duration;
 
+            if (durationVal && !isNaN(durationVal)) {
+                const totalSeconds = Math.floor(durationVal);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
 
-                const totalSeconds =
-                    Math.floor(
-                        lessonVideo.duration
-                    );
-
-
-                const minutes =
-                    Math.floor(
-                        totalSeconds / 60
-                    );
-
-
-                const seconds =
-                    totalSeconds % 60;
-
-
-                durationElement.textContent =
-                    `${minutes}:${seconds
-                        .toString()
-                        .padStart(2, "0")}`;
-
-            },
-            {
-                once: true
+                durationElement.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
             }
-        );
+        };
+
+        // Attach listener to Plyr instance events
+        player.off("loadedmetadata"); // Clean up previous listener if reloading
+        player.on("loadedmetadata", updateDurationUI);
+        player.on("ready", updateDurationUI);
+
+        // Immediate check if metadata is already loaded
+        if (lessonVideo.readyState >= 1) {
+            updateDurationUI();
+        }
 
 
     }

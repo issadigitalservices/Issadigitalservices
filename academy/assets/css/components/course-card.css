@@ -53,15 +53,42 @@
     flex-direction: column;
     flex: 1;
     padding: 20px;
-    min-height: 260px;
+    box-sizing: border-box;
 }
 
-.course-action-container{
-    margin-top:auto;
+.course-action-container {
+    margin-top: auto; /* Now works properly if inside course-body */
+    padding-top: 16px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.course-action-container .btn{
-    width:100%;
+.course-action-container .btn {
+    width: 100%;
+}
+
+/* =========================================
+   Meta
+========================================= */
+
+.course-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #f3f4f6;
+    color: #4b5563;
+    font-size: .9rem;
+    box-sizing: border-box;
+}
+
+.course-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap; /* Ensures "7 Lessons" stays on one line */
 }
 
 /* =========================================
@@ -88,6 +115,7 @@
 
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
 
     overflow: hidden;
@@ -114,26 +142,6 @@
     font-size: 1.3rem;
     font-weight: 700;
     color: #0d6efd;
-}
-
-/* =========================================
-   Meta
-========================================= */
-
-.course-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    color: #4b5563;
-    font-size: .9rem;
-}
-
-.course-meta span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
 /* =========================================
@@ -222,23 +230,23 @@
    Responsive
 ========================================= */
 
-@media (max-width:768px){
+@media (max-width: 768px) {
 
-    .course-body{
-        padding:16px;
+    .course-body {
+        padding: 16px;
     }
 
-    .course-title{
-        font-size:1.05rem;
+    .course-title {
+        font-size: 1.05rem;
     }
 
-    .offer-price{
-        font-size:1.15rem;
+    .offer-price {
+        font-size: 1.15rem;
     }
 
-    .course-meta{
-        flex-direction:column;
-        align-items:flex-start;
+    .course-meta {
+        flex-direction: row; /* Keeps Modules and Lessons on one line in mobile */
+        justify-content: space-between;
     }
 
 }

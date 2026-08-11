@@ -75,10 +75,8 @@ async function loadAllCourses(studentId) {
         allCoursesGrid.innerHTML = "";
 
         const [
-
             coursesSnapshot,
             enrollmentsSnapshot
-
         ] = await Promise.all([
 
             getDocs(
@@ -100,44 +98,46 @@ async function loadAllCourses(studentId) {
         const enrollmentMap = new Map();
 
         enrollmentsSnapshot.forEach((docSnap) => {
-
             const enrollment = docSnap.data();
-
             enrollmentMap.set(
                 enrollment.courseId,
                 enrollment.approvalStatus
             );
-
         });
 
         if (coursesSnapshot.empty) {
-
             allCoursesGrid.innerHTML = `
                 <h3 class="empty-courses-heading">
                     No courses available at the moment.
                 </h3>
             `;
-
             return;
-
         }
 
-        const cards = [];
-
-        coursesSnapshot.forEach((docSnap) => {
+        /* -------------------------------------------------------
+           FETCH COURSES & DYNAMIC COUNTS
+        ------------------------------------------------------- */
+        const cardPromises = coursesSnapshot.docs.map(async (docSnap) => {
 
             const courseId = docSnap.id;
+            const courseData = docSnap.data();
+
+            // Fetch actual modules & lessons counts
+            const [modulesSnap, lessonsSnap] = await Promise.all([
+                getDocs(query(collection(db, "modules"), where("courseId", "==", courseId))),
+                getDocs(query(collection(db, "lessons"), where("courseId", "==", courseId)))
+            ]);
 
             const course = {
                 id: courseId,
-                ...docSnap.data()
+                ...courseData,
+                totalModules: modulesSnap.size || courseData.totalModules || 0,
+                totalLessons: lessonsSnap.size || courseData.totalLessons || 0
             };
 
-            const status =
-                enrollmentMap.get(courseId);
+            const status = enrollmentMap.get(courseId);
 
             let actionButton = "";
-
             const whatsappNumber = "+919746431460";
 
             if (status === "Approved") {
@@ -146,61 +146,41 @@ async function loadAllCourses(studentId) {
                     <a
                         href="course.html?id=${courseId}"
                         class="btn btn-primary">
-
                         Go to Course
-
                     </a>
                 `;
 
-            }
-
-            else if (status === "Pending") {
+            } else if (status === "Pending") {
 
                 const message = encodeURIComponent(
                     `Hello Admin, my enrollment for course "${course.title}" is currently Approval Pending. Please check my status.`
                 );
 
                 actionButton = `
-
                     <div class="pending-actions-wrapper">
-
                         <button
                             class="btn btn-secondary"
                             disabled>
-
                             Approval Pending
-
                         </button>
-
                         <a
                             href="https://wa.me/${whatsappNumber}?text=${message}"
                             target="_blank"
                             class="btn btn-whatsapp-support">
-
                             <i class="fa-brands fa-whatsapp"></i>
-
                             Contact Support
-
                         </a>
-
                     </div>
-
                 `;
 
-            }
-
-            else {
+            } else {
 
                 actionButton = `
-
                     <a
                         href="enroll.html?courseId=${courseId}"
                         class="btn btn-primary">
-
                         Enroll Now
-
                     </a>
-
                 `;
 
             }
@@ -209,25 +189,39 @@ async function loadAllCourses(studentId) {
                 mode: "student"
             });
 
-            card = card.replace(
-                "</div>\n\n        </div>",
-                `
+            // 1. Convert string to temporary DOM element
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = card;
+
+            // 2. Remove default buttons from course-card.js
+            const defaultBtns = tempDiv.querySelectorAll("a.btn, button.btn");
+            defaultBtns.forEach(btn => {
+                if (btn.parentElement && btn.parentElement !== tempDiv.firstElementChild && btn.parentElement.children.length === 1) {
+                    btn.parentElement.remove();
+                } else {
+                    btn.remove();
+                }
+            });
+
+            // 3. Append correct dynamic button
+            const cardElement = tempDiv.firstElementChild;
+            if (cardElement) {
+                cardElement.insertAdjacentHTML("beforeend", `
                     <div class="course-action-container">
                         ${actionButton}
                     </div>
-                </div>
-            </div>`
-            );
+                `);
+            }
 
-            cards.push(card);
+            return tempDiv.innerHTML;
 
         });
 
+        // Resolve all async promises and render to grid
+        const cards = await Promise.all(cardPromises);
         allCoursesGrid.innerHTML = cards.join("");
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(error);
 
@@ -255,10 +249,8 @@ window.enrollInCourse = async function (courseId) {
         showLoader();
 
         const [
-
             userDocSnap,
             courseDocSnap
-
         ] = await Promise.all([
 
             getDoc(doc(db, "students", user.uid)),
@@ -323,9 +315,7 @@ window.enrollInCourse = async function (courseId) {
 
         showPaymentModal(courseId);
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(error);
 
@@ -365,7 +355,6 @@ function showPaymentModal(courseId) {
         "beforeend",
 
         `
-
         <div id="paymentModal" class="modal-overlay">
 
             <div class="modal-card">
@@ -421,7 +410,6 @@ function showPaymentModal(courseId) {
             </div>
 
         </div>
-
         `
 
     );
