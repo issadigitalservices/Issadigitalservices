@@ -237,11 +237,11 @@ if (lesson.videoUrl) {
 
         const sessionResponse =
             await fetch(
-                "https://issa-upload-worker.issadigitalservices.workers.dev/video-session",
+                "https://video.issadigitalservices.com/video-session",
                 {
                     method: "POST",
 
-                    credentials: "include",
+                    credentials: "omit",
 
                     headers: {
                         "Authorization":
@@ -287,7 +287,7 @@ if (lesson.videoUrl) {
          */
 
         const protectedVideoUrl =
-            `https://issa-upload-worker.issadigitalservices.workers.dev/video?token=${encodeURIComponent(sessionData.token)}`;
+    `https://video.issadigitalservices.com/video?token=${encodeURIComponent(sessionData.token)}`;
 
 
         /*
@@ -295,7 +295,7 @@ if (lesson.videoUrl) {
  * protected session cookie to Cloudflare Worker.
  */
 
-lessonVideo.crossOrigin = "use-credentials";
+lessonVideo.crossOrigin = "anonymous";
 
 /*
  * Initialize Plyr once.

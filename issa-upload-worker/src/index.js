@@ -15,20 +15,21 @@ function getCorsHeaders(request) {
             "GET, POST, OPTIONS",
 
         "Access-Control-Allow-Headers":
-            "Authorization, Content-Type",
+            "Authorization, Content-Type, Range",
 
         "Access-Control-Allow-Credentials":
-            "true"
+            "true",
+
+        "Vary":
+            "Origin"
     };
 
     if (
         origin &&
         allowedOrigins.includes(origin)
     ) {
-
         headers["Access-Control-Allow-Origin"] =
             origin;
-
     }
 
     return headers;
@@ -654,11 +655,9 @@ if (
     {
         status: 200,
         headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-            "Set-Cookie":
-                `VIDEO_SESSION=${token}; Max-Age=${VIDEO_TOKEN_LIFETIME}; Path=/; Secure; HttpOnly; SameSite=None`
-        }
+    ...corsHeaders,
+    "Content-Type": "application/json"
+}
     }
 );
 
@@ -697,53 +696,19 @@ if (
     request.method === "GET" &&
     requestUrl.pathname === "/video"
 ) {
+
+  
   /* ========================================================
-   REQUIRE VIDEO SESSION COOKIE
-   ======================================================== */
+   REQUIRE SIGNED VIDEO TOKEN
+======================================================== */
 
-const cookieHeader =
-    request.headers.get("Cookie") || "";
-
-const sessionCookie =
-    cookieHeader
-        .split(";")
-        .map(cookie => cookie.trim())
-        .find(cookie =>
-            cookie.startsWith("VIDEO_SESSION=")
-        );
-
-if (!sessionCookie) {
-
-    return new Response(
-        "Video session required.",
-        {
-            status: 403,
-            headers: corsHeaders
-        }
-    );
-
-}
-
-const sessionToken =
-    sessionCookie.substring(
-        "VIDEO_SESSION=".length
-    );
-
-
-/* ========================================================
-   COOKIE MUST MATCH VIDEO TOKEN
-   ======================================================== */
-
-const urlToken =
+const token =
     requestUrl.searchParams.get("token");
 
-if (
-    !urlToken ||
-    sessionToken !== urlToken
-) {
+if (!token) {
 
     return new Response(
-        "Invalid video session.",
+        "Video access denied.",
         {
             status: 403,
             headers: corsHeaders
@@ -752,25 +717,8 @@ if (
 
 }
 
-    try {
 
-        const token =
-            requestUrl.searchParams.get(
-                "token"
-            );
-
-
-        if (!token) {
-
-            return new Response(
-                "Video access denied.",
-                {
-                    status: 403,
-                    headers: corsHeaders
-                }
-            );
-
-        }
+try {
 
 
         const tokenParts =
@@ -1139,13 +1087,7 @@ if (
         ======================================================== */
 
         const headers =
-            new Headers();
-
-
-        headers.set(
-            "Access-Control-Allow-Origin",
-            "*"
-        );
+    new Headers(corsHeaders);
 
 
         headers.set(
