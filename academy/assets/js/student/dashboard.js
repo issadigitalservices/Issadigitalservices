@@ -276,19 +276,24 @@ async function loadEnrollments(uid) {
    ========================================================================== */
 
 async function loadCourseCatalog() {
+
     try {
+
         const snapshot = await getDocs(collection(db, "courses"));
 
         if (snapshot.empty) {
+
             emptyCourses?.classList.remove("hidden");
             return;
+
         }
 
         const cardsPromises = snapshot.docs.map(async (courseDoc) => {
+
             const courseId = courseDoc.id;
 
-            // Fetch lesson and module counts for catalog cards
-            const [moduleSnapshot, lessonSnapshot] = await Promise.all([
+            /* Query modules & lessons for this specific course */
+            const [modulesSnap, lessonsSnap] = await Promise.all([
                 getDocs(query(collection(db, "modules"), where("courseId", "==", courseId))),
                 getDocs(query(collection(db, "lessons"), where("courseId", "==", courseId)))
             ]);
@@ -296,22 +301,28 @@ async function loadCourseCatalog() {
             const course = {
                 id: courseId,
                 ...courseDoc.data(),
-                totalModules: moduleSnapshot.size,
-                totalLessons: lessonSnapshot.size
+                totalModules: modulesSnap.size,
+                totalLessons: lessonsSnap.size
             };
 
             return createCourseCard(course, {
                 mode: "student"
             });
+
         });
 
         const cards = await Promise.all(cardsPromises);
+
         coursesGrid.innerHTML = cards.join("");
 
     } catch (error) {
+
         console.error("Unable to load course catalog:", error);
+
         emptyCourses?.classList.remove("hidden");
+
     }
+
 }
 
 /* ==========================================================================
