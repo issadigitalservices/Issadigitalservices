@@ -362,31 +362,49 @@ if (!player) {
 
 
         /* ========================================================
-           NEW PLYR METADATA LISTENER
+           DURATION & TIMEUPDATE LISTENERS (PLYR FIX)
         ======================================================== */
 
         const updateDurationUI = () => {
             const durationElement = document.getElementById("lessonDuration");
             if (!durationElement) return;
 
-            // Use Plyr's duration or fallback to raw element duration
             const durationVal = player.duration || lessonVideo.duration;
 
-            if (durationVal && !isNaN(durationVal)) {
+            if (durationVal && !isNaN(durationVal) && durationVal > 0) {
                 const totalSeconds = Math.floor(durationVal);
                 const minutes = Math.floor(totalSeconds / 60);
                 const seconds = totalSeconds % 60;
-
                 durationElement.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+            } else if (lesson.duration) {
+                durationElement.textContent = lesson.duration;
             }
         };
 
-        // Attach listener to Plyr instance events
-        player.off("loadedmetadata"); // Clean up previous listener if reloading
+        // Remove existing listeners
+        player.off("loadedmetadata");
+        player.off("timeupdate");
+
+        // Attach Plyr event listeners
         player.on("loadedmetadata", updateDurationUI);
         player.on("ready", updateDurationUI);
 
-        // Immediate check if metadata is already loaded
+        player.on("timeupdate", async () => {
+            const durationVal = player.duration || lessonVideo.duration;
+            const currentVal = player.currentTime || lessonVideo.currentTime;
+
+            if (!durationVal || durationVal <= 0) return;
+
+            const percent = (currentVal / durationVal) * 100;
+
+            // Mark complete when student reaches 90%
+            if (percent >= 90 && !watchMarked && !isCompleted) {
+                watchMarked = true;
+                console.log("90% threshold reached! Completing lesson...");
+                await completeLesson();
+            }
+        });
+
         if (lessonVideo.readyState >= 1) {
             updateDurationUI();
         }
@@ -445,16 +463,7 @@ else {
     });
 
     /* ================= VIDEO EVENTS ================= */
-    lessonVideo.addEventListener("timeupdate", async () => {
-        if (!lessonVideo.duration) return;
-
-        const percent = (lessonVideo.currentTime / lessonVideo.duration) * 100;
-
-        if (percent >= 90 && !watchMarked && !isCompleted) {
-            watchMarked = true;
-            await completeLesson();
-        }
-    });
+    
 
     /* ================= PARALLEL DATA FETCHING ================= */
     // Fetch Module, Lesson List, Enrollment, and Lesson Progress simultaneously
