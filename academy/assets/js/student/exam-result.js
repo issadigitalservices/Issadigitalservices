@@ -249,6 +249,14 @@ async function loadResult(studentId) {
 
                 resultMessage.textContent =
                     "You have successfully passed the Final Exam. Your certificate is pending admin approval.";
+
+                    // Show WhatsApp Contact Admin button ONLY for passed Final Exam without certificate
+                const whatsappAdminBtn = 
+                    document.getElementById("whatsappAdminBtn");
+
+                if (whatsappAdminBtn) {
+                    whatsappAdminBtn.classList.remove("hidden");
+                }
             }
 
 
