@@ -691,29 +691,9 @@ async function verifyExamAccess() {
 
 
         /* ================================================================
-           ADMIN FINAL EXAM UNLOCK
+           FINAL EXAM ACCESS (Auto-unlocked when all modules are passed)
+           Note: Certificate remains locked until Admin approval.
         ================================================================= */
-
-        if (
-            courseData.isFinalExamUnlocked !== true
-        ) {
-
-            showToast(
-                "The Final Exam is not unlocked yet.",
-                "error"
-            );
-
-            setTimeout(() => {
-
-                location.replace(
-                    `course.html?id=${exam.courseId}`
-                );
-
-            }, 1200);
-
-            return false;
-        }
-
 
         /* ================================================================
            VERIFY ALL MODULES PASSED
