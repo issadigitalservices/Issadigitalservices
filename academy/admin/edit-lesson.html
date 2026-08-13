@@ -2,259 +2,123 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Lesson | ISSA Academy</title>
-
-    <link rel="icon"
-          href="../assets/images/Issa-Logo.png">
-
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-    <link rel="stylesheet"
-          href="../assets/css/main.css">
-
-    <link rel="stylesheet"
-          href="../assets/css/admin/add-lesson.css">
-
-          <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
-
+    <link rel="icon" href="../assets/images/Issa-Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/admin/add-lesson.css">
+    <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
 </head>
 
 <body>
 
 <div class="admin-layout">
 
-    <aside
-    class="sidebar"
-    id="adminSidebar">
-</aside>
+    <aside class="sidebar" id="adminSidebar"></aside>
 
     <main class="main-content">
 
         <header class="topbar">
-
             <div style="display: flex; align-items: center; gap: 1rem;">
-        <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Toggle Sidebar">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <span style="font-weight: 700; font-size: 1.25rem; color: #111827;">ISSA Academy</span>
-        </div>
-    </div>
+                <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Toggle Sidebar">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span style="font-weight: 700; font-size: 1.25rem; color: #111827;">ISSA Academy</span>
+                </div>
+            </div>
 
             <div>
-
                 <h1>Edit Lesson</h1>
-
                 <p>Update lesson details.</p>
-
             </div>
 
-            <a href="lessons.html"
-               class="btn btn-secondary">
-
+            <a href="lessons.html" class="btn btn-secondary">
                 <i class="fa-solid fa-arrow-left"></i>
-
                 Back
-
             </a>
-
         </header>
 
-        <form id="lessonForm"
-              class="form-card">
+        <form id="lessonForm" class="form-card">
 
-            <div class="form-grid">
-
+            <div class="form-row">
                 <div class="form-group">
-
                     <label>Course</label>
-
                     <select id="courseId" required>
-
-                        <option>Loading...</option>
-
+                        <option value="">Select Course</option>
                     </select>
-
                 </div>
 
                 <div class="form-group">
-
                     <label>Module</label>
-
                     <select id="moduleId" required>
-
-                        <option>Select Module</option>
-
+                        <option value="">Select Module</option>
                     </select>
-
                 </div>
-
-                <div class="form-group">
-
-                    <label>Lesson Order</label>
-
-                    <input
-                        id="lessonOrder"
-                        type="number"
-                        min="1"
-                        required>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>Status</label>
-
-                    <select id="lessonStatus">
-
-                        <option value="draft">Draft</option>
-
-                        <option value="published">Published</option>
-
-                    </select>
-
-                </div>
-
             </div>
 
             <div class="form-group">
-
                 <label>Lesson Title</label>
-
-                <input
-                    id="lessonTitle"
-                    type="text"
-                    required>
-
+                <input type="text" id="lessonTitle" required>
             </div>
 
             <div class="form-group">
-
                 <label>Description</label>
 
-                <textarea
-                    id="lessonDescription"
-                    rows="5">
-
-                </textarea>
-
+                <textarea id="lessonDescription" rows="5"></textarea>
             </div>
 
-            <div class="form-group">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Replace Lesson Video</label>
+                    <input type="file" id="videoFile" accept="video/mp4,video/webm,video/mov">
 
-    <label>Replace Lesson Video</label>
+                    <div class="upload-progress">
+                        <progress id="uploadProgress" value="0" max="100"></progress>
+                        <span id="uploadPercent">0%</span>
+                    </div>
 
-    <input
-        type="file"
-        id="videoFile"
-        accept="video/mp4,video/webm,video/mov">
+                    <p id="currentVideo" style="margin-top: 8px; font-size: 0.9rem; color: #6b7280;">
+                        Loading current video...
+                    </p>
 
-    <div class="upload-progress">
+                    <input type="hidden" id="videoUrl">
+                </div>
 
-        <progress
-            id="uploadProgress"
-            value="0"
-            max="100"></progress>
-
-        <span id="uploadPercent">0%</span>
-
-    </div>
-
-    <input
-        type="hidden"
-        id="videoUrl">
-
-</div>
-
-<div class="form-group">
-
-    <label>Current Video</label>
-
-    <p id="currentVideo">
-
-    Current video will appear here.
-
-</p>
-
-</div>
-
-<div class="form-group">
-
-    <label>Duration</label>
-
-    <input
-        id="lessonDuration"
-        type="text"
-        placeholder="00:00">
-
-</div>
-
-            <div class="form-group">
-
-                <label>Attachment URL</label>
-
-                <input
-                    id="attachmentUrl"
-                    type="url">
-
+                <div class="form-group">
+                    <label>Replace Practice Excel File</label>
+                    <input type="file" id="practiceFile" accept=".xlsx,.xls">
+                    
+                    <p id="currentPracticeFile" style="margin-top: 8px; font-size: 0.9rem; color: #6b7280;">
+                        Loading current practice file...
+                    </p>
+                </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Lesson Order</label>
+                    <input type="number" id="lessonOrder" min="1" value="1" required>
+                </div>
 
-                <label>
-
-                    Preview Lesson
-
-                </label>
-
-                <select id="preview">
-
-                    <option value="false">
-
-                        No
-
-                    </option>
-
-                    <option value="true">
-
-                        Yes
-
-                    </option>
-
-                </select>
-
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="lessonStatus">
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="form-actions">
-
-                <button
-                    type="submit"
-                    class="btn btn-primary">
-
-                    <i class="fa-solid fa-floppy-disk"></i>
-
-                    Update Lesson
-
-                </button>
-
-            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Update Lesson
+            </button>
 
         </form>
 
@@ -262,44 +126,20 @@
 
 </div>
 
-<div
-    id="pageLoader"
-    class="page-loader hidden">
-
+<!-- ================= Loader ================= -->
+<div id="pageLoader" class="page-loader hidden">
     <div class="loader-card">
-
-        <img
-            src="../assets/images/Issa-Logo.png"
-            alt="ISSA Academy">
-
+        <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy">
         <div class="loader-spinner"></div>
-
-        <p>
-
-            Loading Lesson...
-
-        </p>
-
+        <p>Loading Lesson...</p>
     </div>
-
 </div>
 
-<div
-    id="toastContainer"
-    class="toast-container">
+<!-- ================= Toast ================= -->
+<div id="toastContainer" class="toast-container"></div>
 
-</div>
-
-<script
-    src="../assets/js/admin/admin-sidebar.js">
-</script>
-
-<script
-    type="module"
-    src="../assets/js/admin/edit-lesson.js">
-
-</script>
+<script src="../assets/js/admin/admin-sidebar.js"></script>
+<script type="module" src="../assets/js/admin/edit-lesson.js"></script>
 
 </body>
-
 </html>
