@@ -403,43 +403,34 @@
    PLYR WATERMARK OVERLAY (ISSA Academy Branding)
    ========================================================== */
 
-/* Ensure Plyr container grounds absolute positioning */
-.plyr {
-    position: relative !important;
-}
-
-/* Watermark Card */
+/* Centered / Background Video Watermark Overlay */
 .plyr-watermark {
     position: absolute;
-    top: 18px;
-    right: 18px;
-    z-index: 10;
-    pointer-events: none; /* Allows clicks to pass through to the video */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none; /* Allows clicks to pass through to the video player */
+    z-index: 2; /* Sits above video frame but below Plyr controls */
+    opacity: 0.05; /* Low opacity for background effect (adjust between 0.10 - 0.20) */
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    background: rgba(15, 23, 42, 0.55); /* Subtle dark backdrop */
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    justify-content: center;
     user-select: none;
-    transition: opacity 0.3s ease;
 }
 
-/* ISSA Logo */
 .plyr-watermark img {
-    height: 20px;
-    width: auto;
-    object-fit: contain;
+    width: 140px; /* Adjust size as needed */
+    height: auto;
+    filter: grayscale(100%); /* Optional: makes logo neutral */
+    margin-bottom: 8px;
 }
 
-/* Branding Text */
 .plyr-watermark span {
     color: #ffffff;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    font-family: inherit;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
 }

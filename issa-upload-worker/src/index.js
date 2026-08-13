@@ -1275,6 +1275,54 @@ try {
     }
 
 }
+
+/* ============================================================
+   PUBLIC FILE / ATTACHMENT DOWNLOAD ROUTE
+   ============================================================ */
+
+if (
+    request.method === "GET" && 
+    (requestUrl.hostname === "files.issadigitalservices.com" || requestUrl.pathname.startsWith("/files/"))
+) {
+    try {
+        const fileKey = decodeURIComponent(
+            requestUrl.pathname.replace(/^\/+/, "")
+        );
+
+        if (!fileKey) {
+            return new Response("File path missing.", {
+                status: 400,
+                headers: corsHeaders
+            });
+        }
+
+        const object = await env.VIDEOS.get(fileKey);
+
+        if (!object) {
+            return new Response("File not found.", {
+                status: 404,
+                headers: corsHeaders
+            });
+        }
+
+        const headers = new Headers(corsHeaders);
+        object.writeHttpMetadata(headers);
+        headers.set("ETag", object.httpEtag);
+        headers.set("Cache-Control", "public, max-age=31536000");
+
+        return new Response(object.body, {
+            status: 200,
+            headers
+        });
+    } catch (error) {
+        console.error("File download error:", error);
+        return new Response("Unable to download file.", {
+            status: 500,
+            headers: corsHeaders
+        });
+    }
+}
+
     if (request.method === "OPTIONS") {
 
       return new Response(null, {
@@ -1371,7 +1419,7 @@ try {
 
       const fileUrl =
 
-        `https://pub-4e6d3c8953e54fb1aa48b58557498743.r2.dev/${fileName}`;
+        `https://files.issadigitalservices.com/${fileName}`;
 
       return Response.json(
 
