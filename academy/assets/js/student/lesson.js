@@ -339,6 +339,7 @@ if (!player) {
 
         }
 
+        
 
         /*
          * Give Plyr the protected video URL.
@@ -380,6 +381,25 @@ if (!player) {
                 durationElement.textContent = lesson.duration;
             }
         };
+
+        /* ================= AUTO-INJECT ISSA ACADEMY WATERMARK ================= */
+            player.off("ready"); // Clear prior ready listeners if re-initializing
+            player.on("ready", () => {
+                const container = player.elements.container;
+
+                if (!container.querySelector(".plyr-watermark")) {
+                    const watermark = document.createElement("div");
+                    watermark.className = "plyr-watermark";
+                    watermark.innerHTML = `
+                        <img src="../assets/images/Issa-Logo.png" alt="ISSA Logo">
+                        <span>ISSA Academy</span>
+                    `;
+                    container.appendChild(watermark);
+                }
+
+                updateDurationUI();
+            });
+
 
         // Remove existing listeners
         player.off("loadedmetadata");

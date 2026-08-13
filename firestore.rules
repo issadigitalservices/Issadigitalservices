@@ -1,155 +1,212 @@
 rules_version = '2';
 
 service cloud.firestore {
-
   match /databases/{database}/documents {
 
-    /* ==========================================================
-       Helpers
-       ========================================================== */
-
-    function isSignedIn() {
-
+    // Helper functions
+    function isAuthenticated() {
       return request.auth != null;
-
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
     }
 
-    function isOwner(uid) {
-
-      return isSignedIn()
-
-        && request.auth.uid == uid;
-
+    // Check if the authenticated user exists in the admins collection
+    function isAdmin() {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
 
-    /* ==========================================================
-       Students
-       ========================================================== */
-
-    match /students/{studentId} {
-
-      allow read, update:
-
-        if isOwner(studentId);
-
-      allow create:
-
-        if isSignedIn();
-
+    // Check if the student's enrollment access is still active (not expired)
+    function isAccessValid(enrollmentData) {
+      return enrollmentData.approvalStatus == "Approved" &&
+             (!('expiresAt' in enrollmentData) || request.time < enrollmentData.expiresAt);
     }
 
-    /* ==========================================================
-       Courses
-       ========================================================== */
+ // 0. Admin Access
+    match /admins/{adminId} {
+      // Allow any authenticated user to check their own admin status (needed for isAdmin() checks)
+      allow get: if isAuthenticated() && request.auth.uid == adminId;
+      allow list, write: if isAdmin();
+    }
 
+    // Categories
+    match /categories/{categoryId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // 1. Courses & Content
     match /courses/{courseId} {
-
-      allow read:
-
-        if isSignedIn();
-
-      allow write:
-
-        if isSignedIn();
-
+      allow read: if isAuthenticated();
+      allow write: if isAdmin(); 
     }
-
-    /* ==========================================================
-       Modules
-       ========================================================== */
-
+    
     match /modules/{moduleId} {
-
-      allow read:
-
-        if isSignedIn();
-
-      allow write:
-
-        if isSignedIn();
-
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
     }
-
-    /* ==========================================================
-       Lessons
-       ========================================================== */
 
     match /lessons/{lessonId} {
-
-      allow read:
-
-        if isSignedIn();
-
-      allow write:
-
-        if isSignedIn();
-
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
     }
 
-    /* ==========================================================
-       Enrollments
-       ========================================================== */
+    match /exams/{examId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    match /examQuestions/{questionId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Payments Collection
+    match /payments/{paymentId} {
+      allow read, write: if isAdmin();
+    }
+    
+    // 2. Student Profile
+    match /students/{studentId} {
+      allow read: if isOwner(studentId) || isAdmin();
+      allow create: if isOwner(studentId);
+      allow update: if isOwner(studentId) || isAdmin();
+    }
 
     match /enrollments/{enrollmentId} {
 
-      allow read:
+  // Admin can read all enrollments.
+  // Students can read only their own enrollment.
+  allow read: if isAdmin() ||
+    (
+      isAuthenticated() &&
+      resource.data.studentId == request.auth.uid
+    );
 
-        if isSignedIn();
+  // Student can create only their own Pending enrollment request.
+  allow create: if isAuthenticated() &&
+    request.resource.data.studentId == request.auth.uid &&
+    request.resource.data.approvalStatus == "Pending";
 
-      allow write:
+  // Admin has full control.
+  allow update: if isAdmin();
 
-        if isSignedIn();
+  // Student can update ONLY their own progress field.
+// Progress must remain between 0 and 100.
+allow update: if isAuthenticated() &&
+request.auth.uid == resource.data.studentId &&
+request.resource.data.studentId == resource.data.studentId &&
+request.resource.data.diff(resource.data)
+    .affectedKeys()
+    .hasOnly(["progress"]) &&
+request.resource.data.progress is number &&
+request.resource.data.progress >= 0 &&
+request.resource.data.progress <= 100;
 
-    }
+  // Only Admin can delete.
+  allow delete: if isAdmin();
+}
 
-    /* ==========================================================
-       Payments
-       ========================================================== */
+    // 4. Lesson Progress
+// 4. Lesson Progress
+match /lessonProgress/{progressId} {
 
-    match /payments/{paymentId} {
+  // Admin can read all progress.
+  // Students can read only their own progress.
+  allow read: if isAdmin() ||
+    (
+      isAuthenticated() &&
+      resource.data.studentId == request.auth.uid
+    );
 
-      allow read:
+  // Students can create a completed lesson record only for themselves.
+  allow create: if isAuthenticated() &&
+    request.resource.data.studentId == request.auth.uid &&
+    request.resource.data.completed == true;
 
-        if isSignedIn();
+  // Students cannot modify a completed lesson record.
+  // Only Admin can delete progress.
+  allow delete: if isAdmin();
+}
 
-      allow write:
+    // 5. Module Progress
+match /moduleProgress/{progressId} {
 
-        if isSignedIn();
+  // Admin can read all progress.
+  // Students can read only their own progress.
+  allow read: if isAdmin() ||
+    (
+      isAuthenticated() &&
+      resource.data.studentId == request.auth.uid
+    );
 
-    }
+  // Students can create a completed module progress record
+  // only for themselves.
+  allow create: if isAuthenticated() &&
+    request.resource.data.studentId == request.auth.uid &&
+    request.resource.data.completed == true;
 
-    /* ==========================================================
-       Certificates
-       ========================================================== */
+  // Students cannot modify completed module progress.
+  // Only Admin can delete progress.
+  allow delete: if isAdmin();
+}
 
-    match /certificates/{certificateId} {
+    // 6. Exam Attempts
+match /examAttempts/{attemptId} {
 
-      allow read:
+  // Admin can read all attempts.
+  // Student can read only their own attempt.
+  allow read: if isAdmin() ||
+    (
+      isAuthenticated() &&
+      resource.data.studentId == request.auth.uid
+    );
 
-        if isSignedIn();
 
-      allow write:
+  // Student can create only their own attempt.
+  // The attempt must belong to the requested exam.
+  allow create: if isAuthenticated() &&
+    request.resource.data.studentId == request.auth.uid &&
+    request.resource.data.examId is string;
 
-        if isSignedIn();
 
-    }
+  // Student can update only their own attempt.
+  // They cannot change ownership or exam identity.
+  allow update: if isAuthenticated() &&
+    resource.data.studentId == request.auth.uid &&
+    request.resource.data.studentId == resource.data.studentId &&
+    request.resource.data.examId == resource.data.examId;
 
-    /* ==========================================================
-       Settings
-       ========================================================== */
 
+  // Only Admin can delete exam attempts.
+  allow delete: if isAdmin();
+}
+
+    // 7. Certificates
+match /certificates/{certId} {
+
+  // Student can view only their own certificate
+  // Admin can view all certificates
+  allow read: if isAdmin() ||
+              (isAuthenticated() &&
+               request.auth.uid == resource.data.studentId);
+
+  // ONLY ADMIN can create a certificate
+  allow create: if isAdmin();
+
+  // ONLY ADMIN can update a certificate
+  allow update: if isAdmin();
+
+  // ONLY ADMIN can delete a certificate
+  allow delete: if isAdmin();
+}
+
+    // 8. Academy Settings
     match /settings/{settingId} {
-
-      allow read:
-
-        if isSignedIn();
-
-      allow write:
-
-        if isSignedIn();
-
+      allow read: if isAuthenticated();
+      allow write: if isAdmin(); 
     }
-
   }
-
 }
