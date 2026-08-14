@@ -290,26 +290,6 @@ function renderExams(){
 
             `${exam.passMark || 70}%`;
 
-        const status =
-
-            clone.querySelector(
-
-                ".exam-status"
-
-            );
-
-        status.textContent =
-
-            exam.status || "Draft";
-
-        status.classList.add(
-
-            (exam.status || "draft")
-
-            .toLowerCase()
-
-        );
-
         clone.querySelector(
 
             ".btn-edit"
