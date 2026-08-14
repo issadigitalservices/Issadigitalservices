@@ -1,244 +1,157 @@
 /* ==========================================================================
    ISSA Academy
-   Exams
+   Exams - Fixed Grid & Layout Alignment
    ========================================================================== */
 
-.exam-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-
-gap:24px;
-
-margin-top:25px;
-
+.exam-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+    margin-top: 25px;
 }
 
-.exam-card{
-
-background:#ffffff;
-
-border-radius:18px;
-
-padding:24px;
-
-box-shadow:0 8px 25px rgba(15,23,42,.08);
-
-border:1px solid #e5e7eb;
-
-transition:.25s;
-
-display:flex;
-
-flex-direction:column;
-
-gap:20px;
-
+.exam-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, .08);
+    border: 1px solid #e5e7eb;
+    transition: .25s;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.exam-card:hover{
-
-transform:translateY(-5px);
-
-box-shadow:0 15px 40px rgba(37,99,235,.12);
-
+.exam-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(37, 99, 235, .12);
 }
 
-.exam-header{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:flex-start;
-
-gap:15px;
-
+.exam-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
 }
 
-.exam-title{
-
-font-size:20px;
-
-font-weight:600;
-
-color:#0f172a;
-
-margin-bottom:6px;
-
+.exam-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 6px;
 }
 
-.exam-course{
-
-font-size:14px;
-
-color:#64748b;
-
+.exam-course {
+    font-size: 14px;
+    color: #64748b;
 }
 
-.exam-status{
+/* ==========================================================================
+   EXAM BODY (LINE BY LINE LAYOUT)
+   ========================================================================== */
 
-padding:6px 12px;
-
-border-radius:50px;
-
-font-size:13px;
-
-font-weight:600;
-
+.exam-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.exam-status.published{
-
-background:#dcfce7;
-
-color:#15803d;
-
+.exam-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #475569;
+    width: 100%;
 }
 
-.exam-status.draft{
-
-background:#fee2e2;
-
-color:#dc2626;
-
+.exam-item span {
+    white-space: normal;
+    word-break: normal;
+    line-height: 1.4;
 }
 
-.exam-body{
-
-display:grid;
-
-grid-template-columns:repeat(2,1fr);
-
-gap:16px;
-
+/* Icons stay uniform and round */
+.exam-item i {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 15px;
 }
 
-.exam-item{
+/* ==========================================================================
+   ACTIONS
+   ========================================================================== */
 
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-font-size:15px;
-
-color:#475569;
-
+.exam-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
 }
 
-.exam-item i{
-
-width:36px;
-
-height:36px;
-
-border-radius:50%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-background:#eff6ff;
-
-color:#2563eb;
-
-font-size:15px;
-
+.exam-actions button {
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 11px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
-.exam-actions{
-
-display:flex;
-
-gap:10px;
-
-margin-top:auto;
-
+.btn-edit {
+    background: #2563eb;
+    color: #ffffff;
 }
 
-.exam-actions button{
-
-flex:1;
-
-border:none;
-
-border-radius:10px;
-
-padding:11px;
-
-cursor:pointer;
-
-font-weight:600;
-
-transition:.2s;
-
+.btn-edit:hover {
+    background: #1d4ed8;
 }
 
-.btn-edit{
-
-background:#2563eb;
-
-color:#ffffff;
-
+.btn-questions {
+    background: #10b981;
+    color: #ffffff;
 }
 
-.btn-edit:hover{
-
-background:#1d4ed8;
-
+.btn-questions:hover {
+    background: #059669;
 }
 
-.btn-questions{
-
-background:#10b981;
-
-color:#ffffff;
-
+.btn-delete {
+    background: #ef4444;
+    color: #ffffff;
 }
 
-.btn-questions:hover{
-
-background:#059669;
-
+.btn-delete:hover {
+    background: #dc2626;
 }
 
-.btn-delete{
+/* ==========================================================================
+   MEDIA QUERIES
+   ========================================================================== */
 
-background:#ef4444;
+@media (max-width: 768px) {
+    .exam-grid {
+        grid-template-columns: 1fr;
+    }
 
-color:#ffffff;
+    .exam-body {
+        grid-template-columns: 1fr;
+    }
 
-}
-
-.btn-delete:hover{
-
-background:#dc2626;
-
-}
-
-@media(max-width:768px){
-
-.exam-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.exam-body{
-
-grid-template-columns:1fr;
-
-}
-
-.exam-actions{
-
-flex-direction:column;
-
-}
-
+    .exam-actions {
+        flex-direction: column;
+    }
 }
