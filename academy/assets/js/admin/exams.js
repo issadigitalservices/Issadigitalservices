@@ -362,29 +362,22 @@ function renderExams(){
    FILTERS
    ========================================================================== */
 
-searchInput.addEventListener(
+if (searchInput) {
+    searchInput.addEventListener("input", filterExams);
+}
 
-    "input",
+if (courseFilter) {
+    courseFilter.addEventListener("change", filterExams);
+}
 
-    filterExams
+if (typeFilter) {
+    typeFilter.addEventListener("change", filterExams);
+}
 
-);
-
-courseFilter.addEventListener(
-
-    "change",
-
-    filterExams
-
-);
-
-typeFilter.addEventListener(
-
-    "change",
-
-    filterExams
-
-);
+// Safely handle status filter if it exists
+if (statusFilter) {
+    statusFilter.addEventListener("change", filterExams);
+}
 
 function filterExams(){
 
