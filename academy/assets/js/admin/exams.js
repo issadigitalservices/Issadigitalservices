@@ -386,14 +386,6 @@ typeFilter.addEventListener(
 
 );
 
-statusFilter.addEventListener(
-
-    "change",
-
-    filterExams
-
-);
-
 function filterExams(){
 
     const keyword =
