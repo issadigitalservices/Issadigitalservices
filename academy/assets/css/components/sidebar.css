@@ -11,17 +11,17 @@
 .sidebar {
     width: 280px;
     min-width: 280px;
-    min-height: 100vh;
+    height: 100vh;          /* FIXED: Must be height, not just min-height */
+    position: sticky;
+    top: 0;
+    left: 0;
+    overflow-y: auto;       /* OK only when height is fixed to 100vh */
+    overflow-x: hidden;
+    z-index: 100;
     background: var(--secondary, #0f172a);
     color: var(--white, #ffffff);
     display: flex;
     flex-direction: column;
-    position: sticky;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    z-index: 100;
     transition: all .3s ease;
 }
 
@@ -126,7 +126,7 @@
 }
 
 /* ==========================================================
-   Lesson Sidebar
+   Lesson Sidebar (Dark Theme Consistency Fix)
    ========================================================== */
 
 .lesson-sidebar {
@@ -135,30 +135,31 @@
     gap: 1.5rem;
 }
 
-.sidebar-module {
-    border: 1px solid var(--border-color);
+.sidebar .sidebar-module {
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     border-radius: var(--radius-md);
     overflow: hidden;
-    background: var(--surface);
+    background: #1e293b !important;
 }
 
-.sidebar-module-header {
+.sidebar .sidebar-module-header {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background: var(--gray-50);
+    background: #1e293b !important;
+    color: #ffffff !important;
     font-weight: 600;
     cursor: pointer;
 }
 
-.sidebar-module-header:hover {
-    background: var(--gray-100);
+.sidebar .sidebar-module-header:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
 }
 
-.sidebar-module-title {
-    color: var(--text-primary);
+.sidebar .sidebar-module-title {
+    color: #ffffff !important;
 }
 
 .sidebar-lesson-list {
@@ -169,31 +170,34 @@
     display: block;
 }
 
-.sidebar-lesson {
+.sidebar .sidebar-lesson {
     width: 100%;
     display: flex;
     align-items: center;
     gap: .75rem;
     padding: .9rem 1rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
     text-align: left;
+    color: #cbd5e1 !important;
     transition: background .25s ease;
 }
 
-.sidebar-lesson:hover {
-    background: var(--gray-50);
+.sidebar .sidebar-lesson:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
 }
 
-.sidebar-lesson.active {
-    background: var(--primary-light);
+.sidebar .sidebar-lesson.active {
+    background: var(--primary, #2563eb) !important;
+    color: #ffffff !important;
 }
 
-.sidebar-lesson.completed {
-    color: var(--success);
+.sidebar .sidebar-lesson.completed {
+    color: #10b981 !important;
 }
 
-.sidebar-lesson.locked {
-    opacity: .6;
+.sidebar .sidebar-lesson.locked {
+    opacity: .5;
     pointer-events: none;
 }
 
@@ -222,23 +226,27 @@
 }
 
 /* ==========================================================
-   Responsive
+   Responsive Drawer Fix
    ========================================================== */
 
 @media(max-width: 992px) {
     .sidebar {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        max-width: 80%;
-        height: 100vh;
-        z-index: 1000;
-        transition: left .3s ease;
+        position: fixed !important;
+        top: 0 !important;
+        left: -280px !important;
+        width: 280px !important;
+        max-width: 85vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        z-index: 1000 !important;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        background: #0f172a !important;
     }
 
-    .sidebar.open {
-        left: 0;
+    .sidebar.open,
+    .sidebar.active,
+    .sidebar.show {
+        left: 0 !important;
     }
 }
 
@@ -255,11 +263,6 @@
     .logo-area h2 {
         font-size: 1.1rem;
     }
-
-    .sidebar {
-        width: 280px;
-        max-width: 80%;
-    }
 }
 
 /* ==========================================================
@@ -269,14 +272,15 @@
 .sidebar-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, .45);
+    background: rgba(0, 0, 0, .5);
     opacity: 0;
     visibility: hidden;
-    transition: .3s;
+    transition: opacity .3s ease, visibility .3s ease;
     z-index: 999;
 }
 
-.sidebar-overlay.show {
+.sidebar-overlay.show,
+.sidebar-overlay.open {
     opacity: 1;
     visibility: visible;
 }
@@ -333,4 +337,25 @@
 .sidebar nav ul li.active i {
     color: #ffffff !important;
     background-color: #2563eb !important;
+}
+
+/* ==========================================================================
+   GLOBAL LAYOUT FIX FOR STICKY POSITIONING
+   ========================================================================== */
+
+/* The parent element containing BOTH sidebar and main content */
+.dashboard,
+.student-layout,
+.exam-body,
+.main-wrapper {
+  display: flex !important;
+  align-items: stretch !important; /* Stretch allows sidebar height: 100vh sticky bounds */
+  overflow: visible !important;    /* MUST be visible on the parent page container */
+  width: 100%;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  overflow: visible !important; /* Prevents container from trapping sticky children */
 }

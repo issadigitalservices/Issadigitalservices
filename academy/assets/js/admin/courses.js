@@ -49,24 +49,36 @@ const state = {
 async function loadCourses() {
     state.courses = [];
 
-    const [coursesSnap, lessonsSnap, enrollmentsSnap] = await Promise.all([
+    // 1. Fetch modules, lessons, enrollments, and courses in parallel
+    const [coursesSnap, modulesSnap, lessonsSnap, enrollmentsSnap] = await Promise.all([
         getDocs(query(collection(db, "courses"), orderBy("createdAt", "desc"))),
+        getDocs(collection(db, "modules")),
         getDocs(collection(db, "lessons")),
         getDocs(collection(db, "enrollments"))
     ]);
 
+    // 2. Count modules per course
+    const moduleCounts = {};
+    modulesSnap.forEach(doc => {
+        const courseId = doc.data().courseId;
+        moduleCounts[courseId] = (moduleCounts[courseId] || 0) + 1;
+    });
+
+    // 3. Count lessons per course
     const lessonCounts = {};
     lessonsSnap.forEach(doc => {
         const courseId = doc.data().courseId;
         lessonCounts[courseId] = (lessonCounts[courseId] || 0) + 1;
     });
 
+    // 4. Count students per course
     const studentCounts = {};
     enrollmentsSnap.forEach(doc => {
         const courseId = doc.data().courseId;
         studentCounts[courseId] = (studentCounts[courseId] || 0) + 1;
     });
 
+    // 5. Construct course objects with accurate dynamic counts
     coursesSnap.forEach(docSnap => {
         const courseId = docSnap.id;
         const courseData = docSnap.data();
@@ -74,6 +86,7 @@ async function loadCourses() {
         state.courses.push({
             id: courseId,
             ...courseData,
+            totalModules: moduleCounts[courseId] || 0, // <-- Added module count mapping
             totalLessons: lessonCounts[courseId] || 0,
             totalStudents: studentCounts[courseId] || 0
         });

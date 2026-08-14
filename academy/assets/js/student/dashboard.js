@@ -183,7 +183,6 @@ async function loadEnrollments(uid) {
             async (enrollmentDoc) => {
 
                 const enrollment = enrollmentDoc.data();
-                const enrollmentProgress = Number(enrollment.progress) || 0;
 
                 /* -------------------------------------------------------
                    FETCH COURSE DETAILS & SUBCOLLECTION COUNTS IN PARALLEL
@@ -206,7 +205,15 @@ async function loadEnrollments(uid) {
                     return "";
                 }
 
-                totalProgress += enrollmentProgress;
+                const totalLessons = lessonSnapshot.size;
+                const completedLessons = completedLessonsSnapshot.size;
+
+                // Dynamically calculate actual percentage
+                const calculatedProgress = totalLessons > 0 
+                    ? Math.round((completedLessons / totalLessons) * 100) 
+                    : 0;
+
+                totalProgress += calculatedProgress;
 
                 /* -------------------------------------------------------
                    CONSTRUCT COURSE OBJECT WITH DYNAMIC COUNTS
@@ -215,7 +222,7 @@ async function loadEnrollments(uid) {
                     id: enrollment.courseId,
                     ...courseSnap.data(),
                     totalModules: moduleSnapshot.size,
-                    totalLessons: lessonSnapshot.size
+                    totalLessons: totalLessons
                 };
 
                 /* -------------------------------------------------------
@@ -225,8 +232,8 @@ async function loadEnrollments(uid) {
                     course,
                     {
                         mode: "dashboard",
-                        progress: enrollmentProgress,
-                        completedLessons: completedLessonsSnapshot.size
+                        progress: calculatedProgress,
+                        completedLessons: completedLessons
                     }
                 );
 
@@ -443,46 +450,33 @@ function showToast(message, type = "success") {
 }
 
 /* ==========================================================================
-   MOBILE SIDEBAR
+   MOBILE SIDEBAR (UNIFIED FIX)
    ========================================================================== */
 
 function openSidebar() {
-
-    sidebar?.classList.add("open");
-    sidebarOverlay?.classList.add("show");
-
+    sidebar?.classList.add("open", "show", "active");
+    sidebarOverlay?.classList.add("show", "open");
 }
 
 function closeSidebar() {
-
-    sidebar?.classList.remove("open");
-    sidebarOverlay?.classList.remove("show");
-
+    sidebar?.classList.remove("open", "show", "active");
+    sidebarOverlay?.classList.remove("show", "open");
 }
 
 menuToggle?.addEventListener("click", (event) => {
-
     event.preventDefault();
     event.stopPropagation();
-
     openSidebar();
-
 });
 
 sidebarClose?.addEventListener("click", (event) => {
-
     event.preventDefault();
-
     closeSidebar();
-
 });
 
 sidebarOverlay?.addEventListener("click", (event) => {
-
     event.preventDefault();
-
     closeSidebar();
-
 });
 
 /* ==========================================================================

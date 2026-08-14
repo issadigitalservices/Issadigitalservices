@@ -53,7 +53,7 @@ onAuthStateChanged(
 );
 
 /* ==========================================================================
-   LOAD COURSES
+   LOAD COURSES (DYNAMIC PROGRESS CALCULATION)
    ========================================================================== */
 
 async function loadCourses(studentId) {
@@ -77,17 +77,33 @@ async function loadCourses(studentId) {
     for (const enrollment of snapshot.docs) {
         const data = enrollment.data();
 
-        const courseSnap = await getDoc(
-            doc(db, "courses", data.courseId)
-        );
+        // 1. Fetch course details and lesson counts in parallel
+        const [courseSnap, lessonSnapshot, completedLessonsSnapshot] = await Promise.all([
+            getDoc(doc(db, "courses", data.courseId)),
+            getDocs(query(collection(db, "lessons"), where("courseId", "==", data.courseId))),
+            getDocs(
+                query(
+                    collection(db, "lessonProgress"),
+                    where("studentId", "==", studentId),
+                    where("courseId", "==", data.courseId),
+                    where("completed", "==", true)
+                )
+            )
+        ]);
 
         if (!courseSnap.exists()) {
             continue;
         }
 
         const course = courseSnap.data();
-        const progress = data.progress || 0;
         
+        // 2. Dynamically calculate completion percentage (matching Dashboard logic)
+        const totalLessons = lessonSnapshot.size;
+        const completedLessons = completedLessonsSnapshot.size;
+        const progress = totalLessons > 0 
+            ? Math.round((completedLessons / totalLessons) * 100) 
+            : 0;
+
         // Dynamically change button text if the course is completed
         const buttonText = progress === 100 ? "Review" : "Continue";
 
@@ -106,12 +122,11 @@ async function loadCourses(studentId) {
         coursesGrid.innerHTML += `
             <article class="course-card">
                 <img
-                    /* AFTER (Fixes full Cloudflare/Firebase URLs and keeps relative paths working): */
-src="${
-    course.thumbnail 
-        ? (course.thumbnail.startsWith('http') ? course.thumbnail : "../" + course.thumbnail.replace(/^[\.\/]+/, '')) 
-        : "../assets/images/excel-course.jpg"
-}"
+                    src="${
+                        course.thumbnail 
+                            ? (course.thumbnail.startsWith('http') ? course.thumbnail : "../" + course.thumbnail.replace(/^[\.\/]+/, '')) 
+                            : "../assets/images/excel-course.jpg"
+                    }"
                     alt="${course.title}"
                     onerror="this.src='../assets/images/course-placeholder.jpg'">
 
@@ -131,7 +146,7 @@ src="${
                             class="progress-bar"
                             style="width:${progress}%">
                         </div>
-                  </div>
+                    </div>
 
                     <div class="course-footer">
                         <span class="progress-text">${progress}% Complete</span>
