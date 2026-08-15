@@ -392,10 +392,19 @@
         grid-template-columns: 1fr;
         gap: 12px;
     }
+    
 
     .lesson-status-card {
         justify-content: center;
         width: 100%;
+    }
+}
+
+/* Decrease lesson title size on tablets and mobile screens */
+@media (max-width: 768px) {
+    .lesson-title {
+        font-size: 26px; /* Reduced from 52px */
+        margin-bottom: 12px;
     }
 }
 
