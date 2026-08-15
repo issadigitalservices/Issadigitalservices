@@ -394,25 +394,24 @@ body {
   }
 
   .exam-body {
-    grid-template-columns: 1fr;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 20px;
   }
 
-  .question-area {
-    padding: 20px 15px;
+  .question-area,
+  .question-palette {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   #questionText {
     font-size: 17px;
   }
 
-  .question-palette {
-    position: static;
-    padding: 15px;
-  }
-
   .palette {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px;
   }
 
   .exam-header {
