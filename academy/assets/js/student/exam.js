@@ -1518,166 +1518,92 @@ async function verifyExamAccess() {
     );
 
     /* ==========================================================================
-    SUBMIT EXAM
-    ========================================================================== */
+SUBMIT EXAM
+========================================================================== */
 
-    async function submitExam(){
+let isSubmitting = false; // Flag to prevent double submissions
 
-        clearInterval(
+async function submitExam(){
+    if (isSubmitting) return;
+    isSubmitting = true;
 
-            timerInterval
+    // 1. Immediately hide & disable the button upon click
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add("hidden");
+    }
 
-        );
+    showLoader();
+    clearInterval(timerInterval);
+    let score = 0;
 
-        let score = 0;
-
-        questions.forEach(question=>{
-
-            if(
-
-                answers[question.id]===question.correctAnswer
-
-            ){
-
-                score +=
-
-                    question.marks || 1;
-
+    try {
+        questions.forEach(question => {
+            if(answers[question.id] === question.correctAnswer){
+                score += question.marks || 1;
             }
-
         });
 
-        const totalMarks =
+        const totalMarks = questions.reduce((total, question) => total + (question.marks || 1), 0);
+        const percentage = totalMarks === 0 ? 0 : Math.round((score / totalMarks) * 100);
+        const passed = percentage >= (exam.passMark || 70);
 
-            questions.reduce(
-
-                (total,question)=>
-
-                    total+(question.marks||1),
-
-                0
-
-            );
-
-        const percentage =
-
-        totalMarks===0
-
-        ? 0
-
-        : Math.round(
-
-            (score/totalMarks)*100
-
-        );
-        const passed =
-
-            percentage >=
-
-            (exam.passMark || 70);
-
-        await updateDoc(
-
-        doc(
-
-            db,
-
-            "examAttempts",
-
-            attemptId
-
-        ),
-
-        {
-
+        await updateDoc(doc(db, "examAttempts", attemptId), {
             score,
-
             totalMarks,
-
             percentage,
-
             passed,
-
             answers,
+            currentQuestion: current,
+            submittedAt: serverTimestamp()
+        });
 
-            currentQuestion:current,
+        if (passed) {
+            const examDoc = await getDoc(doc(db, "exams", examId));
+            const examData = examDoc.data();
 
-            submittedAt:
+            if (examData.type === "module") {
+                const progressSnapshot = await getDocs(
+                    query(
+                        collection(db, "moduleProgress"),
+                        where("studentId", "==", studentId),
+                        where("courseId", "==", examData.courseId),
+                        where("moduleId", "==", examData.moduleId)
+                    )
+                );
 
-                serverTimestamp()
-
-        }
-
-    );
-
-    if (passed) {
-
-    const examDoc = await getDoc(
-        doc(
-            db,
-            "exams",
-            examId
-        )
-    );
-
-    const examData = examDoc.data();
-
-    /* ===========================================================
-       MODULE EXAM
-    =========================================================== */
-
-    if (examData.type === "module") {
-
-        const progressSnapshot = await getDocs(
-            query(
-                collection(db, "moduleProgress"),
-                where("studentId", "==", studentId),
-                where("courseId", "==", examData.courseId),
-                where("moduleId", "==", examData.moduleId)
-            )
-        );
-
-        if (progressSnapshot.empty) {
-
-            await addDoc(
-                collection(db, "moduleProgress"),
-                {
-                    studentId: studentId,
-                    courseId: examData.courseId,
-                    moduleId: examData.moduleId,
-
-                    completed: true,
-                    passed: true,
-
-                    completedAt: serverTimestamp(),
-                    passedAt: serverTimestamp()
+                if (progressSnapshot.empty) {
+                    await addDoc(collection(db, "moduleProgress"), {
+                        studentId: studentId,
+                        courseId: examData.courseId,
+                        moduleId: examData.moduleId,
+                        completed: true,
+                        passed: true,
+                        completedAt: serverTimestamp(),
+                        passedAt: serverTimestamp()
+                    });
                 }
-            );
-
+            } else if (examData.type === "final") {
+                console.log("Final Exam passed. Certificate requires admin approval.");
+            }
         }
 
+        // 2. Redirect occurs regardless of pass/fail outcome
+        location.href = `exam-result.html?id=${examId}&score=${score}&total=${totalMarks}&percentage=${percentage}&passed=${passed}`;
+
+    } catch (error) {
+        console.error("Submission error:", error);
+        showToast("An error occurred during submission. Please try again.", "error");
+
+        // Re-enable if Firestore write fails
+        isSubmitting = false;
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove("hidden");
+        }
+        hideLoader();
     }
-
-    /* ===========================================================
-   FINAL EXAM
-=========================================================== */
-
-else if (examData.type === "final") {
-
-    console.log(
-        "Final Exam passed. Certificate requires admin approval."
-    );
-
 }
-
-/* ===========================================================
-   GO TO RESULT PAGE
-=========================================================== */
-
-location.href =
-    `exam-result.html?id=${examId}&score=${score}&total=${totalMarks}&percentage=${percentage}&passed=${passed}`;
-}
-    }
 
 /* ==========================================================================
 LOADER
