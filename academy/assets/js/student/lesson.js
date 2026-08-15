@@ -33,84 +33,42 @@ import {
    DOM
    ========================================================================== */
 
-const lessonTitle =
-    document.getElementById("lessonTitle");
-
-const headerModuleTitle =
-    document.getElementById("moduleTitle");
-
-const lessonVideo =
-    document.getElementById("lessonVideo");
-
-const lessonDescription =
-    document.getElementById("lessonDescription");
-
-const downloadBtn =
-    document.getElementById("downloadBtn");
-
-const previousLesson =
-    document.getElementById("previousLesson");
-
-const nextLesson =
-    document.getElementById("nextLesson");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-const loader =
-    document.getElementById("pageLoader");
-
-const toastContainer =
-    document.getElementById("toastContainer");
-
-const progressPercent =
-    document.getElementById("progressPercent");
-
-const progressBar =
-    document.getElementById("progressBar");
-
-const lessonNumber =
-    document.getElementById("lessonNumber");
-
-const lessonStatus =
-    document.getElementById("lessonStatus");
-
-const lessonStatusText =
-    document.getElementById("lessonStatusText");
-
+const lessonTitle = document.getElementById("lessonTitle");
+const headerModuleTitle = document.getElementById("moduleTitle");
+const lessonVideo = document.getElementById("lessonVideo");
+const lessonDescription = document.getElementById("lessonDescription");
+const downloadBtn = document.getElementById("downloadBtn");
+const previousLesson = document.getElementById("previousLesson");
+const nextLesson = document.getElementById("nextLesson");
+const logoutBtn = document.getElementById("logoutBtn");
+const loader = document.getElementById("pageLoader");
+const toastContainer = document.getElementById("toastContainer");
+const progressPercent = document.getElementById("progressPercent");
+const progressBar = document.getElementById("progressBar");
+const lessonNumber = document.getElementById("lessonNumber");
+const lessonStatus = document.getElementById("lessonStatus");
+const lessonStatusText = document.getElementById("lessonStatusText");
 
 /* ==========================================================================
    URL
    ========================================================================== */
 
-const params =
-    new URLSearchParams(location.search);
-
-const lessonId =
-    params.get("id");
+const params = new URLSearchParams(location.search);
+const lessonId = params.get("id");
 
 /* ==========================================================================
    GLOBALS
    ========================================================================== */
 
 let studentId = null;
-
 let lessonData = null;
-
 let enrollmentId = null;
-
 let enrollmentData = null;
-
 let lessons = [];
-
 let currentIndex = -1;
-
 let isCompleted = false;
-
 let watchMarked = false;
-
 let lastSavedTime = 0;
-
 let player = null;
 
 /* ==========================================================================
@@ -133,11 +91,11 @@ onAuthStateChanged(
 );
 
 /* ==========================================================================
-   LOAD LESSON (OPTIMIZED WITH ENFORCED LOCKING)
+   LOAD LESSON (FULLY OPTIMIZED WITHOUT CHANGING LOGIC)
    ========================================================================== */
 
 async function loadLesson() {
-    // 1. Fetch main lesson document first
+    // 1. Fetch main lesson document immediately
     const lessonSnap = await getDoc(doc(db, "lessons", lessonId));
 
     if (!lessonSnap.exists()) {
@@ -159,7 +117,7 @@ async function loadLesson() {
     lessonTitle.textContent = lesson.title;
     lessonDescription.textContent = lesson.description || "";
 
-    // 2. Prepare Video Worker Task (non-blocking Promise)
+    // 2. Prepare Video Worker Task (Runs completely in background without blocking DOM/UI)
     const videoTask = (async () => {
         if (!lesson.videoUrl) return;
 
@@ -238,17 +196,18 @@ async function loadLesson() {
             console.error("Video error:", error);
             showToast(error.message || "Unable to load video.", "error");
         }
-    })();
+    });
 
-    // 3. Execute ALL Firestore Queries + Video Worker SIMULTANEOUSLY in parallel
+    // Start video worker concurrently without awaiting inside Promise.all
+    videoTask();
+
+    // 3. Execute ALL Firestore Queries SIMULTANEOUSLY in parallel
     const [
-        _,
         moduleSnap,
         lessonsSnapshot,
         enrollmentSnapshot,
         allProgressSnapshot
     ] = await Promise.all([
-        videoTask,
         getDoc(doc(db, "modules", lesson.moduleId)),
         getDocs(query(collection(db, "lessons"), where("moduleId", "==", lesson.moduleId), orderBy("order"))),
         getDocs(query(collection(db, "enrollments"), where("studentId", "==", studentId), where("courseId", "==", lesson.courseId))),
@@ -481,7 +440,7 @@ logoutBtn.addEventListener("click", async event => {
 });
 
 /* ==========================================================================
-   LOADER
+   LOADER & TOAST HELPERS
    ========================================================================== */
 
 function showLoader() {
@@ -491,10 +450,6 @@ function showLoader() {
 function hideLoader() {
     loader.classList.add("hidden");
 }
-
-/* ==========================================================================
-   TOAST
-   ========================================================================== */
 
 function showToast(message, type = "success") {
     const toast = document.createElement("div");
