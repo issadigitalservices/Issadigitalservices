@@ -65,7 +65,6 @@ let current = 0;
 let seconds = 0;
 let timerInterval;
 let attemptId = "";
-let isSubmitting = false; // Prevents double submission
 
 /* ==========================================================================
 AUTH
@@ -655,82 +654,59 @@ SUBMIT EXAM
 ========================================================================== */
 
 async function submitExam(){
-    if (isSubmitting) return;
-    isSubmitting = true;
-
-    // Immediately disable and hide the submit button
-    if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.classList.add("hidden");
-    }
-
-    showLoader();
     clearInterval(timerInterval);
     let score = 0;
 
-    try {
-        questions.forEach(question => {
-            if(answers[question.id] === question.correctAnswer){
-                score += question.marks || 1;
+    questions.forEach(question => {
+        if(answers[question.id] === question.correctAnswer){
+            score += question.marks || 1;
+        }
+    });
+
+    const totalMarks = questions.reduce((total, question) => total + (question.marks || 1), 0);
+    const percentage = totalMarks === 0 ? 0 : Math.round((score / totalMarks) * 100);
+    const passed = percentage >= (exam.passMark || 70);
+
+    await updateDoc(doc(db, "examAttempts", attemptId), {
+        score,
+        totalMarks,
+        percentage,
+        passed,
+        answers,
+        currentQuestion: current,
+        submittedAt: serverTimestamp()
+    });
+
+    if (passed) {
+        const examDoc = await getDoc(doc(db, "exams", examId));
+        const examData = examDoc.data();
+
+        if (examData.type === "module") {
+            const progressSnapshot = await getDocs(
+                query(
+                    collection(db, "moduleProgress"),
+                    where("studentId", "==", studentId),
+                    where("courseId", "==", examData.courseId),
+                    where("moduleId", "==", examData.moduleId)
+                )
+            );
+
+            if (progressSnapshot.empty) {
+                await addDoc(collection(db, "moduleProgress"), {
+                    studentId: studentId,
+                    courseId: examData.courseId,
+                    moduleId: examData.moduleId,
+                    completed: true,
+                    passed: true,
+                    completedAt: serverTimestamp(),
+                    passedAt: serverTimestamp()
+                });
             }
-        });
-
-        const totalMarks = questions.reduce((total, question) => total + (question.marks || 1), 0);
-        const percentage = totalMarks === 0 ? 0 : Math.round((score / totalMarks) * 100);
-        const passed = percentage >= (exam.passMark || 70);
-
-        await updateDoc(doc(db, "examAttempts", attemptId), {
-            score,
-            totalMarks,
-            percentage,
-            passed,
-            answers,
-            currentQuestion: current,
-            submittedAt: serverTimestamp()
-        });
-
-        if (passed) {
-            const examDoc = await getDoc(doc(db, "exams", examId));
-            const examData = examDoc.data();
-
-            if (examData.type === "module") {
-                const progressSnapshot = await getDocs(
-                    query(
-                        collection(db, "moduleProgress"),
-                        where("studentId", "==", studentId),
-                        where("courseId", "==", examData.courseId),
-                        where("moduleId", "==", examData.moduleId)
-                    )
-                );
-
-                if (progressSnapshot.empty) {
-                    await addDoc(collection(db, "moduleProgress"), {
-                        studentId: studentId,
-                        courseId: examData.courseId,
-                        moduleId: examData.moduleId,
-                        completed: true,
-                        passed: true,
-                        completedAt: serverTimestamp(),
-                        passedAt: serverTimestamp()
-                    });
-                }
-            } else if (examData.type === "final") {
-                console.log("Final Exam passed. Certificate requires admin approval.");
-            }
+        } else if (examData.type === "final") {
+            console.log("Final Exam passed. Certificate requires admin approval.");
         }
 
         location.href = `exam-result.html?id=${examId}&score=${score}&total=${totalMarks}&percentage=${percentage}&passed=${passed}`;
-    } catch (error) {
-        console.error("Submission error:", error);
-        showToast("An error occurred during submission. Please try again.", "error");
-        
-        // Re-enable in case of network failure
-        isSubmitting = false;
-        if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.classList.remove("hidden");
-        }
-        hideLoader();
     }
 }
 
