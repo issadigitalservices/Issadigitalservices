@@ -6,21 +6,16 @@
    ========================================================================== */
 
 import {
-
     auth,
     db
-
 } from "../core/firebase-config.js";
 
 import {
-
     onAuthStateChanged,
     signOut
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 import {
-
     doc,
     getDoc,
     getDocs,
@@ -29,86 +24,46 @@ import {
     where,
     orderBy,
     limit
-
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 /* ==========================================================================
    DOM
    ========================================================================== */
 
-const courseTitle =
-    document.getElementById("courseTitle");
+const courseTitle = document.getElementById("courseTitle");
+const bannerTitle = document.getElementById("bannerTitle");
+const courseCategory = document.getElementById("courseCategory");
+const courseDescription = document.getElementById("courseDescription");
+const courseThumbnail = document.getElementById("courseThumbnail");
+const lessonCount = document.getElementById("lessonCount");
+const progressText = document.getElementById("progressText");
+const overallProgress = document.getElementById("overallProgress");
+const overallProgressBar = document.getElementById("overallProgressBar");
+const moduleCount = document.getElementById("moduleCount");
+const lessonCountCard = document.getElementById("lessonCountCard");
+const certificateStatus = document.getElementById("certificateStatus");
+const moduleList = document.getElementById("moduleList");
+const finalExamContainer = document.getElementById("finalExamContainer");
+const loader = document.getElementById("pageLoader");
+const toastContainer = document.getElementById("toastContainer");
+const logoutBtn = document.getElementById("logoutBtn");
 
-const bannerTitle =
-    document.getElementById("bannerTitle");
+let unlockedOrder = 1;
+let isFinalExamAdminUnlocked = false;
 
-const courseCategory =
-    document.getElementById("courseCategory");
-
-const courseDescription =
-    document.getElementById("courseDescription");
-
-const courseThumbnail =
-    document.getElementById("courseThumbnail");
-
-const lessonCount =
-    document.getElementById("lessonCount");
-
-const progressText =
-    document.getElementById("progressText");
-
-    const overallProgress =
-    document.getElementById("overallProgress");
-
-const overallProgressBar =
-    document.getElementById("overallProgressBar");
-
-const moduleCount =
-    document.getElementById("moduleCount");
-
-const lessonCountCard =
-    document.getElementById("lessonCountCard");
-
-const certificateStatus =
-    document.getElementById("certificateStatus");
-
-const moduleList =
-    document.getElementById("moduleList");
-
-    const finalExamContainer =
-    document.getElementById("finalExamContainer");
-
-const loader =
-    document.getElementById("pageLoader");
-
-const toastContainer =
-    document.getElementById("toastContainer");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-    let unlockedOrder = 1;
-    let isFinalExamAdminUnlocked = false; // Add this line
-
-    /* ==========================================================================
+/* ==========================================================================
    CACHE
    ========================================================================== */
 
 let completedLessons = new Set();
 
-let lessonProgressSnapshot = null;
-
 /* ==========================================================================
    URL
    ========================================================================== */
 
-const params =
-    new URLSearchParams(location.search);
+const params = new URLSearchParams(location.search);
+const courseId = params.get("id");
 
-const courseId =
-    params.get("id");
-
-    // Add this validation check:
 if (!courseId) {
     showToast("No course selected.", "error");
     setTimeout(() => {
@@ -120,190 +75,119 @@ if (!courseId) {
    AUTH
    ========================================================================== */
 
-onAuthStateChanged(
-
-    auth,
-
-    async user=>{
-
-        if(!user){
-
-            location.replace(
-
-                "login.html"
-
-            );
-
-            return;
-
-        }
-
-        showLoader();
-
-await loadCourse(user.uid);
-
-// Loader is now hidden inside loadCourse()
-
+onAuthStateChanged(auth, async user => {
+    if (!user) {
+        location.replace("login.html");
+        return;
     }
 
-);
+    showLoader();
+    await loadCourse(user.uid);
+});
 
 /* ==========================================================================
    LOAD COURSE
    ========================================================================== */
 
-async function loadCourse(studentId){
+async function loadCourse(studentId) {
+    const [courseSnap, enrollment, snapshot] = await Promise.all([
+        getDoc(doc(db, "courses", courseId)),
+        getDocs(query(
+            collection(db, "enrollments"),
+            where("studentId", "==", studentId),
+            where("courseId", "==", courseId),
+            where("approvalStatus", "==", "Approved")
+        )),
+        getDocs(query(
+            collection(db, "moduleProgress"),
+            where("studentId", "==", studentId),
+            where("courseId", "==", courseId)
+        ))
+    ]);
 
-    const courseSnap =
-
-        await getDoc(
-
-            doc(
-
-                db,
-
-                "courses",
-
-                courseId
-
-            )
-
-        );
-
-    if(!courseSnap.exists()){
-
-        showToast(
-
-            "Course not found.",
-
-            "error"
-
-        );
-
+    if (!courseSnap.exists()) {
+        showToast("Course not found.", "error");
         return;
-
     }
 
-    const course =
+    const course = courseSnap.data();
+    isFinalExamAdminUnlocked = course.isFinalExamUnlocked === true;
 
-        courseSnap.data();
+    courseTitle.textContent = course.title;
+    bannerTitle.textContent = course.title;
+    courseCategory.textContent = course.category || "";
+    courseDescription.textContent = course.description || "";
+    courseThumbnail.src = "../assets/images/courses/excel-masterclass.jpg";
 
-        isFinalExamAdminUnlocked = course.isFinalExamUnlocked === true; // Add this line
+    if (enrollment.empty) {
+        showToast("You are not enrolled in this course.", "error");
+        setTimeout(() => {
+            location.href = "my-courses.html";
+        }, 1500);
+        return;
+    }
 
-    courseTitle.textContent =
-        course.title;
+    unlockedOrder = snapshot.size + 1;
 
-    bannerTitle.textContent =
-        course.title;
+    hideLoader();
 
-    courseCategory.textContent =
-        course.category || "";
-
-    courseDescription.textContent =
-        course.description || "";
-
-    courseThumbnail.src =
-    "../assets/images/courses/excel-masterclass.jpg";
-
-
-    /* ================= Progress ================= */
-
-    const enrollment = await getDocs(
-
-    query(
-
-        collection(
-            db,
-            "enrollments"
-        ),
-
-        where(
-            "studentId",
-            "==",
-            studentId
-        ),
-
-        where(
-            "courseId",
-            "==",
-            courseId
-        ),
-
-        where(
-            "approvalStatus",
-            "==",
-            "Approved"
-        )
-
-    )
-
-);
-
-if(enrollment.empty){
-
-    showToast(
-        "You are not enrolled in this course.",
-        "error"
-    );
-
-    setTimeout(()=>{
-
-        location.href = "my-courses.html";
-
-    },1500);
-
-    return;
-
-}
-
-await loadUnlockedModule(studentId);
-
-// Show the page immediately
-hideLoader();
-
-// Load the remaining data in the background
-loadModules();
-loadCertificateStatus(studentId);
-}
-
-async function loadUnlockedModule(studentId){
-
-    const snapshot = await getDocs(
-
-        query(
-
-            collection(db,"moduleProgress"),
-
-            where("studentId","==",studentId),
-
-            where("courseId","==",courseId)
-
-        )
-
-    );
-
-    unlockedOrder =
-
-        snapshot.size + 1;
-
+    // Trigger UI builders simultaneously
+    loadModules();
+    loadCertificateStatus(studentId);
 }
 
 /* ==========================================================================
-   LOAD MODULES
+   LOAD MODULES (BULK FETCHED FOR INSTANT LOADING)
    ========================================================================== */
 
 async function loadModules() {
     moduleList.innerHTML = "";
 
-    // 1. Fetch Lesson Progress and Modules concurrently
-    const [lessonProgressSnapshot, moduleSnapshot] = await Promise.all([
-        getDocs(query(collection(db, "lessonProgress"), where("studentId", "==", auth.currentUser.uid))),
-        getDocs(query(collection(db, "modules"), where("courseId", "==", courseId), orderBy("order")))
+    // Step 1: Bulk fetch EVERYTHING for this course in only 4 queries max
+    const [
+        lessonProgressSnapshot,
+        moduleSnapshot,
+        allLessonsSnapshot,
+        allExamsSnapshot,
+        allAttemptsSnapshot
+    ] = await Promise.all([
+        getDocs(query(
+            collection(db, "lessonProgress"), 
+            where("studentId", "==", auth.currentUser.uid),
+            where("courseId", "==", courseId)
+        )),
+        getDocs(query(
+            collection(db, "modules"), 
+            where("courseId", "==", courseId), 
+            orderBy("order")
+        )),
+        getDocs(query(
+            collection(db, "lessons"), 
+            where("courseId", "==", courseId), 
+            orderBy("order")
+        )),
+        getDocs(query(
+            collection(db, "exams"), 
+            where("courseId", "==", courseId)
+        )),
+        getDocs(query(
+            collection(db, "examAttempts"), 
+            where("studentId", "==", auth.currentUser.uid),
+            where("passed", "==", true)
+        ))
     ]);
 
     completedLessons.clear();
     lessonProgressSnapshot.forEach(doc => {
         if (doc.data().completed) completedLessons.add(doc.data().lessonId);
+    });
+
+    const passedExamIds = new Set();
+    const passedExamData = {};
+    allAttemptsSnapshot.forEach(doc => {
+        const data = doc.data();
+        passedExamIds.add(data.examId);
+        passedExamData[data.examId] = data;
     });
 
     const totalModules = moduleSnapshot.size;
@@ -314,23 +198,36 @@ async function loadModules() {
         return;
     }
 
-    // 2. Fetch all module content IN PARALLEL instead of inside a sequential 'for...of' loop
-    const modulePromises = moduleSnapshot.docs.map(async (moduleDoc) => {
+    // Step 2: Map fetched data in memory without network delays
+    const lessonsByModule = {};
+    allLessonsSnapshot.forEach(docSnap => {
+        const lesson = { id: docSnap.id, ...docSnap.data() };
+        if (!lessonsByModule[lesson.moduleId]) lessonsByModule[lesson.moduleId] = [];
+        lessonsByModule[lesson.moduleId].push(lesson);
+    });
+
+    const examsByModule = {};
+    allExamsSnapshot.forEach(docSnap => {
+        const exam = { id: docSnap.id, ...docSnap.data() };
+        if (exam.moduleId) examsByModule[exam.moduleId] = exam;
+    });
+
+    let totalLessonsCount = 0;
+    let modulesHTML = "";
+
+    moduleSnapshot.docs.forEach(moduleDoc => {
         const module = moduleDoc.data();
         const locked = module.order > unlockedOrder;
+        const moduleLessons = lessonsByModule[moduleDoc.id] || [];
+        const exam = examsByModule[moduleDoc.id];
 
-        // Run lesson query and exam query simultaneously for this module
-        const [lessonSnapshot, examSnapshot] = await Promise.all([
-            getDocs(query(collection(db, "lessons"), where("moduleId", "==", moduleDoc.id), orderBy("order"))),
-            getDocs(query(collection(db, "exams"), where("courseId", "==", courseId), where("moduleId", "==", moduleDoc.id), limit(1)))
-        ]);
+        totalLessonsCount += moduleLessons.length;
 
         let lessonsHTML = "";
         let examHTML = "";
 
         if (locked) {
-            lessonSnapshot.forEach(docSnap => {
-                const lesson = docSnap.data();
+            moduleLessons.forEach(lesson => {
                 lessonsHTML += `
                     <a href="#" class="lesson-item locked">
                         <div class="lesson-info"><i class="fa-solid fa-lock"></i><span>${lesson.title}</span></div>
@@ -344,39 +241,29 @@ async function loadModules() {
                     <div class="assessment-btn disabled">Locked</div>
                 </div>`;
         } else {
-            let lessonIndex = 1;
-            lessonSnapshot.forEach(docSnap => {
-                const lesson = docSnap.data();
-                const lessonLocked = lessonIndex === 1 ? false : !completedLessons.has(lessonSnapshot.docs[lessonIndex - 2].id);
+            moduleLessons.forEach((lesson, index) => {
+                const lessonLocked = index === 0 ? false : !completedLessons.has(moduleLessons[index - 1].id);
 
                 lessonsHTML += `
-                    <a href="${lessonLocked ? "#" : `lesson.html?id=${docSnap.id}`}" class="lesson-item ${lessonLocked ? "locked" : ""}">
+                    <a href="${lessonLocked ? "#" : `lesson.html?id=${lesson.id}`}" class="lesson-item ${lessonLocked ? "locked" : ""}">
                         <div class="lesson-info">
                             <i class="fa-solid ${lessonLocked ? "fa-lock" : "fa-circle-play"}"></i>
                             <span>${lesson.title}</span>
                         </div>
                         ${lessonLocked ? '<span class="lesson-lock">Locked</span>' : '<i class="fa-solid fa-chevron-right"></i>'}
                     </a>`;
-                lessonIndex++;
             });
 
-            const allLessonsCompleted = lessonSnapshot.docs.every(doc => completedLessons.has(doc.id));
+            const allLessonsCompleted = moduleLessons.length > 0 && moduleLessons.every(lesson => completedLessons.has(lesson.id));
 
-            if (!examSnapshot.empty) {
-                const exam = examSnapshot.docs[0];
-                const examData = exam.data();
-
-                const attemptSnapshot = await getDocs(
-                    query(collection(db, "examAttempts"), where("studentId", "==", auth.currentUser.uid), where("examId", "==", exam.id), where("passed", "==", true), limit(1))
-                );
-
-                if (!attemptSnapshot.empty) {
-                    const attempt = attemptSnapshot.docs[0].data();
+            if (exam) {
+                if (passedExamIds.has(exam.id)) {
+                    const attempt = passedExamData[exam.id];
                     examHTML = `
                         <div class="assessment-card passed">
                             <div class="assessment-icon"><i class="fa-solid fa-circle-check"></i></div>
                             <div class="assessment-content">
-                                <h4>${examData.title}</h4>
+                                <h4>${exam.title}</h4>
                                 <p>Score: ${attempt.score}/${attempt.totalMarks} (${attempt.percentage}%)<br><strong style="color:#16a34a;">✅ Passed</strong></p>
                             </div>
                         </div>`;
@@ -385,7 +272,7 @@ async function loadModules() {
                         <div class="assessment-card">
                             <div class="assessment-icon"><i class="fa-solid fa-file-circle-question"></i></div>
                             <div class="assessment-content">
-                                <h4>${examData.title}</h4>
+                                <h4>${exam.title}</h4>
                                 <p>Complete this Exam to unlock the next Module.</p>
                             </div>
                             <a href="start-assessment.html?id=${exam.id}&courseId=${courseId}" class="assessment-btn">Start Exam</a>
@@ -401,52 +288,40 @@ async function loadModules() {
             }
         }
 
-        return {
-            order: module.order,
-            totalLessons: lessonSnapshot.size,
-            html: `
-                <div class="module-card">
-                    <div class="module-header">
-                        <div class="module-title">
-                            ${module.order}. ${module.title}
-                            ${locked ? '<span class="module-lock"><i class="fa-solid fa-lock"></i> Locked</span>' : ""}
-                        </div>
-                        <i class="fa-solid fa-chevron-down"></i>
+        modulesHTML += `
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-title">
+                        ${module.order}. ${module.title}
+                        ${locked ? '<span class="module-lock"><i class="fa-solid fa-lock"></i> Locked</span>' : ""}
                     </div>
-                    <div class="lesson-list show">
-                        ${lessonsHTML}
-                        ${examHTML}
-                    </div>
-                </div>`
-        };
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="lesson-list show">
+                    ${lessonsHTML}
+                    ${examHTML}
+                </div>
+            </div>`;
     });
 
-    // Resolve all module queries at once
-    const processedModules = await Promise.all(modulePromises);
+    moduleList.innerHTML = modulesHTML;
 
-    // Render HTML sorted by module order
-    let totalLessons = 0;
-    processedModules.sort((a, b) => a.order - b.order).forEach(m => {
-        totalLessons += m.totalLessons;
-        moduleList.innerHTML += m.html;
-    });
-
-    // Update UI counters
+    // Update UI Counters
     moduleCount.textContent = totalModules;
-    lessonCountCard.textContent = totalLessons;
-    lessonCount.textContent = totalLessons;
+    lessonCountCard.textContent = totalLessonsCount;
+    lessonCount.textContent = totalLessonsCount;
 
     const completedLessonCount = lessonProgressSnapshot.docs.filter(
-        doc => doc.data().courseId === courseId && doc.data().completed === true
+        doc => doc.data().completed === true
     ).length;
 
-    const percentage = totalLessons > 0 ? Math.round((completedLessonCount / totalLessons) * 100) : 0;
+    const percentage = totalLessonsCount > 0 ? Math.round((completedLessonCount / totalLessonsCount) * 100) : 0;
     progressText.textContent = `${percentage}%`;
     overallProgress.textContent = `${percentage}%`;
     overallProgressBar.style.width = `${percentage}%`;
 
     document.getElementById("completedLessons").textContent = completedLessonCount;
-    document.getElementById("lessonCountProgress").textContent = totalLessons;
+    document.getElementById("lessonCountProgress").textContent = totalLessonsCount;
 
     document.querySelectorAll(".module-header").forEach(header => {
         header.addEventListener("click", () => {
@@ -458,418 +333,169 @@ async function loadModules() {
 }
 
 async function loadCertificateStatus(studentId) {
-
     const snapshot = await getDocs(
-
         query(
-
             collection(db, "certificates"),
-
             where("studentId", "==", studentId),
-
             where("courseId", "==", courseId)
-
         )
-
     );
 
     if (snapshot.empty) {
-
         certificateStatus.textContent = "Locked";
-
         return;
-
     }
 
     certificateStatus.innerHTML = `
-<a href="certificate-view.html?courseId=${courseId}">
-    View Certificate
-</a>
-`;
-
+        <a href="certificate-view.html?courseId=${courseId}">
+            View Certificate
+        </a>
+    `;
 }
 
 /* ==========================================================================
    LOAD FINAL EXAM
    ========================================================================== */
 
-async function loadFinalExam(){
-
+async function loadFinalExam() {
     finalExamContainer.innerHTML = "";
 
-    const finalExamSnapshot = await getDocs(
-
-        query(
+    const [finalExamSnapshot, moduleSnapshot] = await Promise.all([
+        getDocs(query(
             collection(db, "exams"),
             where("courseId", "==", courseId),
             where("type", "==", "final"),
             limit(1)
-        )
-
-    );
-
-    if(finalExamSnapshot.empty){
-
-        return;
-
-    }
-
-    const finalExamDoc =
-        finalExamSnapshot.docs[0];
-
-    const finalExam =
-        finalExamDoc.data();
-
-
-    /* ==========================================================
-       CHECK ALL MODULE EXAMS
-       ========================================================== */
-
-    const moduleSnapshot = await getDocs(
-
-        query(
+        )),
+        getDocs(query(
             collection(db, "modules"),
             where("courseId", "==", courseId)
-        )
+        ))
+    ]);
 
-    );
-
-    const moduleExamPromises =
-        moduleSnapshot.docs.map(async moduleDoc => {
-
-            const examSnapshot = await getDocs(
-
-                query(
-                    collection(db, "exams"),
-                    where("courseId", "==", courseId),
-                    where("moduleId", "==", moduleDoc.id),
-                    where("type", "==", "module"),
-                    limit(1)
-                )
-
-            );
-
-            if(examSnapshot.empty){
-
-                return false;
-
-            }
-
-            const examDoc =
-                examSnapshot.docs[0];
-
-            const attemptSnapshot =
-                await getDocs(
-
-                    query(
-                        collection(db, "examAttempts"),
-                        where(
-                            "studentId",
-                            "==",
-                            auth.currentUser.uid
-                        ),
-                        where(
-                            "examId",
-                            "==",
-                            examDoc.id
-                        ),
-                        where(
-                            "passed",
-                            "==",
-                            true
-                        ),
-                        limit(1)
-                    )
-
-                );
-
-            return !attemptSnapshot.empty;
-
-        });
-
-
-    const moduleExamResults =
-        await Promise.all(moduleExamPromises);
-
-
-    const modulesCompleted =
-        moduleExamResults.length === moduleSnapshot.size &&
-        moduleExamResults.every(
-            passed => passed === true
-        );
-
-
-    /* ==========================================================
-       FINAL EXAM ATTEMPT
-       ========================================================== */
-
-    const attemptSnapshot = await getDocs(
-
-        query(
-            collection(db, "examAttempts"),
-            where(
-                "studentId",
-                "==",
-                auth.currentUser.uid
-            ),
-            where(
-                "examId",
-                "==",
-                finalExamDoc.id
-            ),
-            where(
-                "passed",
-                "==",
-                true
-            ),
-            limit(1)
-        )
-
-    );
-
-
-    /* ==========================================================
-       FINAL EXAM ALREADY PASSED
-       ========================================================== */
-
-    if(!attemptSnapshot.empty){
-
-        const attempt =
-            attemptSnapshot.docs[0].data();
-
-        finalExamContainer.innerHTML = `
-
-            <div class="assessment-card passed">
-
-                <div class="assessment-icon">
-
-                    <i class="fa-solid fa-graduation-cap"></i>
-
-                </div>
-
-                <div class="assessment-content">
-
-                    <h4>
-                        ${finalExam.title}
-                    </h4>
-
-                    <p>
-
-                        Score:
-                        ${attempt.score}/${attempt.totalMarks}
-
-                        (${attempt.percentage}%)
-
-                        <br>
-
-                        <strong style="color:#16a34a;">
-
-                            ✅ Final Exam Passed
-
-                        </strong>
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        `;
-
+    if (finalExamSnapshot.empty) {
         return;
-
     }
 
-
-    /* ==========================================================
-       ALL MODULE EXAMS PASSED
-       ========================================================== */
-
-    if(modulesCompleted){
-
-        finalExamContainer.innerHTML = `
-
-            <div class="assessment-card">
-
-                <div class="assessment-icon">
-
-                    <i class="fa-solid fa-graduation-cap"></i>
-
-                </div>
-
-                <div class="assessment-content">
-
-                    <h4>
-                        ${finalExam.title}
-                    </h4>
-
-                    <p>
-
-                        Complete the Final Exam to complete
-                        your course.
-
-                    </p>
-
-                </div>
-
-                <a
-                    href="start-assessment.html?id=${finalExamDoc.id}&courseId=${courseId}"
-                    class="assessment-btn"
-                >
-
-                    Start Final Exam
-
-                </a>
-
-            </div>
-
-        `;
-
-    }
-
-    else{
-
-        /* ======================================================
-           MODULE EXAMS NOT ALL PASSED
-           ====================================================== */
-
-        finalExamContainer.innerHTML = `
-
-            <div class="assessment-card locked">
-
-                <div class="assessment-icon">
-
-                    <i class="fa-solid fa-lock"></i>
-
-                </div>
-
-                <div class="assessment-content">
-
-                    <h4>
-
-                        Final Certification Exam
-
-                    </h4>
-
-                    <p>
-
-                        Complete all Module Exams to unlock
-                        the Final Exam.
-
-                    </p>
-
-                </div>
-
-                <div class="assessment-btn disabled">
-
-                    Locked
-
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-/* ==========================================================================
-   LOGOUT
-   ========================================================================== */
-
-logoutBtn.addEventListener(
-
-    "click",
-
-    async event=>{
-
-        event.preventDefault();
-
-        await signOut(auth);
-
-        location.href="login.html";
-
-    }
-
-);
-
-/* ==========================================================================
-   LOADER
-   ========================================================================== */
-
-function showLoader(){
-
-    loader.classList.remove(
-
-        "hidden"
-
-    );
-
-}
-
-function hideLoader(){
-
-    loader.classList.add(
-
-        "hidden"
-
-    );
-
-}
-
-/* ==========================================================================
-   TOAST
-   ========================================================================== */
-
-function showToast(
-
-    message,
-
-    type="success"
-
-){
-
-    const toast =
-
-        document.createElement(
-
-            "div"
-
+    const finalExamDoc = finalExamSnapshot.docs[0];
+    const finalExam = finalExamDoc.data();
+
+    const moduleExamPromises = moduleSnapshot.docs.map(async moduleDoc => {
+        const examSnapshot = await getDocs(
+            query(
+                collection(db, "exams"),
+                where("courseId", "==", courseId),
+                where("moduleId", "==", moduleDoc.id),
+                where("type", "==", "module"),
+                limit(1)
+            )
         );
 
-    toast.className =
+        if (examSnapshot.empty) {
+            return false;
+        }
 
-        `toast ${type}`;
+        const examDoc = examSnapshot.docs[0];
 
-    toast.textContent =
-
-        message;
-
-    toastContainer.appendChild(
-
-        toast
-
-    );
-
-    requestAnimationFrame(()=>{
-
-        toast.classList.add(
-
-            "show"
-
+        const attemptSnapshot = await getDocs(
+            query(
+                collection(db, "examAttempts"),
+                where("studentId", "==", auth.currentUser.uid),
+                where("examId", "==", examDoc.id),
+                where("passed", "==", true),
+                limit(1)
+            )
         );
 
+        return !attemptSnapshot.empty;
     });
 
-    setTimeout(()=>{
+    const [moduleExamResults, attemptSnapshot] = await Promise.all([
+        Promise.all(moduleExamPromises),
+        getDocs(query(
+            collection(db, "examAttempts"),
+            where("studentId", "==", auth.currentUser.uid),
+            where("examId", "==", finalExamDoc.id),
+            where("passed", "==", true),
+            limit(1)
+        ))
+    ]);
 
-        toast.remove();
+    const modulesCompleted = moduleExamResults.length === moduleSnapshot.size &&
+        moduleExamResults.every(passed => passed === true);
 
-    },3000);
+    if (!attemptSnapshot.empty) {
+        const attempt = attemptSnapshot.docs[0].data();
 
+        finalExamContainer.innerHTML = `
+            <div class="assessment-card passed">
+                <div class="assessment-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="assessment-content">
+                    <h4>${finalExam.title}</h4>
+                    <p>
+                        Score: ${attempt.score}/${attempt.totalMarks} (${attempt.percentage}%)
+                        <br>
+                        <strong style="color:#16a34a;">✅ Final Exam Passed</strong>
+                    </p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    if (modulesCompleted) {
+        finalExamContainer.innerHTML = `
+            <div class="assessment-card">
+                <div class="assessment-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="assessment-content">
+                    <h4>${finalExam.title}</h4>
+                    <p>Complete the Final Exam to complete your course.</p>
+                </div>
+                <a href="start-assessment.html?id=${finalExamDoc.id}&courseId=${courseId}" class="assessment-btn">
+                    Start Final Exam
+                </a>
+            </div>
+        `;
+    } else {
+        finalExamContainer.innerHTML = `
+            <div class="assessment-card locked">
+                <div class="assessment-icon">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="assessment-content">
+                    <h4>Final Certification Exam</h4>
+                    <p>Complete all Module Exams to unlock the Final Exam.</p>
+                </div>
+                <div class="assessment-btn disabled">
+                    Locked
+                </div>
+            </div>
+        `;
+    }
 }
 
 /* ==========================================================================
-   END
+   LOGOUT & HELPERS
    ========================================================================== */
+
+logoutBtn.addEventListener("click", async event => {
+    event.preventDefault();
+    await signOut(auth);
+    location.href = "login.html";
+});
+
+function showLoader() { loader.classList.remove("hidden"); }
+function hideLoader() { loader.classList.add("hidden"); }
+
+function showToast(message, type = "success") {
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add("show"));
+    setTimeout(() => toast.remove(), 3000);
+}
