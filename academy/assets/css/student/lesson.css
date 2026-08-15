@@ -408,21 +408,6 @@
     }
 }
 
-/* Reduce Course Progress size on mobile */
-@media (max-width: 768px) {
-    .progress-card {
-        padding: 14px 16px; /* Tightens card padding */
-    }
-
-    .progress-header h3 {
-        font-size: 18px; /* Reduced from 30px */
-    }
-
-    .progress-header span {
-        font-size: 16px; /* Slightly reduces percentage text */
-    }
-}
-
 /* ==========================================================
    PLYR WATERMARK OVERLAY (ISSA Academy Branding)
    ========================================================== */
