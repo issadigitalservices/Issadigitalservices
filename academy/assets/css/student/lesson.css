@@ -467,3 +467,23 @@
         height: 6px;
     }
 }
+
+/* ==========================================================
+   LOCKED LESSON & MODULE STYLING
+   ========================================================== */
+
+/* Red color for the lock icon and text */
+.text-locked {
+    color: #ef4444 !important; /* Vivid Red */
+    font-weight: 600;
+}
+
+/* Red styling for the Module Exam "Locked" button box */
+.badge-locked {
+    background-color: #fee2e2 !important; /* Soft Red Background */
+    color: #991b1b !important;             /* Dark Red Text */
+    border: 1px solid #fca5a5 !important;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+}
