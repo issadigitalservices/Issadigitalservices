@@ -14,8 +14,7 @@ import {
     sendEmailVerification,
     signOut,
     setPersistence,
-    browserLocalPersistence,
-    browserSessionPersistence
+    browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 /* ==========================================================================
@@ -25,7 +24,6 @@ import {
 const form = document.getElementById("loginForm");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
-const rememberMe = document.getElementById("rememberMe");
 const togglePassword = document.getElementById("togglePassword");
 const loader = document.getElementById("pageLoader");
 const toastContainer = document.getElementById("toastContainer");
@@ -63,12 +61,7 @@ form.addEventListener("submit", async event => {
 
     try {
         // Set persistence based on "Remember Me" checkbox
-        await setPersistence(
-            auth,
-            rememberMe && rememberMe.checked
-                ? browserLocalPersistence
-                : browserSessionPersistence
-        );
+        await setPersistence(auth, browserLocalPersistence);
 
         // Authenticate User
         const userCredential = await signInWithEmailAndPassword(
