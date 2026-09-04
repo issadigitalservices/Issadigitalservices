@@ -687,45 +687,51 @@
 }
 
 /* ==========================================================
-   FIX FOR LOCKED LESSONS & EXAMS (STUDENT COURSE)
+   TARGETED RED COLOR FOR "LOCKED" STATUS TEXT ONLY
    ========================================================== */
 
-/* 1. Turns all locked lesson links red (icon & text) */
-.lesson-item.locked,
-.lesson-item.locked * {
+/* 1. Only the "Locked" text badge on the right side of a lesson */
+.lesson-item.locked .lesson-lock,
+.lesson-item.locked .badge.locked {
     color: #ef4444 !important; /* Vivid Red */
-}
-
-/* 2. Style the "Locked" text badge on the right of a lesson */
-.lesson-item.locked .lesson-lock {
-    color: #ef4444 !important;
     font-weight: 600;
 }
 
-/* 3. Style the "Locked" status inside Module Headers */
+/* 2. Only the "Locked" status text inside Module Headers */
 .module-lock,
 .module-lock i {
     color: #ef4444 !important;
     font-weight: 600;
-    margin-left: 8px;
 }
 
-/* 4. Style the "Locked" Assessment Cards (Module & Final Exams) */
+/* 3. Revert locked lesson links & icons back to blue */
+.lesson-item.locked a,
+.lesson-item.locked .lesson-info span,
+.lesson-item.locked .lesson-info i {
+    color: #2563eb !important;
+}
+
+/* 4. Revert Exam Card background & titles to default styling */
 .assessment-card.locked {
-    border-color: #fca5a5 !important;
-    background-color: #fef2f2 !important;
+    background-color: #F8FAFC !important;
+    border-color: #E5E7EB !important;
 }
 
-.assessment-card.locked .assessment-icon i,
-.assessment-card.locked h4 {
-    color: #dc2626 !important;
+.assessment-card.locked .assessment-icon {
+    background-color: #DBEAFE !important;
+    color: #2563EB !important;
 }
 
-/* 5. Style the Disabled "Locked" Button */
+.assessment-card.locked .assessment-content h4 {
+    color: #111827 !important;
+}
+
+/* 5. Only the "Locked" text inside the disabled exam button turns red */
 .assessment-card.locked .assessment-btn.disabled {
-    background-color: #fee2e2 !important;
-    color: #991b1b !important;
-    border: 1px solid #fca5a5 !important;
+    background-color: #f3f4f6 !important;
+    color: #ef4444 !important; /* Red Text */
+    border: 1px solid #e5e7eb !important;
+    font-weight: 600;
     cursor: not-allowed;
-    opacity: 1; /* Overrides default browser opacity fade */
+    opacity: 1;
 }
