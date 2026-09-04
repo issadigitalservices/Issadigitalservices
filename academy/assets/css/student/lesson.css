@@ -469,21 +469,45 @@
 }
 
 /* ==========================================================
-   LOCKED LESSON & MODULE STYLING
+   FIX FOR LOCKED LESSONS & EXAMS (STUDENT COURSE)
    ========================================================== */
 
-/* Red color for the lock icon and text */
-.text-locked {
+/* 1. Turns all locked lesson links red (icon & text) */
+.lesson-item.locked,
+.lesson-item.locked * {
     color: #ef4444 !important; /* Vivid Red */
+}
+
+/* 2. Style the "Locked" text badge on the right of a lesson */
+.lesson-item.locked .lesson-lock {
+    color: #ef4444 !important;
     font-weight: 600;
 }
 
-/* Red styling for the Module Exam "Locked" button box */
-.badge-locked {
-    background-color: #fee2e2 !important; /* Soft Red Background */
-    color: #991b1b !important;             /* Dark Red Text */
-    border: 1px solid #fca5a5 !important;
-    padding: 6px 16px;
-    border-radius: 8px;
+/* 3. Style the "Locked" status inside Module Headers */
+.module-lock,
+.module-lock i {
+    color: #ef4444 !important;
     font-weight: 600;
+    margin-left: 8px;
+}
+
+/* 4. Style the "Locked" Assessment Cards (Module & Final Exams) */
+.assessment-card.locked {
+    border-color: #fca5a5 !important;
+    background-color: #fef2f2 !important;
+}
+
+.assessment-card.locked .assessment-icon i,
+.assessment-card.locked h4 {
+    color: #dc2626 !important;
+}
+
+/* 5. Style the Disabled "Locked" Button */
+.assessment-card.locked .assessment-btn.disabled {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    border: 1px solid #fca5a5 !important;
+    cursor: not-allowed;
+    opacity: 1; /* Overrides default browser opacity fade */
 }
