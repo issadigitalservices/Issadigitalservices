@@ -117,7 +117,7 @@ async function loadLesson() {
     lessonTitle.textContent = lesson.title;
     lessonDescription.textContent = lesson.description || "";
 
-    // 2. Prepare Video Worker Task (Runs completely in background without blocking DOM/UI)
+    // 2. Prepare Video Worker Task (With Auto-Recovery & Token Refresh)
     const videoTask = (async () => {
         if (!lesson.videoUrl) return;
 
@@ -133,23 +133,28 @@ async function loadLesson() {
                 } catch (e) {}
             }
 
-            const idToken = await currentUser.getIdToken();
-            const sessionResponse = await fetch("https://video.issadigitalservices.com/video-session", {
-                method: "POST",
-                credentials: "omit",
-                headers: {
-                    "Authorization": `Bearer ${idToken}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ courseId: lesson.courseId, videoKey: videoKey })
-            });
+            // Helper function to fetch a fresh video stream URL token
+            async function getStreamUrl() {
+                const idToken = await currentUser.getIdToken(true); // Force refresh ID token
+                const sessionResponse = await fetch("https://video.issadigitalservices.com/video-session", {
+                    method: "POST",
+                    credentials: "omit",
+                    headers: {
+                        "Authorization": `Bearer ${idToken}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ courseId: lesson.courseId, videoKey: videoKey })
+                });
 
-            const sessionData = await sessionResponse.json();
-            if (!sessionResponse.ok || !sessionData.success || !sessionData.token) {
-                throw new Error(sessionData.message || "Unable to secure video.");
+                const sessionData = await sessionResponse.json();
+                if (!sessionResponse.ok || !sessionData.success || !sessionData.token) {
+                    throw new Error(sessionData.message || "Unable to secure video.");
+                }
+
+                return `https://video.issadigitalservices.com/video?token=${encodeURIComponent(sessionData.token)}`;
             }
 
-            const protectedVideoUrl = `https://video.issadigitalservices.com/video?token=${encodeURIComponent(sessionData.token)}`;
+            const protectedVideoUrl = await getStreamUrl();
             lessonVideo.crossOrigin = "anonymous";
 
             if (!player) {
@@ -165,6 +170,34 @@ async function loadLesson() {
                 type: "video",
                 sources: [{ src: protectedVideoUrl, type: "video/mp4" }]
             };
+
+            // Stream Stall & Error Auto-Recovery Handler
+            async function recoverPlayback() {
+                if (!player || player.paused) return;
+                
+                const currentTime = player.currentTime || 0;
+                console.warn("Stream stalled or token expired. Recovering playback at:", currentTime);
+
+                try {
+                    // Get fresh token & refresh source stream
+                    const freshUrl = await getStreamUrl();
+                    player.source = {
+                        type: "video",
+                        sources: [{ src: freshUrl, type: "video/mp4" }]
+                    };
+
+                    player.once("canplay", () => {
+                        player.currentTime = currentTime;
+                        player.play().catch(e => console.error("Auto-resume failed:", e));
+                    });
+                } catch (err) {
+                    console.error("Failed to recover video session:", err);
+                }
+            }
+
+            // Attach auto-recovery listeners to video element
+            lessonVideo.onerror = recoverPlayback;
+            lessonVideo.onstalled = recoverPlayback;
 
             player.off("ready");
             player.on("ready", () => {
