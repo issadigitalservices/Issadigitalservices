@@ -91,7 +91,7 @@ onAuthStateChanged(
 );
 
 /* ==========================================================================
-   LOAD LESSON (FULLY OPTIMIZED WITHOUT CHANGING LOGIC)
+   LOAD LESSON (FULLY OPTIMIZED WITH PLYR AUTO-RECOVERY)
    ========================================================================== */
 
 async function loadLesson() {
@@ -117,7 +117,7 @@ async function loadLesson() {
     lessonTitle.textContent = lesson.title;
     lessonDescription.textContent = lesson.description || "";
 
-    // 2. Prepare Video Worker Task (With Auto-Recovery & Token Refresh)
+    // 2. Prepare Video Worker Task
     const videoTask = (async () => {
         if (!lesson.videoUrl) return;
 
@@ -171,15 +171,16 @@ async function loadLesson() {
                 sources: [{ src: protectedVideoUrl, type: "video/mp4" }]
             };
 
-            // Stream Stall & Error Auto-Recovery Handler
+            // Stream Recovery Handler using Plyr Instance
+            let isRecovering = false;
             async function recoverPlayback() {
-                if (!player || player.paused) return;
-                
-                const currentTime = player.currentTime || 0;
-                console.warn("Stream stalled or token expired. Recovering playback at:", currentTime);
+                if (isRecovering || !player) return;
+                isRecovering = true;
+
+                const savedTime = player.currentTime || 0;
+                console.warn("Plyr stalled or stream dropped. Recovering at:", savedTime);
 
                 try {
-                    // Get fresh token & refresh source stream
                     const freshUrl = await getStreamUrl();
                     player.source = {
                         type: "video",
@@ -187,17 +188,38 @@ async function loadLesson() {
                     };
 
                     player.once("canplay", () => {
-                        player.currentTime = currentTime;
-                        player.play().catch(e => console.error("Auto-resume failed:", e));
+                        player.currentTime = savedTime;
+                        player.play().catch(e => console.error("Resume failed:", e));
+                        isRecovering = false;
                     });
                 } catch (err) {
                     console.error("Failed to recover video session:", err);
+                    isRecovering = false;
                 }
             }
 
-            // Attach auto-recovery listeners to video element
-            lessonVideo.onerror = recoverPlayback;
-            lessonVideo.onstalled = recoverPlayback;
+            // Attach native event listeners directly to PLYR instance
+            player.off("error");
+            player.off("stalled");
+            player.off("waiting");
+
+            player.on("error", recoverPlayback);
+            player.on("stalled", recoverPlayback);
+
+            // Auto-recovery if video is stuck in 'waiting' buffer state > 4s
+            let waitingTimer = null;
+            player.on("waiting", () => {
+                clearTimeout(waitingTimer);
+                waitingTimer = setTimeout(() => {
+                    if (player && !player.paused) {
+                        recoverPlayback();
+                    }
+                }, 4000);
+            });
+
+            player.on("playing", () => {
+                clearTimeout(waitingTimer);
+            });
 
             player.off("ready");
             player.on("ready", () => {
