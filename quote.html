@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get a quote from ISSA Digital Services for CV creation, Excel training, LinkedIn profile setup, cover letters and digital services.">
+  <title>Get a Quote | ISSA Digital Services</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:#f5f7fb;
+      color:#172033;
+      line-height:1.5;
+    }
+    .wrap{max-width:760px;margin:0 auto;padding:24px 16px 50px}
+    .card{
+      background:#fff;border-radius:22px;padding:28px;
+      box-shadow:0 10px 35px rgba(0,0,0,.08);
+    }
+    .brand{text-align:center;margin-bottom:24px}
+    .brand h1{font-size:28px;color:#102d63;margin-bottom:5px}
+    .brand p{color:#667085;font-size:14px}
+    .badge{
+      display:inline-block;margin-bottom:12px;padding:6px 12px;
+      border-radius:999px;background:#eef3ff;color:#2454b8;
+      font-size:12px;font-weight:700;
+    }
+    h2{font-size:22px;margin-bottom:6px}
+    .intro{color:#667085;font-size:14px;margin-bottom:22px}
+    label{display:block;font-size:14px;font-weight:700;margin:16px 0 7px}
+    input,select,textarea{
+      width:100%;padding:13px 14px;border:1px solid #d8dee9;
+      border-radius:11px;font-size:15px;background:#fff;outline:none;
+    }
+    input:focus,select:focus,textarea:focus{border-color:#2454b8;box-shadow:0 0 0 3px rgba(36,84,184,.10)}
+    textarea{min-height:105px;resize:vertical}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .services{
+      display:grid;grid-template-columns:1fr 1fr;gap:10px;
+      margin-top:8px;
+    }
+    .service{
+      position:relative;border:1px solid #d8dee9;border-radius:11px;
+      padding:12px 12px 12px 40px;font-size:14px;cursor:pointer;
+      transition:.15s;
+    }
+    .service input{position:absolute;width:auto;left:14px;top:15px}
+    .service:has(input:checked){border-color:#2454b8;background:#f3f6ff}
+    .note{
+      margin-top:18px;padding:12px 14px;background:#f8f9fc;
+      border-radius:11px;color:#667085;font-size:12px;
+    }
+    button{
+      width:100%;border:0;border-radius:12px;padding:14px;margin-top:20px;
+      background:#102d63;color:#fff;font-size:16px;font-weight:700;cursor:pointer;
+    }
+    button:hover{background:#0b234d}
+    .footer{text-align:center;color:#8a94a6;font-size:12px;margin-top:18px}
+    @media(max-width:560px){
+      .grid,.services{grid-template-columns:1fr}
+      .card{padding:22px 17px}
+      .brand h1{font-size:24px}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="brand">
+        <span class="badge">ISSA DIGITAL SERVICES</span>
+        <h1>Get a Quote</h1>
+        <p>Professional Digital & Career Services</p>
+      </div>
+
+      <h2>Tell us what you need</h2>
+      <p class="intro">Fill in the details below. We'll review your request and contact you with the next steps.</p>
+
+      <form id="quoteForm">
+        <div class="grid">
+          <div>
+            <label for="name">Full Name *</label>
+            <input id="name" name="name" type="text" placeholder="Your full name" required>
+          </div>
+          <div>
+            <label for="phone">WhatsApp / Phone *</label>
+            <input id="phone" name="phone" type="tel" placeholder="+91 / +966..." required>
+          </div>
+        </div>
+
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" placeholder="yourname@email.com">
+
+        <label>Service Required *</label>
+        <div class="services">
+          <label class="service"><input type="checkbox" name="service" value="Excel Training"> Excel Training</label>
+            <label class="service"><input type="checkbox" name="service" value="ATS Friendly CV"> ATS Friendly CV</label>
+          <label class="service"><input type="checkbox" name="service" value="Professional CV"> Professional CV</label>
+          <label class="service"><input type="checkbox" name="service" value="Cover Letter"> Cover Letter</label>
+          <label class="service"><input type="checkbox" name="service" value="LinkedIn Profile"> LinkedIn Profile</label>
+          <label class="service"><input type="checkbox" name="service" value="Other Digital Service"> Other Digital Service</label>
+        </div>
+
+
+        <label for="message">Additional Details</label>
+        <textarea id="message" name="message" placeholder="Tell us briefly about your requirement..."></textarea>
+
+        <div class="note">
+          Your request will open WhatsApp with the details you entered. Please check the information before sending.
+        </div>
+
+        <button type="submit">Get My Quote →</button>
+      </form>
+
+      <div class="footer">© ISSA Digital Services | ISSA Academy</div>
+    </section>
+  </main>
+
+  <script>
+    const WHATSAPP_NUMBER = "919746431460"; // Replace with your ISSA WhatsApp number
+
+    document.getElementById("quoteForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const services = [...document.querySelectorAll('input[name="service"]:checked')]
+        .map(x => x.value);
+
+      if (!services.length) {
+        alert("Please select at least one service.");
+        return;
+      }
+
+      const text =
+`Hello ISSA Digital Services,
+
+I would like to get a quote.
+
+Name: ${name}
+WhatsApp/Phone: ${phone}
+Email: ${email || "Not provided"}
+Country: ${country || "Not provided"}
+Service: ${services.join(", ")}
+Details: ${message || "Not provided"}
+
+Please share the price and next steps.`;
+
+      window.open(
+        "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text),
+        "_blank"
+      );
+    });
+  </script>
+</body>
+</html>
