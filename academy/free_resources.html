@@ -11,7 +11,7 @@
 
     <meta
         name="description"
-        content="Free Excel, Word, CV, PowerPoint, PDF and other downloadable resources by ISSA Digital Services.">
+        content="Free Excel, Word, CV, PowerPoint, PDF and other useful resources by ISSA Digital Services.">
 
     <title>Free Resources | ISSA Digital Services</title>
 
@@ -19,15 +19,14 @@
         rel="icon"
         href="assets/images/Issa-Logo.png">
 
-    <!-- Main CSS -->
     <link
         rel="stylesheet"
         href="assets/css/main.css">
 
-    <!-- Font Awesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 
     <style>
 
@@ -93,7 +92,7 @@
 
             margin: 0 auto 14px;
 
-            max-width: 800px;
+            max-width: 850px;
 
             color: #0f172a;
 
@@ -113,7 +112,7 @@
 
         .resources-hero p {
 
-            max-width: 680px;
+            max-width: 720px;
 
             margin: 0 auto;
 
@@ -138,6 +137,250 @@
             );
 
             margin: 0 auto 70px;
+
+        }
+
+
+        /* =========================================================
+           PROMOTION SECTION
+           ========================================================= */
+
+        .issa-promo {
+
+            width: min(
+                1180px,
+                calc(100% - 32px)
+            );
+
+            margin: 0 auto 42px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
+            gap: 20px;
+
+        }
+
+
+        .promo-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 28px;
+
+            border-radius: 18px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            box-shadow:
+                0 10px 30px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.06
+                );
+
+        }
+
+
+        .promo-card.course {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff 0%,
+                    #ffffff 100%
+                );
+
+            border-color: #bfdbfe;
+
+        }
+
+
+        .promo-card.cv {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fafc 0%,
+                    #ffffff 100%
+                );
+
+        }
+
+
+        .promo-icon {
+
+            width: 50px;
+
+            height: 50px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 16px;
+
+            border-radius: 12px;
+
+            background: #2563eb;
+
+            color: #ffffff;
+
+            font-size: 21px;
+
+        }
+
+
+        .promo-card h2 {
+
+            margin: 0 0 9px;
+
+            color: #0f172a;
+
+            font-size: 22px;
+
+            line-height: 1.3;
+
+        }
+
+
+        .promo-card p {
+
+            margin: 0 0 18px;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.65;
+
+        }
+
+
+        .promo-points {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .promo-point {
+
+            padding: 6px 10px;
+
+            border-radius: 999px;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            color: #475569;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+        }
+
+
+        .promo-actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+        }
+
+
+        .promo-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 11px 16px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .promo-btn.primary {
+
+            background: #2563eb;
+
+            color: #ffffff;
+
+        }
+
+
+        .promo-btn.primary:hover {
+
+            background: #1d4ed8;
+
+            color: #ffffff;
+
+        }
+
+
+        .promo-btn.whatsapp {
+
+            background: #16a34a;
+
+            color: #ffffff;
+
+        }
+
+
+        .promo-btn.whatsapp:hover {
+
+            background: #15803d;
+
+            color: #ffffff;
+
+        }
+
+
+        .promo-note {
+
+            margin-top: 12px !important;
+
+            margin-bottom: 0 !important;
+
+            font-size: 12px !important;
+
+            color: #64748b !important;
 
         }
 
@@ -421,7 +664,7 @@
 
 
         /* =========================================================
-           LOADING
+           LOADING / EMPTY
            ========================================================= */
 
         .resources-message {
@@ -449,7 +692,7 @@
 
 
         /* =========================================================
-           FOOTER INFO
+           INFORMATION
            ========================================================= */
 
         .resources-note {
@@ -491,6 +734,12 @@
 
             }
 
+            .issa-promo {
+
+                grid-template-columns: 1fr;
+
+            }
+
         }
 
 
@@ -511,6 +760,25 @@
                     calc(
                         100% - 24px
                     );
+
+            }
+
+
+            .issa-promo {
+
+                width:
+                    calc(
+                        100% - 24px
+                    );
+
+                margin-bottom: 32px;
+
+            }
+
+
+            .promo-card {
+
+                padding: 22px;
 
             }
 
@@ -580,7 +848,7 @@
         <h1>
 
             Free Resources for
-            Your Learning & Work
+            Your Learning, Work & Career
 
         </h1>
 
@@ -588,9 +856,9 @@
         <p>
 
             Download practical Excel files,
-            Word templates, CV resources,
-            PDFs and other useful materials
-            from ISSA Digital Services.
+            Word templates, CV resources, PDFs
+            and other useful materials from
+            ISSA Digital Services.
 
         </p>
 
@@ -599,7 +867,173 @@
 
 
     <!-- =========================================================
-         RESOURCES
+         ISSA ACADEMY & CV SERVICES
+         ========================================================= -->
+
+    <section class="issa-promo">
+
+
+        <!-- =====================================================
+     EXCEL COURSE
+     ===================================================== -->
+
+<div class="promo-card course">
+
+    <div class="promo-icon">
+
+        <i class="fa-solid fa-file-excel"></i>
+
+    </div>
+
+
+    <h2>
+
+        ISSA Academy – Excel Basic to Advanced
+
+    </h2>
+
+
+    <p>
+
+        Learn Microsoft Excel from Basic to Advanced
+        with practical, job-focused lessons in Malayalam.
+        Build real-world Excel skills for office and
+        accounting work.
+
+    </p>
+
+
+    <div class="promo-points">
+
+        <span class="promo-point">
+            Basic to Advanced
+        </span>
+
+        <span class="promo-point">
+            Practical Training
+        </span>
+
+        <span class="promo-point">
+            Malayalam
+        </span>
+
+        <span class="promo-point">
+            Practice Files
+        </span>
+
+    </div>
+
+
+    <div class="promo-actions">
+
+        <a
+            href="https://wa.me/919746431460?text=Hi%20ISSA%20Digital%20Services%2C%20I%20am%20interested%20in%20the%20ISSA%20Academy%20Excel%20Basic%20to%20Advanced%20Course.%20Please%20share%20the%20course%20details."
+            class="promo-btn whatsapp"
+            target="_blank"
+            rel="noopener noreferrer">
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+            Enquire About Excel Course
+
+        </a>
+
+    </div>
+
+
+    <p class="promo-note">
+
+        WhatsApp:
+        +91 97464 31460
+
+    </p>
+
+</div>
+
+
+
+        <!-- =====================================================
+             CV SERVICES
+             ===================================================== -->
+
+        <div class="promo-card cv">
+
+            <div class="promo-icon">
+
+                <i class="fa-solid fa-file-user"></i>
+
+            </div>
+
+
+            <h2>
+
+                Professional CV Writing Services
+
+            </h2>
+
+
+            <p>
+
+                Get a professional CV prepared for your
+                job applications with both ATS-friendly
+                and professionally designed CV options.
+
+            </p>
+
+
+            <div class="promo-points">
+
+                <span class="promo-point">
+                    ATS Friendly CV
+                </span>
+
+                <span class="promo-point">
+                    Designed CV
+                </span>
+
+                <span class="promo-point">
+                    Professional Format
+                </span>
+
+                <span class="promo-point">
+                    Job Application Ready
+                </span>
+
+            </div>
+
+
+            <div class="promo-actions">
+
+                <a
+                    href="https://wa.me/919746431460?text=Hi%20ISSA%20Digital%20Services%2C%20I%20am%20interested%20in%20your%20CV%20Writing%20Services."
+                    class="promo-btn whatsapp"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    WhatsApp Us
+
+                </a>
+
+            </div>
+
+
+            <p class="promo-note">
+
+                WhatsApp:
+                +91 97464 31460
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         FREE RESOURCES
          ========================================================= -->
 
     <main class="resources-container">
@@ -610,6 +1044,7 @@
         <div
             class="category-wrapper"
             id="categoryFilters">
+
 
             <button
                 class="category-btn active"
@@ -625,6 +1060,7 @@
                 data-category="Excel">
 
                 <i class="fa-solid fa-file-excel"></i>
+
                 Excel
 
             </button>
@@ -635,6 +1071,7 @@
                 data-category="Word">
 
                 <i class="fa-solid fa-file-word"></i>
+
                 Word
 
             </button>
@@ -644,7 +1081,8 @@
                 class="category-btn"
                 data-category="CV">
 
-                <i class="fa-solid fa-file-user"></i>
+                <i class="fa-solid fa-file-lines"></i>
+
                 CV / Resume
 
             </button>
@@ -655,6 +1093,7 @@
                 data-category="PowerPoint">
 
                 <i class="fa-solid fa-file-powerpoint"></i>
+
                 PowerPoint
 
             </button>
@@ -665,6 +1104,7 @@
                 data-category="PDF">
 
                 <i class="fa-solid fa-file-pdf"></i>
+
                 PDF
 
             </button>
@@ -675,6 +1115,7 @@
                 data-category="Images">
 
                 <i class="fa-solid fa-image"></i>
+
                 Images
 
             </button>
@@ -685,6 +1126,7 @@
                 data-category="Other">
 
                 <i class="fa-solid fa-folder"></i>
+
                 Other
 
             </button>
@@ -722,14 +1164,15 @@
                 class="fa-solid fa-circle-info">
             </i>
 
-            New practice files, templates and
-            useful resources will be added regularly.
+            New practice files, templates and useful
+            resources will be added regularly.
 
         </div>
 
     </main>
 
 </div>
+
 
 
 <!-- =========================================================
