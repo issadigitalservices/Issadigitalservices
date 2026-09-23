@@ -68,14 +68,22 @@ if (sidebar) {
                 <i class="fa-solid fa-award"></i>
                 <a href="certificates.html">Certificates</a>
             </li>
-            <li class="${currentPage === "settings.html" ? "active" : ""}">
-                <i class="fa-solid fa-gear"></i>
-                <a href="settings.html">Settings</a>
-            </li>
+
+            <li class="${currentPage === "resources.html" ? "active" : ""}">
+    <i class="fa-solid fa-folder-open"></i>
+    <a href="resources.html">Resources</a>
+</li>
+
+<li class="${currentPage === "settings.html" ? "active" : ""}">
+    <i class="fa-solid fa-gear"></i>
+    <a href="settings.html">Settings</a>
+</li>
             <li>
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <a href="../student/login.html">Logout</a>
             </li>
+
+            
         </ul>
     </nav>
     `;

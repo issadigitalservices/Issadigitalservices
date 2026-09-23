@@ -71,7 +71,9 @@ export const COLLECTION = Object.freeze({
 
     REVIEWS: "reviews",
 
-    ANNOUNCEMENTS: "announcements"
+    ANNOUNCEMENTS: "announcements",
+
+    RESOURCES: "resources"
 
 });
 
@@ -4135,6 +4137,287 @@ export {
     addDocument
 
 };
+
+/* ==========================================================================
+   RESOURCE REPOSITORY
+   ========================================================================== */
+
+/**
+ * Get all resources for Admin
+ *
+ * Returns newest resources first.
+ */
+export async function getAdminResources() {
+
+    try {
+
+        const snapshot = await getDocs(
+
+            query(
+
+                collectionRef(
+                    COLLECTION.RESOURCES
+                ),
+
+                orderBy(
+                    "createdAt",
+                    "desc"
+                )
+
+            )
+
+        );
+
+
+        const resources =
+            snapshot.docs.map(
+                document => ({
+
+                    id: document.id,
+
+                    ...document.data()
+
+                })
+            );
+
+
+        return success(resources);
+
+    }
+
+    catch (error) {
+
+        return failure(error);
+
+    }
+
+}
+
+
+/**
+ * Get published public resources
+ *
+ * Used by the public Free Resources page.
+ */
+export async function getPublicResources() {
+
+    try {
+
+        const snapshot = await getDocs(
+
+            query(
+
+                collectionRef(
+                    COLLECTION.RESOURCES
+                ),
+
+                where(
+                    "status",
+                    "==",
+                    "published"
+                )
+
+            )
+
+        );
+
+
+        const resources =
+            snapshot.docs.map(
+                document => ({
+
+                    id: document.id,
+
+                    ...document.data()
+
+                })
+            );
+
+
+        // Sort newest first on the client side.
+        resources.sort(
+            (a, b) => {
+
+                const dateA =
+                    a.createdAt?.toMillis
+                        ? a.createdAt.toMillis()
+                        : new Date(
+                            a.createdAt || 0
+                        ).getTime();
+
+
+                const dateB =
+                    b.createdAt?.toMillis
+                        ? b.createdAt.toMillis()
+                        : new Date(
+                            b.createdAt || 0
+                        ).getTime();
+
+
+                return dateB - dateA;
+
+            }
+        );
+
+
+        return success(resources);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "getPublicResources error:",
+            error
+        );
+
+        return failure(error);
+
+    }
+
+}
+
+
+/**
+ * Create a new public resource
+ *
+ * @param {Object} resource
+ */
+export async function createResource(
+    resource
+) {
+
+    requiredObject(
+        resource,
+        "Resource"
+    );
+
+
+    return await addDocument(
+
+        COLLECTION.RESOURCES,
+
+        {
+
+            title:
+                resource.title ?? "",
+
+            description:
+                resource.description ?? "",
+
+            category:
+                resource.category ?? "Other",
+
+            fileName:
+                resource.fileName ?? "",
+
+            fileType:
+                resource.fileType ?? "",
+
+            fileSize:
+                resource.fileSize ?? 0,
+
+            fileUrl:
+                resource.fileUrl ?? "",
+
+            folder:
+                resource.folder ?? "free-resources",
+
+            status:
+                resource.status ?? "published"
+
+        }
+
+    );
+
+}
+
+
+/**
+ * Delete a resource
+ *
+ * @param {string} resourceId
+ */
+export async function deleteResource(
+    resourceId
+) {
+
+    required(
+        resourceId,
+        "Resource ID"
+    );
+
+
+    return await deleteDocument(
+
+        COLLECTION.RESOURCES,
+
+        resourceId
+
+    );
+
+}
+
+
+/**
+ * Get one resource
+ *
+ * @param {string} resourceId
+ */
+export async function getResource(
+    resourceId
+) {
+
+    required(
+        resourceId,
+        "Resource ID"
+    );
+
+
+    return await getDocument(
+
+        COLLECTION.RESOURCES,
+
+        resourceId
+
+    );
+
+}
+
+
+/**
+ * Update a resource
+ *
+ * @param {string} resourceId
+ * @param {Object} data
+ */
+export async function updateResource(
+    resourceId,
+    data
+) {
+
+    required(
+        resourceId,
+        "Resource ID"
+    );
+
+    requiredObject(
+        data,
+        "Resource data"
+    );
+
+
+    return await updateDocument(
+
+        COLLECTION.RESOURCES,
+
+        resourceId,
+
+        data
+
+    );
+
+}
 
 /* ==========================================================================
    COMPATIBILITY FUNCTIONS

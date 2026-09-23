@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Free Excel, Word, CV, PowerPoint, PDF and other downloadable resources by ISSA Digital Services.">
+
+    <title>Free Resources | ISSA Digital Services</title>
+
+    <link
+        rel="icon"
+        href="assets/images/Issa-Logo.png">
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="assets/css/main.css">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+
+        /* =========================================================
+           PAGE
+           ========================================================= */
+
+        .resources-page {
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #f8fafc 0%,
+                    #ffffff 100%
+                );
+
+        }
+
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .resources-hero {
+
+            padding:
+                70px 20px
+                50px;
+
+            text-align: center;
+
+        }
+
+
+        .resources-hero .eyebrow {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 7px 13px;
+
+            margin-bottom: 16px;
+
+            border-radius: 999px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .resources-hero h1 {
+
+            margin: 0 auto 14px;
+
+            max-width: 800px;
+
+            color: #0f172a;
+
+            font-size:
+                clamp(
+                    32px,
+                    5vw,
+                    48px
+                );
+
+            line-height: 1.15;
+
+            font-weight: 800;
+
+        }
+
+
+        .resources-hero p {
+
+            max-width: 680px;
+
+            margin: 0 auto;
+
+            color: #64748b;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =========================================================
+           MAIN CONTAINER
+           ========================================================= */
+
+        .resources-container {
+
+            width: min(
+                1180px,
+                calc(100% - 32px)
+            );
+
+            margin: 0 auto 70px;
+
+        }
+
+
+        /* =========================================================
+           CATEGORY FILTER
+           ========================================================= */
+
+        .category-wrapper {
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .category-btn {
+
+            border: 1px solid #e2e8f0;
+
+            background: #ffffff;
+
+            color: #475569;
+
+            padding: 10px 17px;
+
+            border-radius: 999px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                all 0.2s ease;
+
+        }
+
+
+        .category-btn:hover {
+
+            border-color: #2563eb;
+
+            color: #2563eb;
+
+        }
+
+
+        .category-btn.active {
+
+            background: #2563eb;
+
+            border-color: #2563eb;
+
+            color: #ffffff;
+
+        }
+
+
+        /* =========================================================
+           RESOURCE GRID
+           ========================================================= */
+
+        .resources-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0, 1fr)
+                );
+
+            gap: 20px;
+
+        }
+
+
+        /* =========================================================
+           RESOURCE CARD
+           ========================================================= */
+
+        .resource-card {
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: #ffffff;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.04
+                );
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .resource-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.08
+                );
+
+        }
+
+
+        .resource-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border-radius: 12px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-size: 22px;
+
+        }
+
+
+        .resource-category {
+
+            display: inline-flex;
+
+            width: fit-content;
+
+            padding: 5px 9px;
+
+            margin-bottom: 10px;
+
+            border-radius: 999px;
+
+            background: #f1f5f9;
+
+            color: #475569;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.4px;
+
+        }
+
+
+        .resource-card h3 {
+
+            margin: 0 0 8px;
+
+            color: #0f172a;
+
+            font-size: 18px;
+
+            line-height: 1.4;
+
+        }
+
+
+        .resource-card p {
+
+            margin: 0 0 20px;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+            flex: 1;
+
+        }
+
+
+        .resource-footer {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #f1f5f9;
+
+        }
+
+
+        .resource-date {
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+        }
+
+
+        .download-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition:
+                background 0.2s ease;
+
+        }
+
+
+        .download-btn:hover {
+
+            background: #1d4ed8;
+
+            color: #ffffff;
+
+        }
+
+
+        /* =========================================================
+           LOADING
+           ========================================================= */
+
+        .resources-message {
+
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #64748b;
+
+        }
+
+
+        .resources-message i {
+
+            display: block;
+
+            margin-bottom: 15px;
+
+            font-size: 30px;
+
+        }
+
+
+        /* =========================================================
+           FOOTER INFO
+           ========================================================= */
+
+        .resources-note {
+
+            margin-top: 35px;
+
+            padding: 18px 20px;
+
+            border-radius: 12px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .resources-grid {
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .resources-hero {
+
+                padding:
+                    50px 16px
+                    35px;
+
+            }
+
+
+            .resources-container {
+
+                width:
+                    calc(
+                        100% - 24px
+                    );
+
+            }
+
+
+            .resources-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .category-wrapper {
+
+                justify-content:
+                    flex-start;
+
+                overflow-x: auto;
+
+                flex-wrap: nowrap;
+
+                padding-bottom: 5px;
+
+            }
+
+
+            .category-btn {
+
+                flex-shrink: 0;
+
+            }
+
+
+            .resource-card {
+
+                padding: 18px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="resources-page">
+
+
+    <!-- =========================================================
+         HERO
+         ========================================================= -->
+
+    <section class="resources-hero">
+
+        <div class="eyebrow">
+
+            <i class="fa-solid fa-download"></i>
+
+            FREE RESOURCES
+
+        </div>
+
+
+        <h1>
+
+            Free Resources for
+            Your Learning & Work
+
+        </h1>
+
+
+        <p>
+
+            Download practical Excel files,
+            Word templates, CV resources,
+            PDFs and other useful materials
+            from ISSA Digital Services.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         RESOURCES
+         ========================================================= -->
+
+    <main class="resources-container">
+
+
+        <!-- CATEGORY FILTER -->
+
+        <div
+            class="category-wrapper"
+            id="categoryFilters">
+
+            <button
+                class="category-btn active"
+                data-category="All">
+
+                All
+
+            </button>
+
+
+            <button
+                class="category-btn"
+                data-category="Excel">
+
+                <i class="fa-solid fa-file-excel"></i>
+                Excel
+
+            </button>
+
+
+            <button
+                class="category-btn"
+                data-category="Word">
+
+                <i class="fa-solid fa-file-word"></i>
+                Word
+
+            </button>
+
+
+            <button
+                class="category-btn"
+                data-category="CV">
+
+                <i class="fa-solid fa-file-user"></i>
+                CV / Resume
+
+            </button>
+
+
+            <button
+                class="category-btn"
+                data-category="PowerPoint">
+
+                <i class="fa-solid fa-file-powerpoint"></i>
+                PowerPoint
+
+            </button>
+
+
+            <button
+                class="category-btn"
+                data-category="PDF">
+
+                <i class="fa-solid fa-file-pdf"></i>
+                PDF
+
+            </button>
+
+
+            <button
+                class="category-btn"
+                data-category="Images">
+
+                <i class="fa-solid fa-image"></i>
+                Images
+
+            </button>
+
+
+            <button
+                class="category-btn"
+                data-category="Other">
+
+                <i class="fa-solid fa-folder"></i>
+                Other
+
+            </button>
+
+        </div>
+
+
+
+        <!-- RESOURCE GRID -->
+
+        <div
+            class="resources-grid"
+            id="resourcesGrid">
+
+            <div
+                class="resources-message">
+
+                <i
+                    class="fa-solid fa-spinner fa-spin">
+                </i>
+
+                Loading free resources...
+
+            </div>
+
+        </div>
+
+
+
+        <!-- INFORMATION -->
+
+        <div class="resources-note">
+
+            <i
+                class="fa-solid fa-circle-info">
+            </i>
+
+            New practice files, templates and
+            useful resources will be added regularly.
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     PUBLIC RESOURCE CONTROLLER
+     ========================================================= -->
+
+<script
+    type="module"
+    src="assets/js/free-resources.js">
+</script>
+
+
+</body>
+
+</html>

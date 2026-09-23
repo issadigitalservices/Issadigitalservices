@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Free Resources | ISSA Academy</title>
+
+    <link rel="icon" href="../assets/images/Issa-Logo.png">
+
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/admin/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/layout/admin-layout.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <style>
+        .resource-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .resource-field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .resource-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .resource-field label {
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .resource-field input,
+        .resource-field select,
+        .resource-field textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font: inherit;
+            background: #fff;
+        }
+
+        .resource-field textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .resource-actions {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .resource-submit {
+            border: 0;
+            border-radius: 8px;
+            padding: 12px 18px;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .resource-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .progress-wrap {
+            display: none;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: #2563eb;
+            transition: width 0.2s;
+        }
+
+        .resource-card {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            background: #fff;
+            margin-bottom: 12px;
+        }
+
+        .resource-meta {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .badge {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .badge.status {
+            background: #ecfdf5;
+            color: #15803d;
+        }
+
+        .delete-btn {
+            border: 0;
+            border-radius: 8px;
+            padding: 9px 12px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 35px;
+            color: #64748b;
+        }
+
+        @media (max-width: 700px) {
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-field.full {
+                grid-column: auto;
+            }
+
+            .resource-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="adminSidebar"></aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Topbar -->
+            <header class="topbar">
+
+                <div style="display:flex;align-items:center;gap:1rem;">
+
+                    <button
+                        id="sidebarToggle"
+                        class="sidebar-toggle-btn"
+                        aria-label="Toggle Sidebar">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+                    <span
+                        style="font-weight:700;font-size:1.25rem;color:#111827;">
+
+                        ISSA Academy
+
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <h1>Free Resources</h1>
+
+                    <p>
+                        Manage public downloadable resources.
+                    </p>
+
+                </div>
+
+            </header>
+
+
+            <!-- Add Resource -->
+            <section
+                class="dashboard-card"
+                style="padding:1.5rem;margin-bottom:2rem;">
+
+                <h2 style="margin:0 0 6px;">
+                    Add New Resource
+                </h2>
+
+                <p
+                    style="color:#64748b;margin:0 0 20px;">
+
+                    Create resources under Excel, Word, CV,
+                    PowerPoint, PDF, Images or Other.
+
+                </p>
+
+
+                <form id="resourceForm">
+
+                    <div class="resource-grid">
+
+                        <!-- Category -->
+                        <div class="resource-field">
+
+                            <label for="resCategory">
+                                Category
+                            </label>
+
+                            <select
+                                id="resCategory"
+                                required>
+
+                                <option value="">
+                                    Select category
+                                </option>
+
+                                <option value="Excel">
+                                    Excel
+                                </option>
+
+                                <option value="Word">
+                                    Word
+                                </option>
+
+                                <option value="CV">
+                                    CV / Resume
+                                </option>
+
+                                <option value="PowerPoint">
+                                    PowerPoint
+                                </option>
+
+                                <option value="PDF">
+                                    PDF
+                                </option>
+
+                                <option value="Images">
+                                    Images
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Title -->
+                        <div class="resource-field">
+
+                            <label for="resTitle">
+                                Resource Title
+                            </label>
+
+                            <input
+                                id="resTitle"
+                                type="text"
+                                maxlength="120"
+                                placeholder="e.g. Employee Attendance Practice File"
+                                required>
+
+                        </div>
+
+
+                        <!-- Description -->
+                        <div class="resource-field full">
+
+                            <label for="resDesc">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="resDesc"
+                                maxlength="500"
+                                placeholder="Briefly describe this resource."
+                                required></textarea>
+
+                        </div>
+
+
+                        <!-- File -->
+                        <div class="resource-field full">
+
+                            <label for="resFile">
+                                File
+                            </label>
+
+                            <input
+                                id="resFile"
+                                type="file"
+                                required>
+
+                            <small style="color:#64748b;">
+
+                                The selected file will be uploaded
+                                to Cloudflare R2 automatically.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Actions -->
+                    <div
+                        class="resource-actions"
+                        style="margin-top:20px;">
+
+                        <button
+                            id="publishResourceBtn"
+                            class="resource-submit"
+                            type="submit">
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                            Upload & Publish
+
+                        </button>
+
+
+                        <div
+                            class="progress-wrap"
+                            id="uploadProgressWrap">
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    id="uploadProgressFill">
+                                </div>
+
+                            </div>
+
+                            <small
+                                id="uploadProgressText"
+                                style="color:#64748b;">
+
+                                Preparing...
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <!-- Existing Resources -->
+            <section
+                class="dashboard-card"
+                style="padding:1.5rem;">
+
+                <div
+                    style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:12px;
+                    flex-wrap:wrap;
+                    margin-bottom:16px;
+                    ">
+
+                    <div>
+
+                        <h2 style="margin:0;">
+                            Published Resources
+                        </h2>
+
+                        <p
+                            style="
+                            color:#64748b;
+                            margin:5px 0 0;
+                            ">
+
+                            Filter and manage your
+                            public downloads.
+
+                        </p>
+
+                    </div>
+
+
+                    <!-- Category Filter -->
+                    <select
+                        id="adminCategoryFilter"
+                        style="
+                        padding:10px;
+                        border:1px solid #cbd5e1;
+                        border-radius:8px;
+                        ">
+
+                        <option value="All">
+                            All Categories
+                        </option>
+
+                        <option value="Excel">
+                            Excel
+                        </option>
+
+                        <option value="Word">
+                            Word
+                        </option>
+
+                        <option value="CV">
+                            CV / Resume
+                        </option>
+
+                        <option value="PowerPoint">
+                            PowerPoint
+                        </option>
+
+                        <option value="PDF">
+                            PDF
+                        </option>
+
+                        <option value="Images">
+                            Images
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div id="resourcesList">
+
+                    <div class="empty-state">
+
+                        Loading resources...
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <div
+        id="toastContainer"
+        class="toast-container">
+    </div>
+
+
+    <!-- Admin Sidebar -->
+    <script src="../assets/js/admin/admin-sidebar.js"></script>
+
+
+    <!-- Resource Controller -->
+    <script
+        type="module"
+        src="../assets/js/admin/resources.js">
+    </script>
+
+</body>
+
+</html>
