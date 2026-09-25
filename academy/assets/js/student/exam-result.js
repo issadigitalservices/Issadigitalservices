@@ -164,7 +164,7 @@ async function loadResult(studentId) {
         examSnap.data();
 
 
-    /* ======================================================================
+        /* ======================================================================
        PASSED
     ====================================================================== */
 
@@ -180,17 +180,11 @@ async function loadResult(studentId) {
             "You have successfully passed this Exam.";
 
 
-        /* ================================================================
+        /* ==================================================================
            FINAL EXAM
-        ================================================================= */
+        ================================================================== */
 
         if (exam.type === "final") {
-
-            /*
-             * The Final Exam does NOT automatically issue a certificate.
-             *
-             * The certificate must be created by the admin.
-             */
 
             const certificateSnapshot =
                 await getDocs(
@@ -213,10 +207,6 @@ async function loadResult(studentId) {
                 );
 
 
-            /* ============================================================
-               CERTIFICATE ALREADY ISSUED
-            ============================================================ */
-
             if (!certificateSnapshot.empty) {
 
                 continueBtn.textContent =
@@ -225,23 +215,24 @@ async function loadResult(studentId) {
                 continueBtn.href =
                     `certificate-view.html?courseId=${exam.courseId}`;
 
-                continueBtn.classList.remove("hidden");
+                continueBtn.classList.remove(
+                    "hidden"
+                );
 
             }
-
-
-            /* ============================================================
-               CERTIFICATE NOT YET ISSUED
-            ============================================================ */
 
             else {
 
                 continueBtn.textContent =
                     "Certificate Pending";
 
-                continueBtn.removeAttribute("href");
+                continueBtn.removeAttribute(
+                    "href"
+                );
 
-                continueBtn.classList.remove("hidden");
+                continueBtn.classList.remove(
+                    "hidden"
+                );
 
                 continueBtn.classList.add(
                     "certificate-pending"
@@ -250,28 +241,37 @@ async function loadResult(studentId) {
                 resultMessage.textContent =
                     "You have successfully passed the Final Exam. Your certificate is pending admin approval.";
 
-                    // Show WhatsApp Contact Admin button ONLY for passed Final Exam without certificate
-                const whatsappAdminBtn = 
-                    document.getElementById("whatsappAdminBtn");
+                const whatsappAdminBtn =
+                    document.getElementById(
+                        "whatsappAdminBtn"
+                    );
 
                 if (whatsappAdminBtn) {
-                    whatsappAdminBtn.classList.remove("hidden");
+
+                    whatsappAdminBtn.classList.remove(
+                        "hidden"
+                    );
+
                 }
+
             }
 
 
             /*
-             * Final Exam does not need a Review button here.
+             * Final Exam:
+             * Review button is not required here.
              */
 
-            reviewBtn.classList.add("hidden");
+            reviewBtn.classList.add(
+                "hidden"
+            );
 
         }
 
 
-        /* ================================================================
+        /* ==================================================================
            MODULE EXAM
-        ================================================================= */
+        ================================================================== */
 
         else {
 
@@ -281,17 +281,21 @@ async function loadResult(studentId) {
             continueBtn.href =
                 `course.html?id=${exam.courseId}`;
 
-            continueBtn.classList.remove("hidden");
+            continueBtn.classList.remove(
+                "hidden"
+            );
 
 
-            /* ============================================================
+            /* ==============================================================
                MODULE UNLOCK MESSAGE
-            ============================================================ */
+            ============================================================== */
 
             if (exam.type === "module") {
 
                 const message =
-                    document.createElement("p");
+                    document.createElement(
+                        "p"
+                    );
 
                 message.className =
                     "unlock-message";
@@ -300,22 +304,32 @@ async function loadResult(studentId) {
                     "Congratulations! The next module has been unlocked.";
 
                 const actions =
-                    document.querySelector(".actions");
+                    document.querySelector(
+                        ".actions"
+                    );
 
                 if (actions) {
 
-                    actions.after(message);
+                    actions.after(
+                        message
+                    );
 
                 }
 
             }
 
 
-            /* ============================================================
-               REVIEW BUTTON
-            ============================================================ */
+            /* ==============================================================
+               VIEW MY ANSWERS
+            ============================================================== */
 
-            reviewBtn.classList.add("hidden");
+            reviewBtn.textContent =
+                "View My Answers";
+
+            reviewBtn.classList.remove(
+                "hidden"
+            );
+
 
             reviewBtn.addEventListener(
                 "click",
@@ -323,23 +337,10 @@ async function loadResult(studentId) {
 
                     event.preventDefault();
 
-                    reviewSection.classList.remove(
-                        "hidden"
+                    await showAnswerReview(
+                        studentId,
+                        true
                     );
-
-                    reviewContainer.innerHTML = `
-                        <div class="review-placeholder">
-                            <h3>Exam Review</h3>
-                            <p>
-                                Question review will be available
-                                in the next update.
-                            </p>
-                        </div>
-                    `;
-
-                    reviewSection.scrollIntoView({
-                        behavior: "smooth"
-                    });
 
                 }
             );
@@ -396,5 +397,317 @@ async function loadResult(studentId) {
     resultCard.classList.remove(
         "hidden"
     );
+
+}
+
+/* ==========================================================================
+   SHOW ANSWER REVIEW
+========================================================================== */
+
+async function showAnswerReview(
+    studentId,
+    showCorrectAnswers
+) {
+
+    reviewSection.classList.remove(
+        "hidden"
+    );
+
+    reviewContainer.innerHTML = `
+        <div class="review-placeholder">
+            Loading your answers...
+        </div>
+    `;
+
+    try {
+
+        /*
+         * Find the submitted attempt
+         * for this student and exam.
+         */
+
+        const attemptSnapshot =
+            await getDocs(
+                query(
+                    collection(
+                        db,
+                        "examAttempts"
+                    ),
+
+                    where(
+                        "studentId",
+                        "==",
+                        studentId
+                    ),
+
+                    where(
+                        "examId",
+                        "==",
+                        examId
+                    ),
+
+                    where(
+                        "submittedAt",
+                        "!=",
+                        null
+                    )
+                )
+            );
+
+
+        if (attemptSnapshot.empty) {
+
+            reviewContainer.innerHTML = `
+                <div class="review-placeholder">
+                    <p>
+                        Your submitted answers could not be found.
+                    </p>
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        /*
+         * Use the latest submitted attempt.
+         */
+
+        const attempts =
+            attemptSnapshot.docs
+                .map(docSnap => ({
+                    id: docSnap.id,
+                    ...docSnap.data()
+                }))
+                .sort(
+                    (a, b) => {
+
+                        const dateA =
+                            a.submittedAt?.toMillis
+                                ? a.submittedAt.toMillis()
+                                : 0;
+
+                        const dateB =
+                            b.submittedAt?.toMillis
+                                ? b.submittedAt.toMillis()
+                                : 0;
+
+                        return dateB - dateA;
+
+                    }
+                );
+
+
+        const attempt =
+            attempts[0];
+
+
+        const studentAnswers =
+            attempt.answers || {};
+
+
+        /*
+         * Load exam questions.
+         */
+
+        const questionsSnapshot =
+            await getDocs(
+                query(
+                    collection(
+                        db,
+                        "examQuestions"
+                    ),
+
+                    where(
+                        "examId",
+                        "==",
+                        examId
+                    )
+                )
+            );
+
+
+        if (questionsSnapshot.empty) {
+
+            reviewContainer.innerHTML = `
+                <div class="review-placeholder">
+                    <p>
+                        No questions were found for this exam.
+                    </p>
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        const questions =
+            questionsSnapshot.docs.map(
+                docSnap => ({
+                    id: docSnap.id,
+                    ...docSnap.data()
+                })
+            );
+
+
+        reviewContainer.innerHTML = "";
+
+
+        questions.forEach(
+            (question, index) => {
+
+                const studentAnswer =
+                    studentAnswers[
+                        question.id
+                    ] || "Not Answered";
+
+
+                const getOptionText =
+                    answer => {
+
+                        if (
+                            !answer ||
+                            answer === "Not Answered"
+                        ) {
+                            return "Not Answered";
+                        }
+
+                        const optionKey =
+                            `option${answer.toUpperCase()}`;
+
+                        return question[
+                            optionKey
+                        ] || answer;
+
+                    };
+
+
+                const studentAnswerText =
+                    getOptionText(
+                        studentAnswer
+                    );
+
+
+                let reviewHTML = `
+
+                    <div class="review-question">
+
+                        <h3>
+                            Question ${index + 1}
+                        </h3>
+
+                        <p class="review-question-text">
+                            ${question.question}
+                        </p>
+
+                        <div class="review-answer">
+
+                            <strong>
+                                Your Answer:
+                            </strong>
+
+                            <span>
+                                ${studentAnswerText}
+                            </span>
+
+                        </div>
+                `;
+
+
+                /*
+                 * ONLY PASSED STUDENTS
+                 * see correct answer/status.
+                 */
+
+                if (showCorrectAnswers) {
+
+                    const correctAnswer =
+                        question.correctAnswer;
+
+                    const correctAnswerText =
+                        getOptionText(
+                            correctAnswer
+                        );
+
+
+                    const isCorrect =
+                        studentAnswer ===
+                        correctAnswer;
+
+
+                    reviewHTML += `
+
+                        <div class="review-answer">
+
+                            <strong>
+                                Correct Answer:
+                            </strong>
+
+                            <span>
+                                ${correctAnswerText}
+                            </span>
+
+                        </div>
+
+
+                        <div class="review-status">
+
+                            ${
+                                isCorrect
+                                    ? "✅ Correct"
+                                    : "❌ Wrong"
+                            }
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                reviewHTML += `
+
+                    </div>
+
+                `;
+
+
+                reviewContainer.insertAdjacentHTML(
+                    "beforeend",
+                    reviewHTML
+                );
+
+            }
+        );
+
+
+        reviewSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Answer review error:",
+            error
+        );
+
+        reviewContainer.innerHTML = `
+            <div class="review-placeholder">
+
+                <p>
+                    Unable to load your answers.
+                    Please try again.
+                </p>
+
+            </div>
+        `;
+
+    }
 
 }
