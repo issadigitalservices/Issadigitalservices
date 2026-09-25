@@ -169,176 +169,47 @@ window.addEventListener("load", () => {
 /* ==========================================================================
    FETCH & RENDER PUBLIC RESOURCES
    ========================================================================== */
-import {
-    getPublicResources,
-    incrementResourceDownloads
-} from "../core/firestore-service.js";
-
-/* ==========================================================================
-   FETCH & RENDER PUBLIC RESOURCES
-   ========================================================================== */
+import { query, orderBy } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 async function renderPublicResources() {
     const container = document.getElementById("resourcesContainer");
     if (!container) return;
 
     try {
+        const q = query(collection(db, "resources"), orderBy("createdAt", "desc"));
+        const snapshot = await getDocs(q);
 
-        const result = await getPublicResources();
-
-        if (!result.success) {
-            throw new Error(result.error);
-        }
-
-        const resources = result.data;
-
-        if (!resources.length) {
-            container.innerHTML =
-                "<p style='text-align:center; color:#64748b; grid-column: 1/-1;'>No downloadable files currently available.</p>";
+        if (snapshot.empty) {
+            container.innerHTML = "<p style='text-align:center; color:#64748b; grid-column: 1/-1;'>No downloadable files currently available.</p>";
             return;
         }
 
         container.innerHTML = "";
-
-        resources.forEach((item) => {
-
-            const urlLower = (item.fileUrl || "").toLowerCase();
-
+        snapshot.forEach((docSnap) => {
+            const item = docSnap.data();
+            const urlLower = item.fileUrl.toLowerCase();
             const isPdf = urlLower.includes(".pdf");
-
-            const iconClass = isPdf
-                ? "fa-solid fa-file-pdf"
-                : "fa-solid fa-file-excel";
-
-            const iconColor = isPdf
-                ? "#dc2626"
-                : "#16a34a";
+            
+            const iconClass = isPdf ? "fa-solid fa-file-pdf" : "fa-solid fa-file-excel";
+            const iconColor = isPdf ? "#dc2626" : "#16a34a";
 
             const card = `
-                <div style="
-                    background:#ffffff;
-                    padding:24px;
-                    border-radius:12px;
-                    border:1px solid #e2e8f0;
-                    display:flex;
-                    flex-direction:column;
-                    justify-content:space-between;
-                    box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);
-                ">
-
+                <div style="background: #ffffff; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
                     <div>
-
-                        <i
-                            class="${iconClass}"
-                            style="
-                                font-size:2.2rem;
-                                color:${iconColor};
-                                margin-bottom:12px;
-                            "
-                        ></i>
-
-                        <h3 style="
-                            font-size:1.15rem;
-                            color:#0f172a;
-                            margin-bottom:8px;
-                        ">
-                            ${item.title}
-                        </h3>
-
-                        <p style="
-                            font-size:0.9rem;
-                            color:#64748b;
-                            margin-bottom:20px;
-                            line-height:1.5;
-                        ">
-                            ${item.description}
-                        </p>
-
+                        <i class="${iconClass}" style="font-size: 2.2rem; color: ${iconColor}; margin-bottom: 12px;"></i>
+                        <h3 style="font-size: 1.15rem; color: #0f172a; margin-bottom: 8px;">${item.title}</h3>
+                        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 20px; line-height: 1.5;">${item.description}</p>
                     </div>
-
-                    <button
-                        class="resource-download-btn"
-                        data-resource-id="${item.id}"
-                        data-file-url="${item.fileUrl}"
-                        style="
-                            display:inline-block;
-                            text-align:center;
-                            background:#2563eb;
-                            color:#ffffff;
-                            padding:10px 16px;
-                            border-radius:6px;
-                            border:none;
-                            text-decoration:none;
-                            font-weight:500;
-                            cursor:pointer;
-                        "
-                    >
-                        <i
-                            class="fa-solid fa-download"
-                            style="margin-right:8px;"
-                        ></i>
-
-                        Download File
-                    </button>
-
+                    <a href="${item.fileUrl}" target="_blank" download style="display: inline-block; text-align: center; background: #2563eb; color: #ffffff; padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: 500;">
+                        <i class="fa-solid fa-download" style="margin-right: 8px;"></i> Download File
+                    </a>
                 </div>
             `;
-
             container.insertAdjacentHTML("beforeend", card);
         });
-
-        /* --------------------------------------------------------------
-           DOWNLOAD HANDLER
-           -------------------------------------------------------------- */
-
-        container
-            .querySelectorAll(".resource-download-btn")
-            .forEach((button) => {
-
-                button.addEventListener("click", async () => {
-
-                    const resourceId =
-                        button.dataset.resourceId;
-
-                    const fileUrl =
-                        button.dataset.fileUrl;
-
-                    try {
-
-                        // Count the download
-                        await incrementResourceDownloads(
-                            resourceId
-                        );
-
-                    } catch (error) {
-
-                        console.error(
-                            "Download count update failed:",
-                            error
-                        );
-
-                    }
-
-                    // Open/download the actual file
-                    window.open(
-                        fileUrl,
-                        "_blank",
-                        "noopener,noreferrer"
-                    );
-
-                });
-
-            });
-
     } catch (err) {
-
-        console.error(
-            "Error fetching resources:",
-            err
-        );
-
-        container.innerHTML =
-            "<p style='text-align:center; color:#ef4444; grid-column: 1/-1;'>Failed to load resources.</p>";
+        console.error("Error fetching resources:", err);
+        container.innerHTML = "<p style='text-align:center; color:#ef4444; grid-column: 1/-1;'>Failed to load resources.</p>";
     }
 }
 

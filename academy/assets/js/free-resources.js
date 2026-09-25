@@ -6,7 +6,8 @@
    ========================================================================== */
 
 import {
-    getPublicResources
+    getPublicResources,
+    incrementResourceDownloads
 } from "./core/firestore-service.js";
 
 
@@ -314,29 +315,81 @@ function renderResources() {
                         </span>
 
 
-                        <a
-                            class="download-btn"
-                            href="${escapeHtml(
-                                resource.fileUrl
-                            )}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            download>
+                        <button
+    class="download-btn"
+    type="button"
+    data-resource-id="${escapeHtml(
+        resource.id
+    )}"
+    data-file-url="${escapeHtml(
+        resource.fileUrl
+    )}">
 
-                            <i
-                                class="fa-solid fa-download">
-                            </i>
+    <i
+        class="fa-solid fa-download">
+    </i>
 
-                            Download
+    Download
 
-                        </a>
+</button>
 
                     </div>
 
                 </article>
 
             `
-        ).join("");
+            ).join("");
+
+
+    /* --------------------------------------------------------------
+       DOWNLOAD TRACKING
+       -------------------------------------------------------------- */
+
+    resourcesGrid
+        .querySelectorAll(".download-btn")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                async () => {
+
+                    const resourceId =
+                        button.dataset.resourceId;
+
+                    const fileUrl =
+                        button.dataset.fileUrl;
+
+
+                    try {
+
+                        await incrementResourceDownloads(
+                            resourceId
+                        );
+
+                    } catch (error) {
+
+                        console.error(
+                            "Download count update failed:",
+                            error
+                        );
+
+                    }
+
+
+                    if (fileUrl) {
+
+                        window.open(
+                            fileUrl,
+                            "_blank",
+                            "noopener,noreferrer"
+                        );
+
+                    }
+
+                }
+            );
+
+        });
 
 }
 
