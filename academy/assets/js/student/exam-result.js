@@ -351,39 +351,69 @@ async function loadResult(studentId) {
 
 
     /* ======================================================================
-       FAILED
-    ====================================================================== */
+   FAILED
+====================================================================== */
 
-    else {
+else {
 
-        resultIcon.classList.add(
-            "fail"
-        );
+    resultIcon.classList.add(
+        "fail"
+    );
 
-        resultIconSymbol.className =
-            "fa-solid fa-circle-xmark";
+    resultIconSymbol.className =
+        "fa-solid fa-circle-xmark";
 
-        statusElement.textContent =
-            "FAIL";
+    statusElement.textContent =
+        "FAIL";
 
-        resultTitle.textContent =
-            "Exam Failed";
+    resultTitle.textContent =
+        "Exam Failed";
 
-        resultMessage.textContent =
-            "Don't worry. Review the lessons and try again.";
+    resultMessage.textContent =
+        "Don't worry. Review the lessons and try again.";
 
-        retryBtn.classList.remove(
-            "hidden"
-        );
+    retryBtn.classList.remove(
+        "hidden"
+    );
 
-        retryBtn.href =
-            `start-assessment.html?id=${examId}`;
+    retryBtn.href =
+        `start-assessment.html?id=${examId}`;
 
-        reviewBtn.classList.add(
-            "hidden"
-        );
 
-    }
+    /* ================================================================
+       VIEW MY ANSWERS
+       Failed student can see ONLY:
+       - Question
+       - Their Answer
+
+       Do NOT show:
+       - Correct Answer
+       - Correct/Wrong status
+       - Explanation
+    ================================================================= */
+
+    reviewBtn.textContent =
+        "View My Answers";
+
+    reviewBtn.classList.remove(
+        "hidden"
+    );
+
+    reviewBtn.addEventListener(
+        "click",
+        async event => {
+
+            event.preventDefault();
+
+            await showAnswerReview(
+                studentId,
+                false
+            );
+
+        }
+    );
+
+}
 
 
     /* ======================================================================
@@ -415,16 +445,16 @@ async function showAnswerReview(
 
     reviewContainer.innerHTML = `
         <div class="review-placeholder">
-            Loading your answers...
+            <p>Loading your answers...</p>
         </div>
     `;
 
+
     try {
 
-        /*
-         * Find the submitted attempt
-         * for this student and exam.
-         */
+        /* ================================================================
+           LOAD LATEST SUBMITTED ATTEMPT
+        ================================================================= */
 
         const attemptSnapshot =
             await getDocs(
@@ -433,23 +463,15 @@ async function showAnswerReview(
                         db,
                         "examAttempts"
                     ),
-
                     where(
                         "studentId",
                         "==",
                         studentId
                     ),
-
                     where(
                         "examId",
                         "==",
                         examId
-                    ),
-
-                    where(
-                        "submittedAt",
-                        "!=",
-                        null
                     )
                 )
             );
@@ -459,9 +481,7 @@ async function showAnswerReview(
 
             reviewContainer.innerHTML = `
                 <div class="review-placeholder">
-                    <p>
-                        Your submitted answers could not be found.
-                    </p>
+                    <p>Your exam answers could not be found.</p>
                 </div>
             `;
 
@@ -470,55 +490,67 @@ async function showAnswerReview(
         }
 
 
-        /*
-         * Use the latest submitted attempt.
-         */
+        /* ================================================================
+           GET LATEST ATTEMPT
+        ================================================================= */
 
         const attempts =
             attemptSnapshot.docs
-                .map(docSnap => ({
-                    id: docSnap.id,
-                    ...docSnap.data()
+                .map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
                 }))
+                .filter(
+                    attempt =>
+                        attempt.submittedAt
+                )
                 .sort(
                     (a, b) => {
 
-                        const dateA =
-                            a.submittedAt?.toMillis
-                                ? a.submittedAt.toMillis()
-                                : 0;
+                        const aTime =
+                            a.submittedAt?.toMillis?.() || 0;
 
-                        const dateB =
-                            b.submittedAt?.toMillis
-                                ? b.submittedAt.toMillis()
-                                : 0;
+                        const bTime =
+                            b.submittedAt?.toMillis?.() || 0;
 
-                        return dateB - dateA;
+                        return bTime - aTime;
 
                     }
                 );
+
+
+        if (attempts.length === 0) {
+
+            reviewContainer.innerHTML = `
+                <div class="review-placeholder">
+                    <p>Your submitted answers could not be found.</p>
+                </div>
+            `;
+
+            return;
+
+        }
 
 
         const attempt =
             attempts[0];
 
 
-        const studentAnswers =
+        const answers =
             attempt.answers || {};
 
 
-        /*
-         * Load exam questions.
-         */
+        /* ================================================================
+           LOAD QUESTIONS
+        ================================================================= */
 
-        const questionsSnapshot =
+        const questionSnapshot =
             await getDocs(
                 query(
                     collection(
                         db,
                         "examQuestions"
                     ),
-
                     where(
                         "examId",
                         "==",
@@ -528,13 +560,11 @@ async function showAnswerReview(
             );
 
 
-        if (questionsSnapshot.empty) {
+        if (questionSnapshot.empty) {
 
             reviewContainer.innerHTML = `
                 <div class="review-placeholder">
-                    <p>
-                        No questions were found for this exam.
-                    </p>
+                    <p>No questions were found for this exam.</p>
                 </div>
             `;
 
@@ -543,93 +573,134 @@ async function showAnswerReview(
         }
 
 
-        const questions =
-            questionsSnapshot.docs.map(
-                docSnap => ({
-                    id: docSnap.id,
-                    ...docSnap.data()
-                })
-            );
+        /* ================================================================
+           BUILD REVIEW
+        ================================================================= */
+
+        let html = "";
 
 
-        reviewContainer.innerHTML = "";
+        questionSnapshot.docs.forEach(
+            (questionDoc, index) => {
 
+                const question =
+                    questionDoc.data();
 
-        questions.forEach(
-            (question, index) => {
+                const questionId =
+                    questionDoc.id;
 
                 const studentAnswer =
-                    studentAnswers[
-                        question.id
-                    ] || "Not Answered";
+                    answers[questionId] || "Not Answered";
 
 
-                const getOptionText =
-                    answer => {
-
-                        if (
-                            !answer ||
-                            answer === "Not Answered"
-                        ) {
-                            return "Not Answered";
-                        }
-
-                        const optionKey =
-                            `option${answer.toUpperCase()}`;
-
-                        return question[
-                            optionKey
-                        ] || answer;
-
-                    };
+                let studentAnswerText =
+                    studentAnswer;
 
 
-                const studentAnswerText =
-                    getOptionText(
-                        studentAnswer
-                    );
+                /* ========================================================
+                   CONVERT OPTION LETTER TO ACTUAL ANSWER
+                ======================================================== */
+
+                if (
+                    studentAnswer === "A" &&
+                    question.optionA
+                ) {
+
+                    studentAnswerText =
+                        question.optionA;
+
+                }
+
+                else if (
+                    studentAnswer === "B" &&
+                    question.optionB
+                ) {
+
+                    studentAnswerText =
+                        question.optionB;
+
+                }
+
+                else if (
+                    studentAnswer === "C" &&
+                    question.optionC
+                ) {
+
+                    studentAnswerText =
+                        question.optionC;
+
+                }
+
+                else if (
+                    studentAnswer === "D" &&
+                    question.optionD
+                ) {
+
+                    studentAnswerText =
+                        question.optionD;
+
+                }
 
 
-                let reviewHTML = `
+                /* ========================================================
+                   PASSED STUDENT
+                   Show:
+                   - Question
+                   - Your Answer
+                   - Correct Answer
+                   - Correct / Wrong
 
-                    <div class="review-question">
-
-                        <h3>
-                            Question ${index + 1}
-                        </h3>
-
-                        <p class="review-question-text">
-                            ${question.question}
-                        </p>
-
-                        <div class="review-answer">
-
-                            <strong>
-                                Your Answer:
-                            </strong>
-
-                            <span>
-                                ${studentAnswerText}
-                            </span>
-
-                        </div>
-                `;
-
-
-                /*
-                 * ONLY PASSED STUDENTS
-                 * see correct answer/status.
-                 */
+                   NO explanation
+                ======================================================== */
 
                 if (showCorrectAnswers) {
 
                     const correctAnswer =
-                        question.correctAnswer;
+                        question.correctAnswer || "";
 
-                    const correctAnswerText =
-                        getOptionText(
-                            correctAnswer
-                        );
+                    let correctAnswerText =
+                        correctAnswer;
+
+
+                    if (
+                        correctAnswer === "A" &&
+                        question.optionA
+                    ) {
+
+                        correctAnswerText =
+                            question.optionA;
+
+                    }
+
+                    else if (
+                        correctAnswer === "B" &&
+                        question.optionB
+                    ) {
+
+                        correctAnswerText =
+                            question.optionB;
+
+                    }
+
+                    else if (
+                        correctAnswer === "C" &&
+                        question.optionC
+                    ) {
+
+                        correctAnswerText =
+                            question.optionC;
+
+                    }
+
+                    else if (
+                        correctAnswer === "D" &&
+                        question.optionD
+                    ) {
+
+                        correctAnswerText =
+                            question.optionD;
+
+                    }
 
 
                     const isCorrect =
@@ -637,51 +708,92 @@ async function showAnswerReview(
                         correctAnswer;
 
 
-                    reviewHTML += `
+                    html += `
+                        <div class="review-item">
 
-                        <div class="review-answer">
+                            <h3>
+                                Question ${index + 1}
+                            </h3>
 
-                            <strong>
-                                Correct Answer:
-                            </strong>
+                            <p class="review-question">
+                                ${question.question || ""}
+                            </p>
 
-                            <span>
+                            <p>
+                                <strong>Your Answer:</strong>
+                                ${studentAnswerText}
+                            </p>
+
+                            <p>
+                                <strong>Correct Answer:</strong>
                                 ${correctAnswerText}
-                            </span>
+                            </p>
 
-                        </div>
-
-
-                        <div class="review-status">
-
-                            ${
+                            <p class="${
                                 isCorrect
-                                    ? "✅ Correct"
-                                    : "❌ Wrong"
-                            }
+                                    ? "review-correct"
+                                    : "review-wrong"
+                            }">
+
+                                ${
+                                    isCorrect
+                                        ? "✓ Correct"
+                                        : "✗ Wrong"
+                                }
+
+                            </p>
 
                         </div>
-
                     `;
 
                 }
 
 
-                reviewHTML += `
+                /* ========================================================
+                   FAILED STUDENT
+                   Show ONLY:
+                   - Question
+                   - Your Answer
 
-                    </div>
+                   NO correct answer
+                   NO correct/wrong
+                   NO explanation
+                ======================================================== */
 
-                `;
+                else {
 
+                    html += `
+                        <div class="review-item">
 
-                reviewContainer.insertAdjacentHTML(
-                    "beforeend",
-                    reviewHTML
-                );
+                            <h3>
+                                Question ${index + 1}
+                            </h3>
+
+                            <p class="review-question">
+                                ${question.question || ""}
+                            </p>
+
+                            <p>
+                                <strong>Your Answer:</strong>
+                                ${studentAnswerText}
+                            </p>
+
+                        </div>
+                    `;
+
+                }
 
             }
         );
 
+
+        reviewContainer.innerHTML =
+            html;
+
+
+        /* ================================================================
+           SCROLL TO REVIEW
+        ================================================================= */
 
         reviewSection.scrollIntoView({
             behavior: "smooth",
@@ -699,12 +811,10 @@ async function showAnswerReview(
 
         reviewContainer.innerHTML = `
             <div class="review-placeholder">
-
                 <p>
                     Unable to load your answers.
                     Please try again.
                 </p>
-
             </div>
         `;
 
