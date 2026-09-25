@@ -4419,6 +4419,31 @@ export async function updateResource(
 
 }
 
+export async function incrementResourceDownloads(resourceId) {
+    required(resourceId, "Resource ID");
+
+    try {
+
+        await updateDoc(
+            documentRef(
+                COLLECTION.RESOURCES,
+                resourceId
+            ),
+            {
+                downloadCount: increment(1),
+                updatedAt: serverTimestamp()
+            }
+        );
+
+        return success(true);
+
+    }
+
+    catch (error) {
+        return failure(error);
+    }
+}
+
 /* ==========================================================================
    COMPATIBILITY FUNCTIONS
    DO NOT REMOVE
