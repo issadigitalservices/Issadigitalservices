@@ -4324,7 +4324,9 @@ export async function createResource(
                 resource.folder ?? "free-resources",
 
             status:
-                resource.status ?? "published"
+                resource.status ?? "published",
+                downloadCount:
+    0
 
         }
 
