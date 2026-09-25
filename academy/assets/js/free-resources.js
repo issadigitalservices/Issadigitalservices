@@ -362,18 +362,36 @@ function renderResources() {
 
                     try {
 
-                        await incrementResourceDownloads(
-                            resourceId
-                        );
+    const result =
+        await incrementResourceDownloads(
+            resourceId
+        );
 
-                    } catch (error) {
 
-                        console.error(
-                            "Download count update failed:",
-                            error
-                        );
+    if (!result.success) {
 
-                    }
+        console.error(
+            "Download count update failed:",
+            result.error
+        );
+
+    } else {
+
+        console.log(
+            "Download count updated successfully:",
+            resourceId
+        );
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Download count update failed:",
+        error
+    );
+
+}
 
 
                     if (fileUrl) {
