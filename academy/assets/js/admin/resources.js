@@ -324,16 +324,35 @@ function renderResources() {
 
 
                         <span
-                            style="
-                            font-size:12px;
-                            color:#64748b;
-                            ">
+    style="
+    font-size:12px;
+    color:#64748b;
+">
 
-                            ${formatDate(
-                                item.createdAt
-                            )}
+    ${formatDate(
+        item.createdAt
+    )}
 
-                        </span>
+</span>
+
+
+<span
+    class="badge"
+    style="
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+">
+
+    <i class="fa-solid fa-download"></i>
+
+    ${Number(
+        item.downloadCount || 0
+    )}
+
+    Downloads
+
+</span>
 
                     </div>
 
