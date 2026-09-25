@@ -183,8 +183,7 @@ body {
 }
 
 /* Hide elements when requested */
-.hidden,
-#reviewBtn {
+.hidden {
   display: none !important;
 }
 
