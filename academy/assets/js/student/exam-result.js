@@ -262,9 +262,18 @@ async function loadResult(studentId) {
              * Review button is not required here.
              */
 
-            reviewBtn.classList.add(
-                "hidden"
-            );
+            reviewBtn.textContent = "View My Answers";
+
+reviewBtn.classList.remove("hidden");
+
+reviewBtn.addEventListener("click", async event => {
+    event.preventDefault();
+
+    await showAnswerReview(
+        studentId,
+        false
+    );
+});
 
         }
 
