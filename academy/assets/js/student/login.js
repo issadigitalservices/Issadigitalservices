@@ -149,31 +149,43 @@ form.addEventListener("submit", async event => {
         // Email Verified -> Record Login Activity
 try {
 
-    console.log("STEP 1: Login activity code started");
-
     const deviceInfo = getDeviceInfo();
 
-    console.log("STEP 2: Calling recordStudentLogin", {
-    studentId: user.uid,
-    email: user.email,
-    deviceInfo
-});
-
-    const result = await recordStudentLogin({
+    recordStudentLogin({
         studentId: user.uid,
         email: user.email,
         ...deviceInfo
+    })
+    .then(result => {
+
+        if (!result.success) {
+            console.error(
+                "Login activity recording failed:",
+                result.error
+            );
+        } else {
+            console.log(
+                "Login activity recorded successfully:",
+                result.data
+            );
+        }
+
+    })
+    .catch(error => {
+
+        console.error(
+            "Login activity error:",
+            error
+        );
+
     });
-
-    console.log("STEP 3: recordStudentLogin result:", result);
-
-    if (!result.success) {
-        console.error("Login activity recording failed:", result.error);
-    }
 
 } catch (error) {
 
-    console.error("Login activity error:", error);
+    console.error(
+        "Login activity error:",
+        error
+    );
 
 }
 
