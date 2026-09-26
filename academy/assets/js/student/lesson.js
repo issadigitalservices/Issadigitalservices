@@ -48,8 +48,6 @@ const progressBar = document.getElementById("progressBar");
 const lessonNumber = document.getElementById("lessonNumber");
 const lessonStatus = document.getElementById("lessonStatus");
 const lessonStatusText = document.getElementById("lessonStatusText");
-const moduleExamSection = document.getElementById("moduleExamSection");
-const moduleExamContent = document.getElementById("moduleExamContent");
 
 /* ==========================================================================
    URL
@@ -324,8 +322,6 @@ async function loadLesson() {
         nextLesson.disabled = false;
     }
 
-    await loadModuleExamReview();
-
     // Attachment link setup
     if (lesson.practiceFileUrl) {
         downloadBtn.href = lesson.practiceFileUrl;
@@ -349,77 +345,6 @@ function updateDurationUI() {
         durationElement.textContent = lessonData.duration;
     }
 }
-
-async function loadModuleExamReview() {
-    if (!moduleExamSection || !moduleExamContent) return;
-
-    try {
-        const examSnapshot = await getDocs(
-            query(
-                collection(db, "exams"),
-                where("moduleId", "==", lessonData.moduleId),
-                limit(1)
-            )
-        );
-
-        if (examSnapshot.empty) return;
-
-        const examDoc = examSnapshot.docs[0];
-        const examId = examDoc.id;
-
-        const attemptSnapshot = await getDocs(
-            query(
-                collection(db, "examAttempts"),
-                where("studentId", "==", studentId),
-                where("examId", "==", examId)
-            )
-        );
-
-        const passedAttempt = attemptSnapshot.docs
-            .map(doc => doc.data())
-            .filter(attempt => attempt.submitted === true && attempt.passed === true)
-            .sort((a, b) => {
-                const aTime = a.submittedAt?.toMillis?.() || 0;
-                const bTime = b.submittedAt?.toMillis?.() || 0;
-                return bTime - aTime;
-            })[0];
-
-        if (!passedAttempt) return;
-
-        const score = Number(passedAttempt.score || 0);
-        const total = Number(passedAttempt.total || passedAttempt.totalMarks || 0);
-        const percentage = Number(
-            passedAttempt.percentage ||
-            (total ? (score / total) * 100 : 0)
-        );
-
-        moduleExamSection.classList.remove("hidden");
-
-        moduleExamContent.innerHTML = `
-            <div class="exam-passed">
-                <p>
-                    <strong>Module Exam Passed</strong>
-                </p>
-
-                <p>
-                    Score: ${score}/${total}
-                    (${percentage.toFixed(0)}%)
-                </p>
-
-                <a
-                    href="exam-result.html?id=${examId}&score=${score}&total=${total}&percentage=${percentage}&passed=true"
-                    class="btn btn-secondary">
-                    <i class="fa-solid fa-eye"></i>
-                    View My Answers
-                </a>
-            </div>
-        `;
-
-    } catch (error) {
-        console.error("Module exam review error:", error);
-    }
-}
-
 
 /* ==========================================================================
    PREVIOUS

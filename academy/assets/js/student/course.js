@@ -263,9 +263,20 @@ async function loadModules() {
                         <div class="assessment-card passed">
                             <div class="assessment-icon"><i class="fa-solid fa-circle-check"></i></div>
                             <div class="assessment-content">
-                                <h4>${exam.title}</h4>
-                                <p>Score: ${attempt.score}/${attempt.totalMarks} (${attempt.percentage}%)<br><strong style="color:#16a34a;">✅ Passed</strong></p>
-                            </div>
+    <h4>${exam.title}</h4>
+    <p>
+        Score: ${attempt.score}/${attempt.totalMarks} (${attempt.percentage}%)
+        <br>
+        <strong style="color:#16a34a;">✅ Passed</strong>
+    </p>
+</div>
+
+<a
+    href="exam-result.html?id=${exam.id}&score=${attempt.score}&total=${attempt.totalMarks}&percentage=${attempt.percentage}&passed=true"
+    class="assessment-btn">
+    <i class="fa-solid fa-eye"></i>
+    Review Answers
+</a>
                         </div>`;
                 } else if (allLessonsCompleted) {
                     examHTML = `
