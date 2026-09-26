@@ -868,6 +868,10 @@ export async function addLearningMinutes(uid, minutes) {
 
 }
 
+// ==========================================================================
+// STUDENT LOGIN ACTIVITY
+// ==========================================================================
+
 export async function recordStudentLogin(loginData) {
 
     if (!loginData?.studentId) {
