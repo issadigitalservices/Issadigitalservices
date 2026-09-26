@@ -868,6 +868,26 @@ export async function addLearningMinutes(uid, minutes) {
 
 }
 
+export async function recordStudentLogin(loginData) {
+
+    if (!loginData?.studentId) {
+        throw new Error("Student ID is required.");
+    }
+
+    return await addDocument(
+        "loginActivity",
+        {
+            studentId: loginData.studentId,
+            email: loginData.email ?? "",
+            deviceId: loginData.deviceId ?? "",
+            deviceType: loginData.deviceType ?? "",
+            browser: loginData.browser ?? "",
+            operatingSystem: loginData.operatingSystem ?? "",
+            loginAt: serverTimestamp()
+        }
+    );
+}
+
 /* ==========================================================================
    COURSE REPOSITORY
    ========================================================================== */

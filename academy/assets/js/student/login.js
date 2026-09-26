@@ -10,6 +10,10 @@ import {
 } from "../core/firebase-config.js";
 
 import {
+    recordStudentLogin
+} from "../core/firestore-service.js";
+
+import {
     signInWithEmailAndPassword,
     sendEmailVerification,
     signOut,
@@ -47,6 +51,58 @@ if (togglePassword && password) {
             ? '<i class="fa-solid fa-eye-slash"></i>'
             : '<i class="fa-solid fa-eye"></i>';
     });
+}
+
+
+function getDeviceInfo() {
+
+    let deviceId = localStorage.getItem("issa_device_id");
+
+    if (!deviceId) {
+        deviceId = crypto.randomUUID();
+        localStorage.setItem("issa_device_id", deviceId);
+    }
+
+    const ua = navigator.userAgent;
+
+    let deviceType = "Desktop";
+
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(ua)) {
+        deviceType = "Mobile";
+    }
+
+    let browser = "Unknown";
+
+    if (/Edg\//i.test(ua)) {
+        browser = "Microsoft Edge";
+    } else if (/Chrome\//i.test(ua)) {
+        browser = "Google Chrome";
+    } else if (/Firefox\//i.test(ua)) {
+        browser = "Mozilla Firefox";
+    } else if (/Safari\//i.test(ua)) {
+        browser = "Safari";
+    }
+
+    let operatingSystem = "Unknown";
+
+    if (/Windows NT/i.test(ua)) {
+        operatingSystem = "Windows";
+    } else if (/Android/i.test(ua)) {
+        operatingSystem = "Android";
+    } else if (/iPhone|iPad|iPod/i.test(ua)) {
+        operatingSystem = "iOS";
+    } else if (/Mac OS X/i.test(ua)) {
+        operatingSystem = "macOS";
+    } else if (/Linux/i.test(ua)) {
+        operatingSystem = "Linux";
+    }
+
+    return {
+        deviceId,
+        deviceType,
+        browser,
+        operatingSystem
+    };
 }
 
 /* ==========================================================================
@@ -90,12 +146,33 @@ form.addEventListener("submit", async event => {
             return;
         }
 
-        // Email Verified -> Proceed to Dashboard
-        showToast("Login successful. Redirecting...");
+        // Email Verified -> Record Login Activity
+try {
 
-        setTimeout(() => {
-            location.href = "dashboard.html";
-        }, 1000);
+    const deviceInfo = getDeviceInfo();
+
+    const result = await recordStudentLogin({
+        studentId: user.uid,
+        email: user.email,
+        ...deviceInfo
+    });
+
+    if (!result.success) {
+        console.error("Login activity recording failed:", result.error);
+    }
+
+} catch (error) {
+
+    console.error("Login activity error:", error);
+
+}
+
+// Continue normally to Dashboard
+showToast("Login successful. Redirecting...");
+
+setTimeout(() => {
+    location.href = "dashboard.html";
+}, 1000);
 
     } catch (error) {
         console.error("Login Error:", error);
