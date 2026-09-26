@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Login Activity | ISSA Academy Admin
+    </title>
+
+    <link
+        rel="icon"
+        href="../assets/images/Issa-Logo.png">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/main.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/admin/dashboard.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/layout/admin-layout.css">
+
+    <style>
+
+        .activity-summary {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 24px;
+
+        }
+
+        .summary-card {
+
+            background: #fff;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            border: 1px solid #e2e8f0;
+
+        }
+
+        .summary-card strong {
+
+            display: block;
+
+            font-size: 1.6rem;
+
+            margin-top: 5px;
+
+            color: #0f172a;
+
+        }
+
+        .summary-card span {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+        .activity-toolbar {
+
+            background: #fff;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            border: 1px solid #e2e8f0;
+
+            margin-bottom: 20px;
+
+        }
+
+        .activity-toolbar input {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            padding: 11px 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+
+        }
+
+        .activity-table-wrap {
+
+            background: #fff;
+
+            border-radius: 12px;
+
+            border: 1px solid #e2e8f0;
+
+            overflow-x: auto;
+
+        }
+
+        .activity-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+
+        }
+
+        .activity-table th {
+
+            text-align: left;
+
+            padding: 14px;
+
+            background: #f8fafc;
+
+            color: #475569;
+
+            font-size: 13px;
+
+            white-space: nowrap;
+
+        }
+
+        .activity-table td {
+
+            padding: 14px;
+
+            border-top: 1px solid #e2e8f0;
+
+            font-size: 13px;
+
+            vertical-align: middle;
+
+        }
+
+        .device-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 5px 9px;
+
+            border-radius: 999px;
+
+            background: #eff6ff;
+
+            color: #1d4ed8;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+        }
+
+        .warning-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding: 5px 9px;
+
+            border-radius: 999px;
+
+            background: #fff7ed;
+
+            color: #c2410c;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+        }
+
+        .empty-state {
+
+            text-align: center;
+
+            padding: 50px;
+
+            color: #64748b;
+
+        }
+
+        @media (max-width: 700px) {
+
+            .activity-summary {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <aside
+        class="sidebar"
+        id="adminSidebar">
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div
+                style="
+                display:flex;
+                align-items:center;
+                gap:1rem;
+                ">
+
+                <button
+                    id="sidebarToggle"
+                    class="sidebar-toggle-btn"
+                    aria-label="Toggle Sidebar">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+                <span
+                    style="
+                    font-weight:700;
+                    font-size:1.25rem;
+                    color:#111827;
+                    ">
+
+                    ISSA Academy
+
+                </span>
+
+            </div>
+
+            <div>
+
+                <h1>
+                    Login Activity
+                </h1>
+
+                <p>
+                    Monitor student login devices and activity.
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- Summary -->
+
+        <section class="activity-summary">
+
+            <div class="summary-card">
+
+                <span>
+                    Total Logins
+                </span>
+
+                <strong id="totalLogins">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>
+                    Students Tracked
+                </span>
+
+                <strong id="studentsTracked">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>
+                    Multiple Device Accounts
+                </span>
+
+                <strong id="multipleDeviceAccounts">
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- Search -->
+
+        <section class="activity-toolbar">
+
+            <input
+                type="search"
+                id="activitySearch"
+                placeholder="Search by student email or name...">
+
+        </section>
+
+
+        <!-- Activity Table -->
+
+        <section class="activity-table-wrap">
+
+            <table class="activity-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Login Time
+                        </th>
+
+                        <th>
+                            Device
+                        </th>
+
+                        <th>
+                            OS
+                        </th>
+
+                        <th>
+                            Browser
+                        </th>
+
+                        <th>
+                            Device ID
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="activityTableBody">
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty-state">
+
+                            Loading login activity...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script
+    src="../assets/js/admin/admin-sidebar.js">
+</script>
+
+<script
+    type="module"
+    src="../assets/js/admin/login-activity.js">
+</script>
+
+</body>
+
+</html>

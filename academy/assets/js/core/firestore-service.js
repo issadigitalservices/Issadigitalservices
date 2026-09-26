@@ -892,6 +892,37 @@ export async function recordStudentLogin(loginData) {
     );
 }
 
+// =========================================================================
+// ADMIN - GET STUDENT LOGIN ACTIVITY
+// =========================================================================
+
+export async function getLoginActivity() {
+
+    try {
+
+        const snapshot = await getDocs(
+            query(
+                collectionRef("loginActivity"),
+                orderBy("loginAt", "desc"),
+                limit(500)
+            )
+        );
+
+        const activity = snapshot.docs.map(document => ({
+            id: document.id,
+            ...document.data()
+        }));
+
+        return success(activity);
+
+    } catch (error) {
+
+        return failure(error);
+
+    }
+
+}
+
 /* ==========================================================================
    COURSE REPOSITORY
    ========================================================================== */

@@ -74,6 +74,11 @@ if (sidebar) {
     <a href="resources.html">Resources</a>
 </li>
 
+<li class="${currentPage === "login-activity.html" ? "active" : ""}">
+    <i class="fa-solid fa-clock-rotate-left"></i>
+    <a href="login-activity.html">Login Activity</a>
+</li>
+
 <li class="${currentPage === "settings.html" ? "active" : ""}">
     <i class="fa-solid fa-gear"></i>
     <a href="settings.html">Settings</a>
