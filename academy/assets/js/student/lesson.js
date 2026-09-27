@@ -68,7 +68,6 @@ let lessons = [];
 let currentIndex = -1;
 let isCompleted = false;
 let watchMarked = false;
-let lastSavedTime = 0;
 let player = null;
 
 /* ==========================================================================
@@ -155,11 +154,12 @@ async function loadLesson() {
             }
 
             const protectedVideoUrl = await getStreamUrl();
-            lessonVideo.crossOrigin = "anonymous";
 
             if (!player) {
                 player = new Plyr(lessonVideo, {
                     blankVideo: "",
+                    playsinline: true, // Enables smooth mobile inline streaming
+        fullscreen: { iosNative: true },
                     controls: ["play-large", "play", "progress", "current-time", "duration", "mute", "volume", "settings", "fullscreen"],
                     settings: ["speed"],
                     speed: { selected: 1.25, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
