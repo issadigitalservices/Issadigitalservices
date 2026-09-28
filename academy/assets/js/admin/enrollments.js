@@ -18,6 +18,7 @@ import {
     collection,
     getDocs,
     query,
+    where,
     orderBy,
     doc,
     updateDoc,
@@ -262,37 +263,27 @@ async function approve(id) {
     approveModal.classList.remove("hidden");
 
     try {
-        const moduleSnapshot = await getDocs(
-            query(
-                collection(db, "modules")
-            )
-        );
+    const moduleSnapshot = await getDocs(
+        query(
+            collection(db, "modules"),
+            where("courseId", "==", enrollment.courseId),
+            orderBy("order")
+        )
+    );
 
-        const modules = [];
+    const modules = moduleSnapshot.docs.map(docSnap => ({
+        id: docSnap.id,
+        ...docSnap.data()
+    }));
 
-        moduleSnapshot.forEach(docSnap => {
-            const module = docSnap.data();
-
-            if (module.courseId === enrollment.courseId) {
-                modules.push({
-                    id: docSnap.id,
-                    ...module
-                });
-            }
-        });
-
-        modules.sort((a, b) => {
-            return (a.order || 0) - (b.order || 0);
-        });
-
-        if (modules.length === 0) {
-            moduleAccessList.innerHTML = `
-                <p style="color: #dc2626;">
-                    No modules found for this course.
-                </p>
-            `;
-            return;
-        }
+    if (modules.length === 0) {
+        moduleAccessList.innerHTML = `
+            <p style="color: #dc2626;">
+                No modules found for this course.
+            </p>
+        `;
+        return;
+    }
 
         moduleAccessList.innerHTML = modules.map(module => `
             <label style="
