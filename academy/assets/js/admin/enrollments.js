@@ -242,11 +242,87 @@ function bindEvents() {
 async function approve(id) {
     const enrollment = enrollments.find(item => item.id === id);
 
+    if (!enrollment) {
+        return;
+    }
+
     selectedEnrollmentId = id;
+
     modalStudentName.textContent = enrollment.studentName;
     modalCourseName.textContent = enrollment.courseName;
 
+    const moduleAccessList = document.getElementById("moduleAccessList");
+
+    moduleAccessList.innerHTML = `
+        <p style="color: #6b7280;">
+            Loading modules...
+        </p>
+    `;
+
     approveModal.classList.remove("hidden");
+
+    try {
+        const moduleSnapshot = await getDocs(
+            query(
+                collection(db, "modules")
+            )
+        );
+
+        const modules = [];
+
+        moduleSnapshot.forEach(docSnap => {
+            const module = docSnap.data();
+
+            if (module.courseId === enrollment.courseId) {
+                modules.push({
+                    id: docSnap.id,
+                    ...module
+                });
+            }
+        });
+
+        modules.sort((a, b) => {
+            return (a.order || 0) - (b.order || 0);
+        });
+
+        if (modules.length === 0) {
+            moduleAccessList.innerHTML = `
+                <p style="color: #dc2626;">
+                    No modules found for this course.
+                </p>
+            `;
+            return;
+        }
+
+        moduleAccessList.innerHTML = modules.map(module => `
+            <label style="
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 0.7rem 0;
+                cursor: pointer;
+            ">
+                <input
+                    type="checkbox"
+                    class="module-access-checkbox"
+                    value="${module.id}"
+                >
+
+                <span>
+                    Module ${module.order || ""}: ${module.title || "Untitled Module"}
+                </span>
+            </label>
+        `).join("");
+
+    } catch (error) {
+        console.error(error);
+
+        moduleAccessList.innerHTML = `
+            <p style="color: #dc2626;">
+                Failed to load course modules.
+            </p>
+        `;
+    }
 }
 
 /* ==========================================================================
@@ -352,17 +428,22 @@ confirmApprove.addEventListener("click", async () => {
         const oneYearFromNow = new Date();
         oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
 
-        await updateDoc(
-            doc(db, "enrollments", selectedEnrollmentId),
-            {
-                approvalStatus: "Approved",
-                paymentStatus: "Paid",
-                accessGranted: true,
-                approvedBy: auth.currentUser.uid,
-                approvedAt: serverTimestamp(),
-                expiresAt: Timestamp.fromDate(oneYearFromNow)
-            }
-        );
+        const selectedModules = Array.from(
+    document.querySelectorAll(".module-access-checkbox:checked")
+).map(checkbox => checkbox.value);
+
+await updateDoc(
+    doc(db, "enrollments", selectedEnrollmentId),
+    {
+        approvalStatus: "Approved",
+        paymentStatus: "Paid",
+        accessGranted: true,
+        approvedBy: auth.currentUser.uid,
+        approvedAt: serverTimestamp(),
+        expiresAt: Timestamp.fromDate(oneYearFromNow),
+        allowedModules: selectedModules
+    }
+);
 
         showToast("Enrollment Approved (1-Year Access Granted).");
 
