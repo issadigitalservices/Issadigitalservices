@@ -40,7 +40,7 @@ const FIREBASE_PROJECT_ID = "issa-academy";
 const FIREBASE_API_KEY =
     "AIzaSyBNgQN_Kl0FDKmOfNS1no2KBvYHP2m9Gh4";
 
-const VIDEO_TOKEN_LIFETIME = 15 * 60;
+const VIDEO_TOKEN_LIFETIME = 4 * 60 * 60; // 4 Hours (prevents cutoff mid-lesson)
 
 export default {
 
@@ -705,9 +705,15 @@ if (
    ============================================================ */
 
 if (
-    request.method === "GET" &&
     requestUrl.pathname === "/video"
 ) {
+    if (request.method === "OPTIONS") {
+        return new Response(null, { headers: corsHeaders });
+    }
+
+    if (request.method !== "GET") {
+        return new Response("Method not allowed", { status: 405, headers: corsHeaders });
+    }
 
     /* ========================================================
        RESTRICT DIRECT BROWSER ADDRESS BAR PASTES
@@ -920,46 +926,7 @@ try {
         }
 
 
-        /* ========================================================
-           VERIFY IP & USER-AGENT MATCH
-        ======================================================== */
-
-        const currentIP =
-            request.headers.get("CF-Connecting-IP") || "";
-
-        if (
-            payload.ip &&
-            payload.ip !== currentIP
-        ) {
-
-            return new Response(
-                "Access denied: Network mismatch.",
-                {
-                    status: 403,
-                    headers: corsHeaders
-                }
-            );
-
-        }
-
-
-        const currentUA =
-            request.headers.get("User-Agent") || "";
-
-        if (
-            payload.ua &&
-            payload.ua !== currentUA
-        ) {
-
-            return new Response(
-                "Access denied: Browser environment mismatch.",
-                {
-                    status: 403,
-                    headers: corsHeaders
-                }
-            );
-
-        }
+        /* IP / User-Agent check omitted to prevent mid-stream drops on mobile networks */
 
 
         if (
@@ -980,7 +947,7 @@ try {
 
 
         /* ========================================================
-           GET VIDEO FROM PRIVATE R2
+           GET VIDEO FROM PRIVATE R2 (WITH 5MB CHUNK CAPPING)
         ======================================================== */
 
         const rangeHeader =
@@ -993,141 +960,33 @@ try {
 
 
         if (rangeHeader) {
-
-            const rangeMatch =
-                rangeHeader.match(
-                    /^bytes=(\d*)-(\d*)$/
-                );
-
-
-            if (rangeMatch) {
-
-                const start =
-                    rangeMatch[1] === ""
-                        ? null
-                        : Number(
-                            rangeMatch[1]
-                        );
-
-
-                const requestedEnd =
-                    rangeMatch[2] === ""
-                        ? null
-                        : Number(
-                            rangeMatch[2]
-                        );
-
-
-                const head =
-                    await env.VIDEOS.head(
-                        payload.videoKey
-                    );
-
-
-                if (!head) {
-
-                    return new Response(
-                        "Video not found.",
-                        {
-                            status: 404,
-                            headers: corsHeaders
-                        }
-                    );
-
-                }
-
-
-                const size =
-                    head.size;
-
-
-                let offset;
-                let length;
-
-
-                if (
-                    start !== null
-                ) {
-
-                    offset =
-                        start;
-
-
-                    const end =
-                        requestedEnd !== null
-                            ? Math.min(
-                                requestedEnd,
-                                size - 1
-                            )
-                            : size - 1;
-
-
-                    if (
-                        offset >= size ||
-                        end < offset
-                    ) {
-
-                        return new Response(
-                            "Requested range is not satisfiable.",
-                            {
-                                status: 416,
-                                headers: {
-                                    ...corsHeaders,
-
-                                    "Content-Range":
-                                        `bytes */${size}`
-                                }
-                            }
-                        );
-
-                    }
-
-
-                    length =
-                        end -
-                        offset +
-                        1;
-
-                }
-
-                else if (
-                    requestedEnd !== null
-                ) {
-
-                    length =
-                        Math.min(
-                            requestedEnd,
-                            size
-                        );
-
-
-                    offset =
-                        size -
-                        length;
-
-                }
-
-
-                if (
-                    offset !== undefined &&
-                    length !== undefined
-                ) {
-
-                    object =
-                        await env.VIDEOS.get(
-                            payload.videoKey,
-                            {
-                                range: {
-                                    offset,
-                                    length
-                                }
-                            }
-                        );
-
-                }
-
+            const head = await env.VIDEOS.head(payload.videoKey);
+            if (!head) {
+                return new Response("Video not found.", { status: 404, headers: corsHeaders });
             }
 
+            const size = head.size;
+            const parts = rangeHeader.replace(/bytes=/, "").split("-");
+            const start = parts[0] ? parseInt(parts[0], 10) : 0;
+            let end = parts[1] ? parseInt(parts[1], 10) : size - 1;
+
+            if (start >= size || end >= size) {
+                return new Response("Requested range is not satisfiable.", {
+                    status: 416,
+                    headers: { ...corsHeaders, "Content-Range": `bytes */${size}` }
+                });
+            }
+
+            // Cap chunk size to 5MB max so workers don't choke memory
+            const MAX_CHUNK = 5 * 1024 * 1024;
+            if ((end - start + 1) > MAX_CHUNK) {
+                end = Math.min(start + MAX_CHUNK - 1, size - 1);
+            }
+
+            const chunksize = (end - start) + 1;
+            object = await env.VIDEOS.get(payload.videoKey, {
+                range: { offset: start, length: chunksize }
+            });
         }
 
 

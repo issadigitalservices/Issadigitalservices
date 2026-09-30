@@ -134,7 +134,7 @@ async function loadLesson() {
 
             // Helper function to fetch a fresh video stream URL token
             async function getStreamUrl() {
-                const idToken = await currentUser.getIdToken(true); // Force refresh ID token
+                const idToken = await currentUser.getIdToken();
                 const sessionResponse = await fetch("https://video.issadigitalservices.com/video-session", {
                     method: "POST",
                     credentials: "omit",
@@ -173,12 +173,29 @@ async function loadLesson() {
 
             // Stream Recovery Handler using Plyr Instance
             let isRecovering = false;
-            async function recoverPlayback() {
-                if (isRecovering || !player) return;
-                isRecovering = true;
+let lastRecoveryTime = 0;
 
-                const savedTime = player.currentTime || 0;
-                console.warn("Plyr stalled or stream dropped. Recovering at:", savedTime);
+async function recoverPlayback() {
+    if (!player || isRecovering) return;
+
+// Cancel any pending waiting/stalled recovery timer
+clearTimeout(waitingTimer);
+waitingTimer = null;
+
+// Prevent repeated recovery attempts within 10 seconds
+const now = Date.now();
+    if (now - lastRecoveryTime < 10000) return;
+
+    lastRecoveryTime = now;
+    isRecovering = true;
+
+                if (player.paused) {
+    isRecovering = false;
+    return;
+}
+
+const savedTime = player.currentTime || 0;
+console.warn("Plyr stalled or stream dropped. Recovering at:", savedTime);
 
                 try {
                     const freshUrl = await getStreamUrl();
@@ -188,14 +205,27 @@ async function loadLesson() {
                     };
 
                     player.once("canplay", () => {
-                        player.currentTime = savedTime;
-                        player.play().catch(e => console.error("Resume failed:", e));
-                        isRecovering = false;
-                    });
+    try {
+        player.currentTime = savedTime;
+    } catch (e) {
+        console.warn("Could not restore video position:", e);
+    }
+
+    player.play().catch(e => {
+        console.warn("Resume failed:", e);
+    });
+
+    setTimeout(() => {
+        isRecovering = false;
+    }, 2000);
+});
                 } catch (err) {
-                    console.error("Failed to recover video session:", err);
-                    isRecovering = false;
-                }
+    console.error("Failed to recover video session:", err);
+
+    setTimeout(() => {
+        isRecovering = false;
+    }, 2000);
+}
             }
 
             // Attach native event listeners directly to PLYR instance
@@ -204,22 +234,34 @@ async function loadLesson() {
             player.off("waiting");
 
             player.on("error", recoverPlayback);
-            player.on("stalled", recoverPlayback);
 
-            // Auto-recovery if video is stuck in 'waiting' buffer state > 4s
-            let waitingTimer = null;
-            player.on("waiting", () => {
-                clearTimeout(waitingTimer);
-                waitingTimer = setTimeout(() => {
-                    if (player && !player.paused) {
-                        recoverPlayback();
-                    }
-                }, 4000);
-            });
+player.on("stalled", () => {
+    clearTimeout(waitingTimer);
+
+    waitingTimer = setTimeout(() => {
+        if (player && !player.paused) {
+            recoverPlayback();
+        }
+    }, 8000);
+});
+
+            // Auto-recovery if video is stuck in 'waiting' buffer state > 8s
+let waitingTimer = null;
+player.on("waiting", () => {
+    clearTimeout(waitingTimer);
+
+    waitingTimer = setTimeout(() => {
+        if (player && !player.paused) {
+            recoverPlayback();
+        }
+    }, 8000);
+});
 
             player.on("playing", () => {
-                clearTimeout(waitingTimer);
-            });
+    clearTimeout(waitingTimer);
+    waitingTimer = null;
+    isRecovering = false;
+});
 
             player.off("ready");
             player.on("ready", () => {
