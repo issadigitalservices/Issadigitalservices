@@ -242,24 +242,21 @@ async function loadLesson() {
             player.on("error", recoverPlayback);
 
                         // Give Safari time to buffer before attempting recovery.
-            const scheduleRecovery = () => {
-                clearTimeout(waitingTimer);
+            player.on("stalled", () => {
+    clearTimeout(waitingTimer);
+    waitingTimer = setTimeout(recoverPlayback, 3500);
+});
 
-                waitingTimer = setTimeout(() => {
-                    if (!player || player.paused || player.ended) return;
-                    if (lessonVideo.readyState >= 3) return;
-
-                    recoverPlayback();
-                }, 15000);
-            };
-
-            player.on("stalled", scheduleRecovery);
-            player.on("waiting", scheduleRecovery);
+player.on("waiting", () => {
+    clearTimeout(waitingTimer);
+    waitingTimer = setTimeout(recoverPlayback, 3500);
+});
 
             player.on("playing", () => {
                 clearTimeout(waitingTimer);
                 waitingTimer = null;
                 isRecovering = false;
+                hideLoader();
             });
 
             player.off("ready");
