@@ -132,6 +132,10 @@ async function loadLesson() {
                 } catch (e) {}
             }
 
+            // Explicitly attach inline WebKit video attributes for iOS Safari
+            lessonVideo.setAttribute("playsinline", "true");
+            lessonVideo.setAttribute("webkit-playsinline", "true");
+
             // Helper function to fetch a fresh video stream URL token
             async function getStreamUrl() {
                 const idToken = await currentUser.getIdToken();
@@ -158,8 +162,8 @@ async function loadLesson() {
             if (!player) {
                 player = new Plyr(lessonVideo, {
                     blankVideo: "",
-                    playsinline: true, // Enables smooth mobile inline streaming
-        fullscreen: { iosNative: true },
+                    playsinline: true,
+                    fullscreen: { iosNative: true },
                     controls: ["play-large", "play", "progress", "current-time", "duration", "mute", "volume", "settings", "fullscreen"],
                     settings: ["speed"],
                     speed: { selected: 1.25, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
@@ -173,29 +177,25 @@ async function loadLesson() {
 
             // Stream Recovery Handler using Plyr Instance
             let isRecovering = false;
-let lastRecoveryTime = 0;
+            let lastRecoveryTime = 0;
+            let waitingTimer = null; // Positioned at top of scope to prevent ReferenceError
 
-async function recoverPlayback() {
-    if (!player || isRecovering) return;
+            async function recoverPlayback() {
+                if (!player || isRecovering) return;
 
-// Cancel any pending waiting/stalled recovery timer
-clearTimeout(waitingTimer);
-waitingTimer = null;
+                // Cancel any pending waiting/stalled recovery timer
+                clearTimeout(waitingTimer);
+                waitingTimer = null;
 
-// Prevent repeated recovery attempts within 10 seconds
-const now = Date.now();
-    if (now - lastRecoveryTime < 10000) return;
+                // Prevent repeated recovery attempts within 5 seconds
+                const now = Date.now();
+                if (now - lastRecoveryTime < 5000) return;
 
-    lastRecoveryTime = now;
-    isRecovering = true;
+                lastRecoveryTime = now;
+                isRecovering = true;
 
-                if (player.paused) {
-    isRecovering = false;
-    return;
-}
-
-const savedTime = player.currentTime || 0;
-console.warn("Plyr stalled or stream dropped. Recovering at:", savedTime);
+                const savedTime = player.currentTime || 0;
+                console.warn("Plyr stalled or stream dropped. Recovering at:", savedTime);
 
                 try {
                     const freshUrl = await getStreamUrl();
@@ -205,27 +205,26 @@ console.warn("Plyr stalled or stream dropped. Recovering at:", savedTime);
                     };
 
                     player.once("canplay", () => {
-    try {
-        player.currentTime = savedTime;
-    } catch (e) {
-        console.warn("Could not restore video position:", e);
-    }
+                        try {
+                            player.currentTime = savedTime;
+                        } catch (e) {
+                            console.warn("Could not restore video position:", e);
+                        }
 
-    player.play().catch(e => {
-        console.warn("Resume failed:", e);
-    });
+                        player.play().catch(e => {
+                            console.warn("Resume failed:", e);
+                        });
 
-    setTimeout(() => {
-        isRecovering = false;
-    }, 2000);
-});
+                        setTimeout(() => {
+                            isRecovering = false;
+                        }, 1500);
+                    });
                 } catch (err) {
-    console.error("Failed to recover video session:", err);
-
-    setTimeout(() => {
-        isRecovering = false;
-    }, 2000);
-}
+                    console.error("Failed to recover video session:", err);
+                    setTimeout(() => {
+                        isRecovering = false;
+                    }, 1500);
+                }
             }
 
             // Attach native event listeners directly to PLYR instance
@@ -235,33 +234,22 @@ console.warn("Plyr stalled or stream dropped. Recovering at:", savedTime);
 
             player.on("error", recoverPlayback);
 
-player.on("stalled", () => {
-    clearTimeout(waitingTimer);
+            // Auto-recovery trigger on 3.5s stall threshold
+            player.on("stalled", () => {
+                clearTimeout(waitingTimer);
+                waitingTimer = setTimeout(recoverPlayback, 3500);
+            });
 
-    waitingTimer = setTimeout(() => {
-        if (player && !player.paused) {
-            recoverPlayback();
-        }
-    }, 8000);
-});
-
-            // Auto-recovery if video is stuck in 'waiting' buffer state > 8s
-let waitingTimer = null;
-player.on("waiting", () => {
-    clearTimeout(waitingTimer);
-
-    waitingTimer = setTimeout(() => {
-        if (player && !player.paused) {
-            recoverPlayback();
-        }
-    }, 8000);
-});
+            player.on("waiting", () => {
+                clearTimeout(waitingTimer);
+                waitingTimer = setTimeout(recoverPlayback, 3500);
+            });
 
             player.on("playing", () => {
-    clearTimeout(waitingTimer);
-    waitingTimer = null;
-    isRecovering = false;
-});
+                clearTimeout(waitingTimer);
+                waitingTimer = null;
+                isRecovering = false;
+            });
 
             player.off("ready");
             player.on("ready", () => {
@@ -293,7 +281,7 @@ player.on("waiting", () => {
             console.error("Video error:", error);
             showToast(error.message || "Unable to load video.", "error");
         }
-    });
+    })();
 
     // Start video worker concurrently without awaiting inside Promise.all
     videoTask();
