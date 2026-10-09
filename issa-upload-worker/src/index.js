@@ -6,30 +6,18 @@ const allowedOrigins = [
 ];
 
 function getCorsHeaders(request) {
-
-    const origin =
-        request.headers.get("Origin");
+    const origin = request.headers.get("Origin");
 
     const headers = {
-        "Access-Control-Allow-Methods":
-            "GET, POST, OPTIONS",
-
-        "Access-Control-Allow-Headers":
-            "Authorization, Content-Type, Range",
-
-        "Access-Control-Allow-Credentials":
-            "true",
-
-        "Vary":
-            "Origin"
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Authorization, Content-Type, Range",
+        "Access-Control-Expose-Headers": "Content-Range, Accept-Ranges, Content-Length, Content-Type",
+        "Access-Control-Allow-Credentials": "true",
+        "Vary": "Origin"
     };
 
-    if (
-        origin &&
-        allowedOrigins.includes(origin)
-    ) {
-        headers["Access-Control-Allow-Origin"] =
-            origin;
+    if (origin && allowedOrigins.includes(origin)) {
+        headers["Access-Control-Allow-Origin"] = origin;
     }
 
     return headers;
@@ -701,439 +689,171 @@ if (
 
 
 /* ============================================================
-   PROTECTED VIDEO STREAM
-   ============================================================ */
-
-if (
-    requestUrl.pathname === "/video"
-) {
-    if (request.method === "OPTIONS") {
-        return new Response(null, { headers: corsHeaders });
-    }
-
-    if (request.method !== "GET") {
-        return new Response("Method not allowed", { status: 405, headers: corsHeaders });
-    }
-
-    /* ========================================================
-       RESTRICT DIRECT BROWSER ADDRESS BAR PASTES
-    ======================================================== */
-
-    const referer =
-        request.headers.get("Referer") || "";
-
-    const isAllowedReferer =
-        allowedOrigins.some(origin => referer.startsWith(origin));
-
-    if (!isAllowedReferer) {
-
-        return new Response(
-            "Access denied: Direct links are not allowed.",
-            {
-                status: 403,
-                headers: corsHeaders
-            }
-        );
-
-    }
-
-
-    /* ========================================================
-       REQUIRE SIGNED VIDEO TOKEN
-    ======================================================== */
-
-    const token =
-        requestUrl.searchParams.get("token");
-
-    if (!token) {
-
-        return new Response(
-            "Video access denied.",
-            {
-                status: 403,
-                headers: corsHeaders
-            }
-        );
-
-    }
-
-
-try {
-
-
-        const tokenParts =
-            token.split(".");
-
-
-        if (
-            tokenParts.length !== 2
-        ) {
-
-            return new Response(
-                "Invalid video token.",
-                {
-                    status: 403,
-                    headers: corsHeaders
-                }
-            );
-
-        }
-
-
-        const encodedPayload =
-            tokenParts[0];
-
-
-        const providedSignature =
-            tokenParts[1];
-
-
-        /* ========================================================
-           VERIFY TOKEN SIGNATURE
-        ======================================================== */
-
-        const secretKey =
-            await crypto.subtle.importKey(
-                "raw",
-
-                new TextEncoder().encode(
-                    env.VIDEO_SESSION_SECRET
-                ),
-
-                {
-                    name: "HMAC",
-                    hash: "SHA-256"
-                },
-
-                false,
-
-                ["verify"]
-            );
-
-
-        const signatureBytes =
-            Uint8Array.from(
-                atob(
-                    providedSignature
-                        .replace(/-/g, "+")
-                        .replace(/_/g, "/") +
-                    "=".repeat(
-                        (
-                            4 -
-                            (
-                                providedSignature.length %
-                                4
-                            )
-                        ) % 4
-                    )
-                ),
-                char =>
-                    char.charCodeAt(0)
-            );
-
-
-        const validSignature =
-            await crypto.subtle.verify(
-                "HMAC",
-                secretKey,
-                signatureBytes,
-                new TextEncoder().encode(
-                    encodedPayload
-                )
-            );
-
-
-        if (!validSignature) {
-
-            return new Response(
-                "Invalid video token.",
-                {
-                    status: 403,
-                    headers: corsHeaders
-                }
-            );
-
-        }
-
-
-        /* ========================================================
-           DECODE TOKEN
-        ======================================================== */
-
-        let payload;
-
-
-        try {
-
-            const base64 =
-                encodedPayload
-                    .replace(/-/g, "+")
-                    .replace(/_/g, "/");
-
-
-            const padding =
-                "=".repeat(
-                    (
-                        4 -
-                        (
-                            base64.length %
-                            4
-                        )
-                    ) % 4
-                );
-
-
-            payload =
-                JSON.parse(
-                    atob(
-                        base64 + padding
-                    )
-                );
-
-        }
-
-        catch {
-
-            return new Response(
-                "Invalid video token.",
-                {
-                    status: 403,
-                    headers: corsHeaders
-                }
-            );
-
-        }
-
-
-        /* ========================================================
-           CHECK TOKEN EXPIRY
-        ======================================================== */
-
-        if (
-            !payload.expiresAt ||
-            Date.now() >=
-            Number(payload.expiresAt)
-        ) {
-
-            return new Response(
-                "Video session expired.",
-                {
-                    status: 403,
-                    headers: corsHeaders
-                }
-            );
-
-        }
-
-
-        /* IP / User-Agent check omitted to prevent mid-stream drops on mobile networks */
-
-
-        if (
-            typeof payload.videoKey !==
-            "string" ||
-            !payload.videoKey
-        ) {
-
-            return new Response(
-                "Video file not specified.",
-                {
-                    status: 400,
-                    headers: corsHeaders
-                }
-            );
-
-        }
-
-
-        /* ========================================================
-           GET VIDEO FROM PRIVATE R2 (WITH 5MB CHUNK CAPPING)
-        ======================================================== */
-
-        const rangeHeader =
-            request.headers.get(
-                "Range"
-            );
-
-
-        let object;
-
-
-        if (rangeHeader) {
-            const head = await env.VIDEOS.head(payload.videoKey);
-            if (!head) {
-                return new Response("Video not found.", { status: 404, headers: corsHeaders });
+           PROTECTED VIDEO STREAM (SAFARI SUFFIX RANGE & CHUNK FIXED)
+           ============================================================ */
+        if (requestUrl.pathname === "/video") {
+            if (request.method !== "GET") {
+                return new Response("Method not allowed", { status: 405, headers: corsHeaders });
             }
 
-            const size = head.size;
-            const parts = rangeHeader.replace(/bytes=/, "").split("-");
-            const start = parts[0] ? parseInt(parts[0], 10) : 0;
-            let end = parts[1] ? parseInt(parts[1], 10) : size - 1;
+            /* REFERER RESTRICTION */
+            const referer = request.headers.get("Referer") || "";
+            const isAllowedReferer = allowedOrigins.some(origin => referer.startsWith(origin));
 
-            if (start >= size || end >= size) {
-                return new Response("Requested range is not satisfiable.", {
-                    status: 416,
-                    headers: { ...corsHeaders, "Content-Range": `bytes */${size}` }
+            if (!isAllowedReferer) {
+                return new Response("Access denied: Direct links are not allowed.", {
+                    status: 403,
+                    headers: corsHeaders
                 });
             }
 
-            // Cap chunk size to 5MB max so workers don't choke memory
-            const MAX_CHUNK = 5 * 1024 * 1024;
-            if ((end - start + 1) > MAX_CHUNK) {
-                end = Math.min(start + MAX_CHUNK - 1, size - 1);
+            /* REQUIRE TOKEN */
+            const token = requestUrl.searchParams.get("token");
+            if (!token) {
+                return new Response("Video access denied.", { status: 403, headers: corsHeaders });
             }
 
-            const chunksize = (end - start) + 1;
-            object = await env.VIDEOS.get(payload.videoKey, {
-                range: { offset: start, length: chunksize }
-            });
-        }
+            try {
+                const tokenParts = token.split(".");
+                if (tokenParts.length !== 2) {
+                    return new Response("Invalid video token.", { status: 403, headers: corsHeaders });
+                }
 
+                const encodedPayload = tokenParts[0];
+                const providedSignature = tokenParts[1];
 
-        /* ========================================================
-           FULL VIDEO REQUEST
-        ======================================================== */
-
-        if (!object) {
-
-            object =
-                await env.VIDEOS.get(
-                    payload.videoKey
+                /* VERIFY TOKEN SIGNATURE */
+                const secretKey = await crypto.subtle.importKey(
+                    "raw",
+                    new TextEncoder().encode(env.VIDEO_SESSION_SECRET),
+                    { name: "HMAC", hash: "SHA-256" },
+                    false,
+                    ["verify"]
                 );
 
-        }
+                const signatureBytes = Uint8Array.from(
+                    atob(
+                        providedSignature.replace(/-/g, "+").replace(/_/g, "/") +
+                        "=".repeat((4 - (providedSignature.length % 4)) % 4)
+                    ),
+                    char => char.charCodeAt(0)
+                );
 
+                const validSignature = await crypto.subtle.verify(
+                    "HMAC",
+                    secretKey,
+                    signatureBytes,
+                    new TextEncoder().encode(encodedPayload)
+                );
 
-        if (!object) {
-
-            return new Response(
-                "Video not found.",
-                {
-                    status: 404,
-                    headers: corsHeaders
+                if (!validSignature) {
+                    return new Response("Invalid video token.", { status: 403, headers: corsHeaders });
                 }
-            );
 
-        }
+                /* DECODE PAYLOAD */
+                let payload;
+                try {
+                    const base64 = encodedPayload.replace(/-/g, "+").replace(/_/g, "/");
+                    const padding = "=".repeat((4 - (base64.length % 4)) % 4);
+                    payload = JSON.parse(atob(base64 + padding));
+                } catch {
+                    return new Response("Invalid video token.", { status: 403, headers: corsHeaders });
+                }
 
+                if (!payload.expiresAt || Date.now() >= Number(payload.expiresAt)) {
+                    return new Response("Video session expired.", { status: 403, headers: corsHeaders });
+                }
 
-        /* ========================================================
-           RESPONSE HEADERS
-        ======================================================== */
+                if (typeof payload.videoKey !== "string" || !payload.videoKey) {
+                    return new Response("Video file not specified.", { status: 400, headers: corsHeaders });
+                }
 
-        const headers =
-    new Headers(corsHeaders);
+                /* SAFARI-COMPATIBLE R2 BYTE-RANGE STREAMING */
+                const rangeHeader = request.headers.get("Range");
+                const head = await env.VIDEOS.head(payload.videoKey);
 
+                if (!head) {
+                    return new Response("Video not found.", { status: 404, headers: corsHeaders });
+                }
 
-        headers.set(
-            "Accept-Ranges",
-            "bytes"
-        );
+                const size = head.size;
+                const headers = new Headers(corsHeaders);
+                headers.set("Accept-Ranges", "bytes");
+                headers.set("Cache-Control", "private, no-store");
 
+                if (head.httpEtag) {
+                    headers.set("ETag", head.httpEtag);
+                }
 
-        headers.set(
-            "Cache-Control",
-            "private, no-store"
-        );
+                if (rangeHeader) {
+                    const rangeMatch = rangeHeader.match(/bytes=(\d*)-(\d*)/);
 
+                    if (rangeMatch) {
+                        let start = rangeMatch[1] ? parseInt(rangeMatch[1], 10) : undefined;
+                        let end = rangeMatch[2] ? parseInt(rangeMatch[2], 10) : undefined;
 
-        object.writeHttpMetadata(
-            headers
-        );
+                        // Case 1: Suffix Range Request (bytes=-500) -> Last N bytes
+                        if (start === undefined && end !== undefined) {
+                            start = Math.max(0, size - end);
+                            end = size - 1;
+                        } 
+                        // Case 2: Standard or Open Range Request (bytes=500- or bytes=500-1000)
+                        else if (start !== undefined) {
+                            if (end === undefined || end >= size) {
+                                end = size - 1;
+                            }
+                        }
 
+                        if (start !== undefined && end !== undefined && start < size && end >= start) {
+                            // Cap chunk size to 5MB max
+                            const MAX_CHUNK = 5 * 1024 * 1024;
+                            if ((end - start + 1) > MAX_CHUNK) {
+                                end = start + MAX_CHUNK - 1;
+                            }
 
-        if (
-            object.httpEtag
-        ) {
+                            const length = (end - start) + 1;
+                            const object = await env.VIDEOS.get(payload.videoKey, {
+                                range: { offset: start, length }
+                            });
 
-            headers.set(
-                "ETag",
-                object.httpEtag
-            );
+                            if (object) {
+                                object.writeHttpMetadata(headers);
+                                headers.set("Content-Range", `bytes ${start}-${end}/${size}`);
+                                headers.set("Content-Length", String(length));
 
-        }
+                                return new Response(object.body, {
+                                    status: 206,
+                                    headers
+                                });
+                            }
+                        }
+                    }
 
+                    return new Response("Requested range is not satisfiable.", {
+                        status: 416,
+                        headers: { ...corsHeaders, "Content-Range": `bytes */${size}` }
+                    });
+                }
 
-        /* ========================================================
-           PARTIAL RESPONSE
-        ======================================================== */
+                /* FULL VIDEO RESPONSE */
+                const object = await env.VIDEOS.get(payload.videoKey);
+                if (!object) {
+                    return new Response("Video not found.", { status: 404, headers: corsHeaders });
+                }
 
-        if (
-            rangeHeader &&
-            object.range
-        ) {
+                object.writeHttpMetadata(headers);
+                headers.set("Content-Length", String(size));
 
-            const offset =
-                object.range.offset || 0;
-
-
-            const length =
-                object.range.length ||
-                object.size;
-
-
-            headers.set(
-                "Content-Range",
-                `bytes ${offset}-${offset + length - 1}/${object.size}`
-            );
-
-
-            headers.set(
-                "Content-Length",
-                String(length)
-            );
-
-
-            return new Response(
-                object.body,
-                {
-                    status: 206,
+                return new Response(object.body, {
+                    status: 200,
                     headers
-                }
-            );
+                });
 
+            } catch (error) {
+                console.error("Protected video stream error:", error);
+                return new Response("Unable to stream video.", { status: 500, headers: corsHeaders });
+            }
         }
-
-
-        /* ========================================================
-           FULL RESPONSE
-        ======================================================== */
-
-        headers.set(
-            "Content-Length",
-            String(object.size)
-        );
-
-
-        return new Response(
-            object.body,
-            {
-                status: 200,
-                headers
-            }
-        );
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Protected video stream error:",
-            error
-        );
-
-
-        return new Response(
-            "Unable to stream video.",
-            {
-                status: 500,
-                headers: corsHeaders
-            }
-        );
-
-    }
-
-}
 
 /* ============================================================
    PUBLIC FILE / ATTACHMENT DOWNLOAD ROUTE

@@ -234,16 +234,20 @@ async function loadLesson() {
 
             player.on("error", recoverPlayback);
 
-            // Auto-recovery trigger on 3.5s stall threshold
-            player.on("stalled", () => {
+                        // Give Safari time to buffer before attempting recovery.
+            const scheduleRecovery = () => {
                 clearTimeout(waitingTimer);
-                waitingTimer = setTimeout(recoverPlayback, 3500);
-            });
 
-            player.on("waiting", () => {
-                clearTimeout(waitingTimer);
-                waitingTimer = setTimeout(recoverPlayback, 3500);
-            });
+                waitingTimer = setTimeout(() => {
+                    if (!player || player.paused || player.ended) return;
+                    if (lessonVideo.readyState >= 3) return;
+
+                    recoverPlayback();
+                }, 15000);
+            };
+
+            player.on("stalled", scheduleRecovery);
+            player.on("waiting", scheduleRecovery);
 
             player.on("playing", () => {
                 clearTimeout(waitingTimer);
@@ -284,7 +288,7 @@ async function loadLesson() {
     })();
 
     // Start video worker concurrently without awaiting inside Promise.all
-    videoTask();
+           // The async IIFE above starts immediately; do not call videoTask.
 
     // 3. Execute ALL Firestore Queries SIMULTANEOUSLY in parallel
     const [
