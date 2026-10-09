@@ -83,9 +83,16 @@ onAuthStateChanged(
         }
 
         studentId = user.uid;
-        showLoader();
-        await loadLesson();
-        hideLoader();
+                showLoader();
+
+        try {
+            await loadLesson();
+        } catch (error) {
+            console.error("Lesson loading failed:", error);
+            showToast("Unable to load lesson details. Please refresh.", "error");
+        } finally {
+            hideLoader();
+        }
     }
 );
 
