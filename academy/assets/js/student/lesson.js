@@ -89,7 +89,7 @@ onAuthStateChanged(
             await loadLesson();
         } catch (error) {
             console.error("Lesson loading failed:", error);
-            showToast("Unable to load lesson details. Please refresh.", "error");
+            showToast("Unable to load lesson information. Please refresh.", "error");
         } finally {
             hideLoader();
         }
