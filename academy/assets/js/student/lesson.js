@@ -182,80 +182,16 @@ async function loadLesson() {
                 sources: [{ src: protectedVideoUrl, type: "video/mp4" }]
             };
 
-            // Stream Recovery Handler using Plyr Instance
-            let isRecovering = false;
-            let lastRecoveryTime = 0;
-            let waitingTimer = null; // Positioned at top of scope to prevent ReferenceError
-
-            async function recoverPlayback() {
-                if (!player || isRecovering) return;
-
-                // Cancel any pending waiting/stalled recovery timer
-                clearTimeout(waitingTimer);
-                waitingTimer = null;
-
-                // Prevent repeated recovery attempts within 5 seconds
-                const now = Date.now();
-                if (now - lastRecoveryTime < 5000) return;
-
-                lastRecoveryTime = now;
-                isRecovering = true;
-
-                const savedTime = player.currentTime || 0;
-                console.warn("Plyr stalled or stream dropped. Recovering at:", savedTime);
-
-                try {
-                    const freshUrl = await getStreamUrl();
-                    player.source = {
-                        type: "video",
-                        sources: [{ src: freshUrl, type: "video/mp4" }]
-                    };
-
-                    player.once("canplay", () => {
-                        try {
-                            player.currentTime = savedTime;
-                        } catch (e) {
-                            console.warn("Could not restore video position:", e);
-                        }
-
-                        player.play().catch(e => {
-                            console.warn("Resume failed:", e);
-                        });
-
-                        setTimeout(() => {
-                            isRecovering = false;
-                        }, 1500);
-                    });
-                } catch (err) {
-                    console.error("Failed to recover video session:", err);
-                    setTimeout(() => {
-                        isRecovering = false;
-                    }, 1500);
-                }
-            }
-
-            // Attach native event listeners directly to PLYR instance
+            // Clean event listeners allowing native iOS Safari buffering without restarts
             player.off("error");
             player.off("stalled");
             player.off("waiting");
 
-            player.on("error", recoverPlayback);
-
-                        // Give Safari time to buffer before attempting recovery.
-            player.on("stalled", () => {
-    clearTimeout(waitingTimer);
-    waitingTimer = setTimeout(recoverPlayback, 3500);
-});
-
-player.on("waiting", () => {
-    clearTimeout(waitingTimer);
-    waitingTimer = setTimeout(recoverPlayback, 3500);
-});
+            player.on("error", (err) => {
+                console.warn("Video playback error encountered:", err);
+            });
 
             player.on("playing", () => {
-                clearTimeout(waitingTimer);
-                waitingTimer = null;
-                isRecovering = false;
                 hideLoader();
             });
 
