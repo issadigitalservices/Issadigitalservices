@@ -805,12 +805,6 @@ if (
                         }
 
                         if (start !== undefined && end !== undefined && start < size && end >= start) {
-                            // Cap chunk size to 5MB max
-                            const MAX_CHUNK = 5 * 1024 * 1024;
-                            if ((end - start + 1) > MAX_CHUNK) {
-                                end = start + MAX_CHUNK - 1;
-                            }
-
                             const length = (end - start) + 1;
                             const object = await env.VIDEOS.get(payload.videoKey, {
                                 range: { offset: start, length }
