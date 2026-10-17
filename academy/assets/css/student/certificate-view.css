@@ -132,15 +132,15 @@ body {
 .brand-container {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px; /* Increased spacing between logo and text */
 }
 
 .cert-logo {
-  height: 44px;
+  height: 58px; /* Increased from 44px to make it pop and balance the text block */
   width: auto;
   object-fit: contain;
   display: block;
-  mix-blend-mode: multiply; /* Blends away solid light/grey backgrounds */
+  mix-blend-mode: multiply;
 }
 
 .brand-text-group {
