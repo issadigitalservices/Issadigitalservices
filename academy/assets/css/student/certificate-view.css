@@ -321,8 +321,8 @@ body {
 }
 
 .qr-box {
-    width: 85px;  /* Increased size for easier camera locking */
-    height: 85px;
+    width: 115px;  /* Increased size for easier camera locking */
+    height: 115px;
     border: 1px solid #e5e7eb;
     padding: 6px;  /* Provides a clear quiet-zone white border */
     background: #ffffff;
