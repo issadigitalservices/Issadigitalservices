@@ -138,19 +138,27 @@ async function loadCertificate() {
         }
 
         /* ======================================================================
-           QR CODE
-           ====================================================================== */
+            QR CODE
+            ====================================================================== */
 
         const verifyUrl = `${location.origin}/academy/student/certificate-verify.html?certificate=${encodeURIComponent(data.certificateNumber || "")}`;
 
         qrCode.innerHTML = "";
 
-        new QRCode(qrCode, {
+        const qr = new QRCode(qrCode, {
             text: verifyUrl,
             width: 65,
             height: 65,
             correctLevel: QRCode.CorrectLevel.H
         });
+
+        // Force the generated canvas to match container bounds properly
+        const qrCanvas = qrCode.querySelector("canvas");
+        if (qrCanvas) {
+            qrCanvas.style.width = "100%";
+            qrCanvas.style.height = "100%";
+            qrCanvas.style.display = "block";
+        }
 
         return true;
 
