@@ -145,10 +145,9 @@ async function loadCertificate() {
 
         qrCode.innerHTML = "";
 
-        // Use a direct image API URL to guarantee 100% scannability by any mobile camera or Google Lens
-        const encodedUrl = encodeURIComponent(verifyUrl);
+        // Direct, high-contrast QR image generator that works instantly on all mobile cameras & Google Lens
         const qrImg = document.createElement("img");
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodedUrl}`;
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${verifyUrl}`;
         qrImg.alt = "Certificate QR Code";
         qrImg.style.width = "100%";
         qrImg.style.height = "100%";
