@@ -292,9 +292,14 @@ body {
 .sig-img.hidden { display: none; }
 
 .signature-text {
-  font-family: 'Great Vibes', cursive;
-  font-size: 28px;
-  color: #031b33;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    font-style: normal;
+    color: #061d35;
+    text-transform: none;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
 }
 
 .instructor-title {
