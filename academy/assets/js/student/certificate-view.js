@@ -145,15 +145,15 @@ async function loadCertificate() {
 
         qrCode.innerHTML = "";
 
-        // Direct, high-contrast QR image generator that works instantly on all mobile cameras & Google Lens
-        const qrImg = document.createElement("img");
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${verifyUrl}`;
-        qrImg.alt = "Certificate QR Code";
-        qrImg.style.width = "100%";
-        qrImg.style.height = "100%";
-        qrImg.style.display = "block";
-
-        qrCode.appendChild(qrImg);
+        // Generate crisp vector-based QR code natively using qrcode.js
+        new QRCode(qrCode, {
+            text: verifyUrl,
+            width: 85,
+            height: 85,
+            colorDark: "#031b33",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
 
         return true;
 
