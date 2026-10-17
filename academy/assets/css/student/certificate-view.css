@@ -119,23 +119,32 @@ body {
   z-index: 2;
 }
 
-/* Header & Central Logo */
+/* Header & Side-by-Side Brand Container */
 .cert-header {
   position: relative;
   z-index: 3;
   text-align: center;
   margin-top: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.brand-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .cert-logo {
-  height: 52px;
+  height: 44px;
   width: auto;
-  margin-bottom: 6px;
   object-fit: contain;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   mix-blend-mode: multiply; /* Blends away solid light/grey backgrounds */
+}
+
+.brand-text-group {
+  text-align: left;
 }
 
 .brand-title {
@@ -144,6 +153,7 @@ body {
   font-weight: 800;
   letter-spacing: 2px;
   color: #031b33;
+  line-height: 1.1;
 }
 
 .brand-tagline {
