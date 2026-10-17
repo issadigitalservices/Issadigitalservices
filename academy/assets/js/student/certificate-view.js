@@ -145,6 +145,7 @@ async function loadCertificate() {
 
         qrCode.innerHTML = "";
 
+        // Generate QR code
         const qr = new QRCode(qrCode, {
             text: verifyUrl,
             width: 65,
@@ -152,13 +153,14 @@ async function loadCertificate() {
             correctLevel: QRCode.CorrectLevel.H
         });
 
-        // Force the generated canvas to match container bounds properly
-        const qrCanvas = qrCode.querySelector("canvas");
-        if (qrCanvas) {
-            qrCanvas.style.width = "100%";
-            qrCanvas.style.height = "100%";
-            qrCanvas.style.display = "block";
-        }
+        // Convert the generated canvas into a clean <img> element so phone cameras can read it instantly
+        setTimeout(() => {
+            const canvas = qrCode.querySelector("canvas");
+            if (canvas) {
+                const imgData = canvas.toDataURL("image/png");
+                qrCode.innerHTML = `<img src="${imgData}" alt="Certificate QR Code" style="width: 100%; height: 100%; display: block;" />`;
+            }
+        }, 50);
 
         return true;
 
