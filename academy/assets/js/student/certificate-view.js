@@ -186,19 +186,14 @@ async function loadAcademySettings() {
             academyLogo.src = settings.certificateLogo;
         }
 
-        if (settings.signatureImage) {
-            signatureImage.src = settings.signatureImage;
-            signatureImage.classList.remove("hidden");
-            instructorName.classList.add("hidden");
-        }
+        // Display the academy issuer's name instead of a signature image
+signatureImage.classList.add("hidden");
+signatureImage.removeAttribute("src");
 
-        if (settings.instructorName) {
-            instructorName.textContent = settings.instructorName;
-        }
+instructorName.textContent = "Mohammed Arsad K";
+instructorName.classList.remove("hidden");
 
-        if (settings.instructorDesignation) {
-            designation.textContent = settings.instructorDesignation;
-        }
+designation.textContent = "Founder & Instructor";
 
     } catch (error) {
         console.error("Error loading academy settings:", error);
