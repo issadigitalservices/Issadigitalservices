@@ -145,22 +145,16 @@ async function loadCertificate() {
 
         qrCode.innerHTML = "";
 
-        // Generate QR code
-        const qr = new QRCode(qrCode, {
-            text: verifyUrl,
-            width: 65,
-            height: 65,
-            correctLevel: QRCode.CorrectLevel.H
-        });
+        // Use a direct image API URL to guarantee 100% scannability by any mobile camera or Google Lens
+        const encodedUrl = encodeURIComponent(verifyUrl);
+        const qrImg = document.createElement("img");
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodedUrl}`;
+        qrImg.alt = "Certificate QR Code";
+        qrImg.style.width = "100%";
+        qrImg.style.height = "100%";
+        qrImg.style.display = "block";
 
-        // Convert the generated canvas into a clean <img> element so phone cameras can read it instantly
-        setTimeout(() => {
-            const canvas = qrCode.querySelector("canvas");
-            if (canvas) {
-                const imgData = canvas.toDataURL("image/png");
-                qrCode.innerHTML = `<img src="${imgData}" alt="Certificate QR Code" style="width: 100%; height: 100%; display: block;" />`;
-            }
-        }, 50);
+        qrCode.appendChild(qrImg);
 
         return true;
 
