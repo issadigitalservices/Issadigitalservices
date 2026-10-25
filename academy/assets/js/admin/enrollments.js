@@ -129,7 +129,7 @@ function formatExpirationDate(item) {
     else if (item.createdAt && item.approvalStatus === "Approved") {
         const createdDate = item.createdAt.toDate ? item.createdAt.toDate() : new Date(item.createdAt);
         expiryDate = new Date(createdDate);
-        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        expiryDate.setFullYear(expiryDate.getFullYear() + 5);
     }
 
     if (!expiryDate) return "N/A";
@@ -417,7 +417,7 @@ confirmApprove.addEventListener("click", async () => {
     try {
         // Calculate 1 Year Access Expiration Date from today
         const oneYearFromNow = new Date();
-        oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+        oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 5);
 
         const selectedModules = Array.from(
     document.querySelectorAll(".module-access-checkbox:checked")
@@ -431,12 +431,12 @@ await updateDoc(
         accessGranted: true,
         approvedBy: auth.currentUser.uid,
         approvedAt: serverTimestamp(),
-        expiresAt: Timestamp.fromDate(oneYearFromNow),
+        expiresAt: Timestamp.fromDate(fiveYearsFromNow),
         allowedModules: selectedModules
     }
 );
 
-        showToast("Enrollment Approved (1-Year Access Granted).");
+        showToast("Enrollment Approved (5-Year Access Granted).");
 
         selectedEnrollmentId = null;
         await loadEnrollments();
