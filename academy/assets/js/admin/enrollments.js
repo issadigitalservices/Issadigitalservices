@@ -416,8 +416,8 @@ confirmApprove.addEventListener("click", async () => {
 
     try {
         // Calculate 1 Year Access Expiration Date from today
-        const oneYearFromNow = new Date();
-        oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 5);
+        const fiveYearsFromNow = new Date();
+        fiveYearsFromNow.setFullYear(fiveYearsFromNow.getFullYear() + 5);
 
         const selectedModules = Array.from(
     document.querySelectorAll(".module-access-checkbox:checked")
