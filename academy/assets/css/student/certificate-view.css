@@ -54,9 +54,9 @@ body {
 .certificate-border {
   width: 1000px;
   height: 700px;
-  background-color: #fafbfc;
+  background-color: #faf9f5; /* Warm premium certificate background paper color */
   position: relative;
-  padding: 40px 55px;
+  padding: 38px 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -83,14 +83,14 @@ body {
 }
 
 /* -------------------------------------------------------------
-   Clean Diagonal Corner Banners (Fixed Alignment)
+   Precise Corner Ribbons (Matching Sample 1)
    ------------------------------------------------------------- */
 .corner-ribbon {
   position: absolute;
-  width: 180px;
-  height: 180px;
+  width: 170px;
+  height: 170px;
   overflow: hidden;
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
 }
 
@@ -107,89 +107,89 @@ body {
 
 .ribbon-navy-1 {
   position: absolute;
-  top: -50px;
-  left: -50px;
-  width: 160px;
-  height: 160px;
+  top: -45px;
+  left: -45px;
+  width: 150px;
+  height: 150px;
   background-color: #0c1c38;
   transform: rotate(-45deg);
 }
 
 .ribbon-gold {
   position: absolute;
-  top: 55px;
-  left: -20px;
-  width: 200px;
-  height: 6px;
-  background-color: #b8935c;
+  top: 52px;
+  left: -18px;
+  width: 190px;
+  height: 5px;
+  background-color: #c59b27;
   transform: rotate(-45deg);
 }
 
 .ribbon-navy-2 {
   position: absolute;
-  top: 66px;
-  left: -20px;
-  width: 200px;
-  height: 20px;
+  top: 60px;
+  left: -18px;
+  width: 190px;
+  height: 18px;
   background-color: #0c1c38;
   transform: rotate(-45deg);
 }
 
 /* -------------------------------------------------------------
-   Gold Frame & Ornamental Corner Brackets
+   Gold Frame & Ornamental L-Brackets
    ------------------------------------------------------------- */
 .gold-border-frame {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  right: 18px;
-  bottom: 18px;
-  border: 1.5px solid #b8935c;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  border: 1.5px solid #c59b27;
   pointer-events: none;
   z-index: 2;
 }
 
 .corner-bracket {
   position: absolute;
-  width: 14px;
-  height: 14px;
-  border-color: #b8935c;
+  width: 16px;
+  height: 16px;
+  border-color: #c59b27;
   border-style: solid;
 }
 
 .top-left-bracket {
-  top: 2px;
-  left: 2px;
+  top: 4px;
+  left: 4px;
   border-width: 2px 0 0 2px;
 }
 
 .top-right-bracket {
-  top: 2px;
-  right: 2px;
+  top: 4px;
+  right: 4px;
   border-width: 2px 2px 0 0;
 }
 
 .bottom-left-bracket {
-  bottom: 2px;
-  left: 2px;
+  bottom: 4px;
+  left: 4px;
   border-width: 0 0 2px 2px;
 }
 
 .bottom-right-bracket {
-  bottom: 2px;
-  right: 2px;
+  bottom: 4px;
+  right: 4px;
   border-width: 0 2px 2px 0;
 }
 
 /* -------------------------------------------------------------
-   Header Section (Fixed Logo Tilt & Alignment)
+   Header Section (Exact Logo & Title Sizing)
    ------------------------------------------------------------- */
 .cert-header {
   position: relative;
-  z-index: 3;
+  z-index: 4;
   display: flex;
   justify-content: center;
-  margin-top: 5px;
+  margin-top: 4px;
 }
 
 .brand-container {
@@ -199,11 +199,11 @@ body {
 }
 
 .cert-logo {
-  height: 52px;
+  height: 54px;
   width: auto;
   object-fit: contain;
   display: block;
-  transform: none; /* Removed excessive tilt */
+  transform: rotate(-5deg);
   mix-blend-mode: multiply;
 }
 
@@ -213,17 +213,17 @@ body {
 
 .brand-title {
   font-family: 'Cinzel', serif;
-  font-size: 25px;
+  font-size: 26px;
   font-weight: 800;
   letter-spacing: 2px;
   color: #0c1c38;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .brand-tagline {
   font-family: 'Montserrat', sans-serif;
-  font-size: 10px;
-  letter-spacing: 1.6px;
+  font-size: 9.5px;
+  letter-spacing: 1.8px;
   color: #555555;
   margin-top: 2px;
   text-transform: uppercase;
@@ -235,39 +235,39 @@ body {
    ------------------------------------------------------------- */
 .cert-title-section {
   position: relative;
-  z-index: 3;
+  z-index: 4;
   text-align: center;
-  margin: 5px 0;
+  margin-top: -2px;
 }
 
 .main-title {
   font-family: 'Cinzel', serif;
-  font-size: 42px;
+  font-size: 44px;
   font-weight: 700;
-  letter-spacing: 7px;
+  letter-spacing: 8px;
   color: #0c1c38;
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .sub-title-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  margin-top: 4px;
+  gap: 16px;
+  margin-top: 5px;
 }
 
 .gold-line {
-  width: 70px;
+  width: 90px;
   height: 1px;
-  background-color: #b8935c;
+  background-color: #c59b27;
 }
 
 .sub-title {
   font-family: 'Cinzel', serif;
   font-size: 15px;
-  letter-spacing: 4.5px;
-  color: #b8935c;
+  letter-spacing: 5px;
+  color: #c59b27;
   font-weight: 700;
 }
 
@@ -276,13 +276,13 @@ body {
    ------------------------------------------------------------- */
 .cert-body {
   position: relative;
-  z-index: 3;
+  z-index: 4;
   text-align: center;
-  margin: 5px 0;
+  margin: 0;
 }
 
 .cert-intro {
-  font-size: 13px;
+  font-size: 12.5px;
   color: #4b5563;
 }
 
@@ -292,15 +292,15 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   color: #0c1c38;
-  letter-spacing: 2px;
-  margin: 10px auto 12px auto;
+  letter-spacing: 2.5px;
+  margin: 8px auto 10px auto;
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.15;
   display: block;
 }
 
 .completion-text {
-  font-size: 12.5px;
+  font-size: 12px;
   color: #4b5563;
 }
 
@@ -315,15 +315,15 @@ body {
 }
 
 .course-desc {
-  font-size: 11px;
+  font-size: 10.5px;
   color: #4b5563;
-  max-width: 500px;
+  max-width: 480px;
   margin: 0 auto;
   line-height: 1.4;
 }
 
 /* -------------------------------------------------------------
-   Footer Section (Proper spacing & QR position)
+   Footer Section (Exact 4-Compartment Grid & QR Placement)
    ------------------------------------------------------------- */
 .cert-footer {
   position: relative;
@@ -331,8 +331,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 0 15px 5px 15px;
-  border-top: 1px solid #e5e7eb;
+  padding: 0 10px 4px 10px;
+  border-top: 1px solid #e2e8f0;
   padding-top: 12px;
 }
 
@@ -342,28 +342,28 @@ body {
 }
 
 .badge-icon-wrap {
-  width: 28px;
-  height: 28px;
-  border: 1px solid #b8935c;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #c59b27;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 5px;
-  color: #b8935c;
-  font-size: 13px;
+  color: #c59b27;
+  font-size: 12px;
   background: #fff;
 }
 
 .footer-label {
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.8px;
   color: #6b7280;
 }
 
 .footer-val {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   color: #0c1c38;
   margin-top: 2px;
@@ -376,14 +376,14 @@ body {
 }
 
 .signature-box {
-  min-height: 36px;
+  min-height: 35px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
 .sig-img {
-  height: 36px;
+  height: 35px;
   width: auto;
   object-fit: contain;
 }
@@ -395,21 +395,21 @@ body {
 }
 
 .signature-line {
-  width: 170px;
+  width: 160px;
   height: 1px;
-  background-color: #b8935c;
-  margin: 2px 0 4px 0;
+  background-color: #c59b27;
+  margin: 2px 0 3px 0;
 }
 
 .instructor-name-label {
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: #0c1c38;
 }
 
 .instructor-sub-label {
-  font-size: 9.5px;
+  font-size: 9px;
   color: #6b7280;
 }
 
@@ -417,21 +417,21 @@ body {
 .footer-v-divider {
   width: 1px;
   height: 38px;
-  background-color: #b8935c;
+  background-color: #c59b27;
   margin-bottom: 4px;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
-/* QR Code Compartment (Positioned cleanly on white space) */
+/* QR Code Compartment */
 .footer-qr-block {
   text-align: center;
   align-items: center;
-  margin-right: 15px; /* Keeps QR code out of the dark blue bottom banner */
+  margin-right: 5px;
 }
 
 .qr-box {
-  width: 74px;
-  height: 74px;
+  width: 72px;
+  height: 72px;
   border: 1px solid #cbd5e1;
   padding: 3px;
   background: #ffffff;
@@ -455,7 +455,7 @@ body {
   margin-top: 3px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   padding: 1px 4px;
 }
 
