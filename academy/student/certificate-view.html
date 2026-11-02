@@ -67,42 +67,47 @@
                 
                 <div id="studentName" class="student-name">-</div>
 
-                <p class="completion-text">has successfully completed the</p>
+                <p class="completion-text">has successfully completed the course</p>
                 <h3 id="courseName" class="course-title">-</h3>
                 <p class="course-desc">
                     and demonstrated proficiency in course concepts, practical applications, problem-solving, and advanced techniques.
                 </p>
             </main>
 
-            <!-- Footer Section -->
+            <!-- Footer Section (4-Column Layout matching reference) -->
             <footer class="cert-footer">
                 
-                <!-- Left: Certificate ID -->
+                <!-- 1. Left: Certificate ID -->
                 <div class="footer-left">
                     <div class="course-badge-box">
-                        <i class="fa-solid fa-award course-icon"></i>
+                        <i class="fa-solid fa-id-card course-icon"></i>
                     </div>
-                    <div class="cert-id-label">Certificate ID</div>
+                    <div class="cert-id-label">CERTIFICATE ID</div>
                     <div id="certificateNumber" class="cert-id-val">-</div>
                 </div>
 
-                <!-- Center: Instructor & Signature -->
+                <!-- 2. Center: Instructor & Signature -->
                 <div class="footer-center">
                     <div class="signature-box">
                         <img id="signatureImage" src="" alt="Signature" class="sig-img hidden">
-                        <span id="instructorName" class="signature-text"></span>
+                        <span id="instructorName" class="signature-text">Mohammed Arsad K</span>
                     </div>
-                    <div id="designation" class="instructor-title">Instructor</div>
-                    
-                    <div class="issue-date-wrap">
-                        Issued on: <strong id="issueDate">-</strong>
-                    </div>
+                    <div id="designation" class="instructor-title">Founder & Instructor</div>
                 </div>
 
-                <!-- Right: QR Code -->
+                <!-- 3. Issue Date Block -->
+                <div class="footer-date-section">
+                    <div class="course-badge-box">
+                        <i class="fa-solid fa-calendar-days course-icon"></i>
+                    </div>
+                    <div class="cert-id-label">ISSUE DATE</div>
+                    <div id="issueDate" class="cert-id-val">-</div>
+                </div>
+
+                <!-- 4. Right: QR Code -->
                 <div class="footer-right">
                     <div id="qrCode" class="qr-box"></div>
-                    <p class="verify-text">Verify this certificate</p>
+                    <div class="verify-text">VERIFY THIS CERTIFICATE</div>
                 </div>
 
             </footer>
