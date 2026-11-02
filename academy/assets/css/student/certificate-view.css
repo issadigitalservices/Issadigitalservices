@@ -802,97 +802,25 @@ body {
     .instructor-name-display,
     .course-level,
     
+
 /* =========================================================
-   PREMIUM SYMMETRICAL CORNER DESIGN
+   REMOVE BOTH NAVY CORNER DECORATIONS COMPLETELY
    ========================================================= */
 
-.corner-shape {
-    position: absolute;
-    z-index: 4;
-
-    width: 60px;
-    height: 60px;
-
-    overflow: hidden;
-    background: transparent !important;
-    border-radius: 0 !important;
-
-    pointer-events: none;
-}
-
-/* Top Left */
-
-.corner-shape.top-left {
-    top: 0;
-    left: 0;
-    transform: none;
-}
-
-/* Bottom Right - Mirrored Design */
-
-.corner-shape.bottom-right {
-    right: 0;
-    bottom: 0;
-    transform: rotate(180deg);
-}
-
-/* Navy Geometric Background */
-
-.corner-shape::before {
-    content: "";
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background: linear-gradient(
-        135deg,
-        #142b4b,
-        #0c1c38
-    );
-
-    clip-path: polygon(
-        0 0,
-        100% 0,
-        100% 100%,
-        70% 100%,
-        0 30%
-    );
-
-    transform: none;
-}
-
-/* Elegant Gold Diagonal Stripe */
-
+.corner-shape,
+.corner-shape::before,
 .corner-shape::after {
-    content: "";
-    position: absolute;
-
-    top: 23%;
-    left: -15%;
-
-    width: 135%;
-    height: 4px;
-
-    background: linear-gradient(
-        90deg,
-        #e1c778,
-        #bd922f
-    );
-
-    transform: rotate(-45deg);
-}
-
-/* Print Support */
-
-@media print {
-    
-/* Remove both decorative navy corner shapes */
-.corner-shape {
     display: none !important;
+    content: none !important;
 }
 
-  }
+/* Also hide in PDF / Print */
+@media print {
+    .corner-shape,
+    .corner-shape::before,
+    .corner-shape::after {
+        display: none !important;
+        content: none !important;
+    }
+}
 }
