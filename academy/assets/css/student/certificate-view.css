@@ -259,21 +259,56 @@ body {
    ACADEMY HEADER
    ========================================================= */
 
-.cert-header {
-    position: relative;
-    z-index: 3;
 
+/* =========================================
+   ISSA ACADEMY HEADER - TRUE CENTER ALIGNMENT
+   ========================================= */
+
+.cert-header {
+    width: 100%;
     display: flex;
     justify-content: center;
-
-    margin-top: .2%;
-}
-
-.brand-container {
-    display: inline-flex;
     align-items: center;
-    gap: 18px;
+    text-align: center;
 }
+
+.cert-header .brand-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    left: auto;
+    transform: none;
+}
+
+.cert-header .brand-text-group {
+    width: max-content;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.cert-header .brand-title {
+    width: auto;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.cert-header .brand-tagline {
+    width: auto;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+}
+
 
 .cert-logo {
     display: block;
@@ -285,10 +320,6 @@ body {
 
     transform: rotate(-5deg);
     mix-blend-mode: multiply;
-}
-
-.brand-text-group {
-    text-align: left;
 }
 
 .brand-title {
@@ -813,6 +844,70 @@ body {
     display: none !important;
     content: none !important;
 }
+
+/* Clean centered academy header without logo */
+
+.brand-container {
+    justify-content: center;
+    text-align: center;
+}
+
+.brand-text-group {
+    text-align: center;
+}
+
+/* Center Academy Name and Tagline */
+
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.brand-text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+
+/* FORCE PERFECT HORIZONTAL CENTERING */
+
+.brand-container {
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+.brand-text-group {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+}
+
+.brand-text-group h2,
+.brand-text-group p {
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
 
 /* Also hide in PDF / Print */
 @media print {
