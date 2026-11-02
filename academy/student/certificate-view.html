@@ -11,7 +11,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Alex+Brush&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
@@ -25,7 +25,7 @@
 
 <body>
 
-    <!-- Top Action Bar -->
+    <!-- Action Bar -->
     <div class="action-bar no-print">
         <button id="backBtn" class="btn-secondary">
             <i class="fa-solid fa-arrow-left"></i> Back
@@ -35,16 +35,32 @@
         </button>
     </div>
 
-    <!-- Certificate Card Container (Hidden by default to avoid flash) -->
+    <!-- Certificate Canvas Wrapper -->
     <div id="certificateWrapper" class="certificate-wrapper hidden">
         <div class="certificate-border">
             
-            <!-- Corner Decorative Shapes & Gold Frame -->
-            <div class="corner-shape top-left"></div>
-            <div class="corner-shape bottom-right"></div>
-            <div class="gold-border-frame"></div>
+            <!-- Diagonal Corner Ribbon Accents -->
+            <div class="corner-ribbon top-left">
+                <div class="ribbon-navy-1"></div>
+                <div class="ribbon-gold"></div>
+                <div class="ribbon-navy-2"></div>
+            </div>
+            
+            <div class="corner-ribbon bottom-right">
+                <div class="ribbon-navy-1"></div>
+                <div class="ribbon-gold"></div>
+                <div class="ribbon-navy-2"></div>
+            </div>
 
-           <!-- Header -->
+            <!-- Gold Inner Border with L-Brackets -->
+            <div class="gold-border-frame">
+                <span class="corner-bracket top-left-bracket"></span>
+                <span class="corner-bracket top-right-bracket"></span>
+                <span class="corner-bracket bottom-left-bracket"></span>
+                <span class="corner-bracket bottom-right-bracket"></span>
+            </div>
+
+            <!-- Header -->
             <header class="cert-header">
                 <div class="brand-container">
                     <img id="academyLogo" src="../assets/images/Issa-Logo.png" alt="ISSA Academy Logo" class="cert-logo">
@@ -55,14 +71,13 @@
                 </div>
             </header>
 
-            <!-- Title Section with Reference Gold Lines -->
+            <!-- Title Section with Gold Flanking Rules -->
             <section class="cert-title-section">
                 <h2 class="main-title">CERTIFICATE</h2>
-                <div class="title-divider-line"></div>
-                <div class="sub-title-wrapper">
-                    <span class="sub-line-left"></span>
+                <div class="sub-title-row">
+                    <span class="gold-line"></span>
                     <span class="sub-title">OF COMPLETION</span>
-                    <span class="sub-line-right"></span>
+                    <span class="gold-line"></span>
                 </div>
             </section>
 
@@ -82,38 +97,40 @@
             <!-- Footer Section -->
             <footer class="cert-footer">
                 
-                <!-- Left: Certificate ID -->
-                <div class="footer-left">
-                    <div class="course-badge-box">
-                        <i class="fa-solid fa-id-badge course-icon"></i>
+                <!-- 1. Left: Certificate ID -->
+                <div class="footer-block footer-id-block">
+                    <div class="badge-icon-wrap">
+                        <i class="fa-solid fa-id-badge"></i>
                     </div>
-                    <div class="cert-id-label">CERTIFICATE ID</div>
-                    <div id="certificateNumber" class="cert-id-val">-</div>
+                    <div class="footer-label">CERTIFICATE ID</div>
+                    <div id="certificateNumber" class="footer-val">-</div>
                 </div>
 
-                <!-- Center Group: Signature and Issue Date with a divider -->
-                <div class="footer-center-group">
-                    <div class="signature-column">
-                        <div class="signature-box">
-                            <img id="signatureImage" src="" alt="Signature" class="sig-img hidden">
-                            <span id="instructorName" class="signature-text">Mohammed Arsad K</span>
-                        </div>
-                        <div id="designation" class="instructor-title">Founder & Instructor</div>
+                <!-- 2. Center: Signature & Instructor -->
+                <div class="footer-block footer-sig-block">
+                    <div class="signature-box">
+                        <img id="signatureImage" src="../assets/images/signature.png" alt="Signature" class="sig-img">
+                        <span id="instructorName" class="signature-fallback hidden">Mohammed Arsad K</span>
                     </div>
-
-                    <div class="footer-divider"></div>
-
-                    <div class="date-column">
-                        <div class="course-badge-box">
-                            <i class="fa-solid fa-calendar-days course-icon"></i>
-                        </div>
-                        <div class="cert-id-label">ISSUE DATE</div>
-                        <div id="issueDate" class="cert-id-val">-</div>
-                    </div>
+                    <div class="signature-line"></div>
+                    <div class="instructor-name-label">MOHAMMED ARSAD K</div>
+                    <div id="designation" class="instructor-sub-label">Founder & Instructor</div>
                 </div>
 
-                <!-- Right: QR Code -->
-                <div class="footer-right">
+                <!-- Vertical Separator Rule -->
+                <div class="footer-v-divider"></div>
+
+                <!-- 3. Center-Right: Issue Date -->
+                <div class="footer-block footer-date-block">
+                    <div class="badge-icon-wrap">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <div class="footer-label">ISSUE DATE</div>
+                    <div id="issueDate" class="footer-val">-</div>
+                </div>
+
+                <!-- 4. Right: QR Code -->
+                <div class="footer-block footer-qr-block">
                     <div id="qrCode" class="qr-box"></div>
                     <div class="verify-text">VERIFY THIS CERTIFICATE</div>
                 </div>
