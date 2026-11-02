@@ -54,7 +54,7 @@ body {
 .certificate-border {
   width: 1000px;
   height: 700px;
-  background-color: #faf9f5; /* Warm premium certificate background paper color */
+  background-color: #faf9f5; /* Warm premium paper background */
   position: relative;
   padding: 38px 50px;
   display: flex;
@@ -83,56 +83,30 @@ body {
 }
 
 /* -------------------------------------------------------------
-   Precise Corner Ribbons (Matching Sample 1)
+   Smooth Curved Radial Gradient Corner Shapes
    ------------------------------------------------------------- */
-.corner-ribbon {
+.corner-shape.top-left {
   position: absolute;
-  width: 170px;
-  height: 170px;
-  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 310px;
+  height: 310px;
+  background: radial-gradient(circle at top left, #031b33 58%, #c59b27 72%, transparent 74%);
+  border-bottom-right-radius: 100%;
   z-index: 3;
   pointer-events: none;
 }
 
-.corner-ribbon.top-left {
-  top: 0;
-  left: 0;
-}
-
-.corner-ribbon.bottom-right {
+.corner-shape.bottom-right {
+  position: absolute;
   bottom: 0;
   right: 0;
-  transform: rotate(180deg);
-}
-
-.ribbon-navy-1 {
-  position: absolute;
-  top: -45px;
-  left: -45px;
-  width: 150px;
-  height: 150px;
-  background-color: #0c1c38;
-  transform: rotate(-45deg);
-}
-
-.ribbon-gold {
-  position: absolute;
-  top: 52px;
-  left: -18px;
-  width: 190px;
-  height: 5px;
-  background-color: #c59b27;
-  transform: rotate(-45deg);
-}
-
-.ribbon-navy-2 {
-  position: absolute;
-  top: 60px;
-  left: -18px;
-  width: 190px;
-  height: 18px;
-  background-color: #0c1c38;
-  transform: rotate(-45deg);
+  width: 310px;
+  height: 310px;
+  background: radial-gradient(circle at bottom right, #031b33 58%, #c59b27 72%, transparent 74%);
+  border-top-left-radius: 100%;
+  z-index: 3;
+  pointer-events: none;
 }
 
 /* -------------------------------------------------------------
@@ -155,6 +129,7 @@ body {
   height: 16px;
   border-color: #c59b27;
   border-style: solid;
+  z-index: 4;
 }
 
 .top-left-bracket {
@@ -182,11 +157,11 @@ body {
 }
 
 /* -------------------------------------------------------------
-   Header Section (Exact Logo & Title Sizing)
+   Header Section
    ------------------------------------------------------------- */
 .cert-header {
   position: relative;
-  z-index: 4;
+  z-index: 5;
   display: flex;
   justify-content: center;
   margin-top: 4px;
@@ -235,7 +210,7 @@ body {
    ------------------------------------------------------------- */
 .cert-title-section {
   position: relative;
-  z-index: 4;
+  z-index: 5;
   text-align: center;
   margin-top: -2px;
 }
@@ -276,7 +251,7 @@ body {
    ------------------------------------------------------------- */
 .cert-body {
   position: relative;
-  z-index: 4;
+  z-index: 5;
   text-align: center;
   margin: 0;
 }
@@ -323,7 +298,7 @@ body {
 }
 
 /* -------------------------------------------------------------
-   Footer Section (Exact 4-Compartment Grid & QR Placement)
+   Footer Section
    ------------------------------------------------------------- */
 .cert-footer {
   position: relative;
