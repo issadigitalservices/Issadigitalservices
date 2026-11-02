@@ -51,13 +51,13 @@ body {
   overflow: hidden;
 }
 
-/* Certificate Canvas Container */
+/* Certificate Canvas Container (Exact A4 Landscape Proportions) */
 .certificate-border {
   width: 1000px;
   height: 700px;
   background-color: #fafbfc;
   position: relative;
-  padding: 35px 55px;
+  padding: 35px 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -88,8 +88,8 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 290px;
-  height: 290px;
+  width: 280px;
+  height: 280px;
   background: radial-gradient(circle at top left, #031b33 58%, #c59b27 72%, transparent 74%);
   border-bottom-right-radius: 100%;
   z-index: 1;
@@ -99,20 +99,20 @@ body {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 290px;
-  height: 290px;
+  width: 280px;
+  height: 280px;
   background: radial-gradient(circle at bottom right, #031b33 58%, #c59b27 72%, transparent 74%);
   border-top-left-radius: 100%;
   z-index: 1;
 }
 
-/* Gold Inner Border */
+/* Gold Inner Border Frame */
 .gold-border-frame {
   position: absolute;
-  top: 18px;
-  left: 18px;
-  right: 18px;
-  bottom: 18px;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
   border: 2px solid #c59b27;
   border-radius: 4px;
   pointer-events: none;
@@ -124,19 +124,19 @@ body {
   position: relative;
   z-index: 3;
   text-align: center;
-  margin-top: 2px;
   display: flex;
   justify-content: center;
+  margin-top: 5px;
 }
 
 .brand-container {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .cert-logo {
-  height: 56px;
+  height: 52px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -149,7 +149,7 @@ body {
 
 .brand-title {
   font-family: 'Cinzel', serif;
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 800;
   letter-spacing: 2px;
   color: #031b33;
@@ -157,7 +157,7 @@ body {
 }
 
 .brand-tagline {
-  font-size: 10.5px;
+  font-size: 9.5px;
   letter-spacing: 1.5px;
   color: #555555;
   margin-top: 2px;
@@ -165,48 +165,47 @@ body {
   font-weight: 600;
 }
 
-/* Title Section with Reference Lines */
+/* Title Section with Reference Flanking Lines */
 .cert-title-section {
   position: relative;
   z-index: 3;
   text-align: center;
-  margin-top: -5px;
 }
 
 .main-title {
   font-family: 'Cinzel', serif;
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 700;
-  letter-spacing: 6px;
+  letter-spacing: 7px;
   color: #031b33;
   line-height: 1.1;
 }
 
 .title-divider-line {
-  width: 180px;
+  width: 220px;
   height: 1px;
   background-color: #c59b27;
-  margin: 6px auto;
+  margin: 5px auto;
 }
 
 .sub-title-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 12px;
   margin-top: 2px;
 }
 
 .sub-line-left,
 .sub-line-right {
-  width: 60px;
+  width: 50px;
   height: 1px;
   background-color: #c59b27;
 }
 
 .sub-title {
   font-family: 'Cinzel', serif;
-  font-size: 15px;
+  font-size: 14px;
   letter-spacing: 4px;
   color: #c59b27;
   font-weight: 600;
@@ -217,69 +216,69 @@ body {
   position: relative;
   z-index: 3;
   text-align: center;
-  margin: 5px 0;
+  margin: 0;
 }
 
 .cert-intro {
-  font-size: 13px;
+  font-size: 12.5px;
   color: #4b5563;
 }
 
 .student-name {
   font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
   text-transform: uppercase;
   color: #031b33;
   letter-spacing: 2px;
-  margin: 10px auto 12px auto;
+  margin: 8px auto 10px auto;
   text-align: center;
   line-height: 1.2;
   display: block;
 }
 
 .completion-text {
-  font-size: 12.5px;
+  font-size: 12px;
   color: #4b5563;
 }
 
 .course-title {
   font-family: 'Cinzel', serif;
-  font-size: 21px;
+  font-size: 20px;
   color: #0b6623;
   font-weight: 700;
   letter-spacing: 1px;
-  margin: 5px 0;
+  margin: 4px 0;
   text-transform: uppercase;
 }
 
 .course-desc {
-  font-size: 11px;
+  font-size: 10.5px;
   color: #4b5563;
-  max-width: 500px;
+  max-width: 480px;
   margin: 0 auto;
   line-height: 1.4;
 }
 
-/* Footer Section */
+/* Footer Section - Exact 4-Part Alignment */
 .cert-footer {
   position: relative;
   z-index: 5;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 0 15px 5px 15px;
+  padding: 0 10px 0 10px;
 }
 
 .footer-left {
   text-align: left;
 }
 
-/* Center Group containing Signature and Issue Date with a divider */
+/* Center Group containing Signature and Issue Date with vertical divider */
 .footer-center-group {
   display: flex;
   align-items: flex-end;
-  gap: 22px;
+  gap: 20px;
 }
 
 .signature-column {
@@ -290,39 +289,38 @@ body {
   text-align: left;
 }
 
-/* Vertical Divider Line */
 .footer-divider {
   width: 1px;
-  height: 44px;
+  height: 42px;
   background-color: #d1d5db;
   margin-bottom: 4px;
 }
 
 .course-badge-box {
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   background-color: #eff6ff;
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .course-icon {
-  font-size: 15px;
+  font-size: 14px;
   color: #2563eb;
 }
 
 .cert-id-label {
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: #6b7280;
 }
 
 .cert-id-val {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   color: #031b33;
   margin-top: 2px;
@@ -331,9 +329,9 @@ body {
 .signature-box {
   border-bottom: 1px solid #9ca3af;
   padding-bottom: 2px;
-  width: 180px;
+  width: 170px;
   margin: 0 auto;
-  min-height: 32px;
+  min-height: 30px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -341,38 +339,37 @@ body {
 
 .signature-text {
   font-family: 'Montserrat', sans-serif;
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 700;
   color: #061d35;
   white-space: nowrap;
 }
 
 .instructor-title {
-  font-size: 10.5px;
+  font-size: 10px;
   color: #4b5563;
   margin-top: 3px;
 }
 
-/* Right Column: QR Code positioned over the dark corner background */
+/* Right Column: QR Code positioned cleanly */
 .footer-right {
   text-align: center;
   position: relative;
   z-index: 10;
-  margin-right: 2px;
 }
 
 .qr-box {
-  width: 82px;
-  height: 82px;
+  width: 78px;
+  height: 78px;
   border: 1px solid #cbd5e1;
-  padding: 4px;
+  padding: 3px;
   background: #ffffff;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
 }
 
 .qr-box canvas, 
@@ -383,13 +380,13 @@ body {
 }
 
 .verify-text {
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 700;
   color: #031b33;
-  margin-top: 4px;
+  margin-top: 3px;
   letter-spacing: 0.5px;
   background: rgba(255, 255, 255, 0.95);
-  padding: 2px 5px;
+  padding: 2px 4px;
   border-radius: 3px;
   text-transform: uppercase;
   white-space: nowrap;
