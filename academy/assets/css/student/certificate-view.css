@@ -888,9 +888,11 @@ body {
 /* Print Support */
 
 @media print {
-    .corner-shape {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
+    
+/* Remove both decorative navy corner shapes */
+.corner-shape {
+    display: none !important;
+}
+
   }
 }
