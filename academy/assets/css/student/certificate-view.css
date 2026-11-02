@@ -83,30 +83,51 @@ body {
 }
 
 /* -------------------------------------------------------------
-   Smooth Curved Radial Gradient Corner Shapes
+   Sharp Diagonal Geometric Corner Ribbons (Matching Sample)
    ------------------------------------------------------------- */
-.corner-shape.top-left {
+.corner-shape {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 310px;
-  height: 310px;
-  background: radial-gradient(circle at top left, #031b33 58%, #c59b27 72%, transparent 74%);
-  border-bottom-right-radius: 100%;
+  width: 180px;
+  height: 180px;
+  overflow: hidden;
   z-index: 3;
   pointer-events: none;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.corner-shape.top-left {
+  top: 0;
+  left: 0;
 }
 
 .corner-shape.bottom-right {
-  position: absolute;
   bottom: 0;
   right: 0;
-  width: 310px;
-  height: 310px;
-  background: radial-gradient(circle at bottom right, #031b33 58%, #c59b27 72%, transparent 74%);
-  border-top-left-radius: 100%;
-  z-index: 3;
-  pointer-events: none;
+  transform: rotate(180deg);
+}
+
+/* Inner Navy Triangle & Gold Stripe Layer */
+.corner-shape::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 180px;
+  height: 180px;
+  background-color: #0c1c38;
+  transform: rotate(-45deg);
+}
+
+.corner-shape::after {
+  content: "";
+  position: absolute;
+  top: 48px;
+  left: -20px;
+  width: 220px;
+  height: 6px;
+  background-color: #c59b27;
+  transform: rotate(-45deg);
 }
 
 /* -------------------------------------------------------------
