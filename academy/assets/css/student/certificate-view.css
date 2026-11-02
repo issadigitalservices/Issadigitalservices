@@ -462,3 +462,150 @@ body {
   .certificate-wrapper { box-shadow: none; border-radius: 0; }
   @page { size: A4 landscape; margin: 0; }
 }
+/* ======================================================================
+   PREMIUM CERTIFICATE REFERENCE DESIGN OVERRIDES
+   Navy blue + warm ivory + gold, tuned to the supplied sample.
+   ====================================================================== */
+
+.certificate-border {
+    width: 1000px;
+    height: 700px;
+    aspect-ratio: auto;
+    padding: 38px 50px;
+    background: #fbfaf7;
+}
+
+.certificate-border::before {
+    width: 320px;
+    height: 320px;
+    background-image: url('../../images/Issa-Logo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: .035;
+}
+
+.gold-border-frame {
+    inset: 20px;
+    border: 2px solid #c5a04a;
+}
+
+.cert-header { margin-top: 4px; }
+.brand-container { gap: 18px; }
+.cert-logo { height: 72px; }
+.brand-title {
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+.brand-tagline {
+    margin-top: 4px;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.cert-title-section { margin-top: -2px; }
+.main-title {
+    font-size: 64px;
+    letter-spacing: 8px;
+}
+.sub-title-row { gap: 18px; margin-top: 6px; }
+.gold-line { width: 110px; height: 1.5px; }
+.sub-title {
+    font-size: 23px;
+    letter-spacing: 6px;
+}
+
+.cert-intro,
+.completion-text { font-size: 17px; }
+.student-name {
+    margin: 12px auto 14px;
+    font-size: 44px;
+    letter-spacing: 2px;
+}
+.course-title {
+    margin: 8px 0 5px;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: #07543e;
+}
+.course-desc {
+    max-width: 700px;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.cert-footer {
+    padding: 16px 10px 4px;
+    border-top: 1.5px solid #c5a04a;
+    align-items: center;
+}
+.footer-id-block,
+.footer-date-block { min-width: 205px; }
+.badge-icon-wrap {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 7px;
+    font-size: 16px;
+}
+.footer-label { font-size: 11px; letter-spacing: 1px; }
+.footer-val { margin-top: 5px; font-size: 14px; }
+.footer-sig-block { flex: 1; }
+.signature-box { min-height: 48px; }
+.sig-img { height: 48px; max-width: 190px; }
+.signature-fallback { font-size: 34px; }
+.signature-line { width: 220px; margin: 3px 0 5px; }
+.instructor-name-label { font-size: 12px; letter-spacing: 1px; }
+.instructor-sub-label { font-size: 11px; }
+.footer-v-divider { height: 58px; margin: 0 10px; }
+.footer-qr-block { min-width: 100px; }
+.qr-box {
+    width: 84px;
+    height: 84px;
+    padding: 3px;
+    border: 1.5px solid #c5a04a;
+    border-radius: 4px;
+}
+.verify-text {
+    margin-top: 5px;
+    font-size: 8px;
+    letter-spacing: .5px;
+}
+
+/* Keep the landscape composition usable on smaller screens. */
+@media (max-width: 1030px) {
+    .certificate-wrapper { width: 100%; }
+    .certificate-border {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 10 / 7;
+        padding: 3.8% 5%;
+    }
+    .cert-logo { height: clamp(38px, 7.2vw, 72px); }
+    .brand-title { font-size: clamp(20px, 3.5vw, 36px); }
+    .brand-tagline { font-size: clamp(7px, 1.1vw, 12px); }
+    .main-title { font-size: clamp(34px, 6.2vw, 64px); }
+    .sub-title { font-size: clamp(12px, 2.2vw, 23px); }
+    .student-name { font-size: clamp(22px, 4.3vw, 44px); }
+    .course-title { font-size: clamp(17px, 3.2vw, 32px); }
+    .cert-intro, .completion-text { font-size: clamp(9px, 1.7vw, 17px); }
+    .course-desc { font-size: clamp(8px, 1.4vw, 14px); }
+    .footer-id-block, .footer-date-block { min-width: 19%; }
+    .footer-val { font-size: clamp(7px, 1.4vw, 14px); }
+    .qr-box { width: clamp(44px, 8.4vw, 84px); height: clamp(44px, 8.4vw, 84px); }
+    .badge-icon-wrap { width: clamp(20px, 3.4vw, 34px); height: clamp(20px, 3.4vw, 34px); }
+    .footer-v-divider { height: clamp(26px, 5.8vw, 58px); }
+    .signature-box { min-height: clamp(24px, 4.8vw, 48px); }
+    .sig-img { height: clamp(24px, 4.8vw, 48px); }
+    .signature-line { width: min(220px, 90%); }
+}
+
+@media print {
+    .certificate-border {
+        width: 1000px;
+        height: 700px;
+        aspect-ratio: auto;
+        padding: 38px 50px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}

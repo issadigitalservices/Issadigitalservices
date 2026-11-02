@@ -191,21 +191,20 @@ async function loadAcademySettings() {
 
         // Display the academy issuer's name instead of a signature image
 
-        // In loadAcademySettings():
+        instructorName.textContent = "Mohammed Arsad K";
+designation.textContent = "Founder & Instructor";
+
 if (settings.signatureImage) {
     signatureImage.src = settings.signatureImage;
-    signatureImage.classList.remove("hidden");
-    instructorName.classList.add("hidden");
-} else {
-    // If no signature image uploaded, use the cursive CSS font fallback
+}
+
+signatureImage.classList.remove("hidden");
+instructorName.classList.add("hidden");
+
+signatureImage.onerror = () => {
     signatureImage.classList.add("hidden");
     instructorName.classList.remove("hidden");
-}
-signatureImage.classList.add("hidden");
-signatureImage.removeAttribute("src");
-
-instructorName.textContent = "Mohammed Arsad K";
-instructorName.classList.remove("hidden");
+};
 
 designation.textContent = "Founder & Instructor";
 
