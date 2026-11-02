@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,17 +8,17 @@
     <title>Certificate | ISSA Academy</title>
 
     <link rel="icon" href="../assets/images/Issa-Logo.png">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Alex+Brush&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/student/certificate-view.css">
 
-    <!-- External PDF & Canvas Libraries -->
+    <!-- PDF and QR Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -30,20 +31,22 @@
         <button id="backBtn" class="btn-secondary">
             <i class="fa-solid fa-arrow-left"></i> Back
         </button>
+
         <button id="printBtn" class="btn-primary">
             <i class="fa-solid fa-download"></i> Download PDF
         </button>
     </div>
 
-    <!-- Certificate Canvas Wrapper -->
+    <!-- Certificate -->
     <div id="certificateWrapper" class="certificate-wrapper hidden">
+
         <div class="certificate-border">
-            
-            <!-- Smooth Curved Corner Shapes -->
+
+            <!-- Decorative Corners -->
             <div class="corner-shape top-left"></div>
             <div class="corner-shape bottom-right"></div>
 
-            <!-- Gold Inner Border with L-Brackets -->
+            <!-- Gold Border -->
             <div class="gold-border-frame">
                 <span class="corner-bracket top-left-bracket"></span>
                 <span class="corner-bracket top-right-bracket"></span>
@@ -51,100 +54,239 @@
                 <span class="corner-bracket bottom-right-bracket"></span>
             </div>
 
-            <!-- Header -->
+            <!-- Academy Header -->
             <header class="cert-header">
+
                 <div class="brand-container">
-                    <img id="academyLogo" src="../assets/images/Issa-Logo.png" alt="ISSA Academy Logo" class="cert-logo">
+
+                    <img
+                        id="academyLogo"
+                        src="../assets/images/Issa-Logo.png"
+                        alt="ISSA Academy Logo"
+                        class="cert-logo"
+                    >
+
                     <div class="brand-text-group">
-                        <h1 id="academyName" class="brand-title">ISSA ACADEMY</h1>
-                        <p class="brand-tagline">LEARN TODAY, LEAD TOMORROW</p>
+
+                        <h1 id="academyName" class="brand-title">
+                            ISSA ACADEMY
+                        </h1>
+
+                        <p class="brand-tagline">
+                            LEARN TODAY, LEAD TOMORROW
+                        </p>
+
                     </div>
+
                 </div>
+
             </header>
 
-            <!-- Title Section with Gold Flanking Rules -->
+            <!-- Certificate Heading -->
             <section class="cert-title-section">
-                <h2 class="main-title">CERTIFICATE</h2>
+
+                <h2 class="main-title">
+                    CERTIFICATE
+                </h2>
+
                 <div class="sub-title-row">
+
                     <span class="gold-line"></span>
-                    <span class="sub-title">OF COMPLETION</span>
+
+                    <span class="sub-title">
+                        OF COMPLETION
+                    </span>
+
                     <span class="gold-line"></span>
+
                 </div>
+
             </section>
 
-            <!-- Main Body -->
+            <!-- Certificate Content -->
             <main class="cert-body">
-                <p class="cert-intro">This is to certify that</p>
-                
-                <div id="studentName" class="student-name">-</div>
 
-                <p class="completion-text">has successfully completed the course</p>
-                <h3 id="courseName" class="course-title">-</h3>
-                <p class="course-desc">
-                    and demonstrated proficiency in course concepts, practical applications, problem-solving, and advanced techniques.
+                <p class="cert-intro">
+                    This is to certify that
                 </p>
+
+                <div id="studentName" class="student-name">
+                    -
+                </div>
+
+                <p class="completion-text">
+                    has successfully completed the course
+                </p>
+
+                <h3 id="courseName" class="course-title">
+                    -
+                </h3>
+
+                <!-- Course Level: Separate Line -->
+                <p id="courseLevel" class="course-level"></p>
+
+                <p class="course-desc">
+                    and demonstrated proficiency in course concepts,
+                    practical applications, problem-solving, and
+                    advanced techniques.
+                </p>
+
             </main>
 
-            <!-- Footer Section -->
+            <!-- Certificate Footer -->
             <footer class="cert-footer">
-                
-                <!-- 1. Left: Certificate ID -->
+
+                <!-- Certificate ID -->
                 <div class="footer-block footer-id-block">
+
                     <div class="badge-icon-wrap">
                         <i class="fa-solid fa-id-badge"></i>
                     </div>
-                    <div class="footer-label">CERTIFICATE ID</div>
-                    <div id="certificateNumber" class="footer-val">-</div>
-                </div>
 
-                <!-- 2. Center: Signature & Instructor -->
-                <div class="footer-block footer-sig-block">
-                    <div class="signature-box">
-                        <img id="signatureImage" src="../assets/images/signature.png" alt="Signature" class="sig-img">
-                        <span id="instructorName" class="signature-fallback hidden">Mohammed Arsad K</span>
+                    <div class="footer-label">
+                        CERTIFICATE ID
                     </div>
-                    <div class="signature-line"></div>
-                    <div class="instructor-name-label">MOHAMMED ARSAD K</div>
-                    <div id="designation" class="instructor-sub-label">Founder & Instructor</div>
+
+                    <div id="certificateNumber" class="footer-val">
+                        -
+                    </div>
+
                 </div>
 
-                <!-- Vertical Separator Rule -->
+                <!-- Instructor Name - No Signature -->
+                <div class="footer-block footer-sig-block">
+
+                    <div class="instructor-name-display">
+                        MOHAMMED ARSAD K
+                    </div>
+
+                    <!-- Hidden compatibility elements for existing JS -->
+                    <div class="signature-compatibility" aria-hidden="true">
+
+                        <img
+                            id="signatureImage"
+                            src="../assets/images/signature.png"
+                            alt=""
+                        >
+
+                        <span id="instructorName">
+                            Mohammed Arsad K
+                        </span>
+
+                    </div>
+
+                    <div class="signature-line"></div>
+
+                    <div id="designation" class="instructor-sub-label">
+                        Founder & Instructor
+                    </div>
+
+                </div>
+
+                <!-- Vertical Divider -->
                 <div class="footer-v-divider"></div>
 
-                <!-- 3. Center-Right: Issue Date -->
+                <!-- Issue Date -->
                 <div class="footer-block footer-date-block">
+
                     <div class="badge-icon-wrap">
                         <i class="fa-solid fa-calendar-days"></i>
                     </div>
-                    <div class="footer-label">ISSUE DATE</div>
-                    <div id="issueDate" class="footer-val">-</div>
+
+                    <div class="footer-label">
+                        ISSUE DATE
+                    </div>
+
+                    <div id="issueDate" class="footer-val">
+                        -
+                    </div>
+
                 </div>
 
-                <!-- 4. Right: QR Code -->
+                <!-- QR Code -->
                 <div class="footer-block footer-qr-block">
+
                     <div id="qrCode" class="qr-box"></div>
-                    <div class="verify-text">VERIFY THIS CERTIFICATE</div>
+
+                    <div class="verify-text">
+                        VERIFY THIS CERTIFICATE
+                    </div>
+
                 </div>
 
             </footer>
 
         </div>
+
     </div>
 
     <!-- Page Loader -->
     <div id="pageLoader" class="page-loader">
+
         <div class="loader-card">
-            <img src="../assets/images/Issa-Logo.png" alt="ISSA Academy Logo" style="max-width: 100px; height: auto;">
+
+            <img
+                src="../assets/images/Issa-Logo.png"
+                alt="ISSA Academy Logo"
+                style="max-width: 100px; height: auto;"
+            >
+
             <div class="loader-spinner"></div>
+
             <p>Loading Certificate...</p>
+
         </div>
+
     </div>
 
-    <!-- Toast Notifications Container -->
+    <!-- Toast Notifications -->
     <div id="toastContainer" class="toast-container"></div>
 
+    <!-- Course Title Formatting -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const title = document.getElementById("courseName");
+            const level = document.getElementById("courseLevel");
+
+            if (!title || !level) return;
+
+            const splitCourseTitle = () => {
+
+                const value = (title.textContent || "").trim();
+
+                const match = value.match(/^(.*?)\s*\(([^()]*)\)\s*$/);
+
+                if (!match) return;
+
+                const cleanTitle = match[1].trim();
+                const cleanLevel = `(${match[2].trim()})`;
+
+                if (
+                    title.textContent.trim() !== cleanTitle ||
+                    level.textContent.trim() !== cleanLevel
+                ) {
+                    title.textContent = cleanTitle;
+                    level.textContent = cleanLevel;
+                }
+
+            };
+
+            const observer = new MutationObserver(splitCourseTitle);
+
+            observer.observe(title, {
+                childList: true,
+                characterData: true,
+                subtree: true
+            });
+
+            splitCourseTitle();
+
+        });
+    </script>
+
+    <!-- Existing Certificate JavaScript -->
     <script type="module" src="../assets/js/student/certificate-view.js"></script>
 
 </body>
-
 </html>

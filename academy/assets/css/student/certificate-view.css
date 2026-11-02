@@ -1,610 +1,807 @@
+
+/* =========================================================
+   ISSA ACADEMY - PREMIUM CERTIFICATE DESIGN
+   Navy Blue | Gold | Ivory
+   ========================================================= */
+
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy: #0c1c38;
+    --navy-light: #142b4b;
+    --gold: #c5a04a;
+    --gold-light: #e1c778;
+    --green: #07543e;
+    --ivory: #fbfaf7;
+    --text: #4b5563;
 }
 
 body {
-  background-color: #f3f4f6;
-  font-family: 'Montserrat', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 30px 15px;
-  color: #0c1c38;
+    min-height: 100vh;
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f1f2f4;
+    color: var(--navy);
+    font-family: "Montserrat", sans-serif;
 }
 
-/* Action Bar */
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
 .action-bar {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1000px;
-  margin-bottom: 25px;
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
 }
 
-.btn-primary, .btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  transition: background 0.2s ease;
+.btn-primary,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border: none;
+    border-radius: 6px;
+    font: 600 14px "Montserrat", sans-serif;
+    cursor: pointer;
+    transition: .2s ease;
 }
 
-.btn-primary { background-color: #2563eb; color: #ffffff; }
-.btn-primary:hover { background-color: #1d4ed8; }
-.btn-secondary { background-color: #e5e7eb; color: #374151; }
-.btn-secondary:hover { background-color: #d1d5db; }
+.btn-primary {
+    background: var(--navy);
+    color: white;
+}
 
-/* Main Wrapper */
+.btn-primary:hover {
+    background: #17345f;
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.btn-secondary:hover {
+    background: #d1d5db;
+}
+
+/* =========================================================
+   CERTIFICATE WRAPPER
+   ========================================================= */
+
 .certificate-wrapper {
-  background: #ffffff;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
-  overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 12px 38px rgba(15, 23, 42, .14);
 }
 
-/* Certificate Canvas (Exact A4 Landscape Proportions) */
 .certificate-border {
-  width: 1000px;
-  height: 700px;
-  background-color: #faf9f5; /* Warm premium paper background */
-  position: relative;
-  padding: 38px 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-  box-sizing: border-box;
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    aspect-ratio: 10 / 7;
+    padding: 4.1% 5%;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background: var(--ivory);
 }
 
-/* Background Watermark */
+/* =========================================================
+   BACKGROUND WATERMARK
+   ========================================================= */
+
 .certificate-border::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 320px;
-  height: 320px;
-  background-image: url('../../images/Issa-Logo.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 0.035;
-  pointer-events: none;
-  z-index: 2;
+    content: "";
+    position: absolute;
+    z-index: 0;
+
+    top: 50%;
+    left: 50%;
+
+    width: 34%;
+    aspect-ratio: 1;
+
+    transform: translate(-50%, -50%);
+
+    background: url("../../images/Issa-Logo.png")
+        center / contain no-repeat;
+
+    opacity: .035;
+    pointer-events: none;
 }
 
-/* -------------------------------------------------------------
-   Sharp Diagonal Geometric Corner Ribbons (Matching Sample)
-   ------------------------------------------------------------- */
+/* =========================================================
+   DECORATIVE CORNERS
+   New Geometric Navy + Gold Design
+   ========================================================= */
+
 .corner-shape {
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  overflow: hidden;
-  z-index: 3;
-  pointer-events: none;
-  background: transparent !important;
-  border-radius: 0 !important;
+    position: absolute;
+    z-index: 4;
+
+    width: 112px;
+    height: 112px;
+
+    overflow: hidden;
+    background: transparent !important;
+    border-radius: 0 !important;
+
+    pointer-events: none;
 }
+
+/* Top Left Corner */
 
 .corner-shape.top-left {
-  top: 0;
-  left: 0;
+    top: 0;
+    left: 0;
+    transform: none;
 }
+
+/* Bottom Right Corner */
 
 .corner-shape.bottom-right {
-  bottom: 0;
-  right: 0;
-  transform: rotate(180deg);
+    right: 0;
+    bottom: 0;
+    transform: rotate(180deg);
 }
 
-/* Inner Navy Triangle & Gold Stripe Layer */
+/* Navy Geometric Shape */
+
 .corner-shape::before {
-  content: "";
-  position: absolute;
-  top: -60px;
-  left: -60px;
-  width: 180px;
-  height: 180px;
-  background-color: #0c1c38;
-  transform: rotate(-45deg);
+    content: "";
+    position: absolute;
+
+    top: -65px;
+    left: -65px;
+
+    width: 185px;
+    height: 185px;
+
+    background: linear-gradient(
+        135deg,
+        #142b4b 0%,
+        #0c1c38 75%
+    );
+
+    transform: rotate(-45deg);
+    border: 0;
 }
+
+/* Gold Diagonal Stripe */
 
 .corner-shape::after {
-  content: "";
-  position: absolute;
-  top: 48px;
-  left: -20px;
-  width: 220px;
-  height: 6px;
-  background-color: #c59b27;
-  transform: rotate(-45deg);
+    content: "";
+    position: absolute;
+
+    top: 35px;
+    left: -34px;
+
+    width: 190px;
+    height: 5px;
+
+    background: linear-gradient(
+        90deg,
+        #e1c778,
+        #bd922f
+    );
+
+    transform: rotate(-45deg);
 }
 
-/* -------------------------------------------------------------
-   Gold Frame & Ornamental L-Brackets
-   ------------------------------------------------------------- */
+/* =========================================================
+   GOLD BORDER FRAME
+   ========================================================= */
+
 .gold-border-frame {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
-  border: 1.5px solid #c59b27;
-  pointer-events: none;
-  z-index: 2;
+    position: absolute;
+
+    z-index: 2;
+
+    inset: 2.2%;
+
+    border: 2px solid var(--gold);
+
+    pointer-events: none;
 }
 
 .corner-bracket {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-color: #c59b27;
-  border-style: solid;
-  z-index: 4;
+    position: absolute;
+
+    width: 20px;
+    height: 20px;
+
+    border-color: var(--gold);
+    border-style: solid;
 }
 
 .top-left-bracket {
-  top: 4px;
-  left: 4px;
-  border-width: 2px 0 0 2px;
+    top: 8px;
+    left: 8px;
+    border-width: 2px 0 0 2px;
 }
 
 .top-right-bracket {
-  top: 4px;
-  right: 4px;
-  border-width: 2px 2px 0 0;
+    top: 8px;
+    right: 8px;
+    border-width: 2px 2px 0 0;
 }
 
 .bottom-left-bracket {
-  bottom: 4px;
-  left: 4px;
-  border-width: 0 0 2px 2px;
+    bottom: 8px;
+    left: 8px;
+    border-width: 0 0 2px 2px;
 }
 
 .bottom-right-bracket {
-  bottom: 4px;
-  right: 4px;
-  border-width: 0 2px 2px 0;
+    right: 8px;
+    bottom: 8px;
+    border-width: 0 2px 2px 0;
 }
 
-/* -------------------------------------------------------------
-   Header Section
-   ------------------------------------------------------------- */
+/* =========================================================
+   ACADEMY HEADER
+   ========================================================= */
+
 .cert-header {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  justify-content: center;
-  margin-top: 4px;
+    position: relative;
+    z-index: 3;
+
+    display: flex;
+    justify-content: center;
+
+    margin-top: .2%;
 }
 
 .brand-container {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
 }
 
 .cert-logo {
-  height: 54px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-  transform: rotate(-5deg);
-  mix-blend-mode: multiply;
+    display: block;
+
+    width: auto;
+    height: clamp(54px, 7.2vw, 76px);
+
+    object-fit: contain;
+
+    transform: rotate(-5deg);
+    mix-blend-mode: multiply;
 }
 
 .brand-text-group {
-  text-align: left;
+    text-align: left;
 }
 
 .brand-title {
-  font-family: 'Cinzel', serif;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #0c1c38;
-  line-height: 1.05;
+    color: var(--navy);
+
+    font-family: "Cinzel", Georgia, serif;
+
+    font-size: clamp(25px, 3.1vw, 38px);
+    font-weight: 800;
+
+    letter-spacing: 2px;
+    line-height: 1.05;
 }
 
 .brand-tagline {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 9.5px;
-  letter-spacing: 1.8px;
-  color: #555555;
-  margin-top: 2px;
-  text-transform: uppercase;
-  font-weight: 600;
+    margin-top: 4px;
+
+    color: #555b63;
+
+    font-size: clamp(8px, 1vw, 12px);
+    font-weight: 600;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-/* -------------------------------------------------------------
-   Title Section
-   ------------------------------------------------------------- */
+/* =========================================================
+   CERTIFICATE MAIN HEADING
+   ========================================================= */
+
 .cert-title-section {
-  position: relative;
-  z-index: 5;
-  text-align: center;
-  margin-top: -2px;
+    position: relative;
+    z-index: 3;
+
+    text-align: center;
+    margin-top: -1%;
 }
 
 .main-title {
-  font-family: 'Cinzel', serif;
-  font-size: 44px;
-  font-weight: 700;
-  letter-spacing: 8px;
-  color: #0c1c38;
-  line-height: 1.05;
+    color: var(--navy);
+
+    font-family: "Cinzel", Georgia, serif;
+
+    font-size: clamp(42px, 6.2vw, 72px);
+    font-weight: 700;
+
+    letter-spacing: clamp(4px, .8vw, 9px);
+    line-height: 1.05;
 }
 
 .sub-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 18px;
+    margin-top: 5px;
 }
 
 .gold-line {
-  width: 90px;
-  height: 1px;
-  background-color: #c59b27;
+    width: clamp(55px, 8.2vw, 115px);
+    height: 1.5px;
+
+    background: var(--gold);
 }
 
 .sub-title {
-  font-family: 'Cinzel', serif;
-  font-size: 15px;
-  letter-spacing: 5px;
-  color: #c59b27;
-  font-weight: 700;
+    color: #b89543;
+
+    font-family: "Cinzel", Georgia, serif;
+
+    font-size: clamp(14px, 2vw, 24px);
+    font-weight: 700;
+
+    letter-spacing: clamp(3px, .55vw, 7px);
 }
 
-/* -------------------------------------------------------------
-   Body Section
-   ------------------------------------------------------------- */
+/* =========================================================
+   STUDENT AND COURSE DETAILS
+   ========================================================= */
+
 .cert-body {
-  position: relative;
-  z-index: 5;
-  text-align: center;
-  margin: 0;
-}
+    position: relative;
+    z-index: 3;
 
-.cert-intro {
-  font-size: 12.5px;
-  color: #4b5563;
-}
-
-.student-name {
-  font-family: 'Cinzel', 'Montserrat', serif;
-  font-size: 32px;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: #0c1c38;
-  letter-spacing: 2.5px;
-  margin: 8px auto 10px auto;
-  text-align: center;
-  line-height: 1.15;
-  display: block;
-}
-
-.completion-text {
-  font-size: 12px;
-  color: #4b5563;
-}
-
-.course-title {
-  font-family: 'Cinzel', serif;
-  font-size: 21px;
-  color: #0c1c38;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin: 5px 0;
-  text-transform: uppercase;
-}
-
-.course-desc {
-  font-size: 10.5px;
-  color: #4b5563;
-  max-width: 480px;
-  margin: 0 auto;
-  line-height: 1.4;
-}
-
-/* -------------------------------------------------------------
-   Footer Section
-   ------------------------------------------------------------- */
-.cert-footer {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 0 10px 4px 10px;
-  border-top: 1px solid #e2e8f0;
-  padding-top: 12px;
-}
-
-.footer-block {
-  display: flex;
-  flex-direction: column;
-}
-
-.badge-icon-wrap {
-  width: 26px;
-  height: 26px;
-  border: 1px solid #c59b27;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 5px;
-  color: #c59b27;
-  font-size: 12px;
-  background: #fff;
-}
-
-.footer-label {
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  color: #6b7280;
-}
-
-.footer-val {
-  font-size: 10.5px;
-  font-weight: 700;
-  color: #0c1c38;
-  margin-top: 2px;
-}
-
-/* Signature Compartment */
-.footer-sig-block {
-  text-align: center;
-  align-items: center;
-}
-
-.signature-box {
-  min-height: 35px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.sig-img {
-  height: 35px;
-  width: auto;
-  object-fit: contain;
-}
-
-.signature-fallback {
-  font-family: 'Alex Brush', 'Great Vibes', cursive;
-  font-size: 24px;
-  color: #0c1c38;
-}
-
-.signature-line {
-  width: 160px;
-  height: 1px;
-  background-color: #c59b27;
-  margin: 2px 0 3px 0;
-}
-
-.instructor-name-label {
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #0c1c38;
-}
-
-.instructor-sub-label {
-  font-size: 9px;
-  color: #6b7280;
-}
-
-/* Vertical Divider Rule */
-.footer-v-divider {
-  width: 1px;
-  height: 38px;
-  background-color: #c59b27;
-  margin-bottom: 4px;
-  opacity: 0.6;
-}
-
-/* QR Code Compartment */
-.footer-qr-block {
-  text-align: center;
-  align-items: center;
-  margin-right: 5px;
-}
-
-.qr-box {
-  width: 72px;
-  height: 72px;
-  border: 1px solid #cbd5e1;
-  padding: 3px;
-  background: #ffffff;
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.qr-box canvas, 
-.qr-box img {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-
-.verify-text {
-  font-size: 7.5px;
-  font-weight: 700;
-  color: #374151;
-  margin-top: 3px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 1px 4px;
-}
-
-/* Print CSS */
-@media print {
-  .no-print { display: none !important; }
-  body { padding: 0; background: none; }
-  .certificate-wrapper { box-shadow: none; border-radius: 0; }
-  @page { size: A4 landscape; margin: 0; }
-}
-/* ======================================================================
-   PREMIUM CERTIFICATE REFERENCE DESIGN OVERRIDES
-   Navy blue + warm ivory + gold, tuned to the supplied sample.
-   ====================================================================== */
-
-.certificate-border {
-    width: 1000px;
-    height: 700px;
-    aspect-ratio: auto;
-    padding: 38px 50px;
-    background: #fbfaf7;
-}
-
-.certificate-border::before {
-    width: 320px;
-    height: 320px;
-    background-image: url('../../images/Issa-Logo.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    opacity: .035;
-}
-
-.gold-border-frame {
-    inset: 20px;
-    border: 2px solid #c5a04a;
-}
-
-.cert-header { margin-top: 4px; }
-.brand-container { gap: 18px; }
-.cert-logo { height: 72px; }
-.brand-title {
-    font-size: 36px;
-    letter-spacing: 2px;
-}
-.brand-tagline {
-    margin-top: 4px;
-    font-size: 12px;
-    letter-spacing: 2px;
-}
-
-.cert-title-section { margin-top: -2px; }
-.main-title {
-    font-size: 64px;
-    letter-spacing: 8px;
-}
-.sub-title-row { gap: 18px; margin-top: 6px; }
-.gold-line { width: 110px; height: 1.5px; }
-.sub-title {
-    font-size: 23px;
-    letter-spacing: 6px;
+    text-align: center;
+    margin: 0;
 }
 
 .cert-intro,
-.completion-text { font-size: 17px; }
+.completion-text {
+    color: var(--text);
+
+    font-size: clamp(12px, 1.55vw, 18px);
+    line-height: 1.5;
+}
+
+/* Student Name */
+
 .student-name {
-    margin: 12px auto 14px;
-    font-size: 44px;
-    letter-spacing: 2px;
+    display: block;
+
+    margin: 12px auto;
+
+    color: var(--navy);
+
+    font-family: "Cinzel", Georgia, serif;
+
+    font-size: clamp(28px, 4.1vw, 48px);
+    font-weight: 800;
+
+    letter-spacing: clamp(1px, .25vw, 3px);
+
+    line-height: 1.15;
+    text-align: center;
+    text-transform: uppercase;
+
+    overflow-wrap: anywhere;
 }
+
+/* Course Name */
+
 .course-title {
-    margin: 8px 0 5px;
-    font-size: 32px;
+    max-width: 900px;
+
+    margin: 7px auto 0;
+
+    color: var(--green);
+
+    font-family: "Cinzel", Georgia, serif;
+
+    font-size: clamp(21px, 3.1vw, 36px);
+    font-weight: 800;
+
     letter-spacing: 1px;
-    color: #07543e;
+    line-height: 1.12;
+
+    text-transform: uppercase;
 }
+
+/* BASIC TO ADVANCED - Separate Line */
+
+.course-level {
+    display: block;
+
+    margin: 2px auto 8px;
+
+    color: var(--green);
+
+    font-family: "Cinzel", Georgia, serif;
+
+    font-size: clamp(13px, 1.8vw, 21px);
+    font-weight: 700;
+
+    letter-spacing: 3px;
+    line-height: 1.2;
+
+    text-transform: uppercase;
+}
+
+.course-level:empty {
+    display: none;
+}
+
+/* Description */
+
 .course-desc {
     max-width: 700px;
-    font-size: 14px;
+
+    margin: 0 auto;
+
+    color: var(--text);
+
+    font-size: clamp(10px, 1.25vw, 15px);
     line-height: 1.55;
 }
 
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 .cert-footer {
-    padding: 16px 10px 4px;
-    border-top: 1.5px solid #c5a04a;
+    position: relative;
+    z-index: 3;
+
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    gap: 2%;
+
+    padding: 2.1% 1% .2%;
+
+    border-top: 1.5px solid var(--gold);
 }
-.footer-id-block,
-.footer-date-block { min-width: 205px; }
+
+.footer-block {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+/* Certificate ID and Date Icons */
+
 .badge-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: 34px;
     height: 34px;
+
     margin-bottom: 7px;
+
+    border: 1.5px solid var(--gold);
+    border-radius: 4px;
+
+    background: rgba(255, 255, 255, .75);
+
+    color: #b89543;
     font-size: 16px;
 }
-.footer-label { font-size: 11px; letter-spacing: 1px; }
-.footer-val { margin-top: 5px; font-size: 14px; }
-.footer-sig-block { flex: 1; }
-.signature-box { min-height: 48px; }
-.sig-img { height: 48px; max-width: 190px; }
-.signature-fallback { font-size: 34px; }
-.signature-line { width: 220px; margin: 3px 0 5px; }
-.instructor-name-label { font-size: 12px; letter-spacing: 1px; }
-.instructor-sub-label { font-size: 11px; }
-.footer-v-divider { height: 58px; margin: 0 10px; }
-.footer-qr-block { min-width: 100px; }
-.qr-box {
-    width: 84px;
-    height: 84px;
-    padding: 3px;
-    border: 1.5px solid #c5a04a;
-    border-radius: 4px;
+
+.footer-id-block,
+.footer-date-block {
+    min-width: 19%;
 }
+
+.footer-label {
+    color: #4b5563;
+
+    font-size: clamp(8px, .9vw, 11px);
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.footer-val {
+    margin-top: 5px;
+
+    color: var(--navy);
+
+    font-size: clamp(10px, 1.15vw, 14px);
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   INSTRUCTOR NAME
+   No Handwritten Signature
+   ========================================================= */
+
+.footer-sig-block {
+    flex: 1;
+
+    min-width: 220px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    align-self: stretch;
+    text-align: center;
+}
+
+/* Instructor Name Display */
+
+.instructor-name-display {
+    min-height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--navy);
+
+    font-family: "Cinzel", Georgia, serif;
+
+    font-size: clamp(12px, 1.35vw, 16px);
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+    white-space: nowrap;
+}
+
+/* Hidden Legacy JavaScript Elements */
+
+.signature-compatibility {
+    display: none !important;
+}
+
+/* Gold Line Under Instructor Name */
+
+.footer-sig-block .signature-line {
+    width: min(210px, 82%);
+    height: 1.5px;
+
+    margin: 3px 0 7px;
+
+    background: var(--gold);
+}
+
+/* Founder & Instructor */
+
+.footer-sig-block .instructor-sub-label {
+    color: #647084;
+
+    font-size: clamp(10px, 1vw, 12px);
+}
+
+/* =========================================================
+   VERTICAL DIVIDER
+   ========================================================= */
+
+.footer-v-divider {
+    width: 1px;
+    height: 58px;
+
+    margin: 0 1%;
+
+    background: var(--gold);
+    opacity: .7;
+}
+
+/* =========================================================
+   QR CODE
+   ========================================================= */
+
+.footer-qr-block {
+    align-items: center;
+    text-align: center;
+
+    min-width: 12%;
+}
+
+.qr-box {
+    width: clamp(66px, 8.6vw, 90px);
+    height: clamp(66px, 8.6vw, 90px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 3px;
+
+    border: 1.5px solid var(--gold);
+    border-radius: 4px;
+
+    background: white;
+}
+
+.qr-box canvas,
+.qr-box img {
+    display: block;
+
+    width: 100% !important;
+    height: 100% !important;
+}
+
 .verify-text {
     margin-top: 5px;
-    font-size: 8px;
+    padding: 1px 3px;
+
+    background: rgba(255, 255, 255, .9);
+
+    color: #374151;
+
+    font-size: clamp(6px, .68vw, 8px);
+    font-weight: 700;
+
     letter-spacing: .5px;
+    text-transform: uppercase;
+
+    white-space: nowrap;
 }
 
-/* Keep the landscape composition usable on smaller screens. */
-@media (max-width: 1030px) {
-    .certificate-wrapper { width: 100%; }
-    .certificate-border {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 10 / 7;
-        padding: 3.8% 5%;
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    body {
+        padding: 16px 8px;
     }
-    .cert-logo { height: clamp(38px, 7.2vw, 72px); }
-    .brand-title { font-size: clamp(20px, 3.5vw, 36px); }
-    .brand-tagline { font-size: clamp(7px, 1.1vw, 12px); }
-    .main-title { font-size: clamp(34px, 6.2vw, 64px); }
-    .sub-title { font-size: clamp(12px, 2.2vw, 23px); }
-    .student-name { font-size: clamp(22px, 4.3vw, 44px); }
-    .course-title { font-size: clamp(17px, 3.2vw, 32px); }
-    .cert-intro, .completion-text { font-size: clamp(9px, 1.7vw, 17px); }
-    .course-desc { font-size: clamp(8px, 1.4vw, 14px); }
-    .footer-id-block, .footer-date-block { min-width: 19%; }
-    .footer-val { font-size: clamp(7px, 1.4vw, 14px); }
-    .qr-box { width: clamp(44px, 8.4vw, 84px); height: clamp(44px, 8.4vw, 84px); }
-    .badge-icon-wrap { width: clamp(20px, 3.4vw, 34px); height: clamp(20px, 3.4vw, 34px); }
-    .footer-v-divider { height: clamp(26px, 5.8vw, 58px); }
-    .signature-box { min-height: clamp(24px, 4.8vw, 48px); }
-    .sig-img { height: clamp(24px, 4.8vw, 48px); }
-    .signature-line { width: min(220px, 90%); }
+
+    .certificate-border {
+        padding: 4% 4.5%;
+    }
+
+    .brand-container {
+        gap: 8px;
+    }
+
+    .cert-logo {
+        height: clamp(30px, 7vw, 48px);
+    }
+
+    .brand-title {
+        font-size: clamp(14px, 3.4vw, 23px);
+        letter-spacing: 1px;
+    }
+
+    .brand-tagline {
+        font-size: clamp(5px, 1.1vw, 8px);
+        letter-spacing: 1px;
+    }
+
+    .student-name {
+        margin: 6px auto;
+    }
+
+    .cert-footer {
+        gap: 1%;
+        padding-top: 1.5%;
+    }
+
+    .badge-icon-wrap {
+        width: 22px;
+        height: 22px;
+
+        margin-bottom: 3px;
+
+        font-size: 10px;
+    }
+
+    .corner-shape {
+        width: 70px;
+        height: 70px;
+    }
+
+    .instructor-name-display {
+        min-height: 25px;
+
+        font-size: clamp(7px, 1.45vw, 10px);
+        letter-spacing: .5px;
+    }
+
+    .footer-sig-block {
+        min-width: 0;
+    }
+
+    .footer-sig-block .signature-line {
+        margin: 2px 0 4px;
+    }
+
+    .footer-v-divider {
+        height: 30px;
+    }
+
+    .footer-val {
+        font-size: clamp(6px, 1.2vw, 9px);
+    }
+
+    .course-level {
+        letter-spacing: 1.5px;
+    }
 }
+
+/* =========================================================
+   PRINT AND PDF SETTINGS
+   ========================================================= */
 
 @media print {
+
+    @page {
+        size: A4 landscape;
+        margin: 0;
+    }
+
+    html,
+    body {
+        width: 297mm;
+        height: 210mm;
+
+        margin: 0;
+        padding: 0;
+
+        background: white;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .certificate-wrapper {
+        width: 297mm;
+        max-width: none;
+
+        height: 210mm;
+
+        overflow: hidden;
+        box-shadow: none;
+    }
+
     .certificate-border {
-        width: 1000px;
-        height: 700px;
+        width: 297mm;
+        height: 210mm;
+
         aspect-ratio: auto;
-        padding: 38px 50px;
+
+        padding: 12mm 15mm;
+
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .instructor-name-display,
+    .course-level,
+    .corner-shape {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
     }
