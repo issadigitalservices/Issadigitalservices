@@ -50,13 +50,13 @@ body {
   overflow: hidden;
 }
 
-/* Certificate Canvas (Exact A4 Ratio) */
+/* Certificate Canvas (Exact A4 Landscape Proportions) */
 .certificate-border {
   width: 1000px;
   height: 700px;
   background-color: #fafbfc;
   position: relative;
-  padding: 38px 55px;
+  padding: 40px 55px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -71,8 +71,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 340px;
-  height: 340px;
+  width: 320px;
+  height: 320px;
   background-image: url('../../images/Issa-Logo.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -83,12 +83,12 @@ body {
 }
 
 /* -------------------------------------------------------------
-   Sharp Diagonal Geometric Corner Banners (Navy & Gold)
+   Clean Diagonal Corner Banners (Fixed Alignment)
    ------------------------------------------------------------- */
 .corner-ribbon {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   overflow: hidden;
   z-index: 1;
   pointer-events: none;
@@ -107,30 +107,30 @@ body {
 
 .ribbon-navy-1 {
   position: absolute;
-  top: -40px;
-  left: -40px;
-  width: 170px;
-  height: 170px;
+  top: -50px;
+  left: -50px;
+  width: 160px;
+  height: 160px;
   background-color: #0c1c38;
   transform: rotate(-45deg);
 }
 
 .ribbon-gold {
   position: absolute;
-  top: 65px;
-  left: -15px;
-  width: 220px;
-  height: 8px;
+  top: 55px;
+  left: -20px;
+  width: 200px;
+  height: 6px;
   background-color: #b8935c;
   transform: rotate(-45deg);
 }
 
 .ribbon-navy-2 {
   position: absolute;
-  top: 80px;
-  left: 0;
-  width: 220px;
-  height: 24px;
+  top: 66px;
+  left: -20px;
+  width: 200px;
+  height: 20px;
   background-color: #0c1c38;
   transform: rotate(-45deg);
 }
@@ -140,10 +140,10 @@ body {
    ------------------------------------------------------------- */
 .gold-border-frame {
   position: absolute;
-  top: 22px;
-  left: 22px;
-  right: 22px;
-  bottom: 22px;
+  top: 18px;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
   border: 1.5px solid #b8935c;
   pointer-events: none;
   z-index: 2;
@@ -151,38 +151,38 @@ body {
 
 .corner-bracket {
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-color: #b8935c;
   border-style: solid;
 }
 
 .top-left-bracket {
-  top: 4px;
-  left: 4px;
+  top: 2px;
+  left: 2px;
   border-width: 2px 0 0 2px;
 }
 
 .top-right-bracket {
-  top: 4px;
-  right: 4px;
+  top: 2px;
+  right: 2px;
   border-width: 2px 2px 0 0;
 }
 
 .bottom-left-bracket {
-  bottom: 4px;
-  left: 4px;
+  bottom: 2px;
+  left: 2px;
   border-width: 0 0 2px 2px;
 }
 
 .bottom-right-bracket {
-  bottom: 4px;
-  right: 4px;
+  bottom: 2px;
+  right: 2px;
   border-width: 0 2px 2px 0;
 }
 
 /* -------------------------------------------------------------
-   Header Section
+   Header Section (Fixed Logo Tilt & Alignment)
    ------------------------------------------------------------- */
 .cert-header {
   position: relative;
@@ -199,11 +199,12 @@ body {
 }
 
 .cert-logo {
-  height: 54px;
+  height: 52px;
   width: auto;
   object-fit: contain;
   display: block;
-  transform: rotate(-4deg); /* Exact reference tilt */
+  transform: none; /* Removed excessive tilt */
+  mix-blend-mode: multiply;
 }
 
 .brand-text-group {
@@ -212,19 +213,19 @@ body {
 
 .brand-title {
   font-family: 'Cinzel', serif;
-  font-size: 26px;
+  font-size: 25px;
   font-weight: 800;
   letter-spacing: 2px;
   color: #0c1c38;
-  line-height: 1.0;
+  line-height: 1.1;
 }
 
 .brand-tagline {
   font-family: 'Montserrat', sans-serif;
   font-size: 10px;
-  letter-spacing: 1.8px;
+  letter-spacing: 1.6px;
   color: #555555;
-  margin-top: 3px;
+  margin-top: 2px;
   text-transform: uppercase;
   font-weight: 600;
 }
@@ -236,36 +237,36 @@ body {
   position: relative;
   z-index: 3;
   text-align: center;
-  margin-top: -2px;
+  margin: 5px 0;
 }
 
 .main-title {
   font-family: 'Cinzel', serif;
-  font-size: 44px;
+  font-size: 42px;
   font-weight: 700;
-  letter-spacing: 8px;
+  letter-spacing: 7px;
   color: #0c1c38;
-  line-height: 1.0;
+  line-height: 1.1;
 }
 
 .sub-title-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  margin-top: 6px;
+  gap: 15px;
+  margin-top: 4px;
 }
 
 .gold-line {
-  width: 80px;
+  width: 70px;
   height: 1px;
   background-color: #b8935c;
 }
 
 .sub-title {
   font-family: 'Cinzel', serif;
-  font-size: 16px;
-  letter-spacing: 5px;
+  font-size: 15px;
+  letter-spacing: 4.5px;
   color: #b8935c;
   font-weight: 700;
 }
@@ -277,7 +278,7 @@ body {
   position: relative;
   z-index: 3;
   text-align: center;
-  margin: 0;
+  margin: 5px 0;
 }
 
 .cert-intro {
@@ -291,10 +292,10 @@ body {
   font-weight: 800;
   text-transform: uppercase;
   color: #0c1c38;
-  letter-spacing: 2.5px;
+  letter-spacing: 2px;
   margin: 10px auto 12px auto;
   text-align: center;
-  line-height: 1.1;
+  line-height: 1.2;
   display: block;
 }
 
@@ -308,8 +309,8 @@ body {
   font-size: 21px;
   color: #0c1c38;
   font-weight: 800;
-  letter-spacing: 1.5px;
-  margin: 6px 0;
+  letter-spacing: 1px;
+  margin: 5px 0;
   text-transform: uppercase;
 }
 
@@ -318,11 +319,11 @@ body {
   color: #4b5563;
   max-width: 500px;
   margin: 0 auto;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 /* -------------------------------------------------------------
-   Footer Section (Matching reference 4-compartment grid)
+   Footer Section (Proper spacing & QR position)
    ------------------------------------------------------------- */
 .cert-footer {
   position: relative;
@@ -330,9 +331,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 0 10px 5px 10px;
+  padding: 0 15px 5px 15px;
   border-top: 1px solid #e5e7eb;
-  padding-top: 15px;
+  padding-top: 12px;
 }
 
 .footer-block {
@@ -348,9 +349,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   color: #b8935c;
   font-size: 13px;
+  background: #fff;
 }
 
 .footer-label {
@@ -374,21 +376,21 @@ body {
 }
 
 .signature-box {
-  min-height: 38px;
+  min-height: 36px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
 .sig-img {
-  height: 38px;
+  height: 36px;
   width: auto;
   object-fit: contain;
 }
 
 .signature-fallback {
   font-family: 'Alex Brush', 'Great Vibes', cursive;
-  font-size: 26px;
+  font-size: 24px;
   color: #0c1c38;
 }
 
@@ -414,22 +416,23 @@ body {
 /* Vertical Divider Rule */
 .footer-v-divider {
   width: 1px;
-  height: 40px;
+  height: 38px;
   background-color: #b8935c;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   opacity: 0.5;
 }
 
-/* QR Code Compartment */
+/* QR Code Compartment (Positioned cleanly on white space) */
 .footer-qr-block {
   text-align: center;
   align-items: center;
+  margin-right: 15px; /* Keeps QR code out of the dark blue bottom banner */
 }
 
 .qr-box {
-  width: 76px;
-  height: 76px;
-  border: 1px solid #d1d5db;
+  width: 74px;
+  height: 74px;
+  border: 1px solid #cbd5e1;
   padding: 3px;
   background: #ffffff;
   border-radius: 2px;
@@ -449,9 +452,11 @@ body {
   font-size: 7.5px;
   font-weight: 700;
   color: #374151;
-  margin-top: 4px;
-  letter-spacing: 0.6px;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1px 4px;
 }
 
 /* Print CSS */
